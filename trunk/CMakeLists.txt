@@ -30,13 +30,16 @@ if( MSVC )
 		DESTINATION ${CMAKE_SOURCE_DIR}/bin)
 endif()
 
-add_executable(HeavyTrain  ${sources} ${headers} )
+add_executable(HeavyTrain ${sources} ${headers} )
 
 if( MSVC )
 	target_link_libraries(HeavyTrain SDLmain)
 	target_link_libraries(HeavyTrain tinyxml)
 	target_link_libraries(HeavyTrain tinyxmlSTL)
 	target_link_libraries(HeavyTrain box2Dd)
+else()
+	target_link_libraries(HeavyTrain Box2D)
+	target_link_libraries(HeavyTrain tinyxml)
 endif()
 
 target_link_libraries(HeavyTrain SDL)

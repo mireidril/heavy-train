@@ -6,7 +6,8 @@
 #include "Box2D/Box2D.h"
 #else
 #include <SDL/SDL.h>
-#include <tinyXML/tinyxml.h>
+#include <tinyxml.h>
+#include <Box2D/Box2D.h>
 #endif
 
 int main(int argc, char** argv)
