@@ -118,34 +118,61 @@ int main(int argc, char** argv)
 	int32 positionIterations = 2;
 
 	// This is our little game loop.
-	for (int32 i = 0; i < 1000; ++i)
-	{
-		// Instruct the world to perform a single step of simulation.
-		// It is generally best to keep the time step and iterations fixed.
-		world.Step(timeStep, velocityIterations, positionIterations);
+	bool play = true;
+	SDL_Event event;
+	while (play) {
+	    	while (SDL_PollEvent(&event)){
+			switch (event.type){
+			  	case SDL_KEYDOWN:
+			       		//printf("Touche %d enfoncée (caractère produit: %c)\n", event.key.keysym.sym, event.key.keysym.unicode);
+				       switch (event.key.keysym.sym){
+				       case SDLK_ESCAPE:
+					    play=false;
+					    break;
+				       case SDLK_LEFT:
+		
+					    break;
+				       case SDLK_RIGHT:
+			
+					    break;
+				       case SDLK_UP:
+			
+					    break;
+				       case SDLK_DOWN:
+					   
+					    break;
+				       default:
+					    break;
+				       }
+				default: break;
+			}
+			// Instruct the world to perform a single step of simulation.
+			// It is generally best to keep the time step and iterations fixed.
+			world.Step(timeStep, velocityIterations, positionIterations);
 
-		// Now print the position and angle of the body.
-		b2Vec2 position = body->GetPosition();
-		float32 angle = body->GetAngle();
+			// Now print the position and angle of the body.
+			b2Vec2 position = body->GetPosition();
+			float32 angle = body->GetAngle();
 
-		printf("%4.2f %4.2f %4.2f\n", position.x, position.y, angle);
+			//printf("%4.2f %4.2f %4.2f\n", position.x, position.y, angle);
 
-		/* Copie de l'image à l'écran */
-		//posSprite->x = position.x +10;
-		posSprite->y = -position.y +10;
-		posSol->x = -position.x+10;
-		SDL_FillRect( SDL_GetVideoSurface(), NULL, 0 );
-		SDL_BlitSurface(image, NULL, screen, posSprite);
-		SDL_BlitSurface(image2, NULL, screen, posSol);
+			/* Copie de l'image à l'écran */
+			//posSprite->x = position.x +10;
+			posSprite->y = -position.y +10;
+			posSol->x = -position.x+10;
+			SDL_FillRect( SDL_GetVideoSurface(), NULL, 0 );
+			//SDL_BlitSurface(image, NULL, screen, posSprite);
+			//SDL_BlitSurface(image2, NULL, screen, posSol);
 	
-		/* Mise à jour de la zone d'affichage de la fenetre */
-		SDL_UpdateRect(screen, 0, 0, 0, 0);
+			/* Mise à jour de la zone d'affichage de la fenetre */
+			SDL_UpdateRect(screen, 0, 0, 0, 0);
+		}
 	}
 
 
-#ifdef _WIN32
-	system("PAUSE");
-#endif
+	#ifdef _WIN32
+		system("PAUSE");
+	#endif
 	SDL_FreeSurface(image);
 	SDL_Quit();
 	return 0;
