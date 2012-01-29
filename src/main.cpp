@@ -10,11 +10,13 @@
 #include <Box2D/Box2D.h>
 #endif
 
+
+
+
 int main(int argc, char** argv)
 {
-	std::cout<<"Bonjour"<<std::endl;
-
-	//SDL
+	std::cout<<"Bonjour OWLaround :)"<<std::endl;
+	//-----------------SDL-------------------------------------------------
 	if(SDL_Init(SDL_INIT_VIDEO) != 0) 
 	{
 		std::cerr << "Probleme pour initialiser SDL : " << SDL_GetError() << std::endl;
@@ -41,11 +43,12 @@ int main(int argc, char** argv)
 	{
 		std::cout<<"erreur chargement image2"<<std::endl;
 	}
-
+	std::cout << "ça va?" << std::endl;
 	int colorkey = SDL_MapRGB(screen->format, 255, 255, 255);
+
 	SDL_SetColorKey(image, SDL_SRCCOLORKEY | SDL_RLEACCEL, colorkey);
 
-	
+		
 	//tinyXML
 	TiXmlDocument doc( "../levels/test.xml" );
 	bool loadOkay = doc.LoadFile();
@@ -121,31 +124,32 @@ int main(int argc, char** argv)
 	bool play = true;
 	SDL_Event event;
 	while (play) {
-	    	while (SDL_PollEvent(&event)){
+	    	 if (SDL_PollEvent(&event)){
 			switch (event.type){
 			  	case SDL_KEYDOWN:
 			       		//printf("Touche %d enfoncée (caractère produit: %c)\n", event.key.keysym.sym, event.key.keysym.unicode);
 				       switch (event.key.keysym.sym){
-				       case SDLK_ESCAPE:
-					    play=false;
-					    break;
-				       case SDLK_LEFT:
+					       case SDLK_ESCAPE:
+						    play=false;
+						    break;
+					       case SDLK_LEFT:
 		
-					    break;
-				       case SDLK_RIGHT:
+						    break;
+					       case SDLK_RIGHT:
 			
-					    break;
-				       case SDLK_UP:
+						    break;
+					       case SDLK_UP:
 			
-					    break;
-				       case SDLK_DOWN:
-					   
-					    break;
-				       default:
-					    break;
-				       }
+						    break;
+					       case SDLK_DOWN:
+						   
+						    break;
+					       default:
+						    break;
+					       }
 				default: break;
 			}
+		}
 			// Instruct the world to perform a single step of simulation.
 			// It is generally best to keep the time step and iterations fixed.
 			world.Step(timeStep, velocityIterations, positionIterations);
@@ -161,12 +165,12 @@ int main(int argc, char** argv)
 			posSprite->y = -position.y +10;
 			posSol->x = -position.x+10;
 			SDL_FillRect( SDL_GetVideoSurface(), NULL, 0 );
-			//SDL_BlitSurface(image, NULL, screen, posSprite);
-			//SDL_BlitSurface(image2, NULL, screen, posSol);
+			SDL_BlitSurface(image, NULL, screen, posSprite);
+			SDL_BlitSurface(image2, NULL, screen, posSol);
 	
 			/* Mise à jour de la zone d'affichage de la fenetre */
 			SDL_UpdateRect(screen, 0, 0, 0, 0);
-		}
+
 	}
 
 
