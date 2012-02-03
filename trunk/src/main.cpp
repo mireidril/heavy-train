@@ -4,10 +4,12 @@
 #include "SDL/SDL.h"
 #include "tinyXML/tinyxml.h"
 #include "Box2D/Box2D.h"
+#include "SDL/SDL_image.h"
 #else
 #include <SDL/SDL.h>
 #include <tinyxml.h>
 #include <Box2D/Box2D.h>
+#include <SDL/SDL_image.h>
 #endif
 
 
@@ -15,11 +17,11 @@
 
 int main(int argc, char** argv)
 {
-	std::cout<<"Bonjour OWLaround :)"<<std::endl;
+	std::cout<<"Hello OWLaround :)"<<std::endl;
 	//-----------------SDL-------------------------------------------------
 	if(SDL_Init(SDL_INIT_VIDEO) != 0) 
 	{
-		std::cerr << "Probleme pour initialiser SDL : " << SDL_GetError() << std::endl;
+		std::cerr << "Can't initialize SDL : " << SDL_GetError() << std::endl;
 	}
 
 	SDL_WM_SetCaption("Heavy Train", NULL);
@@ -29,24 +31,24 @@ int main(int argc, char** argv)
 	SDL_Surface * screen = SDL_SetVideoMode(800, 600, 32, SDL_ANYFORMAT);
 	if(screen == NULL)
 	{
-		std::cout<<"erreur initialisation screen"<<std::endl;
+		std::cout<<"Error at initialization screen"<<std::endl;
 	}
 
-	SDL_Surface * image = SDL_LoadBMP("../img/test.bmp");
+	SDL_Surface * image = IMG_Load("../img/trainvache.png");
 	if(image == NULL)
 	{
-		std::cout<<"erreur chargement image"<<std::endl;
+		std::cout<<"Error loading image"<<std::endl;
 	}
 
 	SDL_Surface * image2 = SDL_LoadBMP("../img/sol.bmp");
 	if(image2 == NULL)
 	{
-		std::cout<<"erreur chargement image2"<<std::endl;
+		std::cout<<"Error loading image 2"<<std::endl;
 	}
-	std::cout << "ça va?" << std::endl;
-	int colorkey = SDL_MapRGB(screen->format, 255, 255, 255);
-
-	SDL_SetColorKey(image, SDL_SRCCOLORKEY | SDL_RLEACCEL, colorkey);
+	std::cout << "How are you ?" << std::endl;
+	// Indicates that the transparent color is fuschia but we don't need it now, with PNG
+	//int colorkey = SDL_MapRGB(image->format, 255, 0, 255);
+	//SDL_SetColorKey(image, SDL_SRCCOLORKEY, colorkey);
 
 		
 	//tinyXML
@@ -160,15 +162,15 @@ int main(int argc, char** argv)
 
 			//printf("%4.2f %4.2f %4.2f\n", position.x, position.y, angle);
 
-			/* Copie de l'image à l'écran */
+			/* Copy image to the screen */
 			//posSprite->x = position.x +10;
 			posSprite->y = -position.y +10;
 			posSol->x = -position.x+10;
 			SDL_FillRect( SDL_GetVideoSurface(), NULL, 0 );
 			SDL_BlitSurface(image, NULL, screen, posSprite);
 			SDL_BlitSurface(image2, NULL, screen, posSol);
-	
-			/* Mise à jour de la zone d'affichage de la fenetre */
+			
+			// Update screen
 			SDL_UpdateRect(screen, 0, 0, 0, 0);
 
 	}
