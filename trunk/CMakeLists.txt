@@ -27,6 +27,14 @@ if( MSVC )
 		# copy WIN32 DLLs 
 		file(COPY ${CMAKE_SOURCE_DIR}/dependencies/dll/SDL.dll 
 		${CMAKE_SOURCE_DIR}/dependencies/dll/sdl_image.dll
+		${CMAKE_SOURCE_DIR}/dependencies/dll/jpeg.dll
+		${CMAKE_SOURCE_DIR}/dependencies/dll/zlib.dll
+		${CMAKE_SOURCE_DIR}/dependencies/dll/libpng1.dll
+		${CMAKE_SOURCE_DIR}/dependencies/dll/SDL_ttf.dll
+		${CMAKE_SOURCE_DIR}/dependencies/dll/libfreetype-6.dll
+		${CMAKE_SOURCE_DIR}/dependencies/dll/SDL_gfx.dll
+		${CMAKE_SOURCE_DIR}/dependencies/dll/SDL_mixer.dll
+		${CMAKE_SOURCE_DIR}/dependencies/dll/smpeg.dll
 		DESTINATION ${CMAKE_SOURCE_DIR}/bin)
 endif()
 
@@ -44,3 +52,6 @@ endif()
 
 target_link_libraries(HeavyTrain SDL)
 target_link_libraries(HeavyTrain SDL_image)
+target_link_libraries(HeavyTrain SDL_ttf)
+target_link_libraries(HeavyTrain SDL_gfx)
+target_link_libraries(HeavyTrain SDL_mixer)
