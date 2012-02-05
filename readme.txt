@@ -1,0 +1,32 @@
+==== INSTALLATION =====
+Tout d'abord, j'espère que vous n'avez pas placé le dossier SVN HeavyTrain à un endroit où le chemin est constitué d'un accent (ex : Document/Céline/HeavyTrain) Si c'est le cas, changez son emplacement, car Cmake n'aime pas les accents.
+
+Sous Linux, vous avez besoin des bibliothèques suivantes :
+SDL
+SDL_image
+SDL_ttf
+SDL_mixer
+SDL_gfx
+smpeg
+tinyXML
+
+Sous Windows :
+1. Installer Cmake : http://www.cmake.org/cmake/resources/software.html et Visual C++ Express 2010 : http://www.microsoft.com/visualstudio/en-us/products/2010-editions/visual-cpp-express
+2. Lancez cmake-gui
+3. Complétez les deux champs du haut avec :
+ - Where is the source code : [chemin du SVN]
+ - Where to build the binaries : [chemin du SVN]/windows
+4. Cliquez sur "Configure" puis choisissez "Visual Studio 10" puis cliquez sur OK
+5. Cliquez une seconde fois sur "Configure" puis ensuite sur "Generate"
+6. C'est fini ! Lancez le projet Visual Studio "HeavyTrain.vcproj" du répertoire "windows", puis clic droit sur le projet dans Visual Studio et choisissez "Définir le projet comme projet de démarrage". Heavy Train devrait maintenant être écrit en gras. Faites F7 pour compiler et F5 pour compiler puis lancez le programme.
+
+Sous Linux
+1. Avec des apt-get ou avec l'installeur Synaptic, installez Cmake et tinyXml.
+2. Installez Box2D en téléchargeant l'archive suivante (http://code.google.com/p/box2d/downloads/detail?name=Box2D_v2.2.1.zip&can=2&q=) et suivez les indications du fichier build.txt
+3. Lancez cmake-gui
+4. Complétez les deux champs du haut avec :
+ - Where is the source code : [chemin du SVN]
+ - Where to build the binaries : [chemin du SVN]/linux
+5. Cliquez sur "Configure" puis choisissez "Unix Makefile" puis cliquez sur OK
+6. Cliquez une seconde fois sur "Configure" puis ensuite sur "Generate"
+7. C'est fini ! Le makefile se situe dans le répertoire "linux"

@@ -5,20 +5,24 @@
 #include "tinyXML/tinyxml.h"
 #include "Box2D/Box2D.h"
 #include "SDL/SDL_image.h"
+#include "SDL/SDL_ttf.h"
+#include "SDL/SDL_rotozoom.h"
+#include "SDL/SDL_mixer.h"
 #else
 #include <SDL/SDL.h>
 #include <tinyxml.h>
 #include <Box2D/Box2D.h>
 #include <SDL/SDL_image.h>
+#include <SDL/SDL_ttf.h>
+#include <SDL/SDL_rotozoom.h>
+#include <SDL/SDL_mixer.h>
 #endif
-
-
-
 
 int main(int argc, char** argv)
 {
 	std::cout<<"Hello OWLaround :)"<<std::endl;
 	//-----------------SDL-------------------------------------------------
+
 	if(SDL_Init(SDL_INIT_VIDEO) != 0) 
 	{
 		std::cerr << "Can't initialize SDL : " << SDL_GetError() << std::endl;
@@ -34,7 +38,7 @@ int main(int argc, char** argv)
 		std::cout<<"Error at initialization screen"<<std::endl;
 	}
 
-	SDL_Surface * image = IMG_Load("../img/trainvache.png");
+	SDL_Surface * image = IMG_Load("../img/test.bmp");
 	if(image == NULL)
 	{
 		std::cout<<"Error loading image"<<std::endl;
@@ -122,6 +126,28 @@ int main(int argc, char** argv)
 	int32 velocityIterations = 6;
 	int32 positionIterations = 2;
 
+	//SDL_ttf
+	TTF_Init();
+	TTF_Font * police = TTF_OpenFont("../fonts/mvboli.ttf", 50);
+	SDL_Color couleurNoire = {255,255,0};
+	SDL_Surface * texte = TTF_RenderText_Blended(police, "Salut les Zér0s !", couleurNoire);
+
+	//SDL_gfx
+	image = rotozoomSurface(image, 90, 1.0, 1);
+
+	//SDL_mixer
+	if( Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) == -1)
+		std::cout<<"problem init son"<<std::endl; //Initialisation de l'API Mixer
+	Mix_Music * musique = Mix_LoadMUS("../musics/fanfare.mp3");
+	Mix_VolumeMusic(MIX_MAX_VOLUME/2);
+	if(musique == NULL){
+		std::cout<<"musique non jouée"<<std::endl;
+	}
+	else
+	{
+		Mix_PlayMusic(musique, -1);
+	}
+
 	// This is our little game loop.
 	bool play = true;
 	SDL_Event event;
@@ -169,15 +195,25 @@ int main(int argc, char** argv)
 			SDL_FillRect( SDL_GetVideoSurface(), NULL, 0 );
 			SDL_BlitSurface(image, NULL, screen, posSprite);
 			SDL_BlitSurface(image2, NULL, screen, posSol);
+
+			SDL_Rect * position1 = new SDL_Rect;
+			position1->x = 50;
+			position1->y = 50;
+			SDL_BlitSurface(texte, NULL, screen, position1); /* Blit du texte par-dessus */
 			
 			// Update screen
 			SDL_UpdateRect(screen, 0, 0, 0, 0);
 
 	}
 
+	TTF_CloseFont(police);
+	TTF_Quit();
+	Mix_FreeMusic(musique);
+	Mix_CloseAudio();
+
 
 	#ifdef _WIN32
-		system("PAUSE");
+		//system("PAUSE");
 	#endif
 	SDL_FreeSurface(image);
 	SDL_Quit();
