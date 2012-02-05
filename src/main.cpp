@@ -1,24 +1,12 @@
-#include <iostream>
-
 #ifdef _WIN32
-#include "SDL/SDL.h"
-#include "tinyXML/tinyxml.h"
 #include "Box2D/Box2D.h"
-#include "SDL/SDL_image.h"
-#include "SDL/SDL_ttf.h"
-#include "SDL/SDL_rotozoom.h"
-#include "SDL/SDL_mixer.h"
 #else
-#include <SDL/SDL.h>
-#include <tinyxml.h>
 #include <Box2D/Box2D.h>
-#include <SDL/SDL_image.h>
-#include <SDL/SDL_ttf.h>
-#include <SDL/SDL_rotozoom.h>
-#include <SDL/SDL_mixer.h>
 #endif
 
-int main(int argc, char** argv)
+#include "GameEngine.hpp"
+
+void testLibrairies()
 {
 	std::cout<<"Hello OWLaround :)"<<std::endl;
 	//-----------------SDL-------------------------------------------------
@@ -152,70 +140,61 @@ int main(int argc, char** argv)
 	bool play = true;
 	SDL_Event event;
 	while (play) {
-	    	 if (SDL_PollEvent(&event)){
+		if (SDL_PollEvent(&event)){
 			switch (event.type){
 			  	case SDL_KEYDOWN:
-			       		//printf("Touche %d enfoncée (caractère produit: %c)\n", event.key.keysym.sym, event.key.keysym.unicode);
-				       switch (event.key.keysym.sym){
-					       case SDLK_ESCAPE:
-						    play=false;
-						    break;
-					       case SDLK_LEFT:
-		
-						    break;
-					       case SDLK_RIGHT:
-			
-						    break;
-					       case SDLK_UP:
-			
-						    break;
-					       case SDLK_DOWN:
-						   
-						    break;
-					       default:
-						    break;
-					       }
+			       	switch (event.key.keysym.sym){
+						case SDLK_ESCAPE:
+							play=false;
+							break;
+						default:
+							break;
+					}
 				default: break;
 			}
 		}
-			// Instruct the world to perform a single step of simulation.
-			// It is generally best to keep the time step and iterations fixed.
-			world.Step(timeStep, velocityIterations, positionIterations);
+		// Instruct the world to perform a single step of simulation.
+		// It is generally best to keep the time step and iterations fixed.
+		world.Step(timeStep, velocityIterations, positionIterations);
 
-			// Now print the position and angle of the body.
-			b2Vec2 position = body->GetPosition();
-			float32 angle = body->GetAngle();
+		// Now print the position and angle of the body.
+		b2Vec2 position = body->GetPosition();
+		float32 angle = body->GetAngle();
 
-			//printf("%4.2f %4.2f %4.2f\n", position.x, position.y, angle);
+		//printf("%4.2f %4.2f %4.2f\n", position.x, position.y, angle);
 
-			/* Copy image to the screen */
-			//posSprite->x = position.x +10;
-			posSprite->y = -position.y +10;
-			posSol->x = -position.x+10;
-			SDL_FillRect( SDL_GetVideoSurface(), NULL, 0 );
-			SDL_BlitSurface(image, NULL, screen, posSprite);
-			SDL_BlitSurface(image2, NULL, screen, posSol);
+		/* Copy image to the screen */
+		//posSprite->x = position.x +10;
+		posSprite->y = -position.y +10;
+		posSol->x = -position.x+10;
+		SDL_FillRect( SDL_GetVideoSurface(), NULL, 0 );
+		SDL_BlitSurface(image, NULL, screen, posSprite);
+		SDL_BlitSurface(image2, NULL, screen, posSol);
 
-			SDL_Rect * position1 = new SDL_Rect;
-			position1->x = 50;
-			position1->y = 50;
-			SDL_BlitSurface(texte, NULL, screen, position1); /* Blit du texte par-dessus */
+		SDL_Rect * position1 = new SDL_Rect;
+		position1->x = 50;
+		position1->y = 50;
+		SDL_BlitSurface(texte, NULL, screen, position1); /* Blit du texte par-dessus */
 			
-			// Update screen
-			SDL_UpdateRect(screen, 0, 0, 0, 0);
-
+		// Update screen
+		SDL_UpdateRect(screen, 0, 0, 0, 0);
 	}
-
 	TTF_CloseFont(police);
 	TTF_Quit();
 	Mix_FreeMusic(musique);
 	Mix_CloseAudio();
-
-
-	#ifdef _WIN32
-		//system("PAUSE");
-	#endif
 	SDL_FreeSurface(image);
 	SDL_Quit();
+}
+
+int main(int argc, char** argv)
+{
+	//To launch the game
+	//GameEngine gameEngine;
+	//gameEngine.run();
+	
+	//To test librairies
+	testLibrairies();
+
 	return 0;
 }
