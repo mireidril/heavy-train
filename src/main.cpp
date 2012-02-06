@@ -126,7 +126,7 @@ void testLibrairies()
 	//SDL_mixer
 	if( Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) == -1)
 		std::cout<<"problem init son"<<std::endl; //Initialisation de l'API Mixer
-	Mix_Music * musique = Mix_LoadMUS("../musics/fanfare.mp3");
+	Mix_Music * musique = Mix_LoadMUS("../musics/fanfare.ogg");
 	Mix_VolumeMusic(MIX_MAX_VOLUME/2);
 	if(musique == NULL){
 		std::cout<<"musique non jouée"<<std::endl;
