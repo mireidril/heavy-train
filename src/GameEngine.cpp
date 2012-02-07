@@ -11,7 +11,7 @@ GameEngine::GameEngine()
 , m_windowsWidth(800)
 , m_windowsHeight(600)
 , m_quit(false)
-//, m_actualGame(NULL)
+, m_actualGame()
 {}
 
 /*

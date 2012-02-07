@@ -2,6 +2,7 @@
 #define __GAME_ENGINE_HPP__
 
 #include "Interface.hpp"
+#include "ActualGame.hpp"
 
 #ifdef _WIN32
 #include "SDL/SDL.h"
@@ -60,7 +61,7 @@ class GameEngine
 
 		bool						m_quit;
 
-		//ActualGame*					m_actualGame;
+		ActualGame*					m_actualGame;
 
 };
 
