@@ -23,9 +23,11 @@ enum BlockType
 class Block
 {
 	public :
+		Block(int sizeX, b2World * world);
+		void constructGround();
 	private :
 		Sprite * m_sprite;
-		b2Body m_body;
+		b2Body * m_body;
 		int m_sizeX;
 };
 #endif
