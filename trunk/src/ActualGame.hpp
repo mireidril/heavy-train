@@ -14,13 +14,12 @@ class ActualGame
 	public :
 		ActualGame();
 		~ActualGame();
-		void constructGround();
 		void checkCollisions();
 		
 
 	private :
-		Train * train;
-		b2World * world;
+		Train * m_train;
+		b2World * m_world;
 		
 };
 #endif
