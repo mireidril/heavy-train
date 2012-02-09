@@ -25,6 +25,9 @@ class Sprite
 		void draw(SDL_Surface * screen, const int & width, const int & height);
 		void changeImageManually(const int & imageNum);
 
+		//static void putpixel(SDL_Surface *surface, int x, int y, Uint32 pixel);
+		//static Uint32 getpixel(SDL_Surface *surface, int x, int y);
+
 	private :
 
 		unsigned int				m_actualFrame;
