@@ -108,6 +108,7 @@ void GameEngine::update()
 			case SDL_VIDEORESIZE:
 				m_windowsWidth = event.resize.w;
 				m_windowsHeight = event.resize.h;
+				m_screen = SDL_SetVideoMode(m_windowsWidth, m_windowsHeight, 32, SDL_VIDEORESIZE | SDL_DOUBLEBUF);
 				break;
 			case SDL_KEYDOWN:
 				if(event.key.keysym.sym == SDLK_ESCAPE)
@@ -138,7 +139,7 @@ void GameEngine::render()
 	m_interfaces[m_actualGameScreen]->render(m_screen, m_windowsWidth, m_windowsHeight);
 
 	// Update screen
-	SDL_UpdateRect(m_screen, 0, 0, 0, 0);
+	SDL_UpdateRect(m_screen, 0, 0, m_windowsWidth, m_windowsHeight);
 	SDL_Flip(m_screen);
 }
 
