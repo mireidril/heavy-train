@@ -9,11 +9,13 @@
 #include "tinyXML/tinyxml.h"
 #include "SDL/SDL_ttf.h"
 #include "SDL/SDL_mixer.h"
+#include "SDL/SDL_image.h"
 #else
 #include <SDL/SDL.h>
 #include <tinyxml.h>
 #include <SDL/SDL_ttf.h>
 #include <SDL/SDL_mixer.h>
+#include <SDL/SDL_image.h>
 #endif
 
 #include <map>

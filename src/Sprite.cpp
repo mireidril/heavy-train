@@ -109,6 +109,7 @@ void Sprite::changeImageManually(const int & imageNum)
 /*
 *
 */
+/*
 SDL_Surface* Sprite::scaleSurface(SDL_Surface *surface, Uint16 Width, Uint16 Height)
 {
     if(!surface || !Width || !Height)
@@ -130,7 +131,7 @@ SDL_Surface* Sprite::scaleSurface(SDL_Surface *surface, Uint16 Width, Uint16 Hei
     return _ret;
 }
 
-/*Uint32 Sprite::getpixel(SDL_Surface *surface, int x, int y)
+Uint32 Sprite::getpixel(SDL_Surface *surface, int x, int y)
 {
     int bpp = surface->format->BytesPerPixel;
     // Here p is the address to the pixel we want to retrieve
