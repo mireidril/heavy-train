@@ -190,11 +190,11 @@ void testLibrairies()
 int main(int argc, char** argv)
 {
 	//To launch the game
-	//GameEngine gameEngine;
-	//gameEngine.run();
+	GameEngine gameEngine;
+	gameEngine.run();
 	
 	//To test librairies
-	testLibrairies();
+	//testLibrairies();
 
 	return 0;
 }

@@ -8,9 +8,10 @@ GameEngine::GameEngine()
 , m_nbAvailableIslands(1)
 , m_nbAvailableLevels(1)
 , m_screen(NULL)
-, m_windowsWidth(800)
-, m_windowsHeight(600)
+, m_windowsWidth(1024)
+, m_windowsHeight(768)
 , m_quit(false)
+, m_fullScreen(false)
 , m_actualGame()
 {}
 
@@ -47,7 +48,7 @@ void GameEngine::initSDL()
 
 	SDL_WM_SetCaption("Heavy Train", NULL);
 
-	m_screen = SDL_SetVideoMode(m_windowsWidth, m_windowsHeight, 32, SDL_VIDEORESIZE | SDL_DOUBLEBUF);
+	m_screen = SDL_SetVideoMode(m_windowsWidth, m_windowsHeight, 32, SDL_DOUBLEBUF);
 	assert(m_screen);
 
 	//SDL_ttf
@@ -105,15 +106,30 @@ void GameEngine::update()
 			case SDL_QUIT:
 				m_quit = true;
 				break;
-			case SDL_VIDEORESIZE:
+			/*case SDL_VIDEORESIZE:
 				m_windowsWidth = event.resize.w;
 				m_windowsHeight = event.resize.h;
 				m_screen = SDL_SetVideoMode(m_windowsWidth, m_windowsHeight, 32, SDL_VIDEORESIZE | SDL_DOUBLEBUF);
 				break;
+			*/
 			case SDL_KEYDOWN:
 				if(event.key.keysym.sym == SDLK_ESCAPE)
 				{
 					m_quit = true;
+				}
+				else if(event.key.keysym.sym == SDLK_F11)
+				{
+					if(!m_fullScreen)
+					{
+						m_screen = SDL_SetVideoMode(m_windowsWidth, m_windowsHeight, 32, SDL_FULLSCREEN | SDL_DOUBLEBUF);
+						m_fullScreen = true;
+					}
+					else
+					{
+						m_screen = SDL_SetVideoMode(m_windowsWidth, m_windowsHeight, 32,  SDL_DOUBLEBUF);
+						m_fullScreen = false;
+					}
+
 				}
 				else
 				{

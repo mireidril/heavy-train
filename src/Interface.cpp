@@ -39,7 +39,7 @@ void Interface::loadImages(const GameScreen & screen)
 			assert(size);
 			size->x = 800;
 			size->y = 600;
-			Sprite * background = new Sprite("../img/title.jpg", position, size);
+			Sprite * background = new Sprite("../img/trainvache.png", position, size);
 			assert(background);
 			m_backgroundImages.push_back(background);
 			break;
@@ -73,6 +73,10 @@ void Interface::checkKeyboardEvent(const SDL_KeyboardEvent *event)
 {
 	switch(event->keysym.sym)
 	{
+		case SDLK_UP : {
+				std::cout<<"UP arrow"<<std::endl;
+				break;
+		}
 		default:
 			break;
 	}

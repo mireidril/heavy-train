@@ -79,10 +79,8 @@ void Sprite::draw(SDL_Surface * screen, const int & width, const int & height)
 	{
 		//Rotation and zoom
 		float zoomX = (float)width /m_size->x;
-		float zoomY = (float)height/m_size->y ;
-		SDL_Surface * image = rotozoomSurfaceXY(m_frames[m_actualFrame], m_angle, zoomX, zoomY, 1);
-
-		//image = scaleSurface(m_frames[m_actualFrame], width, height);
+		float zoomY = (float)height/m_size->y;
+		SDL_Surface * image = rotozoomSurfaceXY(m_frames[m_actualFrame], m_angle, 1.0, 1.0, 1);
 
 		//Drawing to a position
 		SDL_Rect * realPos = new SDL_Rect;
