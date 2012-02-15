@@ -1,7 +1,7 @@
 #include "Sprite.hpp"
 
 /**
- * Sprite Constructor
+ * Constructeur
  */
 Sprite::Sprite(const char* imageFileName, SDL_Rect * pos, SDL_Rect * size)
 : m_actualFrame(0)
@@ -18,12 +18,12 @@ Sprite::Sprite(const char* imageFileName, SDL_Rect * pos, SDL_Rect * size)
 		m_frames.push_back(img);
 		m_nbFrames++;
 	}
-	//If pos is not in percentage
+	//Si la position n'est pas un pourcentage
 	assert( m_position->x >= 0 && m_position->y >= 0 && m_position->x <= 100 && m_position->y <= 100 );
 }
 
 /**
- * Sprite Destructor
+ * Destructeur
  */
 Sprite::~Sprite()
 {
@@ -37,7 +37,8 @@ Sprite::~Sprite()
 }
 
 /**
- * Add an new image in the sprite
+ * Charge et ajoute une image au sprite
+ * imageFileName : chemin de l'image à rajouter
  */
 void Sprite::addImage(const char* imageFileName)
 {
@@ -50,13 +51,13 @@ void Sprite::addImage(const char* imageFileName)
 }
 
 /**
- * Animate the sprite, alternating its images every "m_nbFrames" seconds
+ * Change l'image actuellement affichée après un temps donné (m_timeFrame)
  */
 void Sprite::animate()
 {
 	if(m_nbFrames > 1)
 	{
-		//increments m_timeActualFrame (TODO : en secondes et pas en frame)
+		//incrémenter m_timeActualFrame (TODO : en secondes et pas en frame)
 		m_actualFrame++;
 		if(m_timeActualFrame >= m_timeFrame)
 		{
@@ -71,18 +72,21 @@ void Sprite::animate()
 }
 
 /**
- * Draw the sprite in the screen
+ * Dessine le sprite à l'écran
+ * screen : fenêtre SDL
+ * width : largeur de l'écran
+ * height : hauteur de l'écran
  */
 void Sprite::draw(SDL_Surface * screen, const int & width, const int & height)
 {
 	if(m_actualFrame < m_nbFrames)
 	{
-		//Rotation and zoom
+		//Rotation et zoom
 		float zoomX = (float)width /m_size->x;
 		float zoomY = (float)height/m_size->y;
 		SDL_Surface * image = rotozoomSurfaceXY(m_frames[m_actualFrame], m_angle, 1.0, 1.0, 1);
 
-		//Drawing to a position
+		//Dessine à sa position
 		SDL_Rect * realPos = new SDL_Rect;
 		realPos->x = width * m_position->x * 0.01;
 		realPos->y = height * m_position->y * 0.01;
@@ -94,7 +98,7 @@ void Sprite::draw(SDL_Surface * screen, const int & width, const int & height)
 }
 
 /**
- * Change the sprite's image actually displayed
+ * Change l'image actuellement affichée par une autre
  */
 void Sprite::changeImageManually(const int & imageNum)
 {
@@ -105,30 +109,6 @@ void Sprite::changeImageManually(const int & imageNum)
 }
 
 /*
-*
-*/
-/*
-SDL_Surface* Sprite::scaleSurface(SDL_Surface *surface, Uint16 Width, Uint16 Height)
-{
-    if(!surface || !Width || !Height)
-        return 0;
-     
-    SDL_Surface *_ret = SDL_CreateRGBSurface(surface->flags, Width, Height, surface->format->BitsPerPixel,
-        surface->format->Rmask, surface->format->Gmask, surface->format->Bmask, surface->format->Amask);
- 
-    double    _stretch_factor_x = (static_cast<double>(Width)  / static_cast<double>(surface->w)),
-        _stretch_factor_y = (static_cast<double>(Height) / static_cast<double>(surface->h));
- 
-    for(Sint32 y = 0; y < surface->h; y++)
-        for(Sint32 x = 0; x < surface->w; x++)
-            for(Sint32 o_y = 0; o_y < _stretch_factor_y; ++o_y)
-                for(Sint32 o_x = 0; o_x < _stretch_factor_x; ++o_x)
-                    putpixel(_ret, static_cast<Sint32>(_stretch_factor_x * x) + o_x, 
-                        static_cast<Sint32>(_stretch_factor_y * y) + o_y, getpixel(surface, x, y));
- 
-    return _ret;
-}
-
 Uint32 Sprite::getpixel(SDL_Surface *surface, int x, int y)
 {
     int bpp = surface->format->BytesPerPixel;
