@@ -1,7 +1,7 @@
 #include "GameEngine.hpp"
 
 /*
- * GameEngine Constructor
+ * Constructeur
  */
 GameEngine::GameEngine()
 : m_actualGameScreen(TITLE)
@@ -10,13 +10,13 @@ GameEngine::GameEngine()
 , m_screen(NULL)
 , m_windowsWidth(1024)
 , m_windowsHeight(768)
-, m_quit(false)
-, m_fullScreen(false)
+, m_isRunning(true)
+, m_isFullScreen(false)
 , m_actualGame()
 {}
 
 /*
- * GameEngine Destructor
+ * Destructeur
  */
 GameEngine::~GameEngine()
 {
@@ -35,7 +35,7 @@ GameEngine::~GameEngine()
 }
 
 /*
- * Init the SDL window, SDL_ttf, and SDL_mixer
+ * Initialise la fenêtre SDL, SDl_ttf et SDL_mixer
  */
 void GameEngine::initSDL()
 {
@@ -43,7 +43,7 @@ void GameEngine::initSDL()
 	if(SDL_Init(SDL_INIT_VIDEO) != 0) 
 	{
 		std::cerr << "Can't initialize SDL : " << SDL_GetError() << std::endl;
-		m_quit = true;
+		m_isRunning = false;
 	}
 
 	SDL_WM_SetCaption("Heavy Train", NULL);
@@ -58,32 +58,36 @@ void GameEngine::initSDL()
 	if( Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) == -1)
 	{
 		std::cerr << "Can't initialize SDL_mixer " << std::endl;
-		m_quit = true;
+		m_isRunning = false;
 	}
 }
 
 /*
- * Build all the interface of the game
+ * Crée les écrans de jeu
  */
 void GameEngine::loadInterfaces()
 {
 	Interface * titleScreen = new Interface;
 	titleScreen->loadImages(TITLE);
 	m_interfaces.push_back(titleScreen);
+
+	Interface * pauseScreen = new Interface;
+	pauseScreen->loadImages(PAUSE);
+	m_interfaces.push_back(pauseScreen);
 }
 
 /*
- * Main function of the game. Contain the game loop
+ * Contient la boucle principale du jeu
  */
 void GameEngine::run()
 {
-	//SDL initialization
+	//Initialisation SDL
 	initSDL();
 
-	//Interface initialization
+	//Initialisation de l'interface
 	loadInterfaces();
 
-	while(!m_quit)
+	while(m_isRunning)
 	{
 		update();
 		render();
@@ -91,7 +95,7 @@ void GameEngine::run()
 }
 
 /*
- * Proceed operations of the game
+ * Gère les opérations du jeu
  */
 void GameEngine::update()
 {
@@ -104,7 +108,7 @@ void GameEngine::update()
 		switch (event.type)
 		{
 			case SDL_QUIT:
-				m_quit = true;
+				m_isRunning = false;
 				break;
 			/*case SDL_VIDEORESIZE:
 				m_windowsWidth = event.resize.w;
@@ -115,19 +119,19 @@ void GameEngine::update()
 			case SDL_KEYDOWN:
 				if(event.key.keysym.sym == SDLK_ESCAPE)
 				{
-					m_quit = true;
+					m_isRunning = false;
 				}
 				else if(event.key.keysym.sym == SDLK_F11)
 				{
-					if(!m_fullScreen)
+					if(!m_isFullScreen)
 					{
 						m_screen = SDL_SetVideoMode(m_windowsWidth, m_windowsHeight, 32, SDL_FULLSCREEN | SDL_DOUBLEBUF);
-						m_fullScreen = true;
+						m_isFullScreen = true;
 					}
 					else
 					{
 						m_screen = SDL_SetVideoMode(m_windowsWidth, m_windowsHeight, 32,  SDL_DOUBLEBUF);
-						m_fullScreen = false;
+						m_isFullScreen = false;
 					}
 
 				}
@@ -138,14 +142,17 @@ void GameEngine::update()
 				break;
 			case SDL_MOUSEBUTTONUP:
 			case SDL_MOUSEBUTTONDOWN:
-				m_interfaces[m_actualGameScreen]->checkMouseEvent(&(event.button));
+				m_interfaces[m_actualGameScreen]->checkMouseEvent(this, &(event.button));
+				break;
+			case SDL_MOUSEMOTION:
+				m_interfaces[m_actualGameScreen]->checkMouseMotionEvent(&(event.motion));
 				break;
 		}
 	}
 }
 
 /*
- * Render the game
+ * Gère l'affichage du jeu
  */
 void GameEngine::render()
 {
@@ -154,13 +161,14 @@ void GameEngine::render()
 	assert(m_actualGameScreen < m_interfaces.size() );
 	m_interfaces[m_actualGameScreen]->render(m_screen, m_windowsWidth, m_windowsHeight);
 
-	// Update screen
+	// Met à jour l'affichage
 	SDL_UpdateRect(m_screen, 0, 0, m_windowsWidth, m_windowsHeight);
 	SDL_Flip(m_screen);
 }
 
 /*
- * Change the actual game screen
+ * Change l'interface actuellement affichée
+ * screen : Enum du nouvel écran de jeu
  */
 void GameEngine::changeScreen(const GameScreen & screen)
 {
@@ -171,7 +179,7 @@ void GameEngine::changeScreen(const GameScreen & screen)
 }
 
 /*
- * Get the identifiant of the actual game screen
+ * Renvoie l'énum de l'interface actuellement affichée
  */
 GameScreen GameEngine::getActualGameScreen()
 {

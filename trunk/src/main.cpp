@@ -6,6 +6,9 @@
 
 #include "GameEngine.hpp"
 
+/*
+* Fonction qui teste toutes les bibliothèques. A virer plus tard
+*/
 void testLibrairies()
 {
 	std::cout<<"Hello OWLaround :)"<<std::endl;
@@ -189,11 +192,11 @@ void testLibrairies()
 
 int main(int argc, char** argv)
 {
-	//To launch the game
+	//Lancement du jeu
 	GameEngine gameEngine;
 	gameEngine.run();
 	
-	//To test librairies
+	//Pour tester les bibliothèques
 	//testLibrairies();
 
 	return 0;
