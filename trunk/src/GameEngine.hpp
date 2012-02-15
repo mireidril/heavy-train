@@ -62,6 +62,7 @@ class GameEngine
 		int							m_windowsHeight;
 
 		bool						m_quit;
+		bool						m_fullScreen;
 
 		ActualGame*					m_actualGame;
 

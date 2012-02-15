@@ -27,14 +27,13 @@ if( MSVC )
 		# copy WIN32 DLLs 
 		file(COPY ${CMAKE_SOURCE_DIR}/dependencies/dll/SDL.dll 
 		${CMAKE_SOURCE_DIR}/dependencies/dll/sdl_image.dll
-		${CMAKE_SOURCE_DIR}/dependencies/dll/jpeg.dll
-		${CMAKE_SOURCE_DIR}/dependencies/dll/zlib.dll
-		${CMAKE_SOURCE_DIR}/dependencies/dll/libpng1.dll
+		${CMAKE_SOURCE_DIR}/dependencies/dll/libjpeg-8.dll
+		${CMAKE_SOURCE_DIR}/dependencies/dll/zlib1.dll
+		${CMAKE_SOURCE_DIR}/dependencies/dll/libpng15-15.dll
 		${CMAKE_SOURCE_DIR}/dependencies/dll/SDL_ttf.dll
 		${CMAKE_SOURCE_DIR}/dependencies/dll/libfreetype-6.dll
 		${CMAKE_SOURCE_DIR}/dependencies/dll/SDL_gfx.dll
 		${CMAKE_SOURCE_DIR}/dependencies/dll/SDL_mixer.dll
-		${CMAKE_SOURCE_DIR}/dependencies/dll/smpeg.dll
 		DESTINATION ${CMAKE_SOURCE_DIR}/bin)
 endif()
 
@@ -44,7 +43,7 @@ if( MSVC )
 	target_link_libraries(HeavyTrain SDLmain)
 	target_link_libraries(HeavyTrain tinyxml)
 	target_link_libraries(HeavyTrain tinyxmlSTL)
-	target_link_libraries(HeavyTrain box2Dd)
+	target_link_libraries(HeavyTrain optimized box2D debug box2Dd)
 else()
 	target_link_libraries(HeavyTrain Box2D)
 	target_link_libraries(HeavyTrain tinyxml)
