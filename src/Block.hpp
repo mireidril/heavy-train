@@ -32,5 +32,12 @@ class Block
 		Sprite * m_sprite;
 		b2Body * m_body;
 		int m_sizeX;
+		
+		int m_maxSpeed;
+		int m_id;
+		int m_sizeXMin;
+		int m_sizeXMax;
+		int m_y;
+		int m_yMax;
 };
 #endif
