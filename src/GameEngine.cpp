@@ -3,6 +3,22 @@
 /*
  * Constructeur
  */
+GameEngine::GameEngine() {
+
+	std::cout << "game Engine constructor" << std::endl;
+
+	m_actualGameScreen = TITLE;
+	m_nbAvailableIslands = 1;
+	m_nbAvailableLevels = 1;
+	m_screen = NULL;
+	m_windowsWidth = 1024;
+	m_windowsHeight = 768;
+	m_isRunning=true;
+	m_isFullScreen=false;
+	m_actualGame = new ActualGame();
+}
+
+/* cloclo: j'ai changé parce ce que ça appelait pas le constructeur de actualGame
 GameEngine::GameEngine()
 : m_actualGameScreen(TITLE)
 , m_nbAvailableIslands(1)
@@ -13,7 +29,8 @@ GameEngine::GameEngine()
 , m_isRunning(true)
 , m_isFullScreen(false)
 , m_actualGame()
-{}
+{
+}*/
 
 /*
  * Destructeur
@@ -81,6 +98,7 @@ void GameEngine::loadInterfaces()
  */
 void GameEngine::run()
 {
+	std::cout << "Game Engine run" << std::endl;
 	//Initialisation SDL
 	initSDL();
 

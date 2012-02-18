@@ -22,11 +22,12 @@ class Level
 		//Constructor
 		Level();
 		//Destructor
-		virtual ~Level();
+		//virtual ~Level();
 		//Move the level horizontally
 		void scrollLevel(const int & x);
 		//Load and build the level n°lvl of the island n°isle
 		void loadAndBuild(const int & isle, const int & lvl);
+		Block * getBlock(int i);
 	private :
 		//All the blocks of the level
 		std::vector<Block*>	m_blocks;
