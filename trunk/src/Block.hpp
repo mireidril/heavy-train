@@ -23,8 +23,11 @@ enum BlockType
 class Block
 {
 	public :
-		Block(int sizeX, b2World * world);
-		void constructGround();
+		Block(int sizeX);
+		void build();
+		void scroll(int);
+		b2Body * getBody();
+		void setBody(b2Body * body);
 	private :
 		Sprite * m_sprite;
 		b2Body * m_body;
