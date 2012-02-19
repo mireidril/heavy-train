@@ -23,6 +23,8 @@ class Sprite
 		Sprite(const char* imageFileName, SDL_Rect * pos, SDL_Rect * size);
 		//Destructeur
 		virtual ~Sprite();
+		// Setter position
+		void setPosition(SDL_Rect * pos);
 
 		//Charge et ajoute une image au sprite
 		void addImage(const char* imageFileName);

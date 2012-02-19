@@ -28,6 +28,7 @@ class Level
 		//Load and build the level n°lvl of the island n°isle
 		void loadAndBuild(const int & isle, const int & lvl);
 		Block * getBlock(int i);
+		void drawBlocks(SDL_Surface * screen, int w, int h);
 	private :
 		//All the blocks of the level
 		std::vector<Block*>	m_blocks;

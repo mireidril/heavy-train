@@ -2,7 +2,7 @@
 
 
 
-/*Block Constructor */
+/*Level Constructor */
 
 Level::Level () 
 {
@@ -18,8 +18,22 @@ Level::Level ()
 }
 
 
-Block * Level::getBlock(int i) {
+Block * Level::getBlock(int i) 
+{
 	return m_blocks.at(i);
 
 }
+
+/*
+ * Level dessine tous les blocs du vector
+ */
+void Level::drawBlocks(SDL_Surface * screen, int w, int h)
+{
+	for (int i=0; i<m_blocks.size(); i++) 
+	{
+		m_blocks.at(i)->drawSprite( screen, w, h);
+	}
+}
+
+
 

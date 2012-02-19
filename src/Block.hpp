@@ -24,10 +24,11 @@ class Block
 {
 	public :
 		Block(int sizeX);
-		void build();
+		void build(b2World * world);
 		void scroll(int);
 		b2Body * getBody();
 		void setBody(b2Body * body);
+		void drawSprite(SDL_Surface * screen, const int & width, const int & height);
 	private :
 		Sprite * m_sprite;
 		b2Body * m_body;
