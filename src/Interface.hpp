@@ -18,8 +18,8 @@ enum GameScreen
 	HELP,
 	WORLD,
 	ISLAND,
-	GAME,
 	ENDGAME,
+	GAME,
 	NB_SCREENS
 };
 

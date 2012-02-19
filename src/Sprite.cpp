@@ -18,8 +18,6 @@ Sprite::Sprite(const char* imageFileName, SDL_Rect * pos, SDL_Rect * size)
 		m_frames.push_back(img);
 		m_nbFrames++;
 	}
-	//Si la position n'est pas un pourcentage
-	assert( m_position->x >= 0 && m_position->y >= 0 && m_position->x <= 100 && m_position->y <= 100 );
 }
 
 
@@ -96,9 +94,13 @@ void Sprite::draw(SDL_Surface * screen, const int & width, const int & height)
 
 		//Dessine à sa position
 		SDL_Rect * realPos = new SDL_Rect;
-		realPos->x = width * m_position->x * 0.01;
-		realPos->y = height * m_position->y * 0.01;
-		SDL_BlitSurface(image, NULL, screen, realPos);
+		realPos->x = m_position->x;
+		realPos->y = m_position->y;
+		//On le dessine seulement s'il est visible à l'écran
+		if(realPos->x >= - m_size->x && realPos->x <= width && realPos->y >= - m_size->y && realPos->y <= height )
+		{
+			SDL_BlitSurface(image, NULL, screen, realPos);
+		}
 		
 		delete realPos;
 		SDL_FreeSurface(image);

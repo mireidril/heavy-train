@@ -15,8 +15,9 @@ class ActualGame
 {
 	public :
 		ActualGame();
-		~ActualGame();
+		virtual ~ActualGame();
 		void checkCollisions();
+		void checkKeyboardEvent(const SDL_KeyboardEvent *event);
 		void run(SDL_Surface * screen, int w, int h);
 		
 

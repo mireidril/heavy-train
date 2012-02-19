@@ -30,7 +30,6 @@ Interface::~Interface()
  */
 void Interface::loadImages(const GameScreen & screen)
 {
-	//TODO : voir si tout est bien delete
 	SDL_Rect * position = new SDL_Rect;
 	SDL_Rect * size = new SDL_Rect;
 	Sprite * background;
@@ -107,7 +106,7 @@ void Interface::checkMouseEvent(GameEngine * gameEngine, const SDL_MouseButtonEv
 	if( event->button == int(SDL_BUTTON_LEFT) && event->state == int(SDL_RELEASED) )
 	{
 		//m_bButtonPressed = false;
-		gameEngine->changeScreen(PAUSE);
+		gameEngine->changeScreen(GAME);
 	}
 }
 
@@ -118,11 +117,9 @@ void Interface::checkKeyboardEvent(const SDL_KeyboardEvent *event)
 {
 	switch(event->keysym.sym)
 	{
-		case SDLK_UP : {
+		case SDLK_UP :
 			std::cout<<"UP arrow"<<std::endl;
-
 			break;
-		}
 		default:
 			break;
 	}
