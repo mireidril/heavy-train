@@ -42,16 +42,19 @@ void Train::build(b2World * world)
 {
 	b2BodyDef bodyDef;
 	bodyDef.type = b2_dynamicBody;
-	bodyDef.position.Set(0.0f, 0.0f);
+	bodyDef.position.Set(0.0f, 4.0f);
 	m_body = world->CreateBody(&bodyDef);
 	// Define the ground box shape.
-	b2PolygonShape groundBox;
+	b2PolygonShape dynamicBox;
 	// The extents are the half-widths of the box.
-	groundBox.SetAsBox(8.0f, 10.0f);
+	dynamicBox.SetAsBox(1.0f, 1.0f);
+	b2FixtureDef fixtureDef;
+	fixtureDef.shape = &dynamicBox;
+	fixtureDef.density = 1.0f;
+	fixtureDef.friction = 0.3f;
 	// Add the ground fixture to the ground body.
-	m_body->CreateFixture(&groundBox, 0.0f);
+	m_body->CreateFixture(&fixtureDef);
 
-	//std::cout <<  m_body->GetPosition().y << std::endl;
 }
 
 
