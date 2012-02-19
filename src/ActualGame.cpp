@@ -6,7 +6,7 @@
 ActualGame::ActualGame()
 {
 	std::cout << "Actual Game" << std::endl;
-	//box2D
+
 	b2Vec2 gravity(0.0f, -10.0f);
 	// Construct a world object, which will hold and simulate the rigid bodies.
 	m_world = new b2World(gravity);
@@ -36,8 +36,14 @@ ActualGame::ActualGame()
 void ActualGame::run(SDL_Surface * screen, int w, int h){
 
 	m_world->Step(m_timeStep, m_velocityIterations, m_positionIterations);
-	m_actualLevel->drawBlocks( screen, w, h);
-	m_train->draw(screen,w,h);
+
+	//m_actualLevel->drawBlocks( screen, w, h);
+	//m_train->draw(screen,w,h);
+
+    	b2Vec2 position = (m_train->getBody())->GetPosition();
+
+    	std::cout << position.x << std::endl;
+	std::cout << position.y << std::endl; 
 
 }
 

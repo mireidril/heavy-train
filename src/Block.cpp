@@ -42,14 +42,14 @@ void Block::build(b2World * world)
 {
 
 	b2BodyDef groundBodyDef;
-	groundBodyDef.position.Set(0.0f, -30.0f);// a changer ensuite avec les bonne valeurs
+	groundBodyDef.position.Set(0.0f, -10.0f);// a changer ensuite avec les bonne valeurs
 	m_body = world->CreateBody(&groundBodyDef);
 
 	// Define the ground box shape.
 	b2PolygonShape groundBox;
 
 	// The extents are the half-widths of the box.
-	groundBox.SetAsBox(80.0f, 10.0f);
+	groundBox.SetAsBox(50.0f, 10.0f);
 
 	// Add the ground fixture to the ground body.
 	m_body->CreateFixture(&groundBox, 0.0f);
