@@ -18,6 +18,12 @@ Block::Block (int sizeX)
 	
 }
 
+Block::~Block () 
+{
+	delete m_sprite;
+	//supprimer le body
+}
+
 
 b2Body * Block::getBody() 
 {
@@ -30,8 +36,15 @@ void Block::setBody(b2Body * body)
 } 
 
 
-void Block::drawSprite(SDL_Surface * screen, const int & width, const int & height)
+void Block::draw(SDL_Surface * screen, const int & width, const int & height)
 {
+	b2Vec2 bodyPos = m_body->GetPosition();
+	SDL_Rect * pos = new SDL_Rect;
+	//largeur de l'écran : 1024 = 40 metres
+	//hauteur de l'écran : 768 = ??? metres a voir pour l'instant j'ai mis 100
+	pos->x = (float) (width * bodyPos.x) / 40;
+	pos->y = (float) (- height * bodyPos.y) / 100;
+	m_sprite->setPosition(pos);
 	m_sprite->draw(screen, width, height);
 }
 
@@ -42,7 +55,7 @@ void Block::build(b2World * world)
 {
 
 	b2BodyDef groundBodyDef;
-	groundBodyDef.position.Set(0.0f, -10.0f);// a changer ensuite avec les bonne valeurs
+	groundBodyDef.position.Set(0.0f, -80.0f);// a changer ensuite avec les bonne valeurs
 	m_body = world->CreateBody(&groundBodyDef);
 
 	// Define the ground box shape.

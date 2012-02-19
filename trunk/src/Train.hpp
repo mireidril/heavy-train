@@ -18,8 +18,10 @@ class Train
 {
 	public :
 
-	//constructor
+	//Constructeur
 	Train();
+	//Destructeur
+	virtual ~Train();
 
 	//Apply the force m_impetus to move the train
 	void speedUp();
@@ -56,7 +58,6 @@ class Train
 
 	b2Body * getBody() ;
 	void setBody(b2Body * body) ;
-	void draw(SDL_Surface * screen, int w, int h);
 
    private :
 	//Current speed of the train

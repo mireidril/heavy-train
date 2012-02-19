@@ -5,7 +5,7 @@
  */
 
 GameEngine::GameEngine()
-: m_actualGameScreen(TITLE)
+: m_actualGameScreen(GAME)
 , m_nbAvailableIslands(1)
 , m_nbAvailableLevels(1)
 , m_screen(NULL)
@@ -69,13 +69,40 @@ void GameEngine::initSDL()
  */
 void GameEngine::loadInterfaces()
 {
+	//TITLE
 	Interface * titleScreen = new Interface;
 	titleScreen->loadImages(TITLE);
 	m_interfaces.push_back(titleScreen);
 
+	//PAUSE
 	Interface * pauseScreen = new Interface;
 	pauseScreen->loadImages(PAUSE);
 	m_interfaces.push_back(pauseScreen);
+
+	//SCORE
+	Interface * scoreScreen = new Interface;
+	pauseScreen->loadImages(SCORE);
+	m_interfaces.push_back(scoreScreen);
+
+	//HELP
+	Interface * helpScreen = new Interface;
+	pauseScreen->loadImages(HELP);
+	m_interfaces.push_back(helpScreen);
+
+	//WORLD
+	Interface * worldScreen = new Interface;
+	pauseScreen->loadImages(WORLD);
+	m_interfaces.push_back(worldScreen);
+
+	//ISLAND
+	Interface * islandScreen = new Interface;
+	pauseScreen->loadImages(ISLAND);
+	m_interfaces.push_back(islandScreen);
+
+	//ENDGAME
+	Interface * endGameScreen = new Interface;
+	pauseScreen->loadImages(ENDGAME);
+	m_interfaces.push_back(endGameScreen);
 }
 
 /*
@@ -89,6 +116,7 @@ void GameEngine::run()
 
 	//Initialisation de l'interface
 	loadInterfaces();
+	//Initialisation d'un partie actuellement : TEST SERA PAS LA PLUS TARD
 	m_actualGame = new ActualGame();
 
 	while(m_isRunning)
@@ -103,10 +131,15 @@ void GameEngine::run()
  */
 void GameEngine::update()
 {
+	if(m_actualGameScreen != GAME)
+	{
+		assert(m_actualGameScreen < m_interfaces.size() );
+		m_interfaces[m_actualGameScreen]->update();
+	}
+	else
+	{
 
-
-	assert(m_actualGameScreen < m_interfaces.size() );
-	m_interfaces[m_actualGameScreen]->update();
+	}
 
 	SDL_Event event;
 	if( SDL_PollEvent(&event) )
@@ -143,15 +176,29 @@ void GameEngine::update()
 				}
 				else
 				{
-					m_interfaces[m_actualGameScreen]->checkKeyboardEvent(&(event.key));
+					if(m_actualGameScreen == GAME)
+					{
+						assert(m_actualGame);
+						m_actualGame->checkKeyboardEvent(&(event.key));
+					}
+					else
+					{
+						m_interfaces[m_actualGameScreen]->checkKeyboardEvent(&(event.key));
+					}
 				}
 				break;
 			case SDL_MOUSEBUTTONUP:
 			case SDL_MOUSEBUTTONDOWN:
-				m_interfaces[m_actualGameScreen]->checkMouseEvent(this, &(event.button));
+				if(m_actualGameScreen != GAME)
+				{
+					m_interfaces[m_actualGameScreen]->checkMouseEvent(this, &(event.button));
+				}
 				break;
 			case SDL_MOUSEMOTION:
-				m_interfaces[m_actualGameScreen]->checkMouseMotionEvent(&(event.motion));
+				if(m_actualGameScreen != GAME)
+				{
+					m_interfaces[m_actualGameScreen]->checkMouseMotionEvent(&(event.motion));
+				}
 				break;
 		}
 	}
@@ -163,15 +210,19 @@ void GameEngine::update()
 void GameEngine::render()
 {
 	SDL_FillRect( SDL_GetVideoSurface(), NULL, 0 );
-
-	//assert(m_actualGameScreen < m_interfaces.size() );
-	//m_interfaces[m_actualGameScreen]->render(m_screen, m_windowsWidth, m_windowsHeight);
-
+	
+	if(m_actualGameScreen != GAME)
+	{
+		assert(m_actualGameScreen < m_interfaces.size() );
+		m_interfaces[m_actualGameScreen]->render(m_screen, m_windowsWidth, m_windowsHeight);
+	}
+	else
+	{
+		m_actualGame->run(m_screen, m_windowsWidth, m_windowsHeight);		
+	}
 	// Met à jour l'affichage
-	//SDL_UpdateRect(m_screen, 0, 0, m_windowsWidth, m_windowsHeight);
-	//SDL_Flip(m_screen);
-	m_actualGame->run(m_screen, m_windowsWidth, m_windowsHeight);
-
+	SDL_UpdateRect(m_screen, 0, 0, m_windowsWidth, m_windowsHeight);
+	SDL_Flip(m_screen);
 	SDL_UpdateRect(m_screen, 0, 0, m_windowsWidth, m_windowsHeight);
 }
 

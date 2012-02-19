@@ -17,6 +17,12 @@ Train::Train ()
 	
 }
 
+Train::~Train () 
+{
+	delete m_sprite;
+	//suppr bodies, + sounds
+}
+
 b2Body * Train::getBody() 
 {
 	return m_body;
@@ -31,6 +37,13 @@ void Train::setBody(b2Body * body)
 
 void Train::drawSprite(SDL_Surface * screen, const int & width, const int & height)
 {
+	b2Vec2 bodyPos = m_body->GetPosition();
+	SDL_Rect * pos = new SDL_Rect;
+	//largeur de l'écran : 1024 = 40 metres
+	//hauteur de l'écran : 768 = ??? metres a voir pour l'instant j'ai mis 100
+	pos->x = width * bodyPos.x / 40;
+	pos->y = - height * bodyPos.y / 100;  
+	m_sprite->setPosition(pos);
 	m_sprite->draw(screen, width, height);
 }
 
@@ -42,7 +55,7 @@ void Train::build(b2World * world)
 {
 	b2BodyDef bodyDef;
 	bodyDef.type = b2_dynamicBody;
-	bodyDef.position.Set(0.0f, 4.0f);
+	bodyDef.position.Set(0.0f, 0.f);
 	m_body = world->CreateBody(&bodyDef);
 	// Define the ground box shape.
 	b2PolygonShape dynamicBox;
@@ -55,16 +68,4 @@ void Train::build(b2World * world)
 	// Add the ground fixture to the ground body.
 	m_body->CreateFixture(&fixtureDef);
 
-}
-
-
-void Train::draw(SDL_Surface * screen, int w, int h)
-{	
-	b2Vec2 bodyPos = m_body->GetPosition();
-	//std::cout << bodyPos.y << std::endl;
-	SDL_Rect * pos = new SDL_Rect;
-	pos->x = bodyPos.x/30 ;
-	pos->y = bodyPos.y/30 ; 
-	m_sprite->setPosition(pos);
-	m_sprite->draw(screen, w, h);
 }

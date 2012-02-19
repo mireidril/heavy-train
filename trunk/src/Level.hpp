@@ -22,7 +22,7 @@ class Level
 		//Constructor
 		Level();
 		//Destructor
-		//virtual ~Level();
+		virtual ~Level();
 		//Move the level horizontally
 		void scrollLevel(const int & x);
 		//Load and build the level n°lvl of the island n°isle

@@ -17,6 +17,14 @@ Level::Level ()
 
 }
 
+Level::~Level() 
+{
+	for(int i = 0; i < m_blocks.size(); ++i)
+	{
+		delete m_blocks[i];
+	}
+}
+
 
 Block * Level::getBlock(int i) 
 {
@@ -31,7 +39,7 @@ void Level::drawBlocks(SDL_Surface * screen, int w, int h)
 {
 	for (int i=0; i<m_blocks.size(); i++) 
 	{
-		m_blocks.at(i)->drawSprite( screen, w, h);
+		m_blocks.at(i)->draw( screen, w, h);
 	}
 }
 
