@@ -22,6 +22,7 @@ Sprite::Sprite(const char* imageFileName, SDL_Rect * pos, SDL_Rect * size)
 	assert( m_position->x >= 0 && m_position->y >= 0 && m_position->x <= 100 && m_position->y <= 100 );
 }
 
+
 /**
  * Destructeur
  */
@@ -34,6 +35,13 @@ Sprite::~Sprite()
 
 	delete m_position;
 	delete m_size;
+}
+
+/**
+ * Setter position
+ */
+void Sprite::setPosition(SDL_Rect * pos){
+	m_position = pos;
 }
 
 /**

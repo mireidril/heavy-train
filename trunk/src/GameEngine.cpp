@@ -3,22 +3,7 @@
 /*
  * Constructeur
  */
-GameEngine::GameEngine() {
 
-	std::cout << "game Engine constructor" << std::endl;
-
-	m_actualGameScreen = TITLE;
-	m_nbAvailableIslands = 1;
-	m_nbAvailableLevels = 1;
-	m_screen = NULL;
-	m_windowsWidth = 1024;
-	m_windowsHeight = 768;
-	m_isRunning=true;
-	m_isFullScreen=false;
-	m_actualGame = new ActualGame();
-}
-
-/* cloclo: j'ai changé parce ce que ça appelait pas le constructeur de actualGame
 GameEngine::GameEngine()
 : m_actualGameScreen(TITLE)
 , m_nbAvailableIslands(1)
@@ -30,7 +15,7 @@ GameEngine::GameEngine()
 , m_isFullScreen(false)
 , m_actualGame()
 {
-}*/
+}
 
 /*
  * Destructeur
@@ -104,6 +89,7 @@ void GameEngine::run()
 
 	//Initialisation de l'interface
 	loadInterfaces();
+	m_actualGame = new ActualGame();
 
 	while(m_isRunning)
 	{
@@ -117,6 +103,8 @@ void GameEngine::run()
  */
 void GameEngine::update()
 {
+
+
 	assert(m_actualGameScreen < m_interfaces.size() );
 	m_interfaces[m_actualGameScreen]->update();
 
@@ -176,12 +164,15 @@ void GameEngine::render()
 {
 	SDL_FillRect( SDL_GetVideoSurface(), NULL, 0 );
 
-	assert(m_actualGameScreen < m_interfaces.size() );
-	m_interfaces[m_actualGameScreen]->render(m_screen, m_windowsWidth, m_windowsHeight);
+	//assert(m_actualGameScreen < m_interfaces.size() );
+	//m_interfaces[m_actualGameScreen]->render(m_screen, m_windowsWidth, m_windowsHeight);
 
 	// Met à jour l'affichage
+	//SDL_UpdateRect(m_screen, 0, 0, m_windowsWidth, m_windowsHeight);
+	//SDL_Flip(m_screen);
+	m_actualGame->run(m_screen, m_windowsWidth, m_windowsHeight);
+
 	SDL_UpdateRect(m_screen, 0, 0, m_windowsWidth, m_windowsHeight);
-	SDL_Flip(m_screen);
 }
 
 /*

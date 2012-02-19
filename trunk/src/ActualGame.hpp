@@ -17,6 +17,7 @@ class ActualGame
 		ActualGame();
 		~ActualGame();
 		void checkCollisions();
+		void run(SDL_Surface * screen, int w, int h);
 		
 
 	private :
@@ -42,6 +43,9 @@ class ActualGame
 		Level * m_actualLevel;
 		Train * m_train;
 		b2World * m_world;
+		float32 m_timeStep;
+		int32 m_velocityIterations;
+		int32 m_positionIterations;
 		
 };
 #endif
