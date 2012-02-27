@@ -56,6 +56,31 @@ void Sprite::addImage(const char* imageFileName)
 	}
 }
 
+
+/*
+ * Gère les conversions du monde physique vers l'affichage
+ */
+
+void Sprite::convertToPixel (double & w, double & h , const int & width, const int & height){
+	//largeur de l'écran : 1024 = 40 metres
+	//hauteur de l'écran : 768 = ??? metres a voir pour l'instant j'ai mis 30
+	w = width * w / 40;
+	h = height - height * h / 30;  
+}
+
+
+double Sprite::getSizeX(){
+	return   m_size->x ;
+	
+}
+
+double Sprite::getSizeY(){
+	return  m_size->y ;
+	
+}
+
+
+
 /**
  * Change l'image actuellement affichée après un temps donné (m_timeFrame)
  */
