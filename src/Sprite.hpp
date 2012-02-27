@@ -35,6 +35,10 @@ class Sprite
 		//Change l'image actuellement affichée par une autre
 		void changeImageManually(const int & imageNum);
 
+		void convertToPixel (double& w, double& h, const int & width, const int & height);
+		double getSizeX ();
+		double getSizeY ();
+
 		//static void putpixel(SDL_Surface *surface, int x, int y, Uint32 pixel);
 		//static Uint32 getpixel(SDL_Surface *surface, int x, int y);
 

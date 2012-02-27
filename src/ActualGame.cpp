@@ -46,9 +46,6 @@ void ActualGame::run(SDL_Surface * screen, int w, int h){
 	m_actualLevel->drawBlocks(screen, w, h);
 	m_train->drawSprite(screen,w,h);
 
-    b2Vec2 position = (m_train->getBody())->GetPosition();
-    //std::cout << position.x << std::endl;
-	//std::cout << position.y << std::endl; 
 
 }
 
