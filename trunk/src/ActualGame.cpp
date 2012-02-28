@@ -25,13 +25,14 @@ ActualGame::ActualGame()
 	m_train = new Train();
 	m_train->build(m_world);
 
-	
-
+	fooDrawInstance = new DebugDraw;
+	m_world->SetDebugDraw( fooDrawInstance );
 }
 ActualGame::~ActualGame()
 {
 	delete m_actualLevel;
 	delete m_train;
+	delete fooDrawInstance;
 	//supprimer m_world
 }
 
@@ -41,12 +42,12 @@ ActualGame::~ActualGame()
  */
 void ActualGame::run(SDL_Surface * screen, int w, int h){
 
+	fooDrawInstance->SetFlags( b2Draw::e_shapeBit );
 	m_world->Step(m_timeStep, m_velocityIterations, m_positionIterations);
+	m_world->DrawDebugData();
 
 	m_actualLevel->drawBlocks(screen, w, h);
 	m_train->drawSprite(screen,w,h);
-
-
 }
 
 void ActualGame::checkCollisions()

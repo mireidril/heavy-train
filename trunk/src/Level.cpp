@@ -7,7 +7,10 @@
 Level::Level () 
 {
 	//All the blocks of the level
-		m_blocks.push_back(new Block(640,160,1024,768));
+	SDL_Rect * pos = new SDL_Rect;
+	pos->x = 0;
+	pos->y = 0;
+	m_blocks.push_back(new Block(BlockType::JUNCTION_DOWN, 1000, pos));
 		//m_departureTime = ...;
 		//m_position = ...;
 		m_islandNum =0;

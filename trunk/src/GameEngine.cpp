@@ -1,5 +1,7 @@
 #include "GameEngine.hpp"
 
+SDL_Surface * Sprite::screen;
+
 /*
  * Constructeur
  */
@@ -51,6 +53,7 @@ void GameEngine::initSDL()
 	SDL_WM_SetCaption("Heavy Train", NULL);
 
 	m_screen = SDL_SetVideoMode(m_windowsWidth, m_windowsHeight, 32, SDL_DOUBLEBUF);
+	Sprite::screen = m_screen;
 	assert(m_screen);
 
 	//SDL_ttf

@@ -48,5 +48,7 @@ class ActualGame
 		int32 m_velocityIterations;
 		int32 m_positionIterations;
 		
+		//Pour le debug drawing
+		DebugDraw * fooDrawInstance;
 };
 #endif
