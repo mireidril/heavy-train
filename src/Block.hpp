@@ -23,7 +23,7 @@ enum BlockType
 class Block
 {
 	public :
-		Block(int sizeX, int sizeY,const int & width, const int & height);
+		Block(BlockType type, int sizeX, SDL_Rect * pos);
 		virtual ~Block();
 		void build(b2World * world);
 		void scroll(int);
@@ -33,7 +33,9 @@ class Block
 	private :
 		Sprite * m_sprite;
 		b2Body * m_body;
-		SDL_Rect * m_size ;
+		int m_sizeX;
+
+		BlockType * m_type;
 		
 		int m_maxSpeed;
 		int m_id;

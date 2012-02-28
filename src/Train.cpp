@@ -39,17 +39,17 @@ void Train::setBody(b2Body * body)
  */
 void Train::drawSprite(SDL_Surface * screen, const int & width, const int & height)
 {
-	b2Vec2 bodyPos = m_body->GetPosition();
+	/*b2Vec2 bodyPos = m_body->GetPosition();
 	SDL_Rect * pos = new SDL_Rect;
   
 	//std::cout << bodyPos.y << std::endl;
 	double x = bodyPos.x;
 	double y = bodyPos.y;
-	m_sprite->convertToPixel(x,y,width, height);
-	pos->x =  x;
+	m_sprite->convertToPixel(x, y, width, height);
+	pos->x = x;
 	pos->y = y;
 	m_sprite->setPosition(pos);
-	m_sprite->draw(screen, width, height);
+	//m_sprite->draw(screen, width, height);*/
 }
 
 /*

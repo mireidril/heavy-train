@@ -60,14 +60,22 @@ void Sprite::addImage(const char* imageFileName)
 /*
  * Gère les conversions du monde physique vers l'affichage
  */
-
-void Sprite::convertToPixel (double & w, double & h , const int & width, const int & height){
+void Sprite::convertMetersToPixels(double & x, double & y, const int & width, const int & height){
 	//largeur de l'écran : 1024 = 40 metres
-	//hauteur de l'écran : 768 = ??? metres a voir pour l'instant j'ai mis 30
-	w = width * w / 40;
-	h = height - height * h / 30;  
+	//hauteur de l'écran : 768 = 30 metres (pour respecter le ratio de l'écran)
+	x = width * x / 40;
+	y = height - ( height * y / 30 );  
 }
 
+/*
+ * Gère les conversions de l'affichage vers l'écran
+ */
+void Sprite::convertPixelsToMeters(double & x, double & y, const int & width, const int & height){
+	//largeur de l'écran : 1024 = 40 metres
+	//hauteur de l'écran : 768 = 30 metres (pour respecter le ratio de l'écran)
+	x = x * 40 / width;
+	y = 30 - ( y * 30 / height );
+}
 
 double Sprite::getSizeX(){
 	return   m_size->x ;
