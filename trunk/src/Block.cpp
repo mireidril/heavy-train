@@ -71,19 +71,29 @@ void Block::draw(SDL_Surface * screen, const int & width, const int & height)
 void Block::build(b2World * world)
 {
 	b2BodyDef groundBodyDef;
-	groundBodyDef.position.Set(20, 15);// a changer ensuite avec les bonne valeurs
+	groundBodyDef.position.Set(0, 0);
+
+
+
 	m_body = world->CreateBody(&groundBodyDef);
 
 	// Define the ground box shape.
-	//b2PolygonShape groundBox;
-	b2CircleShape groundBox;
+	b2PolygonShape groundBox;
+	//b2CircleShape groundBox;
 
 	// The extents are the half-widths of the box.
 	double sizeX = m_sizeX;
 	double sizeY = 10;
 	Sprite::convertPixelsToMeters(sizeX, sizeY, 1024, 768);
-	//groundBox.SetAsBox(40, 1);
-	groundBox.m_radius = 15;
+	//groundBox.SetAsBox(40, 5);
+	//groundBox.m_radius = 15;
+
+	b2Vec2 vertices[6];
+	vertices[0].Set(0.0f, 0.0f);
+	vertices[1].Set(40.0f, 0.0f);
+	vertices[2].Set(40.0f, 5.0f);
+	vertices[3].Set(0.0f, 5.0f);
+	groundBox.Set(vertices, 4);
 
 	// Add the ground fixture to the ground body.
 	m_body->CreateFixture(&groundBox, 0.0f);
