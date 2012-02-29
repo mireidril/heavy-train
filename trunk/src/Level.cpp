@@ -57,12 +57,11 @@ void Level::loadAndBuild(const int & isle, const int & lvl){
 		TiXmlHandle hdl(&doc);
 		std::cerr << "Level.cpp : après TiXmlHandle hdl(&doc) " << std::endl;
 		TiXmlElement *island = hdl.FirstChildElement().FirstChildElement().Element();
-		TiXmlElement *contenuLevel = hdl.FirstChildElement().FirstChildElement().FirstChildElement().FirstChildElement().Element();
 		TiXmlElement *contenuBlock = hdl.FirstChildElement().FirstChildElement().FirstChildElement().FirstChildElement().FirstChildElement().Element();
 		
 			std::cout<< "island : " << island->Value()<<std::endl;
 			//std::cout<< "level : " << level->Value()<<std::endl;
-			std::cout<< "contenuLevel : " << contenuLevel->Value()<<std::endl;
+			//std::cout<< "contenuLevel : " << contenuLevel->Value()<<std::endl;
 			//std::cout<< "contenuBlock : " << contenuBlock->Value()<<std::endl;
 					//std::cout<< "island : island->Attribute(id) : " << (int)island->Attribute("id") <<std::endl;
 					//std::cout<< "island : isle : " << isle <<std::endl;
@@ -78,26 +77,31 @@ void Level::loadAndBuild(const int & isle, const int & lvl){
 				
 				TiXmlElement *level = island->FirstChildElement();
 				while (level){//ca marche???
-					std::cout<< "CAST level->Attribute(id) : " << atoi (level->Attribute("id")) << std::endl;
-					std::cout<< "level : lvl : " << lvl <<std::endl;
+					//std::cout<< "CAST level->Attribute(id) : " << atoi (level->Attribute("id")) << std::endl;
+					//std::cout<< "level : lvl : " << lvl <<std::endl;
 					if(atoi(level->Attribute("id")) == lvl){
-							std::cout<< "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee : " << std::endl;
-
-						while (contenuLevel->Value() == "block"){
-						/*	std::cout<< "contenuBlock : " << contenuBlock->Value()<<std::endl;
-							//Block * vBlock = new Block(JUNCTION_DOWN, 10, NULL); // smartpointer
-							std::auto_ptr<Block> vBlock (new Block(JUNCTION_DOWN, 10, NULL));
-
-							//vBlock.setId(block->Attribute("numBlock"));
-							//vBlock.setSizeX(block->Attribute("sizeBlock"));
-							//m_blocks.m_type = block->Attribute("typeBlock");
-							//vBlock.m_maxSpeed = block->Attribute("speedBlock");
-			
-							m_blocks.push_back(vBlock.release());
+						
+						TiXmlElement *contenuLevel = level->FirstChildElement();
+						while (contenuLevel){
+								std::cout<< "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee : " << contenuLevel->Value() << std::endl;
+							if (strcmp(contenuLevel->Value(),"block")==0){
+								std::cout<< "ON EST DEDANS : " << std::endl;
+								//contenuLevel->Value().c_str()
+								/*std::cout<< "contenuBlock : " << contenuBlock->Value()<<std::endl;
+								//Block * vBlock = new Block(JUNCTION_DOWN, 10, NULL); // smartpointer
+								std::auto_ptr<Block> vBlock (new Block(JUNCTION_DOWN, 10, NULL));
+								std::cout<< "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee : " << std::endl;
+								//vBlock.setId(block->Attribute("numBlock"));
+								//vBlock.setSizeX(block->Attribute("sizeBlock"));
+								//m_blocks.m_type = block->Attribute("typeBlock");
+								//vBlock.m_maxSpeed = block->Attribute("speedBlock");
+								m_blocks.push_back(vBlock.release());*/
+							}
 							
 							contenuLevel = contenuLevel->NextSiblingElement(); // iteration 
-			*/
+			
 						} //fin while contenuLevel
+
 					} //fin if level
 					level = level->NextSiblingElement(); // iteration 
 				} //fin while level
