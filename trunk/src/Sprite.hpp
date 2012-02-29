@@ -113,11 +113,12 @@ class DebugDraw : public b2Draw
 			Sprite::convertMetersToPixels(x2, y2, 1024, 768);
 			lineRGBA(Sprite::screen, (Sint16) x1 , (Sint16) y1, (Sint16) x2, (Sint16) y2, (Uint8) color2.r * 255, (Uint8) color2.g * 255, (Uint8) color2.b * 255, 255);
 		}
-		
-		/*for(int i = 1; i < vertexCount; ++i){
-			DrawSegment(vertices[i-1], vertices[i], color2);
+		else {
+			for(int i = 1; i < vertexCount; ++i){
+				DrawSegment(vertices[i-1], vertices[i], color2);
+			}
+			DrawSegment(vertices[vertexCount-1], vertices[0], color2);
 		}
-		DrawSegment(vertices[vertexCount-1], vertices[0], color2);*/
 	}
     void DrawCircle(const b2Vec2& center, float32 radius, const b2Color& color) {
 		b2Color color2(1.0, 0.0, 0.0);
@@ -128,18 +129,18 @@ class DebugDraw : public b2Draw
 		double rY = radius;
 		Sprite::convertMetersToPixels(rX, rY, 1024, 768);
 
-		ellipseRGBA(Sprite::screen, (Sint16) x, (Sint16) y, (Sint16) rX, (Sint16) rY, (Uint8) color.r, (Uint8) color2.g, (Uint8) color2.b, 255);
+		ellipseRGBA(Sprite::screen, (Sint16) x, (Sint16) y, (Sint16) rX, (Sint16) rY, (Uint8) color2.r * 255, (Uint8) color2.g * 255, (Uint8) color2.b * 255, 255);
 	}
     void DrawSolidCircle(const b2Vec2& center, float32 radius, const b2Vec2& axis, const b2Color& color) {
 		b2Color color2(1.0, 0.0, 0.0);
-		double x = center.x + radius / 2;
-		double y = center.y + radius / 2;
+		double x = center.x;
+		double y = center.y;
 		Sprite::convertMetersToPixels(x, y, 1024, 768);
-		double rX = radius / 2;
-		double rY = radius / 2;
+		double rX = radius;
+		double rY = radius;
 		Sprite::convertMetersToPixels(rX, rY, 1024, 768);
 
-		ellipseRGBA(Sprite::screen, (Sint16) x, (Sint16) y, (Sint16) rX, (Sint16) rY, (Uint8) color.r, (Uint8) color2.g, (Uint8) color2.b, 255);
+		ellipseRGBA(Sprite::screen, (Sint16) x, (Sint16) y, (Sint16) rX, (Sint16) rY, (Uint8) color2.r * 255, (Uint8) color2.g * 255, (Uint8) color2.b * 255, 255);
 	}
     void DrawSegment(const b2Vec2& p1, const b2Vec2& p2, const b2Color& color) {
 		float sizeX = abs(p1.x - p2.x);
