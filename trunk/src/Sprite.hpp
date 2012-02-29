@@ -82,6 +82,7 @@ class DebugDraw : public b2Draw
 		}
 		DrawSegment(vertices[vertexCount-1], vertices[0], color2);
 	}
+
     void DrawSolidPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color) {
 		b2Color color2(1.0, 0.0, 0.0);
 		double x1, x2, y1, y2;
@@ -129,7 +130,7 @@ class DebugDraw : public b2Draw
 		double rY = radius;
 		Sprite::convertMetersToPixels(rX, rY, 1024, 768);
 
-		ellipseRGBA(Sprite::screen, (Sint16) x, (Sint16) y, (Sint16) rX, (Sint16) rY, (Uint8) color2.r * 255, (Uint8) color2.g * 255, (Uint8) color2.b * 255, 255);
+		ellipseRGBA(Sprite::screen, (Sint16) x, (Sint16) y, (Sint16) rX, (Sint16) rX, (Uint8) color2.r * 255, (Uint8) color2.g * 255, (Uint8) color2.b * 255, 255);
 	}
     void DrawSolidCircle(const b2Vec2& center, float32 radius, const b2Vec2& axis, const b2Color& color) {
 		b2Color color2(1.0, 0.0, 0.0);
@@ -140,18 +141,14 @@ class DebugDraw : public b2Draw
 		double rY = radius;
 		Sprite::convertMetersToPixels(rX, rY, 1024, 768);
 
-		ellipseRGBA(Sprite::screen, (Sint16) x, (Sint16) y, (Sint16) rX, (Sint16) rY, (Uint8) color2.r * 255, (Uint8) color2.g * 255, (Uint8) color2.b * 255, 255);
+		ellipseRGBA(Sprite::screen, (Sint16) x, (Sint16) y, (Sint16) rX, (Sint16) rX, (Uint8) color2.r * 255, (Uint8) color2.g * 255, (Uint8) color2.b * 255, 255);
 	}
     void DrawSegment(const b2Vec2& p1, const b2Vec2& p2, const b2Color& color) {
-		float sizeX = abs(p1.x - p2.x);
-		float sizeY = abs(p1.y - p2.y);
-		//std::cout<<"coord : "<<sizeX<<", "<<sizeY<<std::endl;
-		double x1 = (p1.x + sizeX/2) / 2;
-		double y1 = (p1.y + sizeY/2) / 2;
-		double x2 = (p2.x + sizeX/2) / 2;
-		double y2 = (p2.y + sizeY/2) / 2;
-
-		//std::cout<<"coord : "<<x1<<", "<<y1<<std::endl;
+		double x1 = p1.x;
+		double y1 = p1.y;
+		double x2 = p2.x;
+		double y2 = p2.y;
+		
 		Sprite::convertMetersToPixels(x1, y1, 1024, 768);
 		Sprite::convertMetersToPixels(x2, y2, 1024, 768);
 		lineRGBA(Sprite::screen, (Sint16) x1 , (Sint16) y1, (Sint16) x2, (Sint16) y2, (Uint8) color.r * 255, (Uint8) color.g * 255, (Uint8) color.b * 255, 255);
