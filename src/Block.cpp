@@ -11,6 +11,7 @@ Block::Block(BlockType type, int sizeX, SDL_Rect * pos)
 	switch(type)
 	{
 		case GROUND :
+
 			break;
 		case PRECIPICE :
 			break;
@@ -70,7 +71,7 @@ void Block::draw(SDL_Surface * screen, const int & width, const int & height)
 void Block::build(b2World * world)
 {
 	b2BodyDef groundBodyDef;
-	groundBodyDef.position.Set(0.0f, 0.0f);// a changer ensuite avec les bonne valeurs
+	groundBodyDef.position.Set(-1, 1);// a changer ensuite avec les bonne valeurs
 	m_body = world->CreateBody(&groundBodyDef);
 
 	// Define the ground box shape.
@@ -80,7 +81,7 @@ void Block::build(b2World * world)
 	double sizeX = m_sizeX;
 	double sizeY = 10;
 	Sprite::convertPixelsToMeters( sizeX, sizeY, 1024, 768);
-	groundBox.SetAsBox(40, 0.1);
+	groundBox.SetAsBox(40, 1);
 
 	// Add the ground fixture to the ground body.
 	m_body->CreateFixture(&groundBox, 0.0f);

@@ -64,7 +64,7 @@ void Sprite::convertMetersToPixels(double & x, double & y, const int & width, co
 	//largeur de l'écran : 1024 = 40 metres
 	//hauteur de l'écran : 768 = 30 metres (pour respecter le ratio de l'écran)
 	x = width * x / 40;
-	y = height - ( height * y / 30 );  
+	y = height - height * y / 30;
 }
 
 /*
