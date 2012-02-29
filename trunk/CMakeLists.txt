@@ -34,6 +34,8 @@ if( MSVC )
 		${CMAKE_SOURCE_DIR}/dependencies/dll/libfreetype-6.dll
 		${CMAKE_SOURCE_DIR}/dependencies/dll/SDL_gfx.dll
 		${CMAKE_SOURCE_DIR}/dependencies/dll/SDL_mixer.dll
+		${CMAKE_SOURCE_DIR}/dependencies/dll/msvcp100d.dll
+		${CMAKE_SOURCE_DIR}/dependencies/dll/msvcr100d.dll
 		DESTINATION ${CMAKE_SOURCE_DIR}/bin)
 endif()
 

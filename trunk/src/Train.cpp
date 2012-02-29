@@ -58,19 +58,19 @@ void Train::drawSprite(SDL_Surface * screen, const int & width, const int & heig
 
 void Train::build(b2World * world)
 {
-	b2BodyDef bodyDef;
+	/*b2BodyDef bodyDef;
 	bodyDef.type = b2_dynamicBody;
 	bodyDef.position.Set(10.0f, 20.0f);//initial position in meter
 	m_body = world->CreateBody(&bodyDef);
 	// Define the ground box shape.
 	b2PolygonShape dynamicBox;
 	// The extents are the half-widths of the box.
-	dynamicBox.SetAsBox(m_sprite->getSizeX()*40/1024, m_sprite->getSizeY()*30/768);
+	dynamicBox.SetAsBox(20.0, 15.0);
 	b2FixtureDef fixtureDef;
 	fixtureDef.shape = &dynamicBox;
 	fixtureDef.density = 3.0f;
 	fixtureDef.friction = 0.3f;
 	// Add the ground fixture to the ground body.
 	m_body->CreateFixture(&fixtureDef);
-
+	*/
 }
