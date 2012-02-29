@@ -85,7 +85,7 @@ class DebugDraw : public b2Draw
 
     void DrawSolidPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color) {
 		b2Color color2(1.0, 0.0, 0.0);
-		double x1, x2, y1, y2;
+		/*double x1, x2, y1, y2;
 		if( vertexCount == 4) {
 			float sizeX = abs(vertices[0].x - vertices[2].x);
 			float sizeY = abs(vertices[1].y - vertices[3].y);
@@ -114,7 +114,7 @@ class DebugDraw : public b2Draw
 			Sprite::convertMetersToPixels(x2, y2, 1024, 768);
 			lineRGBA(Sprite::screen, (Sint16) x1 , (Sint16) y1, (Sint16) x2, (Sint16) y2, (Uint8) color2.r * 255, (Uint8) color2.g * 255, (Uint8) color2.b * 255, 255);
 		}
-		else {
+		else */{
 			for(int i = 1; i < vertexCount; ++i){
 				DrawSegment(vertices[i-1], vertices[i], color2);
 			}
