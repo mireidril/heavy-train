@@ -11,7 +11,6 @@
 
 #include "Sprite.hpp"
 #include "Bonus.hpp"
-#include "Station.hpp"
 #include "Wagon.hpp"
 
 class Train
@@ -56,6 +55,8 @@ class Train
 	// Creer la physique du train
 	void build(b2World * world);
 
+	void keyboard( const SDL_KeyboardEvent *event);
+
 
 
    private :
@@ -74,7 +75,9 @@ class Train
 	std::vector<b2Body * > m_bodies; // 3 bodies -- 0: loco - 1: wheel1 - 2: wheel2
 	b2WheelJoint* m_spring1;
 	b2WheelJoint* m_spring2;
-
+	float32 m_speed;
+	float32 m_hz;
+	b2Joint* m_joints[2];// pour joindre les wagons et le train
 
 	//Box2D actor that allows the train to react physically
 	//GameActor* m_actor;

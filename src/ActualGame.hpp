@@ -2,6 +2,7 @@
 #define __ACTUALGAME_HPP__
 
 #include "Train.hpp"
+#include "Level.hpp"
 
 #ifdef _WIN32
 #include "Box2D/Box2D.h"
@@ -9,7 +10,7 @@
 #include <Box2D/Box2D.h>
 #endif
 
-#include "Level.hpp"
+
 
 class ActualGame
 {

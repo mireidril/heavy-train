@@ -48,6 +48,7 @@ void ActualGame::run(SDL_Surface * screen, int w, int h){
 
 	m_actualLevel->drawBlocks(screen, w, h);
 	m_train->drawSprite(screen,w,h);
+	
 }
 
 void ActualGame::checkCollisions()
@@ -57,11 +58,9 @@ void ActualGame::checkCollisions()
 
 void ActualGame::checkKeyboardEvent(const SDL_KeyboardEvent *event)
 {
-	switch(event->keysym.sym)
-	{
-		default:
-			break;
-	}
+
+		m_train->keyboard(event);
+
 }
 
 
