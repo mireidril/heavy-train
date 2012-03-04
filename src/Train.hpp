@@ -56,8 +56,7 @@ class Train
 	// Creer la physique du train
 	void build(b2World * world);
 
-	b2Body * getBody() ;
-	void setBody(b2Body * body) ;
+
 
    private :
 	//Current speed of the train
@@ -70,9 +69,12 @@ class Train
 	int m_impetus;
 	//Vertical impetus applied to make the train jumping
 	int m_jumpImpetus;
+
 	//Physical bodies of the steam engine
-	std::vector<b2Body * > m_bodies;//pour après
-	b2Body  *  m_body;//pour l'instant
+	std::vector<b2Body * > m_bodies; // 3 bodies -- 0: loco - 1: wheel1 - 2: wheel2
+	b2WheelJoint* m_spring1;
+	b2WheelJoint* m_spring2;
+
 
 	//Box2D actor that allows the train to react physically
 	//GameActor* m_actor;
@@ -90,16 +92,6 @@ class Train
 	Mix_Chunk * m_passengerSound;
 
 
-	// 1er test train cloclo
 
-	b2Body* m_car;
-	b2Body* m_wheel1;
-	b2Body* m_wheel2;
-
-	float32 m_hz;
-	float32 m_zeta;
-	float32 m_speed;
-	b2WheelJoint* m_spring1;
-	b2WheelJoint* m_spring2;
 };
 #endif

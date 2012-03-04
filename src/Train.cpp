@@ -25,15 +25,6 @@ Train::~Train ()
 	//suppr bodies, + sounds
 }
 
-b2Body * Train::getBody() 
-{
-	return m_body;
-} 
-
-void Train::setBody(b2Body * body) 
-{
-	m_body = body;
-} 
 
 
 /*
@@ -78,63 +69,60 @@ void Train::build(b2World * world)
 	// Add the ground fixture to the ground body.
 	m_body->CreateFixture(&fixtureDef);*/
 	
-	//cloclo test pour car
-	m_hz = 4.0f;
-	m_zeta = 0.7f;
-	m_speed = 50.0f;
 
-	b2PolygonShape chassis;
-	b2Vec2 vertices[8];
-	vertices[0].Set(8.5f, 9.5f);
-	vertices[1].Set(11.5f, 9.5f);
-	vertices[2].Set(11.5f, 10.0f);
-	vertices[3].Set(10.0f, 10.9f);
-	vertices[4].Set(8.85f, 10.9f);
-	vertices[5].Set(8.5f, 9.8f);
-	chassis.Set(vertices, 6);
-
-
-	//chassis.SetAsBox(2, 2);
+	//Création de la locomotive
+	float32 hz = 4.0f;
+	float32 zeta = 0.7f;
+	float32 speed = 50.0f;
 
 	b2BodyDef bd;
 	bd.type = b2_dynamicBody;
-	bd.position.Set(0.0f, 30.0f);
-	m_car = world->CreateBody(&bd);
-	m_car->CreateFixture(&chassis, 1.0f);
+	bd.position.Set(10.0f, 9.0f);
+
+	b2PolygonShape chassis;
+	b2Vec2 vertices[6];
+	vertices[0].Set(-1.0f, -1.0f);
+	vertices[1].Set(1.0f, -1.0f);
+	vertices[2].Set(1.0f, 1.0f);
+	vertices[3].Set(-1.0f, 1.0f);
+	chassis.Set(vertices, 4);
+
+	m_bodies.push_back(world->CreateBody(&bd));
+	m_bodies[0]->CreateFixture(&chassis, 1.0f);
 
 	b2CircleShape circle;
-	circle.m_radius = 0.2f;
+	circle.m_radius = 0.3f;
 
 	b2FixtureDef fd;
 	fd.shape = &circle;
 	fd.density = 1.0f;
 	fd.friction = 0.9f;
 
-	bd.position.Set(9.0f, 30.0f);
-	m_wheel1 = world->CreateBody(&bd);
-	m_wheel1->CreateFixture(&fd);
+	bd.position.Set(9.6f, 7.8f);
+	m_bodies.push_back(world->CreateBody(&bd));
+	m_bodies[1]->CreateFixture(&fd);
 
-	bd.position.Set(10.0f, 30.0f);
-	m_wheel2 = world->CreateBody(&bd);
-	m_wheel2->CreateFixture(&fd);
+	bd.position.Set(10.4f, 7.8f);
+	m_bodies.push_back(world->CreateBody(&bd));
+	m_bodies[2]->CreateFixture(&fd);
 
-	/*b2WheelJointDef jd;
-	b2Vec2 axis(10.0f, 11.0f);
+	b2WheelJointDef jd;
+	b2Vec2 axis(0.0f, 1.0f);
 
-	jd.Initialize(m_car, m_wheel1, m_wheel1->GetPosition(), axis);
+	jd.Initialize(m_bodies[0], m_bodies[1], m_bodies[1]->GetPosition(), axis);
 	jd.motorSpeed = 0.0f;
 	jd.maxMotorTorque = 20.0f;
 	jd.enableMotor = true;
-	jd.frequencyHz = m_hz;
-	jd.dampingRatio = m_zeta;
-	//m_spring1 = (b2WheelJoint*)world->CreateJoint(&jd);
+	jd.frequencyHz = hz;
+	jd.dampingRatio = zeta;
+	m_spring1 = (b2WheelJoint*)world->CreateJoint(&jd);
 
-	jd.Initialize(m_car, m_wheel2, m_wheel2->GetPosition(), axis);
+	jd.Initialize(m_bodies[0], m_bodies[2], m_bodies[2]->GetPosition(), axis);
 	jd.motorSpeed = 0.0f;
 	jd.maxMotorTorque = 10.0f;
 	jd.enableMotor = false;
-	jd.frequencyHz = m_hz;
-	jd.dampingRatio = m_zeta;
-	//m_spring2 = (b2WheelJoint*)world->CreateJoint(&jd);*/
+	jd.frequencyHz = hz;
+	jd.dampingRatio = zeta;
+	m_spring2 = (b2WheelJoint*)world->CreateJoint(&jd);
 
 }
