@@ -79,7 +79,7 @@ void Train::build(b2World * world)
 	//Création de la locomotive
 	m_hz = 4.0f;
 	float32 zeta = 0.7f;
-	m_speed = 2.0f;
+	m_speed = 10.0f;
 
 	b2BodyDef bd;
 	bd.type = b2_dynamicBody;
