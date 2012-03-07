@@ -43,6 +43,13 @@ void Sprite::setPosition(SDL_Rect * pos){
 }
 
 /**
+ * Setter angle
+ */
+void Sprite::setAngle(double & angle){
+	m_angle = angle;
+}
+
+/**
  * Charge et ajoute une image au sprite
  * imageFileName : chemin de l'image à rajouter
  */

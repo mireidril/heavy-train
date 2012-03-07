@@ -33,6 +33,8 @@ class Wagon{
 	void build(b2World * world, double x);
 	b2Body * getBody();
 
+	void drawSprite(SDL_Surface * screen, const int & width, const int & height);
+
    private :
 	// Number of passengers that the wagon have when it quits the station
 	int m_originalNumberOfPassengers;
@@ -40,8 +42,8 @@ class Wagon{
 	int m_maxCapacity;
 	// Number of passengers actually in the wagon (not ejected ones)
 	int m_passengersCount;
-	// Sprite of the wagon
-	Sprite* m_sprite;
+	// Sprites of the wagon
+	std::vector<Sprite*> m_sprites;
 	// Box2D objects fitting the wagon in the simulation (wagon and wheels)
 	std::vector<b2Body *>  m_bodies; // 3 bodies -- 0: loco - 1: wheel1 - 2: wheel2
 	b2WheelJoint* m_spring1;
