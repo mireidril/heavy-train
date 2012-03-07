@@ -143,7 +143,7 @@ void Train::build(b2World * world)
 	jdd.dampingRatio = 0.0f;
 
 	jdd.bodyA = m_bodies[0];
-	jdd.bodyB = m_wagons[0]->getBody();
+	jdd.bodyB = m_wagons[0]->getBody(0);
 	jdd.localAnchorA.Set(0.0f, 0.2f);
 	jdd.localAnchorB.Set(0.0f, 0.2f);
 	p1 = jdd.bodyA->GetWorldPoint(jdd.localAnchorA);
