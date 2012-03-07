@@ -22,7 +22,7 @@ Block::Block(BlockType type, int sizeX, SDL_Rect * pos)
 			p2->y = 600;
 			p3 = new SDL_Rect;
 			p3->x = 512;
-			p3->y = 350;
+			p3->y = 450;
 			p4 = new SDL_Rect;
 			p4->x = 768;
 			p4->y = 500;
