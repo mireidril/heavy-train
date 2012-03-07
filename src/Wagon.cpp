@@ -30,8 +30,10 @@ Wagon::~Wagon ()
 	//suppr bodies, + sounds
 }
 
-b2Body * Wagon::getBody(){
-	return m_bodies[0];
+b2Body * Wagon::getBody(unsigned int i)
+{
+	assert(i < m_bodies.size());
+	return m_bodies[i];
 }
 
 /*
@@ -76,7 +78,6 @@ void Wagon::drawSprite(SDL_Surface * screen, const int & width, const int & heig
  */
 void Wagon::build(b2World * world, double x)
 {	
-
 	//Création des wagons
 	float32 hz = 4.0f;
 	float32 zeta = 0.7f;
@@ -135,6 +136,5 @@ void Wagon::build(b2World * world, double x)
 	jd.frequencyHz = hz;
 	jd.dampingRatio = zeta;
 	m_spring2 = (b2WheelJoint*)world->CreateJoint(&jd);// joint pour la roue2
-
 }
 

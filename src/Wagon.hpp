@@ -11,9 +11,9 @@ class Wagon{
     public :
 	Wagon();
 	~Wagon();
-        // The train jumps with an impulsion of force N
-        void jump(int);
-        // Add the Passenger also creates the passenger joint. Call checkCapacity at the end.
+    // The train jumps with an impulsion of force N
+    void jump(int);
+    // Add the Passenger also creates the passenger joint. Call checkCapacity at the end.
 	void addPassenger(Passenger*);
 	// Eject the passenger by removing its joint, set the passenger’s “isEjected” to true. After a timer of 5 sec, we call deletePassenger().
 	void ejectPassenger(Passenger*);
@@ -31,7 +31,7 @@ class Wagon{
 	SDL_Rect * doorPosition();
 
 	void build(b2World * world, double x);
-	b2Body * getBody();
+	b2Body * getBody(unsigned int i);
 
 	void drawSprite(SDL_Surface * screen, const int & width, const int & height);
 

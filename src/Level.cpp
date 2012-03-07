@@ -7,7 +7,8 @@ Level::Level ()
         pos->x = 0;
         pos->y = 0;
         //m_blocks.push_back(new Block(BlockType::JUNCTION_DOWN, 1000, pos));
-        m_blocks.push_back(new Block(JUNCTION_DOWN, 1000, pos));
+        //m_blocks.push_back(new Block(JUNCTION_DOWN, 1000, pos));
+		m_blocks.push_back(new Block(GROUND, 1000, pos));
         //m_departureTime = ...;
         //m_position = ...;
         m_islandNum = 0;
@@ -26,7 +27,11 @@ Level::~Level()
 }
 
 Block * Level::getBlock(int i) {
-	return m_blocks.at(i);
+	if(i < m_blocks.size() )
+	{
+		return m_blocks.at(i);
+	}
+	return NULL;
 
 }
 

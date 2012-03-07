@@ -39,7 +39,7 @@ Train::~Train ()
  */
 void Train::drawSprite(SDL_Surface * screen, const int & width, const int & height)
 {
-	SDL_Rect * pos = new SDL_Rect;
+	/*SDL_Rect * pos = new SDL_Rect;
 	double x; 
 	double y; 
 	b2Vec2 bodyPos;
@@ -67,7 +67,7 @@ void Train::drawSprite(SDL_Surface * screen, const int & width, const int & heig
 	}
 
 	m_wagons[0]->drawSprite(screen, width, height);
-	m_wagons[1]->drawSprite(screen, width, height);
+	m_wagons[1]->drawSprite(screen, width, height);*/
 }
 
 /*
@@ -76,8 +76,6 @@ void Train::drawSprite(SDL_Surface * screen, const int & width, const int & heig
 
 void Train::build(b2World * world)
 {
-	
-
 	//Création de la locomotive
 	m_hz = 4.0f;
 	float32 zeta = 0.7f;
@@ -134,9 +132,9 @@ void Train::build(b2World * world)
 	m_spring2 = (b2WheelJoint*)world->CreateJoint(&jd);//joint pour la roue2
 
 	//wagon build
-	m_wagons[0]->build(world, 7.0);
+	/*m_wagons[0]->build(world, 7.0);
 	m_wagons[1]->build(world, 4.0);
-
+	
 	// pour joindre la loco et le wagon1
 	b2DistanceJointDef jdd;
 	b2Vec2 p1, p2, d;
@@ -165,9 +163,7 @@ void Train::build(b2World * world)
 	p2 = jdd.bodyB->GetWorldPoint(jdd.localAnchorB);
 	d = p2 - p1;
 	jdd.length = d.Length();
-	m_joints[1] = world->CreateJoint(&jdd);
-
-
+	m_joints[1] = world->CreateJoint(&jdd);*/
 }
 
 /*
