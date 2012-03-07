@@ -65,6 +65,10 @@ void GameEngine::initSDL()
 		std::cerr << "Can't initialize SDL_mixer " << std::endl;
 		m_isRunning = false;
 	}
+
+	//Framerate
+	SDL_initFramerate(&m_FPSManager);
+	SDL_setFramerate(&m_FPSManager, 60);
 }
 
 /*
@@ -126,6 +130,8 @@ void GameEngine::run()
 	{
 		update();
 		render();
+		SDL_framerateDelay(&m_FPSManager);
+		//std::cout<<SDL_getFramerate(&m_FPSManager)<<std::endl;
 	}
 }
 

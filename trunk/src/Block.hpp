@@ -35,7 +35,12 @@ class Block
 		b2Body * m_body;
 		int m_sizeX;
 
-		BlockType * m_type;
+		BlockType m_type;
+
+		//If the block is GROUND, all the points of the spline are stored here
+		std::vector<SDL_Rect*> m_points;
+		//If the block is GROUND, all the points of the body are stored here
+		std::vector<b2Vec2> m_groundPoints;
 		
 		int m_maxSpeed;
 		int m_id;
@@ -43,5 +48,7 @@ class Block
 		int m_sizeXMax;
 		int m_y;
 		int m_yMax;
+
+		const float m_hillSegmentWidth;
 };
 #endif

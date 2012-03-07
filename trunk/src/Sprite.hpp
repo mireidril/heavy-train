@@ -77,7 +77,7 @@ class DebugDraw : public b2Draw
 {
   public:
 	void DrawPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color) {
-		b2Color color2(1.0, 0.0, 0.0);
+		b2Color color2(1.0, 0.0, 1.0);
 		for(int i = 1; i < vertexCount; ++i){
 			DrawSegment(vertices[i-1], vertices[i], color2);
 		}
@@ -85,7 +85,7 @@ class DebugDraw : public b2Draw
 	}
 
     void DrawSolidPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color) {
-		b2Color color2(1.0, 0.0, 0.0);
+		b2Color color2(1.0, 0.0, 1.0);
 		/*double x1, x2, y1, y2;
 		if( vertexCount == 4) {
 			float sizeX = abs(vertices[0].x - vertices[2].x);
@@ -123,7 +123,7 @@ class DebugDraw : public b2Draw
 		}
 	}
     void DrawCircle(const b2Vec2& center, float32 radius, const b2Color& color) {
-		b2Color color2(1.0, 0.0, 0.0);
+		b2Color color2(1.0, 0.0, 1.0);
 		double x = center.x;
 		double y = center.y;
 		Sprite::convertMetersToPixels(x, y, 1024, 768);
@@ -134,7 +134,7 @@ class DebugDraw : public b2Draw
 		ellipseRGBA(Sprite::screen, (Sint16) x, (Sint16) y, (Sint16) rX, (Sint16) rX, (Uint8) color2.r * 255, (Uint8) color2.g * 255, (Uint8) color2.b * 255, 255);
 	}
     void DrawSolidCircle(const b2Vec2& center, float32 radius, const b2Vec2& axis, const b2Color& color) {
-		b2Color color2(1.0, 0.0, 0.0);
+		b2Color color2(1.0, 0.0, 1.0);
 		double x = center.x;
 		double y = center.y;
 		Sprite::convertMetersToPixels(x, y, 1024, 768);
@@ -145,6 +145,7 @@ class DebugDraw : public b2Draw
 		ellipseRGBA(Sprite::screen, (Sint16) x, (Sint16) y, (Sint16) rX, (Sint16) rX, (Uint8) color2.r * 255, (Uint8) color2.g * 255, (Uint8) color2.b * 255, 255);
 	}
     void DrawSegment(const b2Vec2& p1, const b2Vec2& p2, const b2Color& color) {
+		b2Color color2(1.0, 0.0, 1.0);
 		double x1 = p1.x;
 		double y1 = p1.y;
 		double x2 = p2.x;
@@ -152,7 +153,7 @@ class DebugDraw : public b2Draw
 		
 		Sprite::convertMetersToPixels(x1, y1, 1024, 768);
 		Sprite::convertMetersToPixels(x2, y2, 1024, 768);
-		lineRGBA(Sprite::screen, (Sint16) x1 , (Sint16) y1, (Sint16) x2, (Sint16) y2, (Uint8) color.r * 255, (Uint8) color.g * 255, (Uint8) color.b * 255, 255);
+		lineRGBA(Sprite::screen, (Sint16) x1 , (Sint16) y1, (Sint16) x2, (Sint16) y2, (Uint8) color2.r * 255, (Uint8) color2.g * 255, (Uint8) color2.b * 255, 255);
 	}
     void DrawTransform(const b2Transform& xf) {
 	}

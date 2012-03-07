@@ -80,8 +80,8 @@ void Sprite::convertMetersToPixels(double & x, double & y, const int & width, co
 void Sprite::convertPixelsToMeters(double & x, double & y, const int & width, const int & height){
 	//largeur de l'écran : 1024 = 40 metres
 	//hauteur de l'écran : 768 = 30 metres (pour respecter le ratio de l'écran)
-	x = x * 40 / width;
-	y = 30 - ( y * 30 / height );
+	x = (double) x * 40.0 / width;
+	y = (double) 30 - ( y * 30.0 / height );
 }
 
 double Sprite::getSizeX(){

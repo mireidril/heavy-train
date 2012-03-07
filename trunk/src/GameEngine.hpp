@@ -10,12 +10,14 @@
 #include "SDL/SDL_ttf.h"
 #include "SDL/SDL_mixer.h"
 #include "SDL/SDL_image.h"
+#include "SDL/SDL_framerate.h"
 #else
 #include <SDL/SDL.h>
 #include <tinyxml.h>
 #include <SDL/SDL_ttf.h>
 #include <SDL/SDL_mixer.h>
 #include <SDL/SDL_image.h>
+#include <SDL/SDL_framerate.h>
 #endif
 
 #include <map>
@@ -73,6 +75,8 @@ class GameEngine
 		
 		//Ecran SDL 
 		SDL_Surface*				m_screen;
+		//Gestionnaire de framerate SDL
+		FPSmanager					m_FPSManager;
 		//Largeur de l'écran
 		int							m_windowsWidth;
 		//Hauteur de l'écran
