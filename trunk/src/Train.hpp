@@ -70,29 +70,36 @@ class Train
 	int m_impetus;
 	//Vertical impetus applied to make the train jumping
 	int m_jumpImpetus;
-
-	//Physical bodies of the steam engine
-	std::vector<b2Body * > m_bodies; // 3 bodies -- 0: loco - 1: wheel1 - 2: wheel2
-	b2WheelJoint* m_spring1;
-	b2WheelJoint* m_spring2;
-	float32 m_speed;
-	float32 m_hz;
-	b2Joint* m_joints[2];// pour joindre les wagons et le train
-
-	//Box2D actor that allows the train to react physically
-	//GameActor* m_actor;
-	//Sprite of the steam engine
-	Sprite* m_sprite;
 	//Above 0 if the train is currently using an accelerator bonus. Decrease at each frame
 	int m_usingTimeAccelerator;
-	//The two wagons of the game
-	std::vector<Wagon*> m_wagons;
 	//Increase if the train is shaken
 	int m_shaken;
 	// Sound of the tchoutchou
 	Mix_Chunk * m_tchoutchouSound;	
 	// Sounf of the scared passengers
 	Mix_Chunk * m_passengerSound;
+
+	//Physical bodies of the steam engine
+	// 3 bodies -- 0: loco - 1: wheel1 - 2: wheel2
+	std::vector<b2Body * > m_bodies;
+	// joint pour la roue1 
+	b2WheelJoint* m_spring1; 
+	// joint pour la roue2
+	b2WheelJoint* m_spring2; 
+	// vitesse du wheel joint
+	float32 m_speed; 
+	// fréquence du wheel joint
+	float32 m_hz; 
+	// pour joindre les wagons et le train
+	b2Joint* m_joints[2];
+	//The two wagons of the game
+	std::vector<Wagon*> m_wagons;
+
+	//Box2D actor that allows the train to react physically
+	//GameActor* m_actor;
+	//Sprite of the steam engine
+	std::vector<Sprite*> m_sprites;//0:loco 1:wheel1 2:wheel2
+
 
 
 

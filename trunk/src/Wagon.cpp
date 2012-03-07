@@ -13,6 +13,15 @@ Wagon::Wagon ()
 	m_passengersCount=0;
 	m_areDoorOpened= false;
 
+	SDL_Rect * pos = new SDL_Rect;
+	pos->x = 0; pos->y = 0; 
+	SDL_Rect * size = new SDL_Rect;
+	size->x = 138; size->y = 97; 
+	m_sprites.push_back(new Sprite("../img/elements/wagon.png",  pos,  size));//wagon
+	size->x = 39; size->y = 36; 
+	m_sprites.push_back(new Sprite("../img/elements/roue.png",  pos,  size));//roue1
+	m_sprites.push_back(new Sprite("../img/elements/roue.png",  pos,  size));//roue2
+
 }
 
 Wagon::~Wagon () 
@@ -24,6 +33,42 @@ Wagon::~Wagon ()
 b2Body * Wagon::getBody(){
 	return m_bodies[0];
 }
+
+/*
+ * draw the wagon on the screen
+ */
+void Wagon::drawSprite(SDL_Surface * screen, const int & width, const int & height)
+{
+	SDL_Rect * pos = new SDL_Rect;
+	double x; 
+	double y; 
+	b2Vec2 bodyPos;
+	double angle;
+	//wagon
+	bodyPos = m_bodies[0]->GetPosition();
+	angle = m_bodies[0]->GetAngle()*180/M_PI;
+	x = bodyPos.x; y = bodyPos.y;
+	m_sprites[0]->convertMetersToPixels( x,  y,  width,  height);
+	pos->x = x-50; pos->y = y-30;
+	m_sprites[0]->setPosition(pos);
+	m_sprites[0]->setAngle(angle);
+	m_sprites[0]->draw(screen, width, height);
+
+	//roues
+	for (int i=1; i<3; i++){
+		bodyPos = m_bodies[i]->GetPosition();
+		x = bodyPos.x; y = bodyPos.y;
+		angle = m_bodies[i]->GetAngle()*180/M_PI;
+		m_sprites[i]->convertMetersToPixels( x,  y,  width,  height);
+		pos->x = x+5*i*i-50; pos->y = y+20;
+		m_sprites[i]->setPosition(pos);
+		m_sprites[i]->setAngle(angle);
+		m_sprites[i]->draw(screen, width, height);
+	}
+
+
+}
+
 
 
 /*
@@ -66,11 +111,11 @@ void Wagon::build(b2World * world, double x)
 
 	bd.position.Set(x-0.5f, 7.8f);
 	m_bodies.push_back(world->CreateBody(&bd));
-	m_bodies[1]->CreateFixture(&fd);
+	m_bodies[1]->CreateFixture(&fd);// roue1
 
 	bd.position.Set(x+0.5f, 7.8f);
 	m_bodies.push_back(world->CreateBody(&bd));
-	m_bodies[2]->CreateFixture(&fd);
+	m_bodies[2]->CreateFixture(&fd);// roue2
 
 	b2WheelJointDef jd;
 	b2Vec2 axis(0.0f, 1.0f);
@@ -81,7 +126,7 @@ void Wagon::build(b2World * world, double x)
 	jd.enableMotor = true;
 	jd.frequencyHz = hz;
 	jd.dampingRatio = zeta;
-	m_spring1 = (b2WheelJoint*)world->CreateJoint(&jd);
+	m_spring1 = (b2WheelJoint*)world->CreateJoint(&jd);// joint pour la roue1
 
 	jd.Initialize(m_bodies[0], m_bodies[2], m_bodies[2]->GetPosition(), axis);
 	jd.motorSpeed = 0.0f;
@@ -89,7 +134,7 @@ void Wagon::build(b2World * world, double x)
 	jd.enableMotor = false;
 	jd.frequencyHz = hz;
 	jd.dampingRatio = zeta;
-	m_spring2 = (b2WheelJoint*)world->CreateJoint(&jd);
+	m_spring2 = (b2WheelJoint*)world->CreateJoint(&jd);// joint pour la roue2
 
 }
 

@@ -8,13 +8,14 @@
 Train::Train () 
 {
 	SDL_Rect * pos = new SDL_Rect;
-	pos->x = 10*1024/40;//the initial position in px
-	pos->y = 20*768/30; 
+	pos->x = 0; pos->y = 0; 
 	SDL_Rect * size = new SDL_Rect;
-	size->x = 396;
-	size->y = 165; 
-	m_sprite = new Sprite("../img/trainvache.png",  pos,  size);
-	// first wagon
+	size->x = 166; size->y = 117; 
+	m_sprites.push_back(new Sprite("../img/elements/loco.png",  pos,  size));//loco
+	size->x = 39; size->y = 36; 
+	m_sprites.push_back(new Sprite("../img/elements/roue.png",  pos,  size));//roue1
+	m_sprites.push_back(new Sprite("../img/elements/roue.png",  pos,  size));//roue2
+	// add wagons
 	m_wagons.push_back(new Wagon());
 	m_wagons.push_back(new Wagon());
 
@@ -22,8 +23,12 @@ Train::Train ()
 
 Train::~Train () 
 {
-	delete m_sprite;
-	//delete[] m_wagons; ???
+	for (int i=0; i< m_sprites.size(); i++){
+		delete m_sprites[i]; 
+	}
+	for (int i=0; i< m_wagons.size(); i++){
+		delete m_wagons[i]; 
+	}
 	//suppr bodies, + sounds
 }
 
@@ -34,17 +39,35 @@ Train::~Train ()
  */
 void Train::drawSprite(SDL_Surface * screen, const int & width, const int & height)
 {
-	/*b2Vec2 bodyPos = m_body->GetPosition();
 	SDL_Rect * pos = new SDL_Rect;
-  
-	//std::cout << bodyPos.y << std::endl;
-	double x = bodyPos.x;
-	double y = bodyPos.y;
-	m_sprite->convertToPixel(x, y, width, height);
-	pos->x = x;
-	pos->y = y;
-	m_sprite->setPosition(pos);
-	//m_sprite->draw(screen, width, height);*/
+	double x; 
+	double y; 
+	b2Vec2 bodyPos;
+	double angle;
+	//loco
+	bodyPos = m_bodies[0]->GetPosition();
+	angle = m_bodies[0]->GetAngle()*180/M_PI;
+	x = bodyPos.x; y = bodyPos.y;
+	m_sprites[0]->convertMetersToPixels( x,  y,  width,  height);
+	pos->x = x; pos->y = y-30;
+	m_sprites[0]->setPosition(pos);
+	m_sprites[0]->setAngle(angle);
+	m_sprites[0]->draw(screen, width, height);
+
+	//roues
+	for (int i=1; i<3; i++){
+		bodyPos = m_bodies[i]->GetPosition();
+		x = bodyPos.x; y = bodyPos.y;
+		angle = m_bodies[i]->GetAngle()*180/M_PI;
+		m_sprites[i]->convertMetersToPixels( x,  y,  width,  height);
+		pos->x = x+5*i*i; pos->y = y+20;
+		m_sprites[i]->setPosition(pos);
+		m_sprites[i]->setAngle(angle);
+		m_sprites[i]->draw(screen, width, height);
+	}
+
+	m_wagons[0]->drawSprite(screen, width, height);
+	m_wagons[1]->drawSprite(screen, width, height);
 }
 
 /*
@@ -53,12 +76,6 @@ void Train::drawSprite(SDL_Surface * screen, const int & width, const int & heig
 
 void Train::build(b2World * world)
 {
-	/*b2BodyDef bodyDef;
-
-	fixtureDef.density = 3.0f;
-	fixtureDef.friction = 0.3f;
-	// Add the ground fixture to the ground body.
-	m_body->CreateFixture(&fixtureDef);*/
 	
 
 	//Création de la locomotive
@@ -89,11 +106,11 @@ void Train::build(b2World * world)
 	fd.density = 2.0f;
 	fd.friction = 0.9f;
 
-	bd.position.Set(9.5f, 7.8f);
+	bd.position.Set(9.5f, 7.8f);//position de la roue1
 	m_bodies.push_back(world->CreateBody(&bd));
 	m_bodies[1]->CreateFixture(&fd);
 
-	bd.position.Set(10.5f, 7.8f);
+	bd.position.Set(10.5f, 7.8f);//position de la roue2
 	m_bodies.push_back(world->CreateBody(&bd));
 	m_bodies[2]->CreateFixture(&fd);
 
@@ -106,7 +123,7 @@ void Train::build(b2World * world)
 	jd.enableMotor = true;
 	jd.frequencyHz = m_hz;
 	jd.dampingRatio = zeta;
-	m_spring1 = (b2WheelJoint*)world->CreateJoint(&jd);
+	m_spring1 = (b2WheelJoint*)world->CreateJoint(&jd);//joint pour la roue1
 
 	jd.Initialize(m_bodies[0], m_bodies[2], m_bodies[2]->GetPosition(), axis);
 	jd.motorSpeed = 0.0f;
@@ -114,7 +131,7 @@ void Train::build(b2World * world)
 	jd.enableMotor = false;
 	jd.frequencyHz = m_hz;
 	jd.dampingRatio = zeta;
-	m_spring2 = (b2WheelJoint*)world->CreateJoint(&jd);
+	m_spring2 = (b2WheelJoint*)world->CreateJoint(&jd);//joint pour la roue2
 
 	//wagon build
 	m_wagons[0]->build(world, 7.0);
