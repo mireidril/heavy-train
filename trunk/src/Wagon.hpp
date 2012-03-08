@@ -30,10 +30,11 @@ class Wagon{
 	// Return the position of the door of the wagon
 	SDL_Rect * doorPosition();
 
-	void build(b2World * world, double x);
+	void build(b2World * world, double x, float high);
 	b2Body * getBody(unsigned int i);
 
 	void drawSprite(SDL_Surface * screen, const int & width, const int & height);
+	void setMotorSpeed(float speed);
 
    private :
 	// Number of passengers that the wagon have when it quits the station
