@@ -8,6 +8,7 @@ Level::Level ()
         pos->y = 0;
         //m_blocks.push_back(new Block(BlockType::JUNCTION_DOWN, 1000, pos));
         //m_blocks.push_back(new Block(JUNCTION_DOWN, 1000, pos));
+	//m_blocks.push_back(new Block(JUNCTION_UP, 1000, pos));
 		m_blocks.push_back(new Block(GROUND, 1000, pos));
         //m_departureTime = ...;
         //m_position = ...;

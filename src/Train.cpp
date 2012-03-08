@@ -39,7 +39,7 @@ Train::~Train ()
  */
 void Train::drawSprite(SDL_Surface * screen, const int & width, const int & height)
 {
-	/*SDL_Rect * pos = new SDL_Rect;
+	SDL_Rect * pos = new SDL_Rect;
 	double x; 
 	double y; 
 	b2Vec2 bodyPos;
@@ -49,7 +49,7 @@ void Train::drawSprite(SDL_Surface * screen, const int & width, const int & heig
 	angle = m_bodies[0]->GetAngle()*180/M_PI;
 	x = bodyPos.x; y = bodyPos.y;
 	m_sprites[0]->convertMetersToPixels( x,  y,  width,  height);
-	pos->x = x; pos->y = y-30;
+	pos->x = x-50; pos->y = y-35;
 	m_sprites[0]->setPosition(pos);
 	m_sprites[0]->setAngle(angle);
 	m_sprites[0]->draw(screen, width, height);
@@ -60,14 +60,14 @@ void Train::drawSprite(SDL_Surface * screen, const int & width, const int & heig
 		x = bodyPos.x; y = bodyPos.y;
 		angle = m_bodies[i]->GetAngle()*180/M_PI;
 		m_sprites[i]->convertMetersToPixels( x,  y,  width,  height);
-		pos->x = x+5*i*i; pos->y = y+20;
+		pos->x = x-8; pos->y = y-8;
 		m_sprites[i]->setPosition(pos);
 		m_sprites[i]->setAngle(angle);
 		m_sprites[i]->draw(screen, width, height);
 	}
 
 	m_wagons[0]->drawSprite(screen, width, height);
-	m_wagons[1]->drawSprite(screen, width, height);*/
+	m_wagons[1]->drawSprite(screen, width, height);
 }
 
 /*
@@ -79,36 +79,37 @@ void Train::build(b2World * world)
 	//Création de la locomotive
 	m_hz = 4.0f;
 	float32 zeta = 0.7f;
-	m_speed = 10.0f;
+	m_speed = 20.0f;
+	float high =5;
 
 	b2BodyDef bd;
 	bd.type = b2_dynamicBody;
-	bd.position.Set(10.0f, 9.0f);
+	bd.position.Set(12.0f, high+9.5f);
 
 	b2PolygonShape chassis;
-	b2Vec2 vertices[6];
-	vertices[0].Set(-1.0f, -1.0f);
-	vertices[1].Set(1.0f, -1.0f);
-	vertices[2].Set(1.0f, 1.0f);
-	vertices[3].Set(-1.0f, 1.0f);
+	b2Vec2 vertices[4];
+	vertices[0].Set(-2.0f, -1.5f);
+	vertices[1].Set(2.0f, -1.5f);
+	vertices[2].Set(2.0f, 1.5f);
+	vertices[3].Set(-2.0f, 1.5f);
 	chassis.Set(vertices, 4);
 
 	m_bodies.push_back(world->CreateBody(&bd));
 	m_bodies[0]->CreateFixture(&chassis, 0.5f);
 
 	b2CircleShape circle;
-	circle.m_radius = 0.3f;
+	circle.m_radius = 0.5f;
 
 	b2FixtureDef fd;
 	fd.shape = &circle;
 	fd.density = 2.0f;
 	fd.friction = 0.9f;
 
-	bd.position.Set(9.5f, 7.8f);//position de la roue1
+	bd.position.Set(11.0f, high+8.f);//position de la roue1
 	m_bodies.push_back(world->CreateBody(&bd));
 	m_bodies[1]->CreateFixture(&fd);
 
-	bd.position.Set(10.5f, 7.8f);//position de la roue2
+	bd.position.Set(13.0f, high+8.f);//position de la roue2
 	m_bodies.push_back(world->CreateBody(&bd));
 	m_bodies[2]->CreateFixture(&fd);
 
@@ -132,8 +133,8 @@ void Train::build(b2World * world)
 	m_spring2 = (b2WheelJoint*)world->CreateJoint(&jd);//joint pour la roue2
 
 	//wagon build
-	/*m_wagons[0]->build(world, 7.0);
-	m_wagons[1]->build(world, 4.0);
+	m_wagons[0]->build(world, 8, high);
+	m_wagons[1]->build(world, 5, high);
 	
 	// pour joindre la loco et le wagon1
 	b2DistanceJointDef jdd;
@@ -155,15 +156,15 @@ void Train::build(b2World * world)
 	// pour joindre les 2 locos
 
 
-	jdd.bodyA = m_wagons[0]->getBody();
-	jdd.bodyB = m_wagons[1]->getBody();
+	jdd.bodyA = m_wagons[0]->getBody(0);
+	jdd.bodyB = m_wagons[1]->getBody(0);
 	jdd.localAnchorA.Set(0.0f, 0.2f);
 	jdd.localAnchorB.Set(0.0f, 0.2f);
 	p1 = jdd.bodyA->GetWorldPoint(jdd.localAnchorA);
 	p2 = jdd.bodyB->GetWorldPoint(jdd.localAnchorB);
 	d = p2 - p1;
 	jdd.length = d.Length();
-	m_joints[1] = world->CreateJoint(&jdd);*/
+	m_joints[1] = world->CreateJoint(&jdd);
 }
 
 /*
@@ -175,14 +176,23 @@ void Train::keyboard( const SDL_KeyboardEvent *event)
 	{
 	case SDLK_LEFT:
 		m_spring1->SetMotorSpeed(m_speed);
+		m_spring2->SetMotorSpeed(m_speed);
+		m_wagons[0]->setMotorSpeed(m_speed);
+		m_wagons[1]->setMotorSpeed(m_speed);
 		break;
 
 	case SDLK_UP:
 		m_spring1->SetMotorSpeed(0.0f);
+		m_spring2->SetMotorSpeed(0.0f);
+		m_wagons[0]->setMotorSpeed(0.0f);
+		m_wagons[1]->setMotorSpeed(0.0f);
 		break;
 
 	case SDLK_RIGHT:
 		m_spring1->SetMotorSpeed(-m_speed);
+		m_spring2->SetMotorSpeed(-m_speed);
+		m_wagons[0]->setMotorSpeed(-m_speed);
+		m_wagons[1]->setMotorSpeed(-m_speed);
 		break;
 
 	case 'q':

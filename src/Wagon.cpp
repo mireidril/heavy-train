@@ -51,7 +51,7 @@ void Wagon::drawSprite(SDL_Surface * screen, const int & width, const int & heig
 	angle = m_bodies[0]->GetAngle()*180/M_PI;
 	x = bodyPos.x; y = bodyPos.y;
 	m_sprites[0]->convertMetersToPixels( x,  y,  width,  height);
-	pos->x = x-50; pos->y = y-30;
+	pos->x = x-30; pos->y = y-50;
 	m_sprites[0]->setPosition(pos);
 	m_sprites[0]->setAngle(angle);
 	m_sprites[0]->draw(screen, width, height);
@@ -62,7 +62,7 @@ void Wagon::drawSprite(SDL_Surface * screen, const int & width, const int & heig
 		x = bodyPos.x; y = bodyPos.y;
 		angle = m_bodies[i]->GetAngle()*180/M_PI;
 		m_sprites[i]->convertMetersToPixels( x,  y,  width,  height);
-		pos->x = x+5*i*i-50; pos->y = y+20;
+		pos->x = x-8; pos->y = y-8;
 		m_sprites[i]->setPosition(pos);
 		m_sprites[i]->setAngle(angle);
 		m_sprites[i]->draw(screen, width, height);
@@ -71,12 +71,17 @@ void Wagon::drawSprite(SDL_Surface * screen, const int & width, const int & heig
 
 }
 
+void Wagon::setMotorSpeed(float speed){
+	m_spring1->SetMotorSpeed(speed);
+	m_spring2->SetMotorSpeed(speed);
+}
+
 
 
 /*
  * wagon construction
  */
-void Wagon::build(b2World * world, double x)
+void Wagon::build(b2World * world, double x, float high)
 {	
 	//Création des wagons
 	float32 hz = 4.0f;
@@ -85,36 +90,32 @@ void Wagon::build(b2World * world, double x)
 
 	b2BodyDef bd;
 	bd.type = b2_dynamicBody;
-	bd.position.Set(x, 9.0f);
+	bd.position.Set(x, high+9.0f);
 
 	b2PolygonShape chassis;
-	b2Vec2 vertices[8];
-	vertices[0].Set(-1.0f, -1.0f);
-	vertices[1].Set(1.0f, -1.0f);
-	vertices[2].Set(1.0f, 1.0f);
-	vertices[3].Set(0.8f, 1.0f);
-	vertices[4].Set(0.8f, -0.2f);
-	vertices[5].Set(-0.8f, -0.2f);
-	vertices[6].Set(-0.8f, 1.0f);
-	vertices[7].Set(-1.0f, 1.0f);
-	chassis.Set(vertices, 8);
+	b2Vec2 vertices[4];
+	vertices[0].Set(-1.5f, -0.2f);
+	vertices[1].Set(1.5f, -0.2f);
+	vertices[2].Set(1.5f, 0.2f);
+	vertices[3].Set(-1.5f, 0.2f);
+	chassis.Set(vertices, 4);
 
 	m_bodies.push_back(world->CreateBody(&bd));
 	m_bodies[0]->CreateFixture(&chassis, 0.5f);
 
 	b2CircleShape circle;
-	circle.m_radius = 0.3f;
+	circle.m_radius = 0.5f;
 
 	b2FixtureDef fd;
 	fd.shape = &circle;
 	fd.density = 2.0f;
 	fd.friction = 0.9f;
 
-	bd.position.Set(x-0.5f, 7.8f);
+	bd.position.Set(x-1.0f, high+8.5f);
 	m_bodies.push_back(world->CreateBody(&bd));
 	m_bodies[1]->CreateFixture(&fd);// roue1
 
-	bd.position.Set(x+0.5f, 7.8f);
+	bd.position.Set(x+1.0f, high+8.5f);
 	m_bodies.push_back(world->CreateBody(&bd));
 	m_bodies[2]->CreateFixture(&fd);// roue2
 
