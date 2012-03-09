@@ -65,45 +65,56 @@ void Level::loadAndBuild(const int & isle, const int & lvl){
 		TiXmlElement *island = hdl.FirstChildElement().FirstChildElement().Element();
 		TiXmlElement *contenuBlock = hdl.FirstChildElement().FirstChildElement().FirstChildElement().FirstChildElement().FirstChildElement().Element();
 		
-			std::cout<< "island : " << island->Value()<<std::endl;
-			//std::cout<< "level : " << level->Value()<<std::endl;
-			//std::cout<< "contenuLevel : " << contenuLevel->Value()<<std::endl;
-			//std::cout<< "contenuBlock : " << contenuBlock->Value()<<std::endl;
-					//std::cout<< "island : island->Attribute(id) : " << (int)island->Attribute("id") <<std::endl;
-					//std::cout<< "island : isle : " << isle <<std::endl;
-					
-					//island->QueryIntAttribute("id", &i);
-					//std::cout<< "island : island->QueryIntAttribute() : " << island->QueryIntAttribute("id", m_islandNum) <<std::endl;
-
-
-					//std::cout<< "level : level->Attribute(id) : " << int(level->QueryIntAttribute ("id", lvl)) <<std::endl;
-					//std::cout<< "level : lvl : " << lvl <<std::endl;
 		while (island){
 			if(atoi(island->Attribute("id"))){
 				
 				TiXmlElement *level = island->FirstChildElement();
-				while (level){//ca marche???
-					//std::cout<< "CAST level->Attribute(id) : " << atoi (level->Attribute("id")) << std::endl;
-					//std::cout<< "level : lvl : " << lvl <<std::endl;
+				//on entre dans la balise island et on chack toutes les balises level
+				while (level){
+					//si l'id du level correspond à lvl, on entre dans le if pour pouvoir checker toutes les balises du level choisi
 					if(atoi(level->Attribute("id")) == lvl){
 						
 						TiXmlElement *contenuLevel = level->FirstChildElement();
 						while (contenuLevel){
-								std::cout<< "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee : " << contenuLevel->Value() << std::endl;
+							std::cout<< "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee : " << contenuLevel->Value() << std::endl;
+							//si la balise dans level correspond a la balise block on entre dans ce if
 							if (strcmp(contenuLevel->Value(),"block")==0){
-								std::cout<< "ON EST DEDANS : " << std::endl;
-								//contenuLevel->Value().c_str()
-								/*std::cout<< "contenuBlock : " << contenuBlock->Value()<<std::endl;
-								//Block * vBlock = new Block(JUNCTION_DOWN, 10, NULL); // smartpointer
-								std::auto_ptr<Block> vBlock (new Block(JUNCTION_DOWN, 10, NULL));
-								std::cout<< "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee : " << std::endl;
-								//vBlock.setId(block->Attribute("numBlock"));
-								//vBlock.setSizeX(block->Attribute("sizeBlock"));
-								//m_blocks.m_type = block->Attribute("typeBlock");
-								//vBlock.m_maxSpeed = block->Attribute("speedBlock");
-								m_blocks.push_back(vBlock.release());*/
+								//on est dans une balise block !
+								/*
+		int m_sizeXMin;
+		int m_sizeXMax;
+		int m_y;
+		int m_yMax;
+		BlockType m_type;
+		Sprite * m_sprite;
+		b2Body * m_body;
+		int m_sizeX;
+							*/	
+								Block * vBlock = new Block(JUNCTION_DOWN, 10, NULL); // smartpointer
+								vBlock->setId(atoi(contenuLevel->Attribute("num")));
+								vBlock->setSizeX(atoi(contenuLevel->Attribute("size")));
+								//vBlock->setType((BlockType)contenuLevel->Attribute("type"));
+								vBlock->setSpeed(atoi(contenuLevel->Attribute("speed")));
+								//variable element qui check les balises contenu dans block
+								TiXmlElement *contenuBlock = contenuLevel->FirstChildElement();
+								while (contenuBlock){
+									if (strcmp(contenuBlock->Value(),"obstacle")==0){
+										//vBlock->setTypeObst(atoi(contenuLevel->Attribute("type")));
+										//vBlock->setPosXObst(atoi(contenuLevel->Attribute("posX")));
+										//vBlock->setPosYObst(atoi(contenuLevel->Attribute("posY")));
+
+									}else if (strcmp(contenuBlock->Value(),"point")==0){										
+										//!!!!!!!!!!!!!!!!!!!!attention il y a 2 points pas block : comment faire??? cpt qui rempli tableau? a quoi correspond ces points dans le code?
+										//concerne m_groundPoints (vec 2)
+										//vBlock->setPoints(atoi(contenuLevel->Attribute("x")), atoi(contenuLevel->Attribute("y")));
+									}
+									contenuBlock = contenuBlock->NextSiblingElement();
+								}
+							}else if (strcmp(contenuLevel->Value(),"station")==0){
+								//on est dans la balise station / gare
+							}else if (strcmp(contenuLevel->Value(),"infobulle")==0){
+								//on est dans la balise infobulle
 							}
-							
 							contenuLevel = contenuLevel->NextSiblingElement(); // iteration 
 			
 						} //fin while contenuLevel

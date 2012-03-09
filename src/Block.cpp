@@ -72,6 +72,27 @@ void Block::setBody(b2Body * body)
 {
 	m_body = body;
 } 
+void Block::setId(int num) 
+{
+	m_id = num;
+} 
+void Block::setSizeX(int size) 
+{
+	m_sizeX = size;
+}  
+void Block::setType(BlockType type) 
+{
+	m_type = type;
+}  
+void Block::setSpeed(int speed) 
+{
+	m_maxSpeed = speed;
+}
+void Block::setPoints(int x, int y) 
+{
+	b2Vec2 pts = b2Vec2(x, y);
+	m_groundPoints.push_back(pts);
+}  
 
 
 void Block::draw(SDL_Surface * screen, const int & width, const int & height)

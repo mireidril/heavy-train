@@ -29,6 +29,11 @@ class Block
 		void scroll(int);
 		b2Body * getBody();
 		void setBody(b2Body * body);
+		void setId(int num);
+		void setSizeX(int size);
+		void setType(BlockType type);
+		void setSpeed(int speed);
+		void setPoints(int x, int y);
 		void draw(SDL_Surface * screen, const int & width, const int & height);
 	private :
 		Sprite * m_sprite;
