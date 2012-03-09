@@ -99,14 +99,14 @@ void Level::loadAndBuild(const int & isle, const int & lvl){
 								TiXmlElement *contenuBlock = contenuLevel->FirstChildElement();
 								while (contenuBlock){
 									if (strcmp(contenuBlock->Value(),"obstacle")==0){
-										//vBlock->setTypeObst(atoi(contenuLevel->Attribute("type")));
-										//vBlock->setPosXObst(atoi(contenuLevel->Attribute("posX")));
-										//vBlock->setPosYObst(atoi(contenuLevel->Attribute("posY")));
+										//vBlock->setTypeObst(atoi(contenuBlock->Attribute("type")));
+										//vBlock->setPosXObst(atoi(contenuBlock->Attribute("posX")));
+										//vBlock->setPosYObst(atoi(contenuBlock->Attribute("posY")));
 
 									}else if (strcmp(contenuBlock->Value(),"point")==0){										
 										//!!!!!!!!!!!!!!!!!!!!attention il y a 2 points pas block : comment faire??? cpt qui rempli tableau? a quoi correspond ces points dans le code?
 										//concerne m_groundPoints (vec 2)
-										//vBlock->setPoints(atoi(contenuLevel->Attribute("x")), atoi(contenuLevel->Attribute("y")));
+										vBlock->setPoints(atoi(contenuBlock->Attribute("x")), atoi(contenuBlock->Attribute("y")));
 									}
 									contenuBlock = contenuBlock->NextSiblingElement();
 								}
