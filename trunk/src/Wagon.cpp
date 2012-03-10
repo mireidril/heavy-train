@@ -53,13 +53,13 @@ void Wagon::drawSprite(SDL_Surface * screen, const int & width, const int & heig
 	angledegrees= angle*180/M_PI;
 	x = bodyPos.x; y = bodyPos.y;
 	m_sprites[0]->convertMetersToPixels( x,  y,  width,  height);
-	if (angle>=0){
-		pos->x = x-30*cos(angle)-50*sin(angle); 
-		pos->y = y-30*sin(angle)-50*cos(angle);
+	if (angle>=-0.01){
+		pos->x = x-30*cos(angle)-35*sin(angle); 
+		pos->y = y-30*sin(angle)-35*cos(angle);
 	}
 	else {
-		pos->x = x+30*cos(M_PI-angle)+50*sin(M_PI-angle); 
-		pos->y = y+30*sin(M_PI-angle)+50*cos(M_PI-angle);
+		pos->x = x+30*cos(M_PI-angle)+35*sin(M_PI-angle); 
+		pos->y = y+30*sin(M_PI-angle)+35*cos(M_PI-angle);
 	}
 	m_sprites[0]->setPosition(pos);
 	m_sprites[0]->setAngle(angledegrees);
@@ -110,14 +110,14 @@ void Wagon::build(b2World * world, double x, float high)
 	chassis.Set(vertices, 4);
 
 	m_bodies.push_back(world->CreateBody(&bd));
-	m_bodies[0]->CreateFixture(&chassis, 0.5f);
+	m_bodies[0]->CreateFixture(&chassis, 0.1f);
 
 	b2CircleShape circle;
 	circle.m_radius = 0.5f;
 
 	b2FixtureDef fd;
 	fd.shape = &circle;
-	fd.density = 2.0f;
+	fd.density = 3.0f;
 	fd.friction = 0.9f;
 
 	bd.position.Set(x-1.0f, high+7.9f);
