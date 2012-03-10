@@ -48,7 +48,7 @@ void ActualGame::run(SDL_Surface * screen, int w, int h){
 	m_world->DrawDebugData();
 
 	m_actualLevel->drawBlocks(screen, w, h);
-	m_train->drawSprite(screen,w,h);
+	//m_train->drawSprite(screen,w,h);
 	
 }
 

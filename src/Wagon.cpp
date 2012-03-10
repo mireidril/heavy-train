@@ -103,10 +103,10 @@ void Wagon::build(b2World * world, double x, float high)
 
 	b2PolygonShape chassis;
 	b2Vec2 vertices[4];
-	vertices[0].Set(-1.5f, -0.2f);
-	vertices[1].Set(1.5f, -0.2f);
-	vertices[2].Set(1.5f, 0.2f);
-	vertices[3].Set(-1.5f, 0.2f);
+	vertices[0].Set(-1.5f, -0.8f);
+	vertices[1].Set(1.5f, -0.8f);
+	vertices[2].Set(1.5f, 0.8f);
+	vertices[3].Set(-1.5f, 0.8f);
 	chassis.Set(vertices, 4);
 
 	m_bodies.push_back(world->CreateBody(&bd));
@@ -120,11 +120,11 @@ void Wagon::build(b2World * world, double x, float high)
 	fd.density = 2.0f;
 	fd.friction = 0.9f;
 
-	bd.position.Set(x-1.0f, high+8.5f);
+	bd.position.Set(x-1.0f, high+7.9f);
 	m_bodies.push_back(world->CreateBody(&bd));
 	m_bodies[1]->CreateFixture(&fd);// roue1
 
-	bd.position.Set(x+1.0f, high+8.5f);
+	bd.position.Set(x+1.0f, high+7.9f);
 	m_bodies.push_back(world->CreateBody(&bd));
 	m_bodies[2]->CreateFixture(&fd);// roue2
 
