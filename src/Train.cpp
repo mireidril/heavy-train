@@ -90,11 +90,11 @@ void Train::build(b2World * world)
 	m_hz = 4.0f;
 	float32 zeta = 0.7f;
 	m_speed = 20.0f;
-	float high =5;
+	float high =6;
 
 	b2BodyDef bd;
 	bd.type = b2_dynamicBody;
-	bd.position.Set(12.0f, high+9.5f);
+	bd.position.Set(12.0f, high+9.5f);//position initial train
 
 	b2PolygonShape chassis;
 	b2Vec2 vertices[4];
@@ -102,17 +102,17 @@ void Train::build(b2World * world)
 	vertices[1].Set(2.0f, -1.5f);
 	vertices[2].Set(2.0f, 1.5f);
 	vertices[3].Set(-2.0f, 1.5f);
-	chassis.Set(vertices, 4);
+	chassis.Set(vertices, 4);//locomotive
 
 	m_bodies.push_back(world->CreateBody(&bd));
-	m_bodies[0]->CreateFixture(&chassis, 0.5f);
+	m_bodies[0]->CreateFixture(&chassis, 0.1f);
 
 	b2CircleShape circle;
-	circle.m_radius = 0.5f;
+	circle.m_radius = 0.5f;//rayon roues
 
 	b2FixtureDef fd;
 	fd.shape = &circle;
-	fd.density = 2.0f;
+	fd.density = 3.0f;
 	fd.friction = 0.9f;
 
 	bd.position.Set(10.6f, high+7.9f);//position de la roue1
@@ -143,8 +143,9 @@ void Train::build(b2World * world)
 	m_spring2 = (b2WheelJoint*)world->CreateJoint(&jd);//joint pour la roue2
 
 	//wagon build
+
 	m_wagons[0]->build(world, 8, high);
-	m_wagons[1]->build(world, 5, high);
+	m_wagons[1]->build(world, 4, high);
 	
 	// pour joindre la loco et le wagon1
 	b2DistanceJointDef jdd;
@@ -155,26 +156,32 @@ void Train::build(b2World * world)
 
 	jdd.bodyA = m_bodies[0];
 	jdd.bodyB = m_wagons[0]->getBody(0);
-	jdd.localAnchorA.Set(0.0f, 0.2f);
-	jdd.localAnchorB.Set(0.0f, 0.2f);
+	jdd.localAnchorA.Set(0.f, -1.0f);
+	jdd.localAnchorB.Set(0.f, -0.3f);
 	p1 = jdd.bodyA->GetWorldPoint(jdd.localAnchorA);
 	p2 = jdd.bodyB->GetWorldPoint(jdd.localAnchorB);
 	d = p2 - p1;
 	jdd.length = d.Length();
+	jdd.collideConnected = false;
 	m_joints[0] = world->CreateJoint(&jdd);
+
 	
 	// pour joindre les 2 locos
 
 
 	jdd.bodyA = m_wagons[0]->getBody(0);
 	jdd.bodyB = m_wagons[1]->getBody(0);
-	jdd.localAnchorA.Set(0.0f, 0.2f);
-	jdd.localAnchorB.Set(0.0f, 0.2f);
+	jdd.localAnchorA.Set(0.0f, -0.3f);
+	jdd.localAnchorB.Set(0.0f, -0.3f);
 	p1 = jdd.bodyA->GetWorldPoint(jdd.localAnchorA);
 	p2 = jdd.bodyB->GetWorldPoint(jdd.localAnchorB);
 	d = p2 - p1;
 	jdd.length = d.Length();
+
 	m_joints[1] = world->CreateJoint(&jdd);
+
+
+
 }
 
 /*

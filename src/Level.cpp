@@ -22,7 +22,8 @@ Level::Level ()
 	SDL_Rect * posBg = new SDL_Rect();
         posBg->x = 0; posBg->y = 0;
 	m_backgroundPositions.push_back(posBg);
-	m_backgroundImages.push_back(new Sprite("../img/screens/title_screen.png",  posBg,  size));
+	m_backgroundImages.push_back(new Sprite("../img/niveau2/sky.png",  posBg,  size));
+	m_backgroundImages.push_back(new Sprite("../img/niveau2/moutains.png", posBg,  size));
 
 }
 
@@ -152,6 +153,10 @@ void Level::drawBlocks(SDL_Surface * screen, int w, int h)
 void Level::drawBackgrounds(SDL_Surface * screen, int w, int h)
 {
    m_backgroundPositions[0]->x -= 1;
-   m_backgroundImages[0]->setPosition(m_backgroundPositions[0]);
-   m_backgroundImages[0]->draw(screen,w,h);     
+   //m_backgroundImages[1]->setPosition(m_backgroundPositions[0]);
+   m_backgroundImages[0]->draw(screen,w,h); 
+   m_backgroundImages[1]->draw(screen,w,h); 
+
+     
+    
 }
