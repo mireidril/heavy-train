@@ -55,6 +55,9 @@ class Train
 	// Creer la physique du train
 	void build(b2World * world);
 
+	//Réinitialise les valeurs des PhysicalObjects après un smooth pour coller au framerate
+	void clearAllSmoothAngleAndPosition();
+
 	void keyboard( const SDL_KeyboardEvent *event);
 
 
@@ -81,7 +84,7 @@ class Train
 
 	//Physical bodies of the steam engine
 	// 3 bodies -- 0: loco - 1: wheel1 - 2: wheel2
-	std::vector<b2Body * > m_bodies;
+	std::vector<PhysicalObject * > m_physicalObjects;
 	// joint pour la roue1 
 	b2WheelJoint* m_spring1; 
 	// joint pour la roue2
@@ -94,14 +97,5 @@ class Train
 	b2Joint* m_joints[2];
 	//The two wagons of the game
 	std::vector<Wagon*> m_wagons;
-
-	//Box2D actor that allows the train to react physically
-	//GameActor* m_actor;
-	//Sprite of the steam engine
-	std::vector<Sprite*> m_sprites;//0:loco 1:wheel1 2:wheel2
-
-
-
-
 };
 #endif

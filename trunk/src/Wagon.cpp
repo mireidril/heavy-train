@@ -16,24 +16,45 @@ Wagon::Wagon ()
 	SDL_Rect * pos = new SDL_Rect;
 	pos->x = 0; pos->y = 0; 
 	SDL_Rect * size = new SDL_Rect;
-	size->x = 138; size->y = 97; 
-	m_sprites.push_back(new Sprite("../img/elements/wagon.png",  pos,  size));//wagon
-	size->x = 39; size->y = 36; 
-	m_sprites.push_back(new Sprite("../img/elements/roue.png",  pos,  size));//roue1
-	m_sprites.push_back(new Sprite("../img/elements/roue.png",  pos,  size));//roue2
+	size->x = 138; size->y = 97;
 
+	PhysicalObject * wagon = new PhysicalObject(new Sprite("../img/elements/wagon.png",  pos,  size) );
+	m_physicalObjects.push_back(wagon);
+	size->x = 39; size->y = 36; 
+	PhysicalObject * roue1 = new PhysicalObject(new Sprite("../img/elements/roue.png",  pos,  size) );
+	m_physicalObjects.push_back(roue1);
+	PhysicalObject * roue2 = new PhysicalObject(new Sprite("../img/elements/roue.png",  pos,  size) );
+	m_physicalObjects.push_back(roue2);
 }
 
 Wagon::~Wagon () 
 {
-	//delete m_sprite;
-	//suppr bodies, + sounds
+	for(int i = 0; i < m_physicalObjects.size(); ++i)
+	{
+		delete m_physicalObjects[i];
+	}
 }
 
 b2Body * Wagon::getBody(unsigned int i)
 {
-	assert(i < m_bodies.size());
-	return m_bodies[i];
+	assert(i < m_physicalObjects.size());
+	return m_physicalObjects[i]->getBody();
+}
+
+/*
+ * Réinitialise les valeurs des PhysicalObjects après un smooth pour coller au framerate
+ */
+void Wagon::clearAllSmoothAngleAndPosition()
+{
+	for(int i = 0; i < m_physicalObjects.size(); ++i)
+	{
+		m_physicalObjects[i]->clearSmoothAngleAndPosition();
+	}
+
+	for(int i = 0; i < m_passengers.size(); ++i)
+	{
+		m_passengers[i]->clearSmoothAngleAndPosition();
+	}
 }
 
 /*
@@ -48,11 +69,11 @@ void Wagon::drawSprite(SDL_Surface * screen, const int & width, const int & heig
 	double angle;
 	double angledegrees;
 	//wagon
-	bodyPos = m_bodies[0]->GetPosition();
-	angle = m_bodies[0]->GetAngle();
+	bodyPos = m_physicalObjects[0]->getPositionSmoothed();
+	angle = m_physicalObjects[0]->getAngleSmoothed();
 	angledegrees= angle*180/M_PI;
 	x = bodyPos.x; y = bodyPos.y;
-	m_sprites[0]->convertMetersToPixels( x,  y,  width,  height);
+	m_physicalObjects[0]->getSprite()->convertMetersToPixels( x,  y,  width,  height);
 	if (angle>=-0.01){
 		pos->x = x-30*cos(angle)-35*sin(angle); 
 		pos->y = y-30*sin(angle)-35*cos(angle);
@@ -61,20 +82,20 @@ void Wagon::drawSprite(SDL_Surface * screen, const int & width, const int & heig
 		pos->x = x+30*cos(M_PI-angle)+35*sin(M_PI-angle); 
 		pos->y = y+30*sin(M_PI-angle)+35*cos(M_PI-angle);
 	}
-	m_sprites[0]->setPosition(pos);
-	m_sprites[0]->setAngle(angledegrees);
-	m_sprites[0]->draw(screen, width, height);
+	m_physicalObjects[0]->getSprite()->setPosition(pos);
+	m_physicalObjects[0]->getSprite()->setAngle(angledegrees);
+	m_physicalObjects[0]->getSprite()->draw(screen, width, height);
 
 	//roues
 	for (int i=1; i<3; i++){
-		bodyPos = m_bodies[i]->GetPosition();
+		bodyPos = m_physicalObjects[i]->getPositionSmoothed();
 		x = bodyPos.x; y = bodyPos.y;
-		angle = m_bodies[i]->GetAngle()*180/M_PI;
-		m_sprites[i]->convertMetersToPixels( x,  y,  width,  height);
+		angle = m_physicalObjects[i]->getAngleSmoothed()*180/M_PI;
+		m_physicalObjects[i]->getSprite()->convertMetersToPixels( x,  y,  width,  height);
 		pos->x = x-8; pos->y = y-8;
-		m_sprites[i]->setPosition(pos);
-		m_sprites[i]->setAngle(angle);
-		m_sprites[i]->draw(screen, width, height);
+		m_physicalObjects[i]->getSprite()->setPosition(pos);
+		m_physicalObjects[i]->getSprite()->setAngle(angle);
+		m_physicalObjects[i]->getSprite()->draw(screen, width, height);
 	}
 
 
@@ -109,8 +130,8 @@ void Wagon::build(b2World * world, double x, float high)
 	vertices[3].Set(-1.5f, 0.8f);
 	chassis.Set(vertices, 4);
 
-	m_bodies.push_back(world->CreateBody(&bd));
-	m_bodies[0]->CreateFixture(&chassis, 0.1f);
+	m_physicalObjects[0]->setBody(world->CreateBody(&bd));
+	m_physicalObjects[0]->getBody()->CreateFixture(&chassis, 0.1f);
 
 	b2CircleShape circle;
 	circle.m_radius = 0.5f;
@@ -121,17 +142,17 @@ void Wagon::build(b2World * world, double x, float high)
 	fd.friction = 0.9f;
 
 	bd.position.Set(x-1.0f, high+7.9f);
-	m_bodies.push_back(world->CreateBody(&bd));
-	m_bodies[1]->CreateFixture(&fd);// roue1
+	m_physicalObjects[1]->setBody(world->CreateBody(&bd));
+	m_physicalObjects[1]->getBody()->CreateFixture(&fd);// roue1
 
 	bd.position.Set(x+1.0f, high+7.9f);
-	m_bodies.push_back(world->CreateBody(&bd));
-	m_bodies[2]->CreateFixture(&fd);// roue2
+	m_physicalObjects[2]->setBody(world->CreateBody(&bd));
+	m_physicalObjects[2]->getBody()->CreateFixture(&fd);// roue2
 
 	b2WheelJointDef jd;
 	b2Vec2 axis(0.0f, 1.0f);
 
-	jd.Initialize(m_bodies[0], m_bodies[1], m_bodies[1]->GetPosition(), axis);
+	jd.Initialize(m_physicalObjects[0]->getBody(), m_physicalObjects[1]->getBody(), m_physicalObjects[1]->getBody()->GetPosition(), axis);
 	jd.motorSpeed = 0.0f;
 	jd.maxMotorTorque = 10.0f;
 	jd.enableMotor = true;
@@ -139,7 +160,7 @@ void Wagon::build(b2World * world, double x, float high)
 	jd.dampingRatio = zeta;
 	m_spring1 = (b2WheelJoint*)world->CreateJoint(&jd);// joint pour la roue1
 
-	jd.Initialize(m_bodies[0], m_bodies[2], m_bodies[2]->GetPosition(), axis);
+	jd.Initialize(m_physicalObjects[0]->getBody(), m_physicalObjects[2]->getBody(), m_physicalObjects[2]->getBody()->GetPosition(), axis);
 	jd.motorSpeed = 0.0f;
 	jd.maxMotorTorque = 10.0f;
 	jd.enableMotor = false;

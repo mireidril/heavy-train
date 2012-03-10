@@ -31,8 +31,8 @@ Sprite::~Sprite()
 		SDL_FreeSurface(m_frames[i]);
 	}
 
-	delete m_position;
-	delete m_size;
+	//delete m_position;
+	//delete m_size;
 }
 
 /**
