@@ -44,6 +44,7 @@ void ActualGame::run(SDL_Surface * screen, int w, int h){
 
 	fooDrawInstance->SetFlags( b2Draw::e_shapeBit );
 	m_world->Step(m_timeStep, m_velocityIterations, m_positionIterations);
+	//m_actualLevel->drawBackgrounds(screen,  w,  h);// ralentit tout: i don't know why... :(
 	m_world->DrawDebugData();
 
 	m_actualLevel->drawBlocks(screen, w, h);
