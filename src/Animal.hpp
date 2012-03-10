@@ -1,7 +1,7 @@
 #ifndef __ANIMAL_HPP__
 #define __ANIMAL_HPP__
 
-#include "PNJ.hpp"
+#include "PhysicalObject.hpp"
 /*
 * Animal qui est un obstacle.
 */

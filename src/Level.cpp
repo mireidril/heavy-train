@@ -44,7 +44,13 @@ Block * Level::getBlock(int i) {
 
 }
 
+/*
+ * Réinitialise les valeurs des PhysicalObjects après un smooth pour coller au framerate
+ */
+void Level::clearAllSmoothAngleAndPosition()
+{
 
+}
 
 
 /*
@@ -135,6 +141,13 @@ void Level::loadAndBuild(const int & isle, const int & lvl){
 		} //fin while island
 	}
 }
+
+void Level::render(SDL_Surface * screen, int w, int h)
+{
+	drawBackgrounds(screen,  w,  h);
+	drawBlocks(screen, w, h);
+}
+
 /*
  * Level dessine tous les blocs du vector
  */
@@ -155,8 +168,5 @@ void Level::drawBackgrounds(SDL_Surface * screen, int w, int h)
    m_backgroundPositions[0]->x -= 1;
    //m_backgroundImages[1]->setPosition(m_backgroundPositions[0]);
    m_backgroundImages[0]->draw(screen,w,h); 
-   m_backgroundImages[1]->draw(screen,w,h); 
-
-     
-    
+   m_backgroundImages[1]->draw(screen,w,h);   
 }

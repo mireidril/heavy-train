@@ -3,6 +3,7 @@
 
 #include "Passenger.hpp"
 #include "Station.hpp"
+#include "PhysicalObject.hpp"
 
 /*
 * Represents a wagon of the train. Has passengers, a body, doors ...
@@ -33,6 +34,9 @@ class Wagon{
 	void build(b2World * world, double x, float high);
 	b2Body * getBody(unsigned int i);
 
+	//Réinitialise les valeurs des PhysicalObjects après un smooth pour coller au framerate
+	void clearAllSmoothAngleAndPosition();
+
 	void drawSprite(SDL_Surface * screen, const int & width, const int & height);
 	void setMotorSpeed(float speed);
 
@@ -43,10 +47,8 @@ class Wagon{
 	int m_maxCapacity;
 	// Number of passengers actually in the wagon (not ejected ones)
 	int m_passengersCount;
-	// Sprites of the wagon
-	std::vector<Sprite*> m_sprites;
 	// Box2D objects fitting the wagon in the simulation (wagon and wheels)
-	std::vector<b2Body *>  m_bodies; // 3 bodies -- 0: loco - 1: wheel1 - 2: wheel2
+	std::vector<PhysicalObject *>  m_physicalObjects; // 3 bodies -- 0: loco - 1: wheel1 - 2: wheel2
 	b2WheelJoint* m_spring1;
 	b2WheelJoint* m_spring2;
 	// Passengers in the wagon

@@ -1,7 +1,7 @@
 #ifndef __PASSENGER_HPP__
 #define __PASSENGER_HPP__
 
-#include "PNJ.hpp"
+#include "PhysicalObject.hpp"
 
 /*
 * Passenger, a PNJ that go into train.

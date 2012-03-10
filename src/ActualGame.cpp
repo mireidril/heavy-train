@@ -1,5 +1,7 @@
 #include "ActualGame.hpp"
 
+double PhysicalObject::fixedTimestepAccumulatorRatio;
+
 /*
  * ActualGame Constructor
  */
@@ -10,6 +12,11 @@ ActualGame::ActualGame()
 	b2Vec2 gravity(0.0f, -10.0f);
 	// Construct a world object, which will hold and simulate the rigid bodies.
 	m_world = new b2World(gravity);
+	// Pour caler la simulation avec le framerate
+	fixedTimestepAccumulator = 0;
+	fixedTimestepAccumulatorRatio = 0;
+	m_world->SetAutoClearForces (false);
+
 	// Prepare for simulation. Typically we use a time step of 1/60 of a
 	// second (60Hz) and 10 iterations. This provides a high quality simulation
 	// in most game scenarios.
@@ -34,28 +41,60 @@ ActualGame::~ActualGame()
 	delete m_train;
 	delete fooDrawInstance;
 	//supprimer m_world
+	b2Body * body = m_world->GetBodyList();
+	while(body != NULL)
+	{
+		m_world->DestroyBody(body);
+		body = m_world->GetBodyList();
+	}
 }
-
 
 /*
  * ActualGame run: est appelé dans le game Engine: update le world et dessine les éléments
  */
-void ActualGame::run(SDL_Surface * screen, int w, int h){
+void ActualGame::run(SDL_Surface * screen, int w, int h)
+{
+	//Actualise la simulation
+	runSimulation();
+	
+	//Dessine le niveau & le train
+	m_actualLevel->render(screen, w, h);
+	m_train->drawSprite(screen,w,h);
 
 	fooDrawInstance->SetFlags( b2Draw::e_shapeBit );
-	m_world->Step(m_timeStep, m_velocityIterations, m_positionIterations);
-
-	//m_actualLevel->drawBackgrounds(screen,  w,  h);// ralentit tout: i don't know why... :(
-	m_world->DrawDebugData();
-
-	m_actualLevel->drawBlocks(screen, w, h);
-	m_train->drawSprite(screen,w,h);
-	
+	m_world->DrawDebugData();	
 }
 
-void ActualGame::checkCollisions()
+void ActualGame::runSimulation()
 {
-	
+	//Pour caler la simulation physique avec le framerate
+	float dt = (float) SDL_GetTicks()/1000.f;
+	const int MAX_STEPS = 5;
+ 
+	fixedTimestepAccumulator += dt;
+	const int nSteps = static_cast<int> ( std::floor (fixedTimestepAccumulator / m_timeStep) );
+	if (nSteps > 0)
+	{
+		fixedTimestepAccumulator -= nSteps * m_timeStep;
+	}
+	assert("Accumulator must have a value lesser than the fixed time step" && fixedTimestepAccumulator < m_timeStep + FLT_EPSILON);
+	fixedTimestepAccumulatorRatio = fixedTimestepAccumulator / m_timeStep;
+	PhysicalObject::fixedTimestepAccumulatorRatio = fixedTimestepAccumulatorRatio;
+ 
+	const int nStepsClamped = std::min (nSteps, MAX_STEPS);
+	for (int i = 0; i < nStepsClamped; ++ i)
+	{
+		clearAllSmoothAngleAndPosition();
+		m_world->Step (m_timeStep, m_velocityIterations, m_positionIterations);
+	}
+ 
+	m_world->ClearForces();
+}
+
+void ActualGame::clearAllSmoothAngleAndPosition()
+{
+	m_actualLevel->clearAllSmoothAngleAndPosition();
+	m_train->clearAllSmoothAngleAndPosition();
 }
 
 void ActualGame::checkKeyboardEvent(const SDL_KeyboardEvent *event)

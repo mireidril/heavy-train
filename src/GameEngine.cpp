@@ -29,7 +29,7 @@ GameEngine::~GameEngine()
 		delete m_interfaces[i];
 	}
 
-	//delete m_actualGame;
+	delete m_actualGame;
 
 	SDL_FreeSurface(m_screen);
 
@@ -52,7 +52,7 @@ void GameEngine::initSDL()
 
 	SDL_WM_SetCaption("Heavy Train", NULL);
 
-	m_screen = SDL_SetVideoMode(m_windowsWidth, m_windowsHeight, 32, SDL_DOUBLEBUF);
+	m_screen = SDL_SetVideoMode(m_windowsWidth, m_windowsHeight, 32, SDL_HWSURFACE | SDL_DOUBLEBUF);
 	Sprite::screen = m_screen;
 	assert(m_screen);
 
@@ -234,7 +234,7 @@ void GameEngine::render()
 	// Met à jour l'affichage
 	SDL_UpdateRect(m_screen, 0, 0, m_windowsWidth, m_windowsHeight);
 	SDL_Flip(m_screen);
-	SDL_UpdateRect(m_screen, 0, 0, m_windowsWidth, m_windowsHeight);
+	//SDL_UpdateRect(m_screen, 0, 0, m_windowsWidth, m_windowsHeight);
 }
 
 /*

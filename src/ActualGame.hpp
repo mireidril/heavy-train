@@ -17,7 +17,11 @@ class ActualGame
 	public :
 		ActualGame();
 		virtual ~ActualGame();
-		void checkCollisions();
+		void runSimulation();
+
+		//Réinitialise les valeurs des PhysicalObjects après un smooth pour coller au framerate
+		void clearAllSmoothAngleAndPosition();
+
 		void checkKeyboardEvent(const SDL_KeyboardEvent *event);
 		void run(SDL_Surface * screen, int w, int h);
 		
@@ -51,5 +55,9 @@ class ActualGame
 		
 		//Pour le debug drawing
 		DebugDraw * fooDrawInstance;
+
+		//Pour caler la simulation avec le framerate
+		double fixedTimestepAccumulator;
+		double fixedTimestepAccumulatorRatio;
 };
 #endif

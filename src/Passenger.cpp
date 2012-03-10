@@ -2,7 +2,9 @@
 
 b2World * PhysicalObject::m_world;
 
-Passenger::Passenger(double x, double y){
+Passenger::Passenger(double x, double y)
+: PhysicalObject(NULL)
+{
 	m_speed = 1.0f;
 	m_isEjected = false;
 	m_destination = new b2Vec2(x, y);
