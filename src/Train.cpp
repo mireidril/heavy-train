@@ -46,12 +46,22 @@ void Train::drawSprite(SDL_Surface * screen, const int & width, const int & heig
 	double angle;
 	//loco
 	bodyPos = m_bodies[0]->GetPosition();
-	angle = m_bodies[0]->GetAngle()*180/M_PI;
+	angle = m_bodies[0]->GetAngle();
+	double angledegrees = angle*180/M_PI;
 	x = bodyPos.x; y = bodyPos.y;
 	m_sprites[0]->convertMetersToPixels( x,  y,  width,  height);
-	pos->x = x-50; pos->y = y-35;
+
+	if (angle>=0){
+		pos->x = x-50*cos(angle)-35*sin(angle); 
+		pos->y = y-50*sin(angle)-35*cos(angle);
+	}
+	else {
+		pos->x = x+50*cos(M_PI-angle)+35*sin(M_PI-angle); 
+		pos->y = y+50*sin(M_PI-angle)+35*cos(M_PI-angle);
+	}
+
 	m_sprites[0]->setPosition(pos);
-	m_sprites[0]->setAngle(angle);
+	m_sprites[0]->setAngle(angledegrees);
 	m_sprites[0]->draw(screen, width, height);
 
 	//roues
@@ -80,7 +90,7 @@ void Train::build(b2World * world)
 	m_hz = 4.0f;
 	float32 zeta = 0.7f;
 	m_speed = 20.0f;
-	float high =5;
+	float high =4;
 
 	b2BodyDef bd;
 	bd.type = b2_dynamicBody;
@@ -105,11 +115,11 @@ void Train::build(b2World * world)
 	fd.density = 2.0f;
 	fd.friction = 0.9f;
 
-	bd.position.Set(11.0f, high+8.f);//position de la roue1
+	bd.position.Set(10.6f, high+7.9f);//position de la roue1
 	m_bodies.push_back(world->CreateBody(&bd));
 	m_bodies[1]->CreateFixture(&fd);
 
-	bd.position.Set(13.0f, high+8.f);//position de la roue2
+	bd.position.Set(13.4f, high+7.9f);//position de la roue2
 	m_bodies.push_back(world->CreateBody(&bd));
 	m_bodies[2]->CreateFixture(&fd);
 

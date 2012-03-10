@@ -29,6 +29,7 @@ class Level
 		void loadAndBuild(const int & isle, const int & lvl);
 		Block * getBlock(int i);
 		void drawBlocks(SDL_Surface * screen, int w, int h);
+		void drawBackgrounds(SDL_Surface * screen, int w, int h);
 	private :
 		//All the blocks of the level
 		std::vector<Block*>	m_blocks;
@@ -40,8 +41,9 @@ class Level
 		int	m_islandNum;
 		//Numero of the level
 		int	m_levelNum;
-		//Background image of the level and moving speed
-		std::map<Sprite, int> m_backgroundImages;
+		//Background image of the level 
+		std::vector<Sprite*> m_backgroundImages;
+		std::vector<SDL_Rect *> m_backgroundPositions;
 		//Numeros of the blocks which are stations
 		std::vector<int> m_idStations;
 };

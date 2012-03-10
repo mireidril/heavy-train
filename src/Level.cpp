@@ -17,6 +17,13 @@ Level::Level ()
         //m_backgroundImages = ;
         //m_idStations= ...;
 
+	SDL_Rect * size = new SDL_Rect;
+	size->x = 1024; size->y = 768; 
+	SDL_Rect * posBg = new SDL_Rect();
+        posBg->x = 0; posBg->y = 0;
+	m_backgroundPositions.push_back(posBg);
+	m_backgroundImages.push_back(new Sprite("../img/screens/title_screen.png",  posBg,  size));
+
 }
 
 Level::~Level() 
@@ -136,4 +143,15 @@ void Level::drawBlocks(SDL_Surface * screen, int w, int h)
         {
                 m_blocks.at(i)->draw( screen, w, h);
         }
+}
+
+
+/*
+ * Level dessine les fonds d'écran
+ */
+void Level::drawBackgrounds(SDL_Surface * screen, int w, int h)
+{
+   m_backgroundPositions[0]->x -= 1;
+   m_backgroundImages[0]->setPosition(m_backgroundPositions[0]);
+   m_backgroundImages[0]->draw(screen,w,h);     
 }

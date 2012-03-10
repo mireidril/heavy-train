@@ -46,14 +46,23 @@ void Wagon::drawSprite(SDL_Surface * screen, const int & width, const int & heig
 	double y; 
 	b2Vec2 bodyPos;
 	double angle;
+	double angledegrees;
 	//wagon
 	bodyPos = m_bodies[0]->GetPosition();
-	angle = m_bodies[0]->GetAngle()*180/M_PI;
+	angle = m_bodies[0]->GetAngle();
+	angledegrees= angle*180/M_PI;
 	x = bodyPos.x; y = bodyPos.y;
 	m_sprites[0]->convertMetersToPixels( x,  y,  width,  height);
-	pos->x = x-30; pos->y = y-50;
+	if (angle>=0){
+		pos->x = x-30*cos(angle)-50*sin(angle); 
+		pos->y = y-30*sin(angle)-50*cos(angle);
+	}
+	else {
+		pos->x = x+30*cos(M_PI-angle)+50*sin(M_PI-angle); 
+		pos->y = y+30*sin(M_PI-angle)+50*cos(M_PI-angle);
+	}
 	m_sprites[0]->setPosition(pos);
-	m_sprites[0]->setAngle(angle);
+	m_sprites[0]->setAngle(angledegrees);
 	m_sprites[0]->draw(screen, width, height);
 
 	//roues
