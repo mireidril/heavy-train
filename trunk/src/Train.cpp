@@ -90,7 +90,7 @@ void Train::build(b2World * world)
 	m_hz = 4.0f;
 	float32 zeta = 0.7f;
 	m_speed = 20.0f;
-	float high =4;
+	float high =5;
 
 	b2BodyDef bd;
 	bd.type = b2_dynamicBody;
