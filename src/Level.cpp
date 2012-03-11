@@ -21,9 +21,13 @@ Level::Level ()
 	size->x = 1024; size->y = 768; 
 	SDL_Rect * posBg = new SDL_Rect();
         posBg->x = 0; posBg->y = 0;
-	m_backgroundPositions.push_back(posBg);
+	SDL_Rect * posBg2 = new SDL_Rect();
+        posBg2->x = 0; posBg2->y = 0;
+	SDL_Rect * posBg3 = new SDL_Rect();
+        posBg3->x = 0; posBg3->y = 0;
 	m_backgroundImages.push_back(new Sprite("../img/niveau2/sky.png",  posBg,  size));
-	m_backgroundImages.push_back(new Sprite("../img/niveau2/moutains.png", posBg,  size));
+	m_backgroundImages.push_back(new Sprite("../img/niveau2/moutains.png", posBg2,  size));
+	m_backgroundImages.push_back(new Sprite("../img/niveau2/tree.png", posBg3,  size));
 
 }
 
@@ -165,8 +169,10 @@ void Level::drawBlocks(SDL_Surface * screen, int w, int h)
  */
 void Level::drawBackgrounds(SDL_Surface * screen, int w, int h)
 {
-   m_backgroundPositions[0]->x -= 1;
-   //m_backgroundImages[1]->setPosition(m_backgroundPositions[0]);
+
    m_backgroundImages[0]->draw(screen,w,h); 
+   m_backgroundImages[1]->setPositionX(m_backgroundImages[1]->getPositionX()-1);
    m_backgroundImages[1]->draw(screen,w,h);   
+   m_backgroundImages[2]->setPositionX(m_backgroundImages[2]->getPositionX()-2);
+   m_backgroundImages[2]->draw(screen,w,h);  
 }

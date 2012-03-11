@@ -31,6 +31,8 @@ class Sprite
 		virtual ~Sprite();
 		// Setter position & angle
 		void setPosition(SDL_Rect * pos);
+		void setPositionX(int i);
+		int getPositionX();
 		void setAngle(double & angle);
 
 		//Charge et ajoute une image au sprite
