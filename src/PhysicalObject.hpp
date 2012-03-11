@@ -25,6 +25,9 @@ class PhysicalObject
 		//Retourne le m_sprite
 		Sprite * getSprite();
 
+		//Mets à jour les positions et angle actuelle et de la dernière frame
+		void updatePositions();
+
 		//Pointeur vers le m_world de ActualGame
 		static b2World * m_world;
 		//Ratio calculé en fonction du framerate
@@ -36,14 +39,25 @@ class PhysicalObject
 		double getAngleSmoothed();
 		//Réinitialise les valeurs après un smooth
 		void clearSmoothAngleAndPosition();
+
+		//Retourne la position du body
+		b2Vec2 getPosition();
+		//Retourne la dernière position du body
+		b2Vec2 getLastPosition();
+		//Retourne l'angle du body
+		double getAngle();
 	protected :
 		//Body of the physical object
 		b2Body * m_body;
 		//Sprite of the physical Object
 		Sprite * m_sprite;
 
+		//Position de m_body smoothée
+		b2Vec2 m_smoothedPosition;
 		//Position de m_body au dernier pas de simulation
 		b2Vec2 m_previousPosition;
+		//Angle de m_body smoothée
+		double m_smoothedAngle;
 		//Angle de m_body au dernier pas de simulation
 		float m_previousAngle;
 };

@@ -62,6 +62,7 @@ void ActualGame::run(SDL_Surface * screen, int w, int h)
 	runSimulation();
 	
 	//Dessine le niveau & le train
+	m_train->updatePosition();
 	scroll();
 	m_actualLevel->render(screen, w, h);
 	m_train->drawSprite(screen,w,h);
@@ -73,7 +74,14 @@ void ActualGame::run(SDL_Surface * screen, int w, int h)
 
 void ActualGame::scroll()
 {
+	//Récupération de la dernière position du train
+	b2Vec2 lastPos = m_train->getBodyLastPosition();
+	b2Vec2 currentPos = m_train->getBodyPosition();
 
+	double x = lastPos.x - currentPos.x;
+	Sprite::convertMetersToPixels(&x, NULL, WINDOWS_W, WINDOWS_H);
+
+	m_actualLevel->scrollLevel(x);
 }
 
 void ActualGame::runSimulation()

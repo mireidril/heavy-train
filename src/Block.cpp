@@ -175,8 +175,8 @@ void Block::createImage()
 				y1 = m_groundPoints[i-1].y;
 				x2 = m_groundPoints[i].x;
 				y2 = m_groundPoints[i].y;
-				Sprite::convertMetersToPixels(x1, y1, 1024, 768);
-				Sprite::convertMetersToPixels(x2, y2, 1024, 768);
+				Sprite::convertMetersToPixels(&x1, &y1, WINDOWS_W, WINDOWS_H);
+				Sprite::convertMetersToPixels(&x2, &y2, WINDOWS_W, WINDOWS_H);
 
 				//Remplissage du haut de l'écran par du noir
 				int nbSide = 4;
@@ -258,6 +258,12 @@ void Block::createImage()
 	
 }
 
+void Block::scroll(const int & x)
+{
+	if(m_sprite)
+		m_sprite->setPositionX(m_sprite->getPositionX() + x);
+}
+
 
 void Block::draw(SDL_Surface * screen, const int & width, const int & height)
 {
@@ -327,7 +333,7 @@ void Block::build(b2World * world)
 				//Conversion en mètre
 				x = pt1.x;
 				y = pt1.y;
-				Sprite::convertPixelsToMeters(x, y, 1024, 768);
+				Sprite::convertPixelsToMeters(&x, &y, WINDOWS_W, WINDOWS_H);
 				pt1.x = (float32) x;
 				pt1.y = (float32) y;
 				m_groundPoints.push_back(pt1);
@@ -339,7 +345,7 @@ void Block::build(b2World * world)
 					//Conversion en mètre
 					x = pt2.x;
 					y = pt2.y;
-					Sprite::convertPixelsToMeters(x, y, 1024, 768);
+					Sprite::convertPixelsToMeters(&x, &y, WINDOWS_W, WINDOWS_H);
 					pt2.x = (float32) x;
 					pt2.y = (float32) y;
 					m_groundPoints.push_back(pt2);
@@ -387,8 +393,8 @@ void Block::build(b2World * world)
 			//Attention aux blocs mitoyens : y'a t-il besoin de mettre shape.m_hasVertex0 et shape.m_hasVertex3 ?
 			double x1 = m_posX, y1 = m_sizeYMin;
 			double x2 = m_posX + m_sizeX, y2 = m_sizeYMin;
-			Sprite::convertPixelsToMeters(x1, y1, WINDOWS_W, WINDOWS_H);
-			Sprite::convertPixelsToMeters(x2, y2, WINDOWS_W, WINDOWS_H);
+			Sprite::convertPixelsToMeters(&x1, &y1, WINDOWS_W, WINDOWS_H);
+			Sprite::convertPixelsToMeters(&x2, &y2, WINDOWS_W, WINDOWS_H);
 			b2Vec2 p1((float32) x1, (float32) y1);
 			b2Vec2 p2((float32) x2, (float32) y2);
 			shape.Set(p1, p2);
@@ -408,8 +414,8 @@ void Block::build(b2World * world)
 			b2EdgeShape sol;
 			double x1 = m_posX, y1 = m_y;
 			double x2 = m_posX + m_sizeX, y2 = m_y;
-			Sprite::convertPixelsToMeters(x1, y1, WINDOWS_W, WINDOWS_H);
-			Sprite::convertPixelsToMeters(x2, y2, WINDOWS_W, WINDOWS_H);
+			Sprite::convertPixelsToMeters(&x1, &y1, WINDOWS_W, WINDOWS_H);
+			Sprite::convertPixelsToMeters(&x2, &y2, WINDOWS_W, WINDOWS_H);
 			b2Vec2 p1((float32) x1, (float32) y1);
 			b2Vec2 p2((float32) x2, (float32) y2);
 			sol.Set(p1, p2);
@@ -419,8 +425,8 @@ void Block::build(b2World * world)
 			b2EdgeShape plafond;
 			x1 = m_posX; y1 = m_y - m_tunnelHeight;
 			x2 = m_posX + m_sizeX; y2 = m_y - m_tunnelHeight;
-			Sprite::convertPixelsToMeters(x1, y1, WINDOWS_W, WINDOWS_H);
-			Sprite::convertPixelsToMeters(x2, y2, WINDOWS_W, WINDOWS_H);
+			Sprite::convertPixelsToMeters(&x1, &y1, WINDOWS_W, WINDOWS_H);
+			Sprite::convertPixelsToMeters(&x2, &y2, WINDOWS_W, WINDOWS_H);
 			p1.x = (float32) x1; p1.y = (float32) y1;
 			p2.x = (float32) x2; p2.y = (float32) y2;
 			plafond.Set(p1, p2);

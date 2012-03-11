@@ -51,8 +51,8 @@ class Sprite
 		//Change l'image actuellement affichée par une autre
 		void changeImageManually(const int & imageNum);
 
-		static void convertMetersToPixels (double & x, double & y, const int & width, const int & height);
-		static void convertPixelsToMeters (double & x, double & y, const int & width, const int & height);
+		static void convertMetersToPixels (double * x, double * y, const int & width, const int & height);
+		static void convertPixelsToMeters (double * x, double * y, const int & width, const int & height);
 		
 		double getSizeX();
 		double getSizeY();
@@ -136,10 +136,10 @@ class DebugDraw : public b2Draw
 		b2Color color2(1.0, 0.0, 1.0);
 		double x = center.x;
 		double y = center.y;
-		Sprite::convertMetersToPixels(x, y, 1024, 768);
+		Sprite::convertMetersToPixels(&x, &y, WINDOWS_W, WINDOWS_H);
 		double rX = radius;
 		double rY = radius;
-		Sprite::convertMetersToPixels(rX, rY, 1024, 768);
+		Sprite::convertMetersToPixels(&rX, &rY, WINDOWS_W, WINDOWS_H);
 
 		ellipseRGBA(Sprite::screen, (Sint16) x, (Sint16) y, (Sint16) rX, (Sint16) rX, (Uint8) color2.r * 255, (Uint8) color2.g * 255, (Uint8) color2.b * 255, 255);
 	}
@@ -147,10 +147,10 @@ class DebugDraw : public b2Draw
 		b2Color color2(1.0, 0.0, 1.0);
 		double x = center.x;
 		double y = center.y;
-		Sprite::convertMetersToPixels(x, y, 1024, 768);
+		Sprite::convertMetersToPixels(&x, &y, WINDOWS_W, WINDOWS_H);
 		double rX = radius;
 		double rY = radius;
-		Sprite::convertMetersToPixels(rX, rY, 1024, 768);
+		Sprite::convertMetersToPixels(&rX, &rY, WINDOWS_W, WINDOWS_H);
 
 		ellipseRGBA(Sprite::screen, (Sint16) x, (Sint16) y, (Sint16) rX, (Sint16) rX, (Uint8) color2.r * 255, (Uint8) color2.g * 255, (Uint8) color2.b * 255, 255);
 	}
@@ -161,8 +161,8 @@ class DebugDraw : public b2Draw
 		double x2 = p2.x;
 		double y2 = p2.y;
 		
-		Sprite::convertMetersToPixels(x1, y1, 1024, 768);
-		Sprite::convertMetersToPixels(x2, y2, 1024, 768);
+		Sprite::convertMetersToPixels(&x1, &y1, WINDOWS_W, WINDOWS_H);
+		Sprite::convertMetersToPixels(&x2, &y2, WINDOWS_W, WINDOWS_H);
 		lineRGBA(Sprite::screen, (Sint16) x1 , (Sint16) y1, (Sint16) x2, (Sint16) y2, (Uint8) color2.r * 255, (Uint8) color2.g * 255, (Uint8) color2.b * 255, 255);
 	}
     void DrawTransform(const b2Transform& xf) {

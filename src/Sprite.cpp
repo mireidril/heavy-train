@@ -122,21 +122,25 @@ void Sprite::addImage(SDL_Surface * sdlSurface)
 /*
  * Gère les conversions du monde physique vers l'affichage
  */
-void Sprite::convertMetersToPixels(double & x, double & y, const int & width, const int & height){
+void Sprite::convertMetersToPixels(double * x, double * y, const int & width, const int & height){
 	//largeur de l'écran : 1024 = 40 metres
 	//hauteur de l'écran : 768 = 30 metres (pour respecter le ratio de l'écran)
-	x = width * x / 40;
-	y = height - height * y / 30;
+	if(x)
+		(*x) = width * (*x) / 40;
+	if(y)
+		(*y) = height - height * (*y) / 30;
 }
 
 /*
  * Gère les conversions de l'affichage vers l'écran
  */
-void Sprite::convertPixelsToMeters(double & x, double & y, const int & width, const int & height){
+void Sprite::convertPixelsToMeters(double * x, double * y, const int & width, const int & height){
 	//largeur de l'écran : 1024 = 40 metres
 	//hauteur de l'écran : 768 = 30 metres (pour respecter le ratio de l'écran)
-	x = (double) x * 40.0 / width;
-	y = (double) 30 - ( y * 30.0 / height );
+	if(x)
+		(*x) = (double) (*x) * 40.0 / width;
+	if(y)
+		(*y) = (double) 30 - ( (*y) * 30.0 / height );
 }
 
 double Sprite::getSizeX(){
