@@ -62,12 +62,18 @@ void ActualGame::run(SDL_Surface * screen, int w, int h)
 	runSimulation();
 	
 	//Dessine le niveau & le train
+	scroll();
 	m_actualLevel->render(screen, w, h);
 	m_train->drawSprite(screen,w,h);
 
 	fooDrawInstance->SetFlags( b2Draw::e_shapeBit );
 	//Affichage des formes physiques pour Debug
 	m_world->DrawDebugData();	
+}
+
+void ActualGame::scroll()
+{
+
 }
 
 void ActualGame::runSimulation()
@@ -104,9 +110,7 @@ void ActualGame::clearAllSmoothAngleAndPosition()
 
 void ActualGame::checkKeyboardEvent(const SDL_KeyboardEvent *event)
 {
-
-		m_train->keyboard(event);
-
+	m_train->keyboard(event);
 }
 
 

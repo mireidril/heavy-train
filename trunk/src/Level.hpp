@@ -27,7 +27,7 @@ class Level
 		void scrollLevel(const int & x);
 		//Load and build the level n°lvl of the island n°isle
 		void loadAndBuild(const int & isle, const int & lvl);
-		Block * getBlock(int i);
+		Block * getBlock(unsigned int i);
 
 		//Réinitialise les valeurs des PhysicalObjects après un smooth pour coller au framerate
 		void clearAllSmoothAngleAndPosition();

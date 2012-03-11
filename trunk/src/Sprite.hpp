@@ -34,8 +34,9 @@ class Sprite
 		//Destructeur
 		virtual ~Sprite();
 		// Setter position & angle
-		void setPosition(SDL_Rect * pos);
-		void setPositionX(int i);
+		void setPosition(int x, int y);
+		void setPositionX(int x);
+		void setPositionY(int y);
 		int getPositionX();
 		void setAngle(double & angle);
 

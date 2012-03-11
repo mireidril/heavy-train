@@ -43,7 +43,6 @@ Train::~Train ()
  */
 void Train::drawSprite(SDL_Surface * screen, const int & width, const int & height)
 {
-	SDL_Rect * pos = new SDL_Rect;
 	double x; 
 	double y; 
 	b2Vec2 bodyPos;
@@ -56,15 +55,15 @@ void Train::drawSprite(SDL_Surface * screen, const int & width, const int & heig
 	m_physicalObjects[0]->getSprite()->convertMetersToPixels( x,  y,  width,  height);
 
 	if (angle>=0){
-		pos->x = x-50*cos(angle)-35*sin(angle); 
-		pos->y = y-50*sin(angle)-35*cos(angle);
+		x = x-50*cos(angle)-35*sin(angle); 
+		y = y-50*sin(angle)-35*cos(angle);
 	}
 	else {
-		pos->x = x+50*cos(M_PI-angle)+35*sin(M_PI-angle); 
-		pos->y = y+50*sin(M_PI-angle)+35*cos(M_PI-angle);
+		x = x+50*cos(M_PI-angle)+35*sin(M_PI-angle); 
+		y = y+50*sin(M_PI-angle)+35*cos(M_PI-angle);
 	}
 
-	m_physicalObjects[0]->getSprite()->setPosition(pos);
+	m_physicalObjects[0]->getSprite()->setPosition(x, y);
 	m_physicalObjects[0]->getSprite()->setAngle(angledegrees);
 	m_physicalObjects[0]->getSprite()->draw(screen, width, height);
 
@@ -74,8 +73,8 @@ void Train::drawSprite(SDL_Surface * screen, const int & width, const int & heig
 		x = bodyPos.x; y = bodyPos.y;
 		angle = m_physicalObjects[i]->getAngleSmoothed()*180/M_PI;
 		m_physicalObjects[i]->getSprite()->convertMetersToPixels( x,  y,  width,  height);
-		pos->x = x-8; pos->y = y-8;
-		m_physicalObjects[i]->getSprite()->setPosition(pos);
+		x = x-8; y = y-8;
+		m_physicalObjects[i]->getSprite()->setPosition(x, y);
 		m_physicalObjects[i]->getSprite()->setAngle(angle);
 		m_physicalObjects[i]->getSprite()->draw(screen, width, height);
 	}
