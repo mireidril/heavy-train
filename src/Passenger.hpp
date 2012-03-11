@@ -27,8 +27,13 @@ class Passenger : public PhysicalObject
 		// Set the destination point
 		void setDestinationPoint( double x, double y );
 		void setJoint(b2DistanceJoint * );
+
+		//Taille des passagers
+		static const float m_width;
+		static const float m_height;
         
 	private :
+		
 		//Joint linking the body of the passenger to the wagon
 		b2DistanceJoint * m_joint;
 		// Destination point that the passenger wants to reach
