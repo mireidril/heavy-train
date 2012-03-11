@@ -11,21 +11,19 @@ Passenger::Passenger(double x, double y)
 	m_joint = NULL;
 
 	//---Creation des "shapes"---
-	double width = 1.0f;
-	double height = 2.0f;
-	float mHeight=(float)width * 1.5f / 2.0f;
-    float mWidth=(float)width / 2.0f;
+	double width = 0.5f;
+	double height = 1.0f;
 	//Un passager est composé d'un rectangle et d'un cercle à la base.
 	//Rectangle
     b2PolygonShape sd1;
     //sd1.setAsBox(width / 2.0f, width / 2.0f);
 	b2Vec2 vertices[4];
-	float boxHeight = 3*height/4.f;
+	float boxHeight = 2*height/6.f;
 	float boxWidth = width/2.0f;
-	vertices[0].Set(-boxHeight, -boxWidth);
-	vertices[1].Set(boxHeight, -boxWidth);
-	vertices[2].Set(boxHeight, boxWidth);
-	vertices[3].Set(-boxHeight, boxWidth);
+	vertices[0].Set(-boxWidth, -boxHeight);
+	vertices[1].Set(boxWidth, -boxHeight);
+	vertices[2].Set(boxWidth, boxHeight);
+	vertices[3].Set(-boxWidth, boxHeight);
 	sd1.Set(vertices, 4);
 
 	b2FixtureDef fd;
@@ -33,14 +31,16 @@ Passenger::Passenger(double x, double y)
 	fd.density = 3.0f;
 	fd.friction = 0.9f;
 
-    //sd1.density = density/2;
-	/*
+	//Cercle	
 	b2CircleShape sd2;
-    sd2 = new b2CircleShape();
-    sd2.radius = width / 2.0f;
-    sd2.localPosition.set(0.0f, width / 2.0f);
-    sd2.density = density/2; // massless
-    */          
+    sd2.m_radius = width / 2.0f;
+    sd2.m_p.Set(0.0f, - 2*width / 3.0f);
+
+	b2FixtureDef fd2;
+	fd2.shape = &sd2;
+	fd2.density = 3.0f;
+	fd2.friction = 0.9f;
+         
 	//Création du BodyDef, le "modèle"
 	b2BodyDef bodyDef;
 	bodyDef.position.Set(x, y);
@@ -50,8 +50,10 @@ Passenger::Passenger(double x, double y)
 
 	//Création du b2Body à partir du BodyDef 
 	setBody( PhysicalObject::m_world->CreateBody(&bodyDef) );
+
+	//Assignation des Fixtures ( pour créer les formes)
 	getBody()->CreateFixture( &fd );
-    //m_body.createShape(sd2);
+	getBody()->CreateFixture( &fd2 );
 }
 
 //Destructor
