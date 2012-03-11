@@ -20,6 +20,25 @@ Sprite::Sprite(const char* imageFileName, SDL_Rect * pos, SDL_Rect * size)
 	}
 }
 
+/**
+ * Constructeur
+ */
+Sprite::Sprite(SDL_Surface * sdlSurface, SDL_Rect * pos, SDL_Rect * size)
+: m_actualFrame(0)
+, m_nbFrames(0)
+, m_position(pos)
+, m_angle(0.0)
+, m_size(size)
+, m_timeActualFrame(0)
+, m_timeFrame(10)
+{
+	if(sdlSurface)
+	{
+		m_frames.push_back(sdlSurface);
+		m_nbFrames++;
+	}
+}
+
 
 /**
  * Destructeur
@@ -78,6 +97,18 @@ void Sprite::addImage(const char* imageFileName)
 	}
 }
 
+/**
+ * Ajoute une image au sprite
+ * sdlSurface : SDL_Surface à rajouter
+ */
+void Sprite::addImage(SDL_Surface * sdlSurface)
+{
+	if(sdlSurface)
+	{
+		m_frames.push_back(sdlSurface);
+		m_nbFrames++;
+	}
+}
 
 /*
  * Gère les conversions du monde physique vers l'affichage
@@ -173,7 +204,6 @@ void Sprite::changeImageManually(const int & imageNum)
 	}
 }
 
-/*
 Uint32 Sprite::getpixel(SDL_Surface *surface, int x, int y)
 {
     int bpp = surface->format->BytesPerPixel;
@@ -236,4 +266,4 @@ void Sprite::putpixel(SDL_Surface *surface, int x, int y, Uint32 pixel)
         *(Uint32 *)p = pixel;
         break;
     }
-}*/
+}

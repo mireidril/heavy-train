@@ -19,14 +19,18 @@
 #include <cassert>
 #include <iostream>
 
+#define WINDOWS_W 1024
+#define WINDOWS_H 768
+
 /*
  * Ensemble d'images
  */
 class Sprite
 {
 	public :
-		//Constructeur
+		//Constructeurs
 		Sprite(const char* imageFileName, SDL_Rect * pos, SDL_Rect * size);
+		Sprite(SDL_Surface * sdlSurface, SDL_Rect * pos, SDL_Rect * size);
 		//Destructeur
 		virtual ~Sprite();
 		// Setter position & angle
@@ -37,6 +41,8 @@ class Sprite
 
 		//Charge et ajoute une image au sprite
 		void addImage(const char* imageFileName);
+		//Ajoute une image au sprite
+		void addImage(SDL_Surface * sdlSurface);
 		//Change l'image actuellement affichée après un temps donné (m_timeFrame)
 		void animate();
 		//Dessine le sprite à l'écran
@@ -50,8 +56,9 @@ class Sprite
 		double getSizeX();
 		double getSizeY();
 
-		//static void putpixel(SDL_Surface *surface, int x, int y, Uint32 pixel);
-		//static Uint32 getpixel(SDL_Surface *surface, int x, int y);
+		static void putpixel(SDL_Surface *surface, int x, int y, Uint32 pixel);
+		static Uint32 getpixel(SDL_Surface *surface, int x, int y);
+
 		static SDL_Surface* screen;
 
 	private :
