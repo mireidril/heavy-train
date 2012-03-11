@@ -43,6 +43,21 @@ void Sprite::setPosition(SDL_Rect * pos){
 }
 
 /**
+ * Setter positionX
+ */
+void Sprite::setPositionX(int i){
+	m_position->x = i;
+}
+
+
+/**
+ * Getter position X
+ */
+int Sprite::getPositionX(){
+	return m_position->x;
+}
+
+/**
  * Setter angle
  */
 void Sprite::setAngle(double & angle){

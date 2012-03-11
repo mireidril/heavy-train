@@ -48,7 +48,6 @@ class Level
 		int	m_levelNum;
 		//Background image of the level
 		std::vector<Sprite*> m_backgroundImages;
-		std::vector<SDL_Rect *> m_backgroundPositions;
 		//Numeros of the blocks which are stations
 		std::vector<int> m_idStations;
 };
