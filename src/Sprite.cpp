@@ -57,16 +57,25 @@ Sprite::~Sprite()
 /**
  * Setter position
  */
-void Sprite::setPosition(SDL_Rect * pos){
-	m_position = pos;
+void Sprite::setPosition(int x, int y){
+	m_position->x = x;
+	m_position->y = y;
 }
 
 /**
  * Setter positionX
  */
-void Sprite::setPositionX(int i){
-	m_position->x = i;
+void Sprite::setPositionX(int x){
+	m_position->x = x;
 }
+
+/**
+ * Setter positionY
+ */
+void Sprite::setPositionY(int y){
+	m_position->y = y;
+}
+
 
 
 /**

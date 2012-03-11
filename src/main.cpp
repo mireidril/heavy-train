@@ -66,7 +66,7 @@ void testLibrairies()
 	b2BodyDef groundBodyDef;
 	groundBodyDef.position.Set(0.0f, -30.0f);
 	SDL_Rect * posSol = new SDL_Rect;
-	posSol->x = 0.0;
+	posSol->x = 0;
 	posSol->y = 30 + 249/2 + 20;
 
 	// Call the body factory which allocates memory for the ground body
@@ -88,7 +88,7 @@ void testLibrairies()
 	bodyDef.type = b2_dynamicBody;
 	bodyDef.position.Set(400.0f, 4.0f);
 	SDL_Rect * posSprite = new SDL_Rect;
-	posSprite->x = 400.f;
+	posSprite->x = 400;
 	b2Body* body = world.CreateBody(&bodyDef);
 
 	// Define another box shape for our dynamic body.
@@ -168,8 +168,8 @@ void testLibrairies()
 
 		/* Copy image to the screen */
 		//posSprite->x = position.x +10;
-		posSprite->y = -position.y +10;
-		posSol->x = -position.x+10;
+		posSprite->y = (Sint16) -position.y +10;
+		posSol->x = (Sint16) -position.x + 10;
 		SDL_FillRect( SDL_GetVideoSurface(), NULL, 0 );
 		SDL_BlitSurface(image, NULL, screen, posSprite);
 		SDL_BlitSurface(image2, NULL, screen, posSol);

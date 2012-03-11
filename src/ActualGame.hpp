@@ -18,6 +18,8 @@ class ActualGame
 		ActualGame();
 		virtual ~ActualGame();
 		void runSimulation();
+		//Scrolle le niveau en fonction du déplacement du train
+		void scroll();
 
 		//Réinitialise les valeurs des PhysicalObjects après un smooth pour coller au framerate
 		void clearAllSmoothAngleAndPosition();

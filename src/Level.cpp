@@ -9,7 +9,7 @@ Level::Level ()
         //m_blocks.push_back(new Block(BlockType::JUNCTION_DOWN, 1000, pos));
         //m_blocks.push_back(new Block(JUNCTION_DOWN, 1000, pos));
 	//m_blocks.push_back(new Block(JUNCTION_UP, 1000, pos));
-		m_blocks.push_back(new Block(GROUND, 1000, pos));
+		m_blocks.push_back(new Block(GROUND, 500, 0, 0));
         //m_departureTime = ...;
         //m_position = ...;
         m_islandNum = 0;
@@ -33,13 +33,13 @@ Level::Level ()
 
 Level::~Level() 
 {
-        for(int i = 0; i < m_blocks.size(); ++i)
-        {
-                delete m_blocks[i];
-        }
+	for(unsigned int i = 0; i < m_blocks.size(); ++i)
+	{
+			delete m_blocks[i];
+	}
 }
 
-Block * Level::getBlock(int i) {
+Block * Level::getBlock(unsigned int i) {
 	if(i < m_blocks.size() )
 	{
 		return m_blocks.at(i);
@@ -108,7 +108,7 @@ void Level::loadAndBuild(const int & isle, const int & lvl){
 		b2Body * m_body;
 		int m_sizeX;
 							*/	
-								Block * vBlock = new Block(JUNCTION_DOWN, 10, NULL); // smartpointer
+								Block * vBlock = new Block(JUNCTION_DOWN, 10, NULL,-1); // smartpointer
 								vBlock->setId(atoi(contenuLevel->Attribute("num")));
 								vBlock->setSizeX(atoi(contenuLevel->Attribute("size")));
 								//vBlock->setType((BlockType)contenuLevel->Attribute("type"));
@@ -157,10 +157,10 @@ void Level::render(SDL_Surface * screen, int w, int h)
  */
 void Level::drawBlocks(SDL_Surface * screen, int w, int h)
 {
-        for (int i=0; i<m_blocks.size(); i++) 
-        {
-                m_blocks.at(i)->draw( screen, w, h);
-        }
+	for (unsigned int i=0; i<m_blocks.size(); i++) 
+	{
+		m_blocks.at(i)->draw( screen, w, h);
+	}
 }
 
 
