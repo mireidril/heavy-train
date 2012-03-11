@@ -33,9 +33,6 @@ ActualGame::ActualGame()
 	m_train = new Train();
 	m_train->build(m_world);
 
-	//TEST Création d'un passager
-	Passenger *p = new Passenger(5.0f, 30.0f);
-
 	fooDrawInstance = new DebugDraw;
 	m_world->SetDebugDraw( fooDrawInstance );
 }

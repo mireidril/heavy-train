@@ -1,6 +1,8 @@
 #include "Passenger.hpp"
 
 b2World * PhysicalObject::m_world;
+const float Passenger::m_width = 0.5f;
+const float Passenger::m_height = 1.0f;
 
 Passenger::Passenger(double x, double y)
 : PhysicalObject(NULL)
@@ -11,15 +13,13 @@ Passenger::Passenger(double x, double y)
 	m_joint = NULL;
 
 	//---Creation des "shapes"---
-	double width = 0.5f;
-	double height = 1.0f;
+	
 	//Un passager est composé d'un rectangle et d'un cercle à la base.
 	//Rectangle
     b2PolygonShape sd1;
-    //sd1.setAsBox(width / 2.0f, width / 2.0f);
 	b2Vec2 vertices[4];
-	float boxHeight = 2*height/6.f;
-	float boxWidth = width/2.0f;
+	float boxHeight = 2*m_height/6.f;
+	float boxWidth = m_width/2.0f;
 	vertices[0].Set(-boxWidth, -boxHeight);
 	vertices[1].Set(boxWidth, -boxHeight);
 	vertices[2].Set(boxWidth, boxHeight);
@@ -28,17 +28,17 @@ Passenger::Passenger(double x, double y)
 
 	b2FixtureDef fd;
 	fd.shape = &sd1;
-	fd.density = 3.0f;
+	fd.density = 1.0f;
 	fd.friction = 0.9f;
 
 	//Cercle	
 	b2CircleShape sd2;
-    sd2.m_radius = width / 2.0f;
-    sd2.m_p.Set(0.0f, - 2*width / 3.0f);
+    sd2.m_radius = m_width / 2.0f;
+    sd2.m_p.Set(0.0f, - 2*m_width / 3.0f);
 
 	b2FixtureDef fd2;
 	fd2.shape = &sd2;
-	fd2.density = 3.0f;
+	fd2.density = 1.0f;
 	fd2.friction = 0.9f;
          
 	//Création du BodyDef, le "modèle"
@@ -88,13 +88,13 @@ void Passenger::switchDynamic(){
 	getBody()->SetActive(true);
 
 	//Initialisation du joint
-	b2DistanceJointDef jointDef;
+	/*b2DistanceJointDef jointDef;
 	jointDef.bodyA = m_body;
 	// TODO 
 	//jointDef.bodyB = myBodyB;
 	//jointDef.localAnchorA = m_body->GetCenterPosition(); 
 	//jointDef.localAnchorB = wagon body 
-	m_joint = (b2DistanceJoint*)(PhysicalObject::m_world)->CreateJoint(&jointDef);
+	m_joint = (b2DistanceJoint*)(PhysicalObject::m_world)->CreateJoint(&jointDef);*/
 }
 
 void Passenger::setDestinationPoint( double x, double y ){
