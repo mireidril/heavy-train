@@ -26,6 +26,7 @@ class Passenger : public PhysicalObject
 		void switchDynamic();
 		// Set the destination point
 		void setDestinationPoint( double x, double y );
+		void setJoint(b2DistanceJoint * );
         
 	private :
 		//Joint linking the body of the passenger to the wagon

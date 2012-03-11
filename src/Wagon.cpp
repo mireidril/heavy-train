@@ -1,5 +1,4 @@
 #include "Wagon.hpp"
-
 /*
  * Wagon Constructor 
  */
@@ -11,6 +10,7 @@ Wagon::Wagon ()
 	m_maxCapacity=20;
 	// Number of passengers actually in the wagon (not ejected ones)
 	m_passengersCount=0;
+	
 	m_areDoorOpened= false;
 
 	SDL_Rect * pos = new SDL_Rect;
@@ -25,6 +25,7 @@ Wagon::Wagon ()
 	m_physicalObjects.push_back(roue1);
 	PhysicalObject * roue2 = new PhysicalObject(new Sprite("../img/elements/roue.png",  pos,  size) );
 	m_physicalObjects.push_back(roue2);
+
 }
 
 Wagon::~Wagon () 
@@ -169,3 +170,19 @@ void Wagon::build(b2World * world, double x, float high)
 	m_spring2 = (b2WheelJoint*)world->CreateJoint(&jd);// joint pour la roue2
 }
 
+// Add the Passenger also creates the passenger joint. Call checkCapacity at the end.
+void Wagon::addPassenger(Passenger* p)
+{
+	m_passengers.push_back(p);
+	++ m_passengersCount;
+	p->switchDynamic();
+
+	//Création du joint pour lier le passager au wagon
+	b2DistanceJointDef jointDef;
+	b2Vec2 worldAnchorWagon(0.0f, 1.0f);
+	//TODO a revoir, fait à l'arrache
+	jointDef.Initialize(p->getBody(), m_physicalObjects[0]->getBody(), p->getBody()->GetPosition(), worldAnchorWagon);
+	p->setJoint( (b2DistanceJoint*)PhysicalObject::m_world->CreateJoint(&jointDef) );
+	
+	//checkCapacity();
+}
