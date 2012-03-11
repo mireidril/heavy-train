@@ -12,6 +12,7 @@ ActualGame::ActualGame()
 	b2Vec2 gravity(0.0f, -10.0f);
 	// Construct a world object, which will hold and simulate the rigid bodies.
 	m_world = new b2World(gravity);
+	PhysicalObject::m_world = m_world;
 	// Pour caler la simulation avec le framerate
 	fixedTimestepAccumulator = 0;
 	fixedTimestepAccumulatorRatio = 0;
@@ -31,6 +32,9 @@ ActualGame::ActualGame()
 	/* test pour tracer le train */
 	m_train = new Train();
 	m_train->build(m_world);
+
+	//TEST Création d'un passager
+	Passenger *p = new Passenger(5.0f, 5.0f);
 
 	fooDrawInstance = new DebugDraw;
 	m_world->SetDebugDraw( fooDrawInstance );
