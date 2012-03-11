@@ -19,13 +19,16 @@ Block::Block(BlockType type, int sizeX, int posX, int id)
 , m_y (668)
 , m_tunnelHeight (200)
 {
-	SDL_Rect * p1, *p2, *p3, *p4, *p5;
+	SDL_Rect * p1, *p01, *p2, *p3, *p4, *p5;
 	switch(type)
 	{
 		case GROUND :
 			p1 = new SDL_Rect;
 			p1->x = 0;
-			p1->y = 384;
+			p1->y = m_y;
+			p01 = new SDL_Rect;
+			p01->x = 10;
+			p01->y = 384;
 			p2 = new SDL_Rect;
 			p2->x = 256;
 			p2->y = 600;
@@ -37,8 +40,9 @@ Block::Block(BlockType type, int sizeX, int posX, int id)
 			p4->y = 500;
 			p5 = new SDL_Rect;
 			p5->x = 1024;
-			p5->y = 384;
+			p5->y = m_y;
 			m_points.push_back(p1);
+			m_points.push_back(p01);
 			m_points.push_back(p2);
 			m_points.push_back(p3);
 			m_points.push_back(p4);
