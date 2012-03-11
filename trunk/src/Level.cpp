@@ -60,8 +60,12 @@ void Level::clearAllSmoothAngleAndPosition()
 /*
  * Move the level horizontally
  */
-void Level::scrollLevel(const int & x){
-
+void Level::scrollLevel(const int & x)
+{
+	for(unsigned int i = 0; i < m_blocks.size(); ++i)
+	{
+		m_blocks[i]->scroll(x);
+	}
 }
 
 /*

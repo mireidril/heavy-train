@@ -33,7 +33,7 @@ class Block
 		void createImage();
 
 		//Modifie la position du bloc en x
-		void scroll(int);
+		void scroll(const int & x);
 
 		//Retourne le body du bloc
 		b2Body * getBody();

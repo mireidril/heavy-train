@@ -36,7 +36,14 @@ Train::~Train ()
 	//suppr bodies, + sounds
 }
 
-
+//Update the vertical position of the Train’s sprite according to the physical simulation
+void Train::updatePosition()
+{
+	for(unsigned int i = 0; i < m_physicalObjects.size(); ++i)
+	{
+		m_physicalObjects[i]->updatePositions();
+	}
+}
 
 /*
  * draw the train on the screen
@@ -48,11 +55,11 @@ void Train::drawSprite(SDL_Surface * screen, const int & width, const int & heig
 	b2Vec2 bodyPos;
 	double angle;
 	//loco
-	bodyPos = m_physicalObjects[0]->getPositionSmoothed();
-	angle = m_physicalObjects[0]->getAngleSmoothed();
+	bodyPos = m_physicalObjects[0]->getPosition();
+	angle = m_physicalObjects[0]->getAngle();
 	double angledegrees = angle*180/M_PI;
 	x = bodyPos.x; y = bodyPos.y;
-	m_physicalObjects[0]->getSprite()->convertMetersToPixels( x,  y,  width,  height);
+	m_physicalObjects[0]->getSprite()->convertMetersToPixels( &x,  &y,  width,  height);
 
 	if (angle>=0){
 		x = x-50*cos(angle)-35*sin(angle); 
@@ -69,10 +76,10 @@ void Train::drawSprite(SDL_Surface * screen, const int & width, const int & heig
 
 	//roues
 	for (int i=1; i<3; i++){
-		bodyPos = m_physicalObjects[i]->getPositionSmoothed();
+		bodyPos = m_physicalObjects[i]->getPosition();
 		x = bodyPos.x; y = bodyPos.y;
-		angle = m_physicalObjects[i]->getAngleSmoothed()*180/M_PI;
-		m_physicalObjects[i]->getSprite()->convertMetersToPixels( x,  y,  width,  height);
+		angle = m_physicalObjects[i]->getAngle()*180/M_PI;
+		m_physicalObjects[i]->getSprite()->convertMetersToPixels( &x,  &y,  width,  height);
 		x = x-8; y = y-8;
 		m_physicalObjects[i]->getSprite()->setPosition(x, y);
 		m_physicalObjects[i]->getSprite()->setAngle(angle);
@@ -241,4 +248,16 @@ void Train::keyboard( const SDL_KeyboardEvent *event)
 		m_spring2->SetSpringFrequencyHz(m_hz);
 		break;
 	}
+}
+
+//Donne la position du body à la dernière frame
+b2Vec2 Train::getBodyLastPosition()
+{
+	return m_physicalObjects[0]->getLastPosition();
+}
+
+//Donne la position actuelle du body
+b2Vec2 Train::getBodyPosition()
+{
+	return m_physicalObjects[0]->getPosition();
 }
