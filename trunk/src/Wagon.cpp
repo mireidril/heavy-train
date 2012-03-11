@@ -123,17 +123,55 @@ void Wagon::build(b2World * world, double x, float high)
 	bd.type = b2_dynamicBody;
 	bd.position.Set(x, high+9.0f);
 
-	b2PolygonShape chassis;
-	b2Vec2 vertices[4];
-	vertices[0].Set(-1.5f, -0.8f);
-	vertices[1].Set(1.5f, -0.8f);
-	vertices[2].Set(1.5f, 0.8f);
-	vertices[3].Set(-1.5f, 0.8f);
-	chassis.Set(vertices, 4);
-
 	m_physicalObjects[0]->setBody(world->CreateBody(&bd));
-	m_physicalObjects[0]->getBody()->CreateFixture(&chassis, 0.1f);
 
+	bool testConcave = true;
+	if( !testConcave ){
+		//Le code qui donne un rectangle tout simple
+		b2PolygonShape chassis;
+		b2Vec2 vertices[4];
+		vertices[0].Set(-1.5f, -0.8f);
+		vertices[1].Set(1.5f, -0.8f);
+		vertices[2].Set(1.5f, 0.8f);
+		vertices[3].Set(-1.5f, 0.8f);
+		chassis.Set(vertices, 4);
+
+		m_physicalObjects[0]->getBody()->CreateFixture(&chassis, 0.1f);
+	}else{
+		b2PolygonShape chassisGauche;
+		b2Vec2 vertices[4];
+		vertices[0].Set(-1.6f, -0.8f);
+		vertices[1].Set(-1.5f, -0.8f);
+		vertices[2].Set(-1.5f, 0.8f);
+		vertices[3].Set(-1.6f, 0.8f);
+		chassisGauche.Set(vertices, 4);
+		b2PolygonShape chassisSol;
+		vertices[0].Set(-1.6f, -0.9f);
+		vertices[1].Set(1.6f, -0.9f);
+		vertices[2].Set(1.6f, -0.8f);
+		vertices[3].Set(-1.6f, -0.8f);
+		chassisSol.Set(vertices, 4);
+
+		b2PolygonShape chassisDroite;
+		vertices[0].Set(1.5f, -0.9f);
+		vertices[1].Set(1.6f, -0.9f);
+		vertices[2].Set(1.6f, 0.9f);
+		vertices[3].Set(1.5f, 0.9f);
+		chassisDroite.Set(vertices, 4);
+		/* Le toit fait planter l'appli :/
+		b2PolygonShape chassisToit;
+		vertices[0].Set(-1.6f, 0.8f);
+		vertices[1].Set(1.6f, 0.8f);
+		vertices[2].Set(1.6f, 0.9f);
+		vertices[3].Set(-1.6f, 0.9f);
+		chassisDroite.Set(vertices, 4);
+		*/
+	
+		m_physicalObjects[0]->getBody()->CreateFixture(&chassisSol, 0.25f);
+		m_physicalObjects[0]->getBody()->CreateFixture(&chassisGauche, 0.25f);
+		m_physicalObjects[0]->getBody()->CreateFixture(&chassisDroite, 0.25f);
+		//m_physicalObjects[0]->getBody()->CreateFixture(&chassisToit, 0.1f);
+	}
 	b2CircleShape circle;
 	circle.m_radius = 0.5f;
 

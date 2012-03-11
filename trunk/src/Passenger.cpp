@@ -46,7 +46,7 @@ Passenger::Passenger(double x, double y)
 	bodyDef.position.Set(x, y);
 	bodyDef.type = b2_dynamicBody;
 	// Par défaut on créée des passagers qui ne sont pas actifs 
-	bodyDef.active = false;
+	//bodyDef.active = false;
 
 	//Création du b2Body à partir du BodyDef 
 	setBody( PhysicalObject::m_world->CreateBody(&bodyDef) );

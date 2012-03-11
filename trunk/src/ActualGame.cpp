@@ -34,7 +34,7 @@ ActualGame::ActualGame()
 	m_train->build(m_world);
 
 	//TEST Création d'un passager
-	Passenger *p = new Passenger(5.0f, 5.0f);
+	Passenger *p = new Passenger(5.0f, 30.0f);
 
 	fooDrawInstance = new DebugDraw;
 	m_world->SetDebugDraw( fooDrawInstance );
@@ -67,7 +67,7 @@ void ActualGame::run(SDL_Surface * screen, int w, int h)
 
 	fooDrawInstance->SetFlags( b2Draw::e_shapeBit );
 	//Affichage des formes physiques pour Debug
-	//m_world->DrawDebugData();	
+	m_world->DrawDebugData();	
 }
 
 void ActualGame::runSimulation()
