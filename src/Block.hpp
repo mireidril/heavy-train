@@ -33,8 +33,16 @@ class Block
 		void setSizeX(int size);
 		void setType(BlockType type);
 		void setSpeed(int speed);
-		void setPoints(int x, int y);
+
+		void addPoint(int x, int y);
+		//Retourne l'identifiant du point à l'ordonnée la plus basse
+		int getYMinPoint();
+		//Retourne l'identifiant du point à l'ordonnée la plus grande
+		int getYMaxPoint();
+
 		void draw(SDL_Surface * screen, const int & width, const int & height);
+
+		void createImage();
 	private :
 		Sprite * m_sprite;
 		b2Body * m_body;
@@ -49,11 +57,13 @@ class Block
 		
 		int m_maxSpeed;
 		int m_id;
-		int m_sizeXMin;
-		int m_sizeXMax;
-		int m_y;
-		int m_yMax;
 
+		//Min and Max size in pixels
+		const double m_sizeXMin;
+		const double m_sizeXMax;
+		const double m_sizeYMin;
+		const double m_y;
+		
 		const float m_hillSegmentWidth;
 };
 #endif
