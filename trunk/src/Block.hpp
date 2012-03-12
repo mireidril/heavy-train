@@ -2,6 +2,7 @@
 #define __BLOCK_HPP__
 
 #include "Bonus.hpp"
+#include "Animal.hpp"
 #include "Sprite.hpp"
 
 #ifdef _WIN32
@@ -57,6 +58,8 @@ class Block
 		int getYMaxPoint();
 
 		//Dessine le bloc
+		void setBonus(Bonus* bonus);
+		void setAnimal(Animal * animal);
 		void draw(SDL_Surface * screen, const int & width, const int & height);
 
 		
@@ -81,6 +84,10 @@ class Block
 		std::vector<b2Vec2> m_groundPoints;
 		
 		int m_maxSpeed; //utile ?
+		//Bonus present in the block
+		std::vector <Bonus*> m_bonus;
+		//Animals present in the block
+		std::vector <Animal*> m_animals;
 
 		//Min and Max size in pixels
 		const double m_sizeXMin;
