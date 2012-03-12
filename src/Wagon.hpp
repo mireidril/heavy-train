@@ -40,6 +40,10 @@ class Wagon{
 	void drawSprite(SDL_Surface * screen, const int & width, const int & height);
 	void setMotorSpeed(float speed);
 
+	//DEBUG A REMETTRE DANS PRIVATE
+	// Passengers in the wagon
+	std::vector<Passenger*> m_passengers;
+
    private :
 	// Number of passengers that the wagon have when it quits the station
 	int m_originalNumberOfPassengers;
@@ -51,8 +55,7 @@ class Wagon{
 	std::vector<PhysicalObject *>  m_physicalObjects; // 3 bodies -- 0: loco - 1: wheel1 - 2: wheel2
 	b2WheelJoint* m_spring1;
 	b2WheelJoint* m_spring2;
-	// Passengers in the wagon
-	std::vector<Passenger*> m_passengers;
+	
 	// Linking the wagon to the one ahead, or to the locomotive
 	//b2RevoluteJoint *       m_joint;// pk une revolute joint???
 

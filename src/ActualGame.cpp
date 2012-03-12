@@ -34,7 +34,15 @@ ActualGame::ActualGame()
 	m_train->build(m_world);
 
 	fooDrawInstance = new DebugDraw;
+	uint32 flags = 0;
+	flags += 1			* b2Draw::e_shapeBit;
+	flags += 1			* b2Draw::e_jointBit;
+	flags += 0		* b2Draw::e_aabbBit;
+	flags += 0				* b2Draw::e_centerOfMassBit;
+	fooDrawInstance->SetFlags(flags);
 	m_world->SetDebugDraw( fooDrawInstance );
+
+	
 }
 ActualGame::~ActualGame()
 {
@@ -66,7 +74,15 @@ void ActualGame::run(SDL_Surface * screen, int w, int h)
 
 	fooDrawInstance->SetFlags( b2Draw::e_shapeBit );
 	//Affichage des formes physiques pour Debug
-	m_world->DrawDebugData();	
+	m_world->DrawDebugData();
+	
+	//TEST pour afficher le joint du 1er passager
+
+	b2Vec2 p1 = m_train->get_wagons().at(0)->m_passengers.at(0)->get_joint()->GetAnchorA();
+	b2Vec2 p2 = m_train->get_wagons().at(0)->m_passengers.at(0)->get_joint()->GetAnchorB();
+	b2Color c;
+	c.Set(0.0f, 1.0f, 0.0f);
+	fooDrawInstance->DrawSegment(p1, p2, c);
 }
 
 void ActualGame::scroll()
