@@ -1,7 +1,7 @@
 #include "Passenger.hpp"
 
 b2World * PhysicalObject::m_world;
-const float Passenger::m_width = 0.5f;
+const float Passenger::m_width = .5f;
 const float Passenger::m_height = 1.0f;
 
 Passenger::Passenger(double x, double y)
@@ -18,7 +18,7 @@ Passenger::Passenger(double x, double y)
 	//Rectangle
     b2PolygonShape sd1;
 	b2Vec2 vertices[4];
-	float boxHeight = 2*m_height/6.f;
+	float boxHeight = (m_height-m_width/2.f)/2.f;
 	float boxWidth = m_width/2.0f;
 	vertices[0].Set(-boxWidth, -boxHeight);
 	vertices[1].Set(boxWidth, -boxHeight);
@@ -34,7 +34,7 @@ Passenger::Passenger(double x, double y)
 	//Cercle	
 	b2CircleShape sd2;
     sd2.m_radius = m_width / 2.0f;
-    sd2.m_p.Set(0.0f, - 2*m_width / 3.0f);
+    sd2.m_p.Set(0.0f, -m_height/2.f + m_width/4.f);
 
 	b2FixtureDef fd2;
 	fd2.shape = &sd2;
@@ -103,4 +103,8 @@ void Passenger::setDestinationPoint( double x, double y ){
 
 void Passenger::setJoint(b2DistanceJoint * j){
 	m_joint = j;
+}
+
+const b2DistanceJoint * Passenger::get_joint(){
+	return m_joint;
 }

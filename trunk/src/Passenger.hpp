@@ -27,6 +27,7 @@ class Passenger : public PhysicalObject
 		// Set the destination point
 		void setDestinationPoint( double x, double y );
 		void setJoint(b2DistanceJoint * );
+		const b2DistanceJoint * get_joint();
 
 		//Taille des passagers
 		static const float m_width;
