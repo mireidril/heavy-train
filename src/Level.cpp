@@ -175,7 +175,32 @@ void Level::loadAndBuild(const int & isle, const int & lvl){
 								m_blocks.push_back(vBlock);
 							}else if (strcmp(contenuLevel->Value(),"infobulle")==0){
 								//on est dans la balise infobulle
+								if (strcmp(contenuLevel->Attribute("type"),"standard")){
+									/*StandardTip * infoStandard = new StandardTip();
+									infoStandard->setAction(contenuLevel->Attribute("action"));
+									infoStandard->setDeclenche(contenuLevel->Attribute("declenche"));
+									TiXmlElement *contenuBulle = contenuLevel->FirstChildElement();
+									while (contenuBulle){
+										if (strcmp(contenuBulle->Value(),"sprite")==0){
+											infoStandard->setSprite(contenuBulle->Attribute("img"));
+										}
+										contenuBulle = contenuBulle->NextSiblingElement();
+									}*/
+								}else if (strcmp(contenuLevel->Attribute("type"),"aide")){
+									/*HelpTip * infoAide = new HelpTip();
+									infoAide->setNumBlock(contenuLevel->Attribute("numBlock"));
+									infoAide->setDeclenche(contenuLevel->Attribute("declenche"));
+									TiXmlElement *contenuBulle = contenuLevel->FirstChildElement();
+									while (contenuBulle){
+										if (strcmp(contenuBulle->Value(),"sprite")==0){
+											infoAide->setSprite(contenuBulle->Attribute("img"));
+										}
+										contenuBulle = contenuBulle->NextSiblingElement();
+									}*/
+								}
 							}
+
+							//}
 							contenuLevel = contenuLevel->NextSiblingElement(); // iteration 
 			
 						} //fin while contenuLevel
