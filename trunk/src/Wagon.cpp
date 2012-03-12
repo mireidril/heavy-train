@@ -136,7 +136,7 @@ void Wagon::build(b2World * world, double x, float high)
 		vertices[3].Set(-1.5f, 0.8f);
 		chassis.Set(vertices, 4);
 
-		m_physicalObjects[0]->getBody()->CreateFixture(&chassis, 0.1f);
+		m_physicalObjects[0]->getBody()->CreateFixture(&chassis, 5.0f);
 	}else if( typeWagon == 1 ){
 		//avec des polygones
 		b2PolygonShape chassisGauche;
@@ -159,7 +159,7 @@ void Wagon::build(b2World * world, double x, float high)
 		vertices[2].Set(1.6f, 0.9f);
 		vertices[3].Set(1.5f, 0.9f);
 		chassisDroite.Set(vertices, 4);
-		//Le toit fait planter l'appli :/
+		//
 		b2PolygonShape chassisToit;
 		vertices[0].Set(-1.6f, 0.8f);
 		vertices[1].Set(1.6f, 0.8f);
@@ -168,10 +168,10 @@ void Wagon::build(b2World * world, double x, float high)
 		chassisToit.Set(vertices, 4);
 		//*/
 	
-		m_physicalObjects[0]->getBody()->CreateFixture(&chassisSol, 5.0f);
-		m_physicalObjects[0]->getBody()->CreateFixture(&chassisGauche, 5.0f);
-		m_physicalObjects[0]->getBody()->CreateFixture(&chassisDroite, 5.0f);
-		m_physicalObjects[0]->getBody()->CreateFixture(&chassisToit, 5.0f);
+		m_physicalObjects[0]->getBody()->CreateFixture(&chassisSol, 1.0f);
+		m_physicalObjects[0]->getBody()->CreateFixture(&chassisGauche, 1.0f);
+		m_physicalObjects[0]->getBody()->CreateFixture(&chassisDroite, 1.0f);
+		m_physicalObjects[0]->getBody()->CreateFixture(&chassisToit, 1.0f);
 	}
 	b2CircleShape circle;
 	circle.m_radius = 0.5f;
@@ -222,20 +222,20 @@ void Wagon::addPassenger(Passenger* p)
 	p->switchDynamic();
 
 	//On le déplace dans le wagon
-	p->getBody()->SetTransform(m_physicalObjects[0]->getBody()->GetPosition(), 0.0);
+	b2Vec2 pos(m_physicalObjects[0]->getBody()->GetPosition().x, m_physicalObjects[0]->getBody()->GetPosition().y - 0.3f );
+	p->getBody()->SetTransform(pos, 0.0);
 
 	//Création du joint pour lier le passager au wagon
-	b2DistanceJointDef jointDef;
-	b2Vec2 worldAnchorWagon(m_physicalObjects[0]->getBody()->GetPosition().x, m_physicalObjects[0]->getBody()->GetPosition().y - 0.9f);
+	b2RevoluteJointDef jointDef;
 	b2Vec2 worldAnchorPassenger(p->getBody()->GetPosition().x, p->getBody()->GetPosition().y - p->m_height/2.0f + p->m_width/4.0f );
+	jointDef.Initialize(p->getBody(), m_physicalObjects[0]->getBody(), worldAnchorPassenger);
 
-	//TODO a revoir, fait à l'arrache
-	jointDef.Initialize(p->getBody(), m_physicalObjects[0]->getBody(), worldAnchorPassenger, worldAnchorWagon);
-	jointDef.length =  p->m_width/2.f + 0.055f;
-	jointDef.dampingRatio = 0.9f;
-	p->setJoint( (b2DistanceJoint*)PhysicalObject::m_world->CreateJoint(&jointDef) );
+	//On limite l'ampleur de l'angle
+	jointDef.lowerAngle = -0.25f * b2_pi; // -45 degrees
+	jointDef.upperAngle = 0.25f * b2_pi; // 45 degrees
 
-	p->getBody()->SetTransform(m_physicalObjects[0]->getBody()->GetPosition(), 0.0);
-	
+	jointDef.enableLimit = true;
+
+	p->setJoint( PhysicalObject::m_world->CreateJoint(&jointDef) );
 	//checkCapacity();
 }

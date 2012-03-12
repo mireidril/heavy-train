@@ -261,8 +261,3 @@ b2Vec2 Train::getBodyPosition()
 {
 	return m_physicalObjects[0]->getPosition();
 }
-
-//FCT DE DEBUG
-std::vector<Wagon*> Train::get_wagons(){
-	return m_wagons;
-}

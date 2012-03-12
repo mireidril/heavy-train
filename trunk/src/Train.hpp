@@ -67,8 +67,7 @@ class Train
 	
 	Sprite * getSprite() {return m_physicalObjects[0]->getSprite(); };
 
-	//FCT DE DEBUG
-	std::vector<Wagon*> get_wagons();
+
 
    private :
 	//Current speed of the train

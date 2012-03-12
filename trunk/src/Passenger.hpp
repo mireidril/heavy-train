@@ -26,8 +26,8 @@ class Passenger : public PhysicalObject
 		void switchDynamic();
 		// Set the destination point
 		void setDestinationPoint( double x, double y );
-		void setJoint(b2DistanceJoint * );
-		const b2DistanceJoint * get_joint();
+		void setJoint(b2Joint * );
+		const b2Joint * get_joint();
 
 		//Taille des passagers
 		static const float m_width;
@@ -36,7 +36,7 @@ class Passenger : public PhysicalObject
 	private :
 		
 		//Joint linking the body of the passenger to the wagon
-		b2DistanceJoint * m_joint;
+		b2Joint * m_joint;
 		// Destination point that the passenger wants to reach
 		b2Vec2 * m_destination;
 		// Speed of the passenger on the station
