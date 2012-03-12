@@ -101,10 +101,10 @@ void Passenger::setDestinationPoint( double x, double y ){
 	m_destination->Set( x, y );
 }
 
-void Passenger::setJoint(b2DistanceJoint * j){
+void Passenger::setJoint(b2Joint * j){
 	m_joint = j;
 }
 
-const b2DistanceJoint * Passenger::get_joint(){
+const b2Joint * Passenger::get_joint(){
 	return m_joint;
 }
