@@ -102,32 +102,25 @@ void Level::loadAndBuild(const int & isle, const int & lvl){
 							//si la balise dans level correspond a la balise block on entre dans ce if
 							if (strcmp(contenuLevel->Value(),"block")==0){
 								//on est dans une balise block !
-								/*
-		int m_sizeXMin;
-		int m_sizeXMax;
-		int m_y;
-		int m_yMax;
-		BlockType m_type;
-		Sprite * m_sprite;
-		b2Body * m_body;
-		int m_sizeX;
-							*/	
 								Block * vBlock = new Block(JUNCTION_DOWN, 10, NULL,-1); // smartpointer
 								vBlock->setId(atoi(contenuLevel->Attribute("num")));
 								vBlock->setSizeX(atoi(contenuLevel->Attribute("size")));
+
+
 								//vBlock->setType((BlockType)contenuLevel->Attribute("type"));
+
+
 								vBlock->setSpeed(atoi(contenuLevel->Attribute("speed")));
 								//variable element qui check les balises contenu dans block
 								TiXmlElement *contenuBlock = contenuLevel->FirstChildElement();
 								while (contenuBlock){
 									if (strcmp(contenuBlock->Value(),"obstacle")==0){
-										//vBlock->setTypeObst(atoi(contenuBlock->Attribute("type")));
-										//vBlock->setPosXObst(atoi(contenuBlock->Attribute("posX")));
-										//vBlock->setPosYObst(atoi(contenuBlock->Attribute("posY")));
-
-									}else if (strcmp(contenuBlock->Value(),"point")==0){										
-										//!!!!!!!!!!!!!!!!!!!!attention il y a 2 points pas block : comment faire??? cpt qui rempli tableau? a quoi correspond ces points dans le code?
-										//concerne m_groundPoints (vec 2)
+										if (strcmp(contenuBlock->Attribute("type"),"animal")){
+											vBlock->setAnimal(contenuBlock->Attribute("nom"), atoi(contenuBlock->Attribute("posX")), atoi(contenuBlock->Attribute("posX")));
+										}else if (strcmp(contenuBlock->Attribute("type"),"bonus")){
+											//vBlock->setBonus(contenuBlock->Attribute("nom"), atoi(contenuBlock->Attribute("posX")), atoi(contenuBlock->Attribute("posX")));
+										}
+									}else if (strcmp(contenuBlock->Value(),"point")==0){
 										vBlock->addPoint(atoi(contenuBlock->Attribute("x")), atoi(contenuBlock->Attribute("y")));
 									}
 									contenuBlock = contenuBlock->NextSiblingElement();

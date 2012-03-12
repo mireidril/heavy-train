@@ -115,8 +115,12 @@ void Block::setBonus(Bonus* bonus)
 {
 	m_bonus.push_back(bonus);
 }
-void Block::setAnimal(Animal * animal) 
+void Block::setAnimal(const char * type, int x, int y) 
 {
+	Animal * animal = new Animal();
+	animal->setType(type);
+	animal->setPosX(x);
+	animal->setPosY(y);
 	m_animals.push_back(animal);
 }
 //Retourne l'identifiant du point à l'ordonnée la plus basse
