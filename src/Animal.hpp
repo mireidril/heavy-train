@@ -2,6 +2,7 @@
 #define __ANIMAL_HPP__
 
 #include "PhysicalObject.hpp"
+#include "Sprite.hpp"
 /*
 * Animal qui est un obstacle.
 */
@@ -24,6 +25,6 @@ class Animal : public PhysicalObject
 		int m_posX;
 		int m_posY;
 		char * m_type;
-		char * m_sprite;
+		Sprite * m_sprite;
 };
 #endif

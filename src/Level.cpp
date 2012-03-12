@@ -98,35 +98,81 @@ void Level::loadAndBuild(const int & isle, const int & lvl){
 						
 						TiXmlElement *contenuLevel = level->FirstChildElement();
 						while (contenuLevel){
-							std::cout<< "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee : " << contenuLevel->Value() << std::endl;
 							//si la balise dans level correspond a la balise block on entre dans ce if
 							if (strcmp(contenuLevel->Value(),"block")==0){
 								//on est dans une balise block !
 								Block * vBlock = new Block(JUNCTION_DOWN, 10, NULL,-1); // smartpointer
 								vBlock->setId(atoi(contenuLevel->Attribute("num")));
 								vBlock->setSizeX(atoi(contenuLevel->Attribute("size")));
-
-
-								//vBlock->setType((BlockType)contenuLevel->Attribute("type"));
-
-
 								vBlock->setSpeed(atoi(contenuLevel->Attribute("speed")));
-								//variable element qui check les balises contenu dans block
-								TiXmlElement *contenuBlock = contenuLevel->FirstChildElement();
-								while (contenuBlock){
-									if (strcmp(contenuBlock->Value(),"obstacle")==0){
-										if (strcmp(contenuBlock->Attribute("type"),"animal")){
-											vBlock->setAnimal(contenuBlock->Attribute("nom"), atoi(contenuBlock->Attribute("posX")), atoi(contenuBlock->Attribute("posX")));
-										}else if (strcmp(contenuBlock->Attribute("type"),"bonus")){
-											//vBlock->setBonus(contenuBlock->Attribute("nom"), atoi(contenuBlock->Attribute("posX")), atoi(contenuBlock->Attribute("posX")));
+
+								if (strcmp(contenuLevel->Attribute("type"),"GROUND")==0){
+									vBlock->setType(GROUND);
+
+									//variable element qui check les balises contenu dans block
+									TiXmlElement *contenuBlock = contenuLevel->FirstChildElement();
+									while (contenuBlock){
+										if (strcmp(contenuBlock->Value(),"obstacle")==0){
+											if (strcmp(contenuBlock->Attribute("type"),"animal")){
+												vBlock->setAnimal(contenuBlock->Attribute("nom"), atoi(contenuBlock->Attribute("posX")), atoi(contenuBlock->Attribute("posX")));
+											}else if (strcmp(contenuBlock->Attribute("type"),"bonus")){
+												if (strcmp(contenuBlock->Attribute("nom"),"etoile")){
+													vBlock->setBonus(STAR_DUST, atoi(contenuBlock->Attribute("posX")), atoi(contenuBlock->Attribute("posX")));
+												}else if (strcmp(contenuBlock->Attribute("nom"),"accelerateur")){
+													vBlock->setBonus(ACCELERATOR, atoi(contenuBlock->Attribute("posX")), atoi(contenuBlock->Attribute("posX")));
+												}
+											}
+										}else if (strcmp(contenuBlock->Value(),"point")==0){
+											vBlock->addPoint(atoi(contenuBlock->Attribute("x")), atoi(contenuBlock->Attribute("y")));
 										}
-									}else if (strcmp(contenuBlock->Value(),"point")==0){
-										vBlock->addPoint(atoi(contenuBlock->Attribute("x")), atoi(contenuBlock->Attribute("y")));
+										contenuBlock = contenuBlock->NextSiblingElement();
+									}// fin du while dans le block
+
+
+								}else if (strcmp(contenuLevel->Attribute("type"),"PRECIPICE")==0){
+									vBlock->setType(PRECIPICE);
+								}else if (strcmp(contenuLevel->Attribute("type"),"TUNNEL")==0){
+									vBlock->setType(TUNNEL);
+								}else if (strcmp(contenuLevel->Attribute("type"),"JUNCTION_UP")==0 || strcmp(contenuLevel->Attribute("type"),"JUNCTION_DOWN")==0){
+
+									if (strcmp(contenuLevel->Attribute("type"),"JUNCTION_UP")==0){
+										vBlock->setType(JUNCTION_UP);
+									}else if (strcmp(contenuLevel->Attribute("type"),"JUNCTION_DOWN")==0){
+										vBlock->setType(JUNCTION_DOWN);
 									}
-									contenuBlock = contenuBlock->NextSiblingElement();
+									//variable element qui check les balises contenu dans block
+									TiXmlElement *contenuBlock = contenuLevel->FirstChildElement();
+									while (contenuBlock){
+										if (strcmp(contenuBlock->Value(),"obstacle")==0){
+											if (strcmp(contenuBlock->Attribute("type"),"animal")){
+												vBlock->setAnimal(contenuBlock->Attribute("nom"), atoi(contenuBlock->Attribute("posX")), atoi(contenuBlock->Attribute("posX")));
+											}else if (strcmp(contenuBlock->Attribute("type"),"bonus")){
+												if (strcmp(contenuBlock->Attribute("nom"),"STAR_DUST")){
+													vBlock->setBonus(STAR_DUST, atoi(contenuBlock->Attribute("posX")), atoi(contenuBlock->Attribute("posX")));
+												}else if (strcmp(contenuBlock->Attribute("nom"),"ACCELERATOR")){
+													vBlock->setBonus(ACCELERATOR, atoi(contenuBlock->Attribute("posX")), atoi(contenuBlock->Attribute("posX")));
+												}
+											}
+										}
+										contenuBlock = contenuBlock->NextSiblingElement();
+									}// fin du while dans le block
+
 								}
+								m_blocks.push_back(vBlock);
 							}else if (strcmp(contenuLevel->Value(),"station")==0){
 								//on est dans la balise station / gare
+								Block * vBlock = new Block(JUNCTION_DOWN, 10, NULL,-1); // smartpointer
+								vBlock->setType(STATION);
+								//variable element qui check les balises contenu dans block
+								TiXmlElement *contenuStation = contenuLevel->FirstChildElement();
+								while (contenuStation){
+									vBlock->setId(atoi(contenuStation->Attribute("num")));
+									vBlock->setSizeX(atoi(contenuStation->Attribute("size")));
+									if (strcmp(contenuStation->Value(),"option")==0){
+									}
+									contenuStation = contenuStation->NextSiblingElement();
+								}
+								m_blocks.push_back(vBlock);
 							}else if (strcmp(contenuLevel->Value(),"infobulle")==0){
 								//on est dans la balise infobulle
 							}
