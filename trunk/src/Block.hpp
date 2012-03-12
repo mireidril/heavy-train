@@ -59,7 +59,7 @@ class Block
 
 		//Dessine le bloc
 		void setBonus(Bonus* bonus);
-		void setAnimal(Animal * animal);
+		void setAnimal(const char * type, int x, int y);
 		void draw(SDL_Surface * screen, const int & width, const int & height);
 
 		

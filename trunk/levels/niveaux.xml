@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<world>
+	<island id="0">
+		<level id="0">
+			<departure hour="12" minutes="00" seconds="00"/>
+			<sprite img="flatGround.png" />
+			<infobulle type="aide" numBloc="3" declenche="false">
+				<sprite img="info1.png" />
+			</infobulle>
+			<infobulle type="standard" action="collision" declenche="false">
+				<sprite img="info2.png" />
+			</infobulle>
+			<!-- Exemple de portion -->
+			<block type="terrainPlat" size="50" num="0" speed="220">
+				<obstacle type="animal" nom="tatou" posX="90" posY="10" />
+				<point x="10" y = "5" />
+				<point x="80" y = "10" />
+			</block>
+			<!-- Exemple de portion de type Station -->
+			<station size="50" num="1">
+				<option hours="12" minutes="02" leaving="0" entering="10"/>
+			</station>
+		</level>
+	</island>
+	<island id="1">
+		<level id="0">
+			<departure hour="12" minutes="00" seconds="00"/>
+			<sprite img="flatGround.png" />
+			<infobulle type="aide" numBloc="3" declenche="false">
+				<sprite img="info1.png" />
+			</infobulle>
+			<infobulle type="standard" action="collision" declenche="false">
+				<sprite img="info2.png" />
+			</infobulle>
+			<!-- Exemple de portion -->
+			<block type="terrainPlat" size="50" num="0" speed="220">
+				<obstacle type="animal" nom="tatou" posX="90" posY="10" />
+				<point x="10" y = "5" />
+				<point x="80" y = "10" />
+			</block>
+			<!-- Exemple de portion de type Station -->
+			<station size="50" num="1">
+				<option hours="12" minutes="02" leaving="0" entering="10"/>
+			</station>
+		</level>
+		<level id="1">
+			<departure hour="12" minutes="00" seconds="00"/>
+			<sprite img="flatGround.png" />
+			<infobulle type="aide" numBloc="3" declenche="false">
+				<sprite img="info1.png" />
+			</infobulle>
+			<infobulle type="standard" action="collision" declenche="false">
+				<sprite img="info2.png" />
+			</infobulle>
+			<!-- Exemple de portion -->
+			<block type="terrainPlat" size="50" num="0" speed="220">
+				<obstacle type="animal" nom="tatou" posX="90" posY="10" />
+				<point x="10" y = "5" />
+				<point x="80" y = "10" />
+			</block>
+			<!-- Exemple de portion de type Station -->
+			<station size="50" num="1">
+				<option hours="12" minutes="02" leaving="0" entering="10"/>
+			</station>
+		</level>
+	</island>
+</world>
