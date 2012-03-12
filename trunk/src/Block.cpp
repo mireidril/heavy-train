@@ -104,15 +104,17 @@ void Block::setSpeed(int speed)
 
 void Block::addPoint(int x, int y) 
 {
-/*b2Vec2 pts = b2Vec2(x, y);
-	m_groundPoints.push_back(pts);*/
-		SDL_Rect * pts = new SDL_Rect;
+	SDL_Rect * pts = new SDL_Rect;
 	pts->x = x;
 	pts->y = y;
 	m_points.push_back(pts);
 } 
-void Block::setBonus(Bonus* bonus) 
+void Block::setBonus(BonusType type, int x, int y) 
 {
+	Bonus * bonus = new Bonus();
+	bonus->setType(type);
+	bonus->setPosX(x);
+	bonus->setPosY(y);
 	m_bonus.push_back(bonus);
 }
 void Block::setAnimal(const char * type, int x, int y) 

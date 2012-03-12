@@ -58,7 +58,7 @@ class Block
 		int getYMaxPoint();
 
 		//Dessine le bloc
-		void setBonus(Bonus* bonus);
+		void setBonus(BonusType type, int x, int y);
 		void setAnimal(const char * type, int x, int y);
 		void draw(SDL_Surface * screen, const int & width, const int & height);
 
