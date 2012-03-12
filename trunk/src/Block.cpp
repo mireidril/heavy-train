@@ -104,12 +104,21 @@ void Block::setSpeed(int speed)
 
 void Block::addPoint(int x, int y) 
 {
-	SDL_Rect * pts = new SDL_Rect;
+/*b2Vec2 pts = b2Vec2(x, y);
+	m_groundPoints.push_back(pts);*/
+		SDL_Rect * pts = new SDL_Rect;
 	pts->x = x;
 	pts->y = y;
 	m_points.push_back(pts);
 } 
-
+void Block::setBonus(Bonus* bonus) 
+{
+	m_bonus.push_back(bonus);
+}
+void Block::setAnimal(Animal * animal) 
+{
+	m_animals.push_back(animal);
+}
 //Retourne l'identifiant du point à l'ordonnée la plus basse
 int Block::getYMinPoint()
 {
