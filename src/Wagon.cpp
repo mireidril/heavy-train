@@ -3,7 +3,7 @@
  * Wagon Constructor 
  */
 
-Wagon::Wagon () 
+Wagon::Wagon (int posX) 
 {
 	m_originalNumberOfPassengers=0;
 	//Maximum number of passenger for the wagon
@@ -14,16 +14,20 @@ Wagon::Wagon ()
 	m_areDoorOpened= false;
 
 	SDL_Rect * pos = new SDL_Rect;
-	pos->x = 0; pos->y = 0; 
+	pos->x = posX; pos->y=0;
+	SDL_Rect * posr1 = new SDL_Rect;
+	posr1->x = posX+10; posr1->y=0;
+	SDL_Rect * posr2 = new SDL_Rect;
+	posr2->x = posX+50; posr2->y=0;
 	SDL_Rect * size = new SDL_Rect;
 	size->x = 138; size->y = 97;
 
 	PhysicalObject * wagon = new PhysicalObject(new Sprite("../img/elements/wagon.png",  pos,  size) );
 	m_physicalObjects.push_back(wagon);
 	size->x = 39; size->y = 36; 
-	PhysicalObject * roue1 = new PhysicalObject(new Sprite("../img/elements/roue.png",  pos,  size) );
+	PhysicalObject * roue1 = new PhysicalObject(new Sprite("../img/elements/roue.png",  posr1,  size) );
 	m_physicalObjects.push_back(roue1);
-	PhysicalObject * roue2 = new PhysicalObject(new Sprite("../img/elements/roue.png",  pos,  size) );
+	PhysicalObject * roue2 = new PhysicalObject(new Sprite("../img/elements/roue.png",  posr2,  size) );
 	m_physicalObjects.push_back(roue2);
 
 
@@ -62,39 +66,47 @@ void Wagon::clearAllSmoothAngleAndPosition()
 /*
  * draw the wagon on the screen
  */
-void Wagon::drawSprite(SDL_Surface * screen, const int & width, const int & height)
+void Wagon::drawSprite(SDL_Surface * screen, const int & width, const int & height, int posX)
 {
 	double x; 
 	double y; 
 	b2Vec2 bodyPos;
 	double angle;
 	double angledegrees;
-	//wagon
 	bodyPos = m_physicalObjects[0]->getPosition();
 	angle = m_physicalObjects[0]->getAngle();
 	angledegrees= angle*180/M_PI;
-	x = bodyPos.x; y = bodyPos.y;
+	x = bodyPos.x; 
+	y = bodyPos.y;
 	m_physicalObjects[0]->getSprite()->convertMetersToPixels( &x,  &y,  width,  height);
 	if (angle>=-0.01){
-		x = x-30*cos(angle)-35*sin(angle); 
 		y = y-30*sin(angle)-35*cos(angle);
 	}
 	else {
-		x = x+30*cos(M_PI-angle)+35*sin(M_PI-angle); 
 		y = y+30*sin(M_PI-angle)+35*cos(M_PI-angle);
 	}
-	m_physicalObjects[0]->getSprite()->setPosition(x, y);
+	m_physicalObjects[0]->getSprite()->setPositionY( y);
 	m_physicalObjects[0]->getSprite()->setAngle(angledegrees);
 	m_physicalObjects[0]->getSprite()->draw(screen, width, height);
 
 	//roues
 	for (int i=1; i<3; i++){
 		bodyPos = m_physicalObjects[i]->getPosition();
-		x = bodyPos.x; y = bodyPos.y;
-		angle = m_physicalObjects[i]->getAngle()*180/M_PI;
-		m_physicalObjects[i]->getSprite()->convertMetersToPixels( &x,  &y,  width,  height);
-		x = x-8; y = y-8;
+		x = bodyPos.x; 
+		y = bodyPos.y;
+		m_physicalObjects[i]->getSprite()->convertMetersToPixels( &x,  &y,  width,  height); 
+		y = y-8;
+		angle = m_physicalObjects[0]->getAngle();
+		if (angle>=0){
+			x= posX+10*cos(angle)+(i-1)*40*cos(angle);
+			y = y-8*sin(angle)-8*cos(angle);
+		}
+		else {
+			x= posX-10*cos(angle)+(i-1)*40*cos(angle);
+			y = y-8*sin(M_PI-angle)+8*cos(M_PI-angle);
+		}
 		m_physicalObjects[i]->getSprite()->setPosition(x, y);
+		angle = m_physicalObjects[i]->getAngle()*180/M_PI;
 		m_physicalObjects[i]->getSprite()->setAngle(angle);
 		m_physicalObjects[i]->getSprite()->draw(screen, width, height);
 	}

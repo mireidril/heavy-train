@@ -9,7 +9,7 @@ Level::Level ()
         //m_blocks.push_back(new Block(BlockType::JUNCTION_DOWN, 1000, pos));
         //m_blocks.push_back(new Block(JUNCTION_DOWN, 1000, pos));
 	//m_blocks.push_back(new Block(JUNCTION_UP, 1000, pos));
-		m_blocks.push_back(new Block(GROUND, 500, 0, 0));
+	m_blocks.push_back(new Block(GROUND, 500, 0, 0));
         //m_departureTime = ...;
         //m_position = ...;
         m_islandNum = 0;
