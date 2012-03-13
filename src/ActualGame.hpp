@@ -26,7 +26,24 @@ class ActualGame
 
 		void checkKeyboardEvent(const SDL_KeyboardEvent *event);
 		void run(SDL_Surface * screen, int w, int h);
-		
+		//Add points to the total score
+		void updateTotalScore(const int & points);
+		//Add points to the passenger score
+		void updatePassengerScore(const int & points);
+		//Add points to the time score
+		void updateTimeScore(const int & points);
+		//Add points to the satisfaction score
+		void updateSatisfactionScore(const int & points);
+		//Add points to the stardust score
+		void updateStarDustScore(const int & points);
+		//Add points to the obstacle score
+		void updateObstacleScore(const int & points);
+		//Update the total score when stopping at a station
+		void calculateStopScore();
+		//If an animal is visible on screen, return true
+		bool isAnimalOnScreen();
+		//At the end of a level, save the total score of the player in the xml file
+		void saveScore(const std::string & player);
 
 	private :
 		Time * m_timer;

@@ -15,6 +15,7 @@
 #include "Sprite.hpp"
 #include "Block.hpp"
 #include "Time.hpp"
+#include "Station.hpp"
 
 class Level
 {
