@@ -161,10 +161,11 @@ void Level::loadAndBuild(const int & isle, const int & lvl){
 								m_blocks.push_back(vBlock);
 							}else if (strcmp(contenuLevel->Value(),"station")==0){
 								//on est dans la balise station / gare
-								/*
-								Station * vStation = new Station(JUNCTION_DOWN, 10, NULL,-1); // smartpointer
-								vStation->setType(STATION);
-								vStation->setId(atoi(contenuLevel->Attribute("num")));
+								
+								//Station * vStation= new Station(); // smartpointer
+								//vStation = new Block(STATION, 10, NULL,-1);
+								//vStation->setType(STATION);
+								/*vStation->setId(atoi(contenuLevel->Attribute("num")));
 								vStation->setSizeX(atoi(contenuLevel->Attribute("size")));
 								//variable element qui check les balises contenu dans block
 								TiXmlElement *contenuStation = contenuLevel->FirstChildElement();
@@ -177,8 +178,8 @@ void Level::loadAndBuild(const int & isle, const int & lvl){
 									contenuStation = contenuStation->NextSiblingElement();
 								}
 								m_blocks.push_back(vStation);
-								
 								*/
+								
 							}else if (strcmp(contenuLevel->Value(),"infobulle")==0){
 								//on est dans la balise infobulle
 								if (strcmp(contenuLevel->Attribute("type"),"standard")){

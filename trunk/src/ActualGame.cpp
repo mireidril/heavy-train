@@ -59,7 +59,7 @@ ActualGame::~ActualGame()
 }
 
 /*
- * ActualGame run: est appelé dans le game Engine: update le world et dessine les éléments
+ * ActualGame run: est appel� dans le game Engine: update le world et dessine les �l�ments
  */
 void ActualGame::run(SDL_Surface * screen, int w, int h)
 {
