@@ -35,11 +35,12 @@ class ActualGame
 		//Add points to the satisfaction score
 		void updateSatisfactionScore(const int & points);
 		//Add points to the stardust score
-		void updateStarDustScore(const int & points);
+		//void updateStarDustScore(const int & points);
+		void updateStarDustScore();
 		//Add points to the obstacle score
-		void updateObstacleScore(const int & points);
+		void updateObstacleScore();
 		//Update the total score when stopping at a station
-		void calculateStopScore();
+		void calculateStopScore(const int & points);
 		//If an animal is visible on screen, return true
 		bool isAnimalOnScreen();
 		//At the end of a level, save the total score of the player in the xml file
@@ -55,13 +56,22 @@ class ActualGame
 		int m_starDustScore;
 		int m_obstacleScore;
 		int m_actualBlock;
-		float m_animalsFactor;
-		float m_speedLimitFactor;
-		int m_stopStationPoint;
-		int m_drivePoint;
-		int m_starsPoint;
-		int m_timePoint;
-		int m_onTimePoint;
+		//Factor of how many passengers will leave the train
+		static float m_animalsFactor;
+		//Factor of how many passengers will leave the train while in a limit speed zone
+		static float m_speedLimitFactor;
+		//How many points the player gains for each start dust
+		static const int m_starsPoint = 900;
+		//How many satisfaction point the player can lose if he drive so badly
+		static const int m_drivePoint = -100;
+		//How many satisfaction point the player win or lose when he stop his train correctly at the station
+		static const int m_stopStationPoint = 500;
+		//How many points per minute the player lose if he arrives too late AND how many point the gamer win (per minutes) if he arrives more than 10 minutes the time at the station
+		static const int m_timePoint = 700;
+		//How many points the player gains if he arrives between 1 and 10 minutes before time at the station
+		static const int m_onTimeInfTenPoint = 1400;
+		//How many points the player gains if he arrives on time at the station
+		static const int m_onTimePoint = 5000;
 		int m_missStationPoint;
 		int m_nbPassengerPoint;
 

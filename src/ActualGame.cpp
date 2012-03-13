@@ -42,7 +42,7 @@ ActualGame::ActualGame()
 	fooDrawInstance->SetFlags(flags);
 	m_world->SetDebugDraw( fooDrawInstance );
 
-	
+	m_starDustScore = 0;
 }
 ActualGame::~ActualGame()
 {
@@ -127,3 +127,6 @@ void ActualGame::checkKeyboardEvent(const SDL_KeyboardEvent *event)
 }
 
 
+void ActualGame::updateStarDustScore(){
+	m_starDustScore += m_starsPoint;
+}
