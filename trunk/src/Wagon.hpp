@@ -10,7 +10,7 @@
 */
 class Wagon{
     public :
-	Wagon();
+	Wagon(int);
 	~Wagon();
     // The train jumps with an impulsion of force N
     void jump(int);
@@ -37,7 +37,7 @@ class Wagon{
 	//Réinitialise les valeurs des PhysicalObjects après un smooth pour coller au framerate
 	void clearAllSmoothAngleAndPosition();
 
-	void drawSprite(SDL_Surface * screen, const int & width, const int & height);
+	void drawSprite(SDL_Surface * screen, const int & width, const int & height, int posX);
 	void setMotorSpeed(float speed);
 
    private :

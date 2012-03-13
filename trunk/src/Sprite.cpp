@@ -61,7 +61,6 @@ void Sprite::setPosition(int x, int y){
 	m_position->x = x;
 	m_position->y = y;
 }
-
 /**
  * Setter positionX
  */
