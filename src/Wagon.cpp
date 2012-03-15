@@ -57,10 +57,8 @@ void Wagon::clearAllSmoothAngleAndPosition()
 		m_physicalObjects[i]->clearSmoothAngleAndPosition();
 	}
 
-	for(int i = 0; i < m_passengers.size(); ++i)
-	{
-		m_passengers[i]->clearSmoothAngleAndPosition();
-	}
+	for (std::list<Passenger*>::iterator it = m_passengers.begin(); it != m_passengers.end(); it++)
+		(*it)->clearSmoothAngleAndPosition();
 }
 
 /*
@@ -109,7 +107,8 @@ void Wagon::drawSprite(SDL_Surface * screen, const int & width, const int & heig
 
 }
 
-void Wagon::setMotorSpeed(float speed){
+void Wagon::setMotorSpeed(float speed)
+{
 	m_spring1->SetMotorSpeed(speed);
 	m_spring2->SetMotorSpeed(speed);
 }
@@ -133,7 +132,8 @@ void Wagon::build(b2World * world, double x, float high)
 	m_physicalObjects[0]->setBody(world->CreateBody(&bd));
 
 	int typeWagon = 1;
-	if( typeWagon == 0 ){
+	if( typeWagon == 0 )
+	{
 		//Le code qui donne un rectangle tout simple
 		b2PolygonShape chassis;
 		b2Vec2 vertices[4];
@@ -144,7 +144,8 @@ void Wagon::build(b2World * world, double x, float high)
 		chassis.Set(vertices, 4);
 
 		m_physicalObjects[0]->getBody()->CreateFixture(&chassis, 5.0f);
-	}else if( typeWagon == 1 ){
+	}else if( typeWagon == 1 )
+	{
 		//avec des polygones
 		b2PolygonShape chassisGauche;
 		b2Vec2 vertices[4];
@@ -166,7 +167,7 @@ void Wagon::build(b2World * world, double x, float high)
 		vertices[2].Set(1.6f, 0.9f);
 		vertices[3].Set(1.5f, 0.9f);
 		chassisDroite.Set(vertices, 4);
-		//
+		/*
 		b2PolygonShape chassisToit;
 		vertices[0].Set(-1.6f, 0.8f);
 		vertices[1].Set(1.6f, 0.8f);
@@ -178,7 +179,7 @@ void Wagon::build(b2World * world, double x, float high)
 		m_physicalObjects[0]->getBody()->CreateFixture(&chassisSol, 1.0f);
 		m_physicalObjects[0]->getBody()->CreateFixture(&chassisGauche, 1.0f);
 		m_physicalObjects[0]->getBody()->CreateFixture(&chassisDroite, 1.0f);
-		m_physicalObjects[0]->getBody()->CreateFixture(&chassisToit, 1.0f);
+		//m_physicalObjects[0]->getBody()->CreateFixture(&chassisToit, 1.0f);
 	}
 	b2CircleShape circle;
 	circle.m_radius = 0.5f;
@@ -216,9 +217,11 @@ void Wagon::build(b2World * world, double x, float high)
 	m_spring2 = (b2WheelJoint*)world->CreateJoint(&jd);// joint pour la roue2
 
 
-	//TEST Création d'un passager
+	//TEST Création d'un passager A RETIRER PLUS TARD
 	Passenger *p = new Passenger(0.0f, 0.0f);
 	addPassenger(p);
+
+	ejectPassenger(p);
 }
 
 // Add the Passenger also creates the passenger joint. Call checkCapacity at the end.
@@ -245,4 +248,28 @@ void Wagon::addPassenger(Passenger* p)
 
 	p->setJoint( PhysicalObject::m_world->CreateJoint(&jointDef) );
 	//checkCapacity();
+}
+
+// Eject the passenger by removing its joint, set the passenger’s “isEjected” to true. After a timer of 5 sec, we call deletePassenger().
+void Wagon::ejectPassenger(Passenger* p)
+{
+	PhysicalObject::m_world->DestroyJoint(p->getJoint());
+	p->setJoint(NULL);
+	p->setIsEjected(true);
+	m_passengersCount --;
+
+	//On lui met une force vers le haut pour qu'il soit ejecté
+	p->getBody()->ApplyForce( b2Vec2(-10, 40), p->getBody()->GetPosition() );
+
+	//timer de 5 sec
+	
+	//deletePassenger(p);
+}
+
+void Wagon::deletePassenger(Passenger* p)
+{
+	// TODO On vérifie que le passager est hors de l'écran
+	m_passengers.remove(p);
+	delete p;
+	p = NULL;
 }

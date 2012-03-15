@@ -4,7 +4,7 @@
 #include "Passenger.hpp"
 #include "Station.hpp"
 #include "PhysicalObject.hpp"
-
+#include <list>
 /*
 * Represents a wagon of the train. Has passengers, a body, doors ...
 */
@@ -52,7 +52,7 @@ class Wagon{
 	b2WheelJoint* m_spring1;
 	b2WheelJoint* m_spring2;
 	// Passengers in the wagon
-	std::vector<Passenger*> m_passengers;
+	std::list<Passenger*> m_passengers;
 	// Linking the wagon to the one ahead, or to the locomotive
 	//b2RevoluteJoint *       m_joint;// pk une revolute joint???
 
