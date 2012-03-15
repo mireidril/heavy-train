@@ -147,38 +147,43 @@ void Wagon::build(b2World * world, double x, float high)
 	}else if( typeWagon == 1 )
 	{
 		//avec des polygones
-		b2PolygonShape chassisGauche;
+		b2PolygonShape frameLeft;
 		b2Vec2 vertices[4];
 		vertices[0].Set(-1.6f, -0.8f);
 		vertices[1].Set(-1.5f, -0.8f);
 		vertices[2].Set(-1.5f, 0.8f);
 		vertices[3].Set(-1.6f, 0.8f);
-		chassisGauche.Set(vertices, 4);
-		b2PolygonShape chassisSol;
+		frameLeft.Set(vertices, 4);
+		b2PolygonShape frameBot;
 		vertices[0].Set(-1.6f, -0.9f);
 		vertices[1].Set(1.6f, -0.9f);
 		vertices[2].Set(1.6f, -0.8f);
 		vertices[3].Set(-1.6f, -0.8f);
-		chassisSol.Set(vertices, 4);
+		frameBot.Set(vertices, 4);
 
-		b2PolygonShape chassisDroite;
+		b2PolygonShape frameRight;
 		vertices[0].Set(1.5f, -0.9f);
 		vertices[1].Set(1.6f, -0.9f);
 		vertices[2].Set(1.6f, 0.9f);
 		vertices[3].Set(1.5f, 0.9f);
-		chassisDroite.Set(vertices, 4);
-		/*
-		b2PolygonShape chassisToit;
+		frameRight.Set(vertices, 4);
+		//*
+		b2PolygonShape frameRoof;
 		vertices[0].Set(-1.6f, 0.8f);
 		vertices[1].Set(1.6f, 0.8f);
 		vertices[2].Set(1.6f, 0.9f);
 		vertices[3].Set(-1.6f, 0.9f);
-		chassisToit.Set(vertices, 4);
+		frameRoof.Set(vertices, 4);
+		b2FixtureDef fixtureRoof;
+		fixtureRoof.shape = &frameRoof;
+		fixtureRoof.density = 5.0f;
+		fixtureRoof.filter.groupIndex = -1; // So it doesn't collide with passengers
 		//*/
 	
-		m_physicalObjects[0]->getBody()->CreateFixture(&chassisSol, 1.0f);
-		m_physicalObjects[0]->getBody()->CreateFixture(&chassisGauche, 1.0f);
-		m_physicalObjects[0]->getBody()->CreateFixture(&chassisDroite, 1.0f);
+		m_physicalObjects[0]->getBody()->CreateFixture(&frameBot, 5.0f);
+		m_physicalObjects[0]->getBody()->CreateFixture(&frameLeft, 5.0f);
+		m_physicalObjects[0]->getBody()->CreateFixture(&frameRight, 5.0f);
+		m_physicalObjects[0]->getBody()->CreateFixture(&fixtureRoof);
 		//m_physicalObjects[0]->getBody()->CreateFixture(&chassisToit, 1.0f);
 	}
 	b2CircleShape circle;
@@ -218,10 +223,12 @@ void Wagon::build(b2World * world, double x, float high)
 
 
 	//TEST Création d'un passager A RETIRER PLUS TARD
-	Passenger *p = new Passenger(0.0f, 0.0f);
-	addPassenger(p);
+	for(int i = 0; i< 20; i++ ){
+		Passenger *p = new Passenger(0.0f, 0.0f);
+		addPassenger(p);
 
-	ejectPassenger(p);
+		//ejectPassenger(p);
+	}//*/
 }
 
 // Add the Passenger also creates the passenger joint. Call checkCapacity at the end.
@@ -231,8 +238,11 @@ void Wagon::addPassenger(Passenger* p)
 	++ m_passengersCount;
 	p->switchDynamic();
 
-	//On le déplace dans le wagon
-	b2Vec2 pos(m_physicalObjects[0]->getBody()->GetPosition().x, m_physicalObjects[0]->getBody()->GetPosition().y - 0.3f );
+	// On le déplace dans le wagon
+	// On le place selon le nombre de passagers déja présents
+	float shift = ((float)m_passengersCount / 5) - m_passengersCount / 5;
+	std::clog<<m_passengersCount<<"shift : "<<shift<<std::endl;
+	b2Vec2 pos(m_physicalObjects[0]->getBody()->GetPosition().x - 1.1f + (float)shift * 2.7f, m_physicalObjects[0]->getBody()->GetPosition().y +0.1f );
 	p->getBody()->SetTransform(pos, 0.0);
 
 	//Création du joint pour lier le passager au wagon
@@ -241,8 +251,8 @@ void Wagon::addPassenger(Passenger* p)
 	jointDef.Initialize(p->getBody(), m_physicalObjects[0]->getBody(), worldAnchorPassenger);
 
 	//On limite l'ampleur de l'angle
-	jointDef.lowerAngle = -0.25f * b2_pi; // -45 degrees
-	jointDef.upperAngle = 0.25f * b2_pi; // 45 degrees
+	jointDef.lowerAngle = -0.15f * b2_pi; // -45 degrees
+	jointDef.upperAngle = 0.15f * b2_pi; // 45 degrees
 
 	jointDef.enableLimit = true;
 
