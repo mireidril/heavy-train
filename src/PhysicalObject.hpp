@@ -56,6 +56,8 @@ class PhysicalObject
 		b2Vec2 m_smoothedPosition;
 		//Position de m_body au dernier pas de simulation
 		b2Vec2 m_previousPosition;
+		//Position de m_body au dernier pas de simulation
+		b2Vec2 m_previousPosition2;
 		//Angle de m_body smoothée
 		double m_smoothedAngle;
 		//Angle de m_body au dernier pas de simulation

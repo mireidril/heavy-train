@@ -98,6 +98,7 @@ void Sprite::setAngle(double & angle){
 void Sprite::addImage(const char* imageFileName)
 {
 	SDL_Surface * img = IMG_Load(imageFileName);
+	img = SDL_DisplayFormat(img);
 	if(img)
 	{
 		m_frames.push_back(img);
@@ -111,9 +112,10 @@ void Sprite::addImage(const char* imageFileName)
  */
 void Sprite::addImage(SDL_Surface * sdlSurface)
 {
+	SDL_Surface * img = SDL_DisplayFormat(sdlSurface);
 	if(sdlSurface)
 	{
-		m_frames.push_back(sdlSurface);
+		m_frames.push_back(img);
 		m_nbFrames++;
 	}
 }
