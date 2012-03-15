@@ -65,7 +65,8 @@ Passenger::~Passenger(){
 }
 
 void Passenger::breakJoint(){
-	(PhysicalObject::m_world)->DestroyJoint(m_joint);
+	if( m_joint )
+		(PhysicalObject::m_world)->DestroyJoint(m_joint);
 	m_joint = NULL;
 }
 
@@ -105,6 +106,10 @@ void Passenger::setJoint(b2Joint * j){
 	m_joint = j;
 }
 
-const b2Joint * Passenger::get_joint(){
+b2Joint * Passenger::getJoint(){
 	return m_joint;
+}
+
+void Passenger::setIsEjected(bool b){
+	m_isEjected = b;
 }

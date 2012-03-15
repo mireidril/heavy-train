@@ -75,7 +75,7 @@ void ActualGame::run(SDL_Surface * screen, int w, int h)
 
 	fooDrawInstance->SetFlags( b2Draw::e_shapeBit );
 	//Affichage des formes physiques pour Debug
-	//m_world->DrawDebugData();
+	m_world->DrawDebugData();
 }
 
 void ActualGame::scroll()
