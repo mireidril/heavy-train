@@ -68,18 +68,15 @@ void Wagon::clearAllSmoothAngleAndPosition()
  */
 void Wagon::drawSprite(SDL_Surface * screen, const int & width, const int & height, int posX)
 {
-	double x; 
-	double y; 
+	double x, y; 
 	b2Vec2 bodyPos;
-	double angle;
-	double angledegrees;
+	double angle,angledegrees;
 	bodyPos = m_physicalObjects[0]->getPosition();
 	angle = m_physicalObjects[0]->getAngle();
 	angledegrees= angle*180/M_PI;
-	x = bodyPos.x; 
 	y = bodyPos.y;
-	m_physicalObjects[0]->getSprite()->convertMetersToPixels( &x,  &y,  width,  height);
-	if (angle>=-0.01){
+	m_physicalObjects[0]->getSprite()->convertMetersToPixelsY( &y,  width,  height);
+	if (angle>=0){
 		y = y-30*sin(angle)-35*cos(angle);
 	}
 	else {
@@ -92,10 +89,8 @@ void Wagon::drawSprite(SDL_Surface * screen, const int & width, const int & heig
 	//roues
 	for (int i=1; i<3; i++){
 		bodyPos = m_physicalObjects[i]->getPosition();
-		x = bodyPos.x; 
 		y = bodyPos.y;
-		m_physicalObjects[i]->getSprite()->convertMetersToPixels( &x,  &y,  width,  height); 
-		y = y-8;
+		m_physicalObjects[i]->getSprite()->convertMetersToPixelsY( &y,  width,  height); 
 		angle = m_physicalObjects[0]->getAngle();
 		if (angle>=0){
 			x= posX+10*cos(angle)+(i-1)*40*cos(angle);

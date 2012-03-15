@@ -130,6 +130,15 @@ void Sprite::convertMetersToPixels(double * x, double * y, const int & width, co
 		(*y) = height - height * (*y) / 30;
 }
 
+
+/*
+ * Gère les conversions du monde physique vers l'affichage
+ */
+void Sprite::convertMetersToPixelsY( double * y, const int & width, const int & height){
+	if(y)
+		(*y) = height - height * (*y) / 30;
+}
+
 /*
  * Gère les conversions de l'affichage vers l'écran
  */
