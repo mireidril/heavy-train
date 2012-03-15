@@ -1,10 +1,15 @@
 #include "PhysicalObject.hpp"
 
+
+
 PhysicalObject::PhysicalObject()
-: m_smoothedPosition(0, 0)
-, m_previousPosition(0, 0)
+: m_smoothedPosition(INFINITE, INFINITE)
+, m_previousPosition(INFINITE, INFINITE)
+, m_previousAngle(INFINITE)
+, m_smoothedAngle(INFINITE)
 {
 	m_sprite = NULL;
+	clearSmoothAngleAndPosition();
 }
 
 PhysicalObject::PhysicalObject(Sprite * s)
@@ -35,7 +40,7 @@ void PhysicalObject::updatePositions()
 {
 	m_previousPosition = m_smoothedPosition;
 	m_smoothedPosition = getPositionSmoothed();
-
+	
 	m_previousAngle = m_smoothedAngle;
 	m_smoothedAngle = getAngleSmoothed();
 }
@@ -58,11 +63,6 @@ b2Vec2 PhysicalObject::getPosition()
 	return m_smoothedPosition;
 }
 
-b2Vec2 PhysicalObject::getLastPosition()
-{
-	return m_previousPosition;
-}
-
 double PhysicalObject::getAngle()
 {
 	return m_smoothedAngle;
@@ -83,6 +83,6 @@ double PhysicalObject::getAngleSmoothed()
 
 void PhysicalObject::clearSmoothAngleAndPosition()
 {
-	m_smoothedPosition /*= m_previousPosition */= m_body->GetPosition();
+	m_smoothedPosition = m_previousPosition = m_body->GetPosition();
 	m_smoothedAngle = m_previousAngle = m_body->GetAngle();
 }

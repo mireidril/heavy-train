@@ -60,8 +60,6 @@ class Train
 
 	void keyboard( const SDL_KeyboardEvent *event);
 
-	//Donne la position du body à la dernière frame
-	b2Vec2 getBodyLastPosition();
 	//Donne la position actuelle du body
 	b2Vec2 getBodyPosition();
 	

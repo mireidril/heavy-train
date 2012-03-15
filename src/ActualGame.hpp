@@ -10,8 +10,6 @@
 #include <Box2D/Box2D.h>
 #endif
 
-
-
 class ActualGame
 {
 	public :
@@ -88,5 +86,8 @@ class ActualGame
 		//Pour caler la simulation avec le framerate
 		double fixedTimestepAccumulator;
 		double fixedTimestepAccumulatorRatio;
+
+		//On stocke ici la dernière position du train avant scrolling
+		double m_lastPosXTrain;
 };
 #endif

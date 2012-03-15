@@ -11,6 +11,8 @@
 
 #include "Sprite.hpp"
 
+#define INFINITE 999999.0
+
 class PhysicalObject
 {
 	public :
@@ -42,8 +44,6 @@ class PhysicalObject
 
 		//Retourne la position du body
 		b2Vec2 getPosition();
-		//Retourne la dernière position du body
-		b2Vec2 getLastPosition();
 		//Retourne l'angle du body
 		double getAngle();
 	protected :
