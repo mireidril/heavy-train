@@ -221,7 +221,7 @@ void Wagon::build(b2World * world, double x, float high)
 	jd.dampingRatio = zeta;
 	m_spring2 = (b2WheelJoint*)world->CreateJoint(&jd);// joint pour la roue2
 
-
+	
 	//TEST Création d'un passager A RETIRER PLUS TARD
 	for(int i = 0; i< 20; i++ ){
 		Passenger *p = new Passenger(0.0f, 0.0f);
@@ -241,8 +241,13 @@ void Wagon::addPassenger(Passenger* p)
 	// On le déplace dans le wagon
 	// On le place selon le nombre de passagers déja présents
 	float shift = ((float)m_passengersCount / 5) - m_passengersCount / 5;
-	std::clog<<m_passengersCount<<"shift : "<<shift<<std::endl;
-	b2Vec2 pos(m_physicalObjects[0]->getBody()->GetPosition().x - 1.1f + (float)shift * 2.7f, m_physicalObjects[0]->getBody()->GetPosition().y +0.1f );
+	//Initialise random 
+	
+	float bloup = (float)rand() /2.0f/ (float)RAND_MAX;
+	std::clog<<m_passengersCount<<"shift : "<<shift<<" bloup: "<<bloup<<std::endl;
+	
+	
+	b2Vec2 pos(m_physicalObjects[0]->getBody()->GetPosition().x - 1.1f + (float)shift * 2.2f + bloup , m_physicalObjects[0]->getBody()->GetPosition().y +0.1f );
 	p->getBody()->SetTransform(pos, 0.0);
 
 	//Création du joint pour lier le passager au wagon

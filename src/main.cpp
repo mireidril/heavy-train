@@ -14,7 +14,7 @@ void testLibrairies()
 	std::cout<<"Hello OWLaround :)"<<std::endl;
 	//-----------------SDL-------------------------------------------------
 
-	if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER) != 0) 
+	if(SDL_Init(SDL_INIT_VIDEO) != 0) 
 	{
 		std::cerr << "Can't initialize SDL : " << SDL_GetError() << std::endl;
 	}
@@ -192,6 +192,9 @@ void testLibrairies()
 
 int main(int argc, char** argv)
 {
+	//Initialisation du rand
+	srand ( time(NULL) );
+
 	//Lancement du jeu
 	GameEngine gameEngine;
 	gameEngine.run();
