@@ -90,11 +90,11 @@ void Train::drawSprite(SDL_Surface * screen, const int & width, const int & heig
 		angle = m_physicalObjects[0]->getAngle();
 		if (angle>=0){
 			x= m_physicalObjects[0]->getSprite()->getPositionX()+20+20*cos(angle)+(i-1)*50*cos(angle);
-			y = y-8*sin(angle)-8*cos(angle);
+			//y = y-8*sin(angle)-8*cos(angle);
 		}
 		else {
 			x= m_physicalObjects[0]->getSprite()->getPositionX()+20-20*cos(angle)+(i-1)*50*cos(angle);
-			y = y-8*sin(M_PI-angle)+8*cos(M_PI-angle);
+			//y = y-8*sin(M_PI-angle)+8*cos(M_PI-angle);
 		}
 		m_physicalObjects[i]->getSprite()->setPosition(x,y);
 		angle = m_physicalObjects[i]->getAngle()*180/M_PI;
