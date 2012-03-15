@@ -265,12 +265,6 @@ void Train::keyboard( const SDL_KeyboardEvent *event)
 	}
 }
 
-//Donne la position du body à la dernière frame
-b2Vec2 Train::getBodyLastPosition()
-{
-	return m_physicalObjects[0]->getLastPosition();
-}
-
 //Donne la position actuelle du body
 b2Vec2 Train::getBodyPosition()
 {

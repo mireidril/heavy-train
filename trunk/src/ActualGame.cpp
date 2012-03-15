@@ -6,6 +6,7 @@ double PhysicalObject::fixedTimestepAccumulatorRatio;
  * ActualGame Constructor
  */
 ActualGame::ActualGame()
+: m_lastPosXTrain (INFINITE)
 {
 	std::cout << "Actual Game" << std::endl;
 
@@ -59,7 +60,7 @@ ActualGame::~ActualGame()
 }
 
 /*
- * ActualGame run: est appel� dans le game Engine: update le world et dessine les �l�ments
+ * ActualGame run: est appele dans le game Engine: update le world et dessine les elements
  */
 void ActualGame::run(SDL_Surface * screen, int w, int h)
 {
@@ -74,19 +75,21 @@ void ActualGame::run(SDL_Surface * screen, int w, int h)
 
 	fooDrawInstance->SetFlags( b2Draw::e_shapeBit );
 	//Affichage des formes physiques pour Debug
-	m_world->DrawDebugData();
+	//m_world->DrawDebugData();
 }
 
 void ActualGame::scroll()
 {
 	//Récupération de la dernière position du train
-	b2Vec2 lastPos = m_train->getBodyLastPosition();
 	b2Vec2 currentPos = m_train->getBodyPosition();
+	if( m_lastPosXTrain != INFINITE )
+	{
+		double x = m_lastPosXTrain - currentPos.x;
+		Sprite::convertMetersToPixels(&x, NULL, WINDOWS_W, WINDOWS_H);
 
-	double x = lastPos.x - currentPos.x;
-	Sprite::convertMetersToPixels(&x, NULL, WINDOWS_W, WINDOWS_H);
-
-	m_actualLevel->scrollLevel(x);
+		m_actualLevel->scrollLevel(x);
+	}
+	m_lastPosXTrain = currentPos.x;
 }
 
 void ActualGame::runSimulation()

@@ -19,7 +19,7 @@ Block::Block(BlockType type, int sizeX, int posX, int id)
 , m_y (668)
 , m_tunnelHeight (200)
 {
-	SDL_Rect * p1, *p01, *p2, *p3, *p4, *p5;
+	SDL_Rect * p1, *p01, *p2, *p3, *p4, *p5, *p6;
 	switch(type)
 	{
 		case GROUND :
@@ -41,12 +41,16 @@ Block::Block(BlockType type, int sizeX, int posX, int id)
 			p5 = new SDL_Rect;
 			p5->x = 1024;
 			p5->y = m_y;
+			p6 = new SDL_Rect;
+			p6->x = 2048;
+			p6->y = m_y;
 			m_points.push_back(p1);
 			m_points.push_back(p01);
 			m_points.push_back(p2);
 			m_points.push_back(p3);
 			m_points.push_back(p4);
 			m_points.push_back(p5);
+			m_points.push_back(p6);
 			break;
 		case PRECIPICE :
 			break;
@@ -177,13 +181,13 @@ void Block::createImage()
 		case GROUND :
 		{
 			//Création du masque
-			SDL_Surface * image = SDL_CreateRGBSurface(SDL_HWSURFACE, m_sizeX, (int) m_sizeYMin, 32, rmask, gmask, bmask, amask);
+			SDL_Surface * mask = SDL_CreateRGBSurface(SDL_HWSURFACE, m_sizeX, (int) m_sizeYMin, 32, rmask, gmask, bmask, amask);
 	
 			for(int x = 0; x < m_sizeX; ++x)
 			{
 				for(int y = 0; y < m_sizeYMin; ++y)
 				{
-					Sprite::putpixel(image, x, y, 0xffffffff);
+					Sprite::putpixel(mask, x, y, 0xffffffff);
 				}
 			}
 			double x1, y1, x2, y2;
@@ -205,12 +209,12 @@ void Block::createImage()
 				xPolygon[1] = (Sint16) x2; yPolygon[1] = 0;
 				xPolygon[2] = (Sint16) x2; yPolygon[2] = (Sint16) (y2 - m_sizeYMin);
 				xPolygon[3] = (Sint16) x1; yPolygon[3] = (Sint16) (y1 - m_sizeYMin);
-				filledPolygonRGBA(image, xPolygon, yPolygon, nbSide, 0, 0, 0, 255);
+				filledPolygonRGBA(mask, xPolygon, yPolygon, nbSide, 0, 0, 0, 255);
 				delete [] xPolygon;
 				delete [] yPolygon;
 			}
 	
-			SDL_SaveBMP(image, "masque.bmp");
+			SDL_SaveBMP(mask, "masque.bmp");
 
 			//Chargement de l'image ground
 			SDL_Surface * ground = IMG_Load("../img/levels/ground.png");
@@ -229,13 +233,13 @@ void Block::createImage()
 			{
 				for(int y = 0; y < m_sizeYMin; ++y)
 				{
-					if( Sprite::getpixel(image, x, y) == 0xff000000)
+					if( Sprite::getpixel(mask, x, y) == 0xff000000)
 					{
 						actualPixel = 0x00000000;
 					}
-					else if( Sprite::getpixel(image, x, y) == 0xffffffff)
+					else if( Sprite::getpixel(mask, x, y) == 0xffffffff)
 					{
-						actualPixel = Sprite::getpixel(image, x, y) & Sprite::getpixel(ground, x, y);
+						actualPixel = Sprite::getpixel(mask, x, y) & Sprite::getpixel(ground, x, y);
 					}
 					Sprite::putpixel(imageTest, x, y, actualPixel);
 				}
@@ -250,6 +254,9 @@ void Block::createImage()
 			size->x = (Sint16) m_sizeX;
 			size->y = (Sint16) m_sizeYMin;
 			m_sprite = new Sprite(imageTest, position, size);
+
+			SDL_FreeSurface(mask);
+			SDL_FreeSurface(ground);
 		}
 		break;
 

@@ -9,7 +9,7 @@ Level::Level ()
         //m_blocks.push_back(new Block(BlockType::JUNCTION_DOWN, 1000, pos));
         //m_blocks.push_back(new Block(JUNCTION_DOWN, 1000, pos));
 	//m_blocks.push_back(new Block(JUNCTION_UP, 1000, pos));
-	m_blocks.push_back(new Block(GROUND, 500, 0, 0));
+		m_blocks.push_back(new Block(GROUND, 500, 0, 0));
         //m_departureTime = ...;
         //m_position = ...;
         m_islandNum = 0;
@@ -62,9 +62,17 @@ void Level::clearAllSmoothAngleAndPosition()
  */
 void Level::scrollLevel(const int & x)
 {
+	//Blocks
 	for(unsigned int i = 0; i < m_blocks.size(); ++i)
 	{
 		m_blocks[i]->scroll(x);
+	}
+
+	//Backgrounds
+	for(int i = 1; i < m_backgroundImages.size(); ++i)
+	{
+		int newX = (int) ( x + ( double(x) * i * 0.25) );
+		m_backgroundImages[i]->setPositionX(m_backgroundImages[i]->getPositionX() + newX);
 	}
 }
 
@@ -244,10 +252,7 @@ void Level::drawBlocks(SDL_Surface * screen, int w, int h)
  */
 void Level::drawBackgrounds(SDL_Surface * screen, int w, int h)
 {
-
-   m_backgroundImages[0]->draw(screen,w,h); 
-   m_backgroundImages[1]->setPositionX(m_backgroundImages[1]->getPositionX()-1);
-   m_backgroundImages[1]->draw(screen,w,h);   
-   m_backgroundImages[2]->setPositionX(m_backgroundImages[2]->getPositionX()-2);
-   m_backgroundImages[2]->draw(screen,w,h);  
+   m_backgroundImages[0]->draw(screen, w, h); 
+   m_backgroundImages[1]->draw(screen, w, h);
+   m_backgroundImages[2]->draw(screen, w, h);  
 }
