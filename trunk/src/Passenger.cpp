@@ -28,8 +28,9 @@ Passenger::Passenger(double x, double y)
 
 	b2FixtureDef fd;
 	fd.shape = &sd1;
-	fd.density = 1.0f;
+	fd.density = 0.1f;
 	fd.friction = 0.9f;
+	fd.filter.groupIndex = -1; // pour que les passagers n'aient pas de collision entre eux
 
 	//Cercle	
 	b2CircleShape sd2;
@@ -38,8 +39,9 @@ Passenger::Passenger(double x, double y)
 
 	b2FixtureDef fd2;
 	fd2.shape = &sd2;
-	fd2.density = 1.0f;
+	fd2.density = 0.1f;
 	fd2.friction = 0.9f;
+	fd2.filter.groupIndex = -1; // pour que les passagers n'aient pas de collision entre eux
          
 	//Création du BodyDef, le "modèle"
 	b2BodyDef bodyDef;
