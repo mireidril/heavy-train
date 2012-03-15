@@ -83,6 +83,6 @@ double PhysicalObject::getAngleSmoothed()
 
 void PhysicalObject::clearSmoothAngleAndPosition()
 {
-	m_smoothedPosition = m_previousPosition = m_body->GetPosition();
+	m_smoothedPosition /*= m_previousPosition */= m_body->GetPosition();
 	m_smoothedAngle = m_previousAngle = m_body->GetAngle();
 }
