@@ -5,6 +5,10 @@
 #include "Station.hpp"
 #include "PhysicalObject.hpp"
 #include <list>
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
 /*
 * Represents a wagon of the train. Has passengers, a body, doors ...
 */
