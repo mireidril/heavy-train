@@ -7,17 +7,25 @@
 
 Train::Train () 
 {
+	//la corps de la loco
+	//position de la loco
 	SDL_Rect * pos = new SDL_Rect;
 	pos->x = 280; pos->y = 0; 
-
+	//taille de la loco
 	SDL_Rect * size = new SDL_Rect;
 	size->x = 166; size->y = 117;
-
 	PhysicalObject * loco = new PhysicalObject(new Sprite("../img/elements/loco.png",  pos,  size));
 	m_physicalObjects.push_back(loco);
-	size->x = 39; size->y = 36;
-	PhysicalObject * roue1 = new PhysicalObject(new Sprite("../img/elements/roue.png",  pos,  size));	
-	PhysicalObject * roue2 = new PhysicalObject(new Sprite("../img/elements/roue.png",  pos,  size));
+
+	//les roues de la loco
+	//position des roues
+	SDL_Rect * posr = new SDL_Rect;
+	posr->x = 0; posr->y = 0; 
+	//taille roues
+	SDL_Rect * sizer = new SDL_Rect;
+	sizer->x = 39; sizer->y = 36;
+	PhysicalObject * roue1 = new PhysicalObject(new Sprite("../img/elements/roue.png",  posr,  sizer));	
+	PhysicalObject * roue2 = new PhysicalObject(new Sprite("../img/elements/roue.png",  posr,  sizer));
 	m_physicalObjects.push_back(roue1);//roue1
 	m_physicalObjects.push_back(roue2);//roue2
 	// add wagons
@@ -51,18 +59,15 @@ void Train::updatePosition()
  */
 void Train::drawSprite(SDL_Surface * screen, const int & width, const int & height)
 {
-	double x; 
 	double y; 
 	b2Vec2 bodyPos;
-	double angle;
-	//loco
+	double angle, angledegrees;
+	//locomotive
 	bodyPos = m_physicalObjects[0]->getPosition();
 	angle = m_physicalObjects[0]->getAngle();
-	double angledegrees = angle*180/M_PI;
-	x = bodyPos.x; 
+	angledegrees = angle*180/M_PI;
 	y = bodyPos.y;
-	m_physicalObjects[0]->getSprite()->convertMetersToPixels( &x,  &y,  width,  height);
-	x=280;
+	m_physicalObjects[0]->getSprite()->convertMetersToPixelsY( &y,  width,  height);
 	if (angle>=0){
 		//x = x-50*cos(angle)-35*sin(angle); 
 		y = y-50*sin(angle)-35*cos(angle);
@@ -72,23 +77,23 @@ void Train::drawSprite(SDL_Surface * screen, const int & width, const int & heig
 		y = y+50*sin(M_PI-angle)+35*cos(M_PI-angle);
 	}
 
-	m_physicalObjects[0]->getSprite()->setPosition(x, y);
+	m_physicalObjects[0]->getSprite()->setPositionY( y);
 	m_physicalObjects[0]->getSprite()->setAngle(angledegrees);
 	m_physicalObjects[0]->getSprite()->draw(screen, width, height);
 
 	//roues
+	double x;
 	for (int i=1; i<3; i++){
-		bodyPos = m_physicalObjects[i]->getPosition();
-		x = bodyPos.x; 
+		bodyPos = m_physicalObjects[i]->getPosition(); 
 		y = bodyPos.y;
-		m_physicalObjects[i]->getSprite()->convertMetersToPixels( &x,  &y,  width,  height);
+		m_physicalObjects[i]->getSprite()->convertMetersToPixelsY(  &y,  width,  height);
 		angle = m_physicalObjects[0]->getAngle();
 		if (angle>=0){
-			x= 300+10*cos(angle)+(i-1)*40*cos(angle);
+			x= m_physicalObjects[0]->getSprite()->getPositionX()+20+20*cos(angle)+(i-1)*50*cos(angle);
 			y = y-8*sin(angle)-8*cos(angle);
 		}
 		else {
-			x= 300-10*cos(angle)+(i-1)*40*cos(angle);
+			x= m_physicalObjects[0]->getSprite()->getPositionX()+20-20*cos(angle)+(i-1)*50*cos(angle);
 			y = y-8*sin(M_PI-angle)+8*cos(M_PI-angle);
 		}
 		m_physicalObjects[i]->getSprite()->setPosition(x,y);
@@ -96,7 +101,6 @@ void Train::drawSprite(SDL_Surface * screen, const int & width, const int & heig
 		m_physicalObjects[i]->getSprite()->setAngle(angle);
 		m_physicalObjects[i]->getSprite()->draw(screen, width, height);
 	}
-
 	m_wagons[0]->drawSprite(screen, width, height, 230);
 	m_wagons[1]->drawSprite(screen, width, height, 170);
 }
