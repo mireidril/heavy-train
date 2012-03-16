@@ -222,7 +222,7 @@ void Wagon::build(b2World * world, double x, float high)
 	m_spring2 = (b2WheelJoint*)world->CreateJoint(&jd);// joint pour la roue2
 
 	
-	//TEST Création d'un passager A RETIRER PLUS TARD
+	//TEST Création de passagers A RETIRER PLUS TARD
 	for(int i = 0; i< 20; i++ ){
 		Passenger *p = new Passenger(0.0f, 0.0f);
 		addPassenger(p);
@@ -244,7 +244,7 @@ void Wagon::addPassenger(Passenger* p)
 	//Initialise random 
 	
 	float bloup = (float)rand() /2.0f/ (float)RAND_MAX;
-	std::clog<<m_passengersCount<<"shift : "<<shift<<" bloup: "<<bloup<<std::endl;
+	//std::clog<<m_passengersCount<<"shift : "<<shift<<" bloup: "<<bloup<<std::endl;
 	
 	
 	b2Vec2 pos(m_physicalObjects[0]->getBody()->GetPosition().x - 1.1f + (float)shift * 2.2f + bloup , m_physicalObjects[0]->getBody()->GetPosition().y +0.1f );
@@ -256,8 +256,8 @@ void Wagon::addPassenger(Passenger* p)
 	jointDef.Initialize(p->getBody(), m_physicalObjects[0]->getBody(), worldAnchorPassenger);
 
 	//On limite l'ampleur de l'angle
-	jointDef.lowerAngle = -0.15f * b2_pi; // -45 degrees
-	jointDef.upperAngle = 0.15f * b2_pi; // 45 degrees
+	jointDef.lowerAngle = -0.15f * b2_pi;
+	jointDef.upperAngle = 0.15f * b2_pi;
 
 	jointDef.enableLimit = true;
 
@@ -265,7 +265,7 @@ void Wagon::addPassenger(Passenger* p)
 	//checkCapacity();
 }
 
-// Eject the passenger by removing its joint, set the passenger’s “isEjected” to true. After a timer of 5 sec, we call deletePassenger().
+// Eject the passenger by removing its joint, set the passenger’s “isEjected” to true.
 void Wagon::ejectPassenger(Passenger* p)
 {
 	PhysicalObject::m_world->DestroyJoint(p->getJoint());
@@ -276,14 +276,11 @@ void Wagon::ejectPassenger(Passenger* p)
 	//On lui met une force vers le haut pour qu'il soit ejecté
 	p->getBody()->ApplyForce( b2Vec2(-10, 40), p->getBody()->GetPosition() );
 
-	//timer de 5 sec
-	
-	//deletePassenger(p);
 }
 
+//On appellera deletePassenger à l'arret aux gares.
 void Wagon::deletePassenger(Passenger* p)
 {
-	// TODO On vérifie que le passager est hors de l'écran
 	m_passengers.remove(p);
 	delete p;
 	p = NULL;

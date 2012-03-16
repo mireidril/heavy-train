@@ -20,9 +20,9 @@ class Wagon{
     void jump(int);
     // Add the Passenger also creates the passenger joint. Call checkCapacity at the end.
 	void addPassenger(Passenger*);
-	// Eject the passenger by removing its joint, set the passenger’s “isEjected” to true. After a timer of 5 sec, we call deletePassenger().
+	// Eject the passenger by removing its joint, set the passenger’s “isEjected” to true. 
 	void ejectPassenger(Passenger*);
-	// If the passenger is ejected and outside of the screen, remove it from m_passengers. If not, call self in 5 sec.
+	// Appellé à l'arrêt aux gares, avant l'ouverture des portes. 
 	void deletePassenger(Passenger*);
 	// Make the passenger take off at the station
 	void takeOffPassenger(Passenger*, Station *);
