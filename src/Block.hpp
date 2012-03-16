@@ -63,7 +63,7 @@ class Block
 		void draw(SDL_Surface * screen, const int & width, const int & height);
 
 		
-	private :
+	protected :
 		//Sprite du bloc
 		Sprite * m_sprite;
 		//Body du bloc

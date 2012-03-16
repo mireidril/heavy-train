@@ -24,7 +24,7 @@ Block::Block(BlockType type, int sizeX, int posX, int id)
 	{
 		case GROUND :
 			p1 = new SDL_Rect;
-			p1->x = 0;
+			p1->x = posX;
 			p1->y = m_y;
 			/*p01 = new SDL_Rect;
 			p01->x = 10;
@@ -42,7 +42,7 @@ Block::Block(BlockType type, int sizeX, int posX, int id)
 			p5->x = 1024;
 			p5->y = m_y;*/
 			p6 = new SDL_Rect;
-			p6->x = 2048;
+			p6->x = posX+sizeX;
 			p6->y = m_y;
 			m_points.push_back(p1);
 			/*m_points.push_back(p01);
@@ -412,7 +412,7 @@ void Block::build(b2World * world)
 		{
 			//On suppose que la taille de la gare est supérieure à zéro
 			b2BodyDef groundBodyDef;
-			groundBodyDef.position.Set(0, 0); //Position à changer plus tard
+			groundBodyDef.position.Set(m_posX, 0); //Position à changer plus tard
 			m_body = world->CreateBody(&groundBodyDef);
 
 			b2EdgeShape shape;
@@ -425,6 +425,7 @@ void Block::build(b2World * world)
 			b2Vec2 p2((float32) x2, (float32) y2);
 			shape.Set(p1, p2);
 			m_body->CreateFixture(&shape, 0);
+			break;
 		}
 
 		case TUNNEL :
@@ -458,6 +459,7 @@ void Block::build(b2World * world)
 			plafond.Set(p1, p2);
 			m_body->CreateFixture(&plafond, 0);
 		}
+		break;
 
 		case PRECIPICE :
 		{
