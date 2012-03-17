@@ -29,8 +29,8 @@ Train::Train ()
 	m_physicalObjects.push_back(roue1);//roue1
 	m_physicalObjects.push_back(roue2);//roue2
 	// add wagons
-	m_wagons.push_back(new Wagon(180));
-	m_wagons.push_back(new Wagon(90));
+	m_wagons.push_back(new Wagon(164));
+	m_wagons.push_back(new Wagon(65));
 
 }
 
@@ -59,15 +59,18 @@ void Train::updatePosition()
  */
 void Train::drawSprite(SDL_Surface * screen, const int & width, const int & height)
 {
-	double y; 
+	double y, xLoco;
+	int xLocoSprite; 
+	xLocoSprite=m_physicalObjects[0]->getSprite()->getPositionX();
 	b2Vec2 bodyPos;
 	double angle, angledegrees;
 	//locomotive
 	bodyPos = m_physicalObjects[0]->getPosition();
 	angle = m_physicalObjects[0]->getAngle();
 	angledegrees = angle*180/M_PI;
+	xLoco = bodyPos.x;
 	y = bodyPos.y;
-	m_physicalObjects[0]->getSprite()->convertMetersToPixelsY( &y,  width,  height);
+	m_physicalObjects[0]->getSprite()->convertMetersToPixels(&xLoco, &y,  width,  height);
 	if (angle>=0){
 		//x = x-50*cos(angle)-35*sin(angle); 
 		y = y-50*sin(angle)-35*cos(angle);
@@ -89,11 +92,11 @@ void Train::drawSprite(SDL_Surface * screen, const int & width, const int & heig
 		m_physicalObjects[i]->getSprite()->convertMetersToPixelsY(  &y,  width,  height);
 		angle = m_physicalObjects[0]->getAngle();
 		if (angle>=0){
-			x= m_physicalObjects[0]->getSprite()->getPositionX()+60*sin(angle)+(i-1)*50*cos(angle);
+			x= m_physicalObjects[0]->getSprite()->getPositionX()+60*sin(angle)+(i-1)*70*cos(angle);
 			y = y-10*sin(angle)-10*cos(angle);
 		}
 		else {
-			x= m_physicalObjects[0]->getSprite()->getPositionX()+12*sin(angle)+(i-1)*50*cos(angle);
+			x= m_physicalObjects[0]->getSprite()->getPositionX()+12*sin(angle)+(i-1)*70*cos(angle);
 			y = y-10*sin(M_PI-angle)+10*cos(M_PI-angle);
 		}
 		m_physicalObjects[i]->getSprite()->setPosition(x,y);
@@ -103,8 +106,8 @@ void Train::drawSprite(SDL_Surface * screen, const int & width, const int & heig
 	}
 
 
-	m_wagons[0]->drawSprite(screen, width, height, 190);
-	m_wagons[1]->drawSprite(screen, width, height, 80);
+	m_wagons[0]->drawSprite(screen, width, height, xLocoSprite , xLoco);
+	m_wagons[1]->drawSprite(screen, width, height,xLocoSprite , xLoco );
 }
 
 /*
