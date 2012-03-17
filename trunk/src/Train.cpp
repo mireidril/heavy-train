@@ -10,7 +10,7 @@ Train::Train ()
 	//la corps de la loco
 	//position de la loco
 	SDL_Rect * pos = new SDL_Rect;
-	pos->x = 280; pos->y = 0; 
+	pos->x = 260; pos->y = 0; 
 	//taille de la loco
 	SDL_Rect * size = new SDL_Rect;
 	size->x = 166; size->y = 117;
@@ -29,8 +29,8 @@ Train::Train ()
 	m_physicalObjects.push_back(roue1);//roue1
 	m_physicalObjects.push_back(roue2);//roue2
 	// add wagons
-	m_wagons.push_back(new Wagon(220));
-	m_wagons.push_back(new Wagon(150));
+	m_wagons.push_back(new Wagon(180));
+	m_wagons.push_back(new Wagon(90));
 
 }
 
@@ -89,20 +89,22 @@ void Train::drawSprite(SDL_Surface * screen, const int & width, const int & heig
 		m_physicalObjects[i]->getSprite()->convertMetersToPixelsY(  &y,  width,  height);
 		angle = m_physicalObjects[0]->getAngle();
 		if (angle>=0){
-			x= m_physicalObjects[0]->getSprite()->getPositionX()+20+20*cos(angle)+(i-1)*50*cos(angle);
-			//y = y-8*sin(angle)-8*cos(angle);
+			x= m_physicalObjects[0]->getSprite()->getPositionX()+60*sin(angle)+(i-1)*50*cos(angle);
+			y = y-10*sin(angle)-10*cos(angle);
 		}
 		else {
-			x= m_physicalObjects[0]->getSprite()->getPositionX()+20-20*cos(angle)+(i-1)*50*cos(angle);
-			//y = y-8*sin(M_PI-angle)+8*cos(M_PI-angle);
+			x= m_physicalObjects[0]->getSprite()->getPositionX()+12*sin(angle)+(i-1)*50*cos(angle);
+			y = y-10*sin(M_PI-angle)+10*cos(M_PI-angle);
 		}
 		m_physicalObjects[i]->getSprite()->setPosition(x,y);
 		angle = m_physicalObjects[i]->getAngle()*180/M_PI;
-		m_physicalObjects[i]->getSprite()->setAngle(angle);
+		//m_physicalObjects[i]->getSprite()->setAngle(angle);
 		m_physicalObjects[i]->getSprite()->draw(screen, width, height);
 	}
-	m_wagons[0]->drawSprite(screen, width, height, 230);
-	m_wagons[1]->drawSprite(screen, width, height, 170);
+
+
+	m_wagons[0]->drawSprite(screen, width, height, 190);
+	m_wagons[1]->drawSprite(screen, width, height, 80);
 }
 
 /*
