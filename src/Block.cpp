@@ -26,30 +26,30 @@ Block::Block(BlockType type, int sizeX, int posX, int id)
 			p1 = new SDL_Rect;
 			p1->x = posX;
 			p1->y = m_y;
-			/*p01 = new SDL_Rect;
+			p01 = new SDL_Rect;
 			p01->x = 10;
-			p01->y = 384;
+			p01->y = 404;
 			p2 = new SDL_Rect;
 			p2->x = 256;
-			p2->y = 600;
+			p2->y = 550;
 			p3 = new SDL_Rect;
 			p3->x = 512;
-			p3->y = 450;
+			p3->y = 600;
 			p4 = new SDL_Rect;
 			p4->x = 768;
-			p4->y = 500;
+			p4->y = 450;
 			p5 = new SDL_Rect;
 			p5->x = 1024;
-			p5->y = m_y;*/
+			p5->y = m_y;
 			p6 = new SDL_Rect;
 			p6->x = posX+sizeX;
 			p6->y = m_y;
 			m_points.push_back(p1);
-			/*m_points.push_back(p01);
+			m_points.push_back(p01);
 			m_points.push_back(p2);
 			m_points.push_back(p3);
 			m_points.push_back(p4);
-			m_points.push_back(p5);*/
+			m_points.push_back(p5);
 			m_points.push_back(p6);
 			break;
 		case PRECIPICE :

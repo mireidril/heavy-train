@@ -230,7 +230,7 @@ void Level::loadAndBuild(const int & isle, const int & lvl){
 
 void Level::render(SDL_Surface * screen, int w, int h)
 {
-	drawBackgrounds(screen,  w,  h);
+	//drawBackgrounds(screen,  w,  h);
 	drawBlocks(screen, w, h);
 }
 
