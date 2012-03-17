@@ -41,7 +41,7 @@ class Wagon{
 	//Réinitialise les valeurs des PhysicalObjects après un smooth pour coller au framerate
 	void clearAllSmoothAngleAndPosition();
 
-	void drawSprite(SDL_Surface * screen, const int & width, const int & height, int posX);
+	void drawSprite(SDL_Surface * screen, const int & width, const int & height, const int & posXLocoSprite, const double & posXLocoBody);
 	void setMotorSpeed(float speed);
 
    private :
