@@ -101,7 +101,7 @@ void Train::drawSprite(SDL_Surface * screen, const int & width, const int & heig
 		}
 		m_physicalObjects[i]->getSprite()->setPosition(x,y);
 		angle = m_physicalObjects[i]->getAngle()*180/M_PI;
-		//m_physicalObjects[i]->getSprite()->setAngle(angle);
+		m_physicalObjects[i]->getSprite()->setAngle(angle);
 		m_physicalObjects[i]->getSprite()->draw(screen, width, height);
 	}
 
