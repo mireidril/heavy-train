@@ -21,6 +21,8 @@ class Animal : public PhysicalObject
 		void setType(const char * type);
 		void setPosX(int x);
 		void setPosY(int y);
+
+		void build(b2World * world);
 	private :
 		int m_posX;
 		int m_posY;
