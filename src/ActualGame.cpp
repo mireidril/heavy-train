@@ -22,7 +22,7 @@ ActualGame::ActualGame()
 	// Prepare for simulation. Typically we use a time step of 1/60 of a
 	// second (60Hz) and 10 iterations. This provides a high quality simulation
 	// in most game scenarios.
-	m_timeStep = 1.0f / 30.0f;
+	m_timeStep = 1.0f / 60.0f;
 	m_velocityIterations = 6;
 	m_positionIterations = 2;
 
@@ -64,6 +64,25 @@ ActualGame::~ActualGame()
  */
 void ActualGame::run(SDL_Surface * screen, int w, int h)
 {
+
+	//Calcule FPS
+	static double current_time = 0;
+	static double last_time = 0;
+	static int n = 0;
+	static int fps = n;
+
+	n++;
+	current_time = SDL_GetTicks () / 1000.0;
+
+	if ((current_time - last_time) >= 1.0)
+    {
+		// nombre de frames par seconde
+		fps = n;
+		n = 0;
+		last_time = current_time;
+    }
+	std::cout<<"FPS : "<<fps<<std::endl;
+
 	//Actualise la simulation
 	runSimulation();
 	

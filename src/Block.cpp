@@ -247,13 +247,7 @@ void Block::createImage()
 
 			SDL_SaveBMP(imageTest, "bloc.bmp");
 
-			SDL_Rect * position = new SDL_Rect;
-			position->x = 0;
-			position->y = (Sint16) m_sizeYMin;
-			SDL_Rect * size = new SDL_Rect;
-			size->x = (Sint16) m_sizeX;
-			size->y = (Sint16) m_sizeYMin;
-			m_sprite = new Sprite(imageTest, position, size);
+			m_sprite = new Sprite(imageTest, 0, (Sint16) m_sizeYMin, m_sizeX, m_sizeYMin);
 
 			SDL_FreeSurface(mask);
 			SDL_FreeSurface(ground);

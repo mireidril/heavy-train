@@ -13,21 +13,16 @@ Wagon::Wagon (int posX)
 	
 	m_areDoorOpened= false;
 
-	SDL_Rect * pos = new SDL_Rect;
-	pos->x = posX; pos->y=0;
-	SDL_Rect * posr1 = new SDL_Rect;
-	posr1->x = posX+10; posr1->y=0;
-	SDL_Rect * posr2 = new SDL_Rect;
-	posr2->x = posX+50; posr2->y=0;
-	SDL_Rect * size = new SDL_Rect;
-	size->x = 82; size->y = 59;
-
-	PhysicalObject * wagon = new PhysicalObject(new Sprite("../img/elements/wagon.png",  pos,  size) );
+	int x = posX; int y =0;
+	int sizeX = 82, sizeY = 59;
+	PhysicalObject * wagon = new PhysicalObject(new Sprite("../img/elements/wagon.png",  x, y,  sizeX, sizeY) );
 	m_physicalObjects.push_back(wagon);
-	size->x = 23; size->y = 23; 
-	PhysicalObject * roue1 = new PhysicalObject(new Sprite("../img/elements/roue.png",  posr1,  size) );
+	sizeX = 23; sizeY = 23; 
+	x = posX+10; y=0;
+	PhysicalObject * roue1 = new PhysicalObject(new Sprite("../img/elements/roue.png", x, y,  sizeX, sizeY) );
 	m_physicalObjects.push_back(roue1);
-	PhysicalObject * roue2 = new PhysicalObject(new Sprite("../img/elements/roue.png",  posr2,  size) );
+	x = posX+50; y=0;	
+	PhysicalObject * roue2 = new PhysicalObject(new Sprite("../img/elements/roue.png", x, y,  sizeX, sizeY) );
 	m_physicalObjects.push_back(roue2);
 
 
