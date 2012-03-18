@@ -15,7 +15,7 @@ GameEngine::GameEngine()
 , m_windowsHeight(WINDOWS_H)
 , m_isRunning(true)
 , m_isFullScreen(false)
-, m_actualGame()
+, m_actualGame(NULL)
 {
 }
 
@@ -29,7 +29,8 @@ GameEngine::~GameEngine()
 		delete m_interfaces[i];
 	}
 
-	delete m_actualGame;
+	if(m_actualGame != NULL)
+		delete m_actualGame;
 
 	SDL_FreeSurface(m_screen);
 
@@ -78,37 +79,37 @@ void GameEngine::loadInterfaces()
 {
 	//TITLE
 	Interface * titleScreen = new Interface(TITLE);
-	titleScreen->loadImages();
+	titleScreen->load();
 	m_interfaces.push_back(titleScreen);
 
 	//PAUSE
 	Interface * pauseScreen = new Interface(PAUSE);
-	pauseScreen->loadImages();
+	pauseScreen->load();
 	m_interfaces.push_back(pauseScreen);
 
 	//SCORE
 	Interface * scoreScreen = new Interface(SCORE);
-	scoreScreen->loadImages();
+	scoreScreen->load();
 	m_interfaces.push_back(scoreScreen);
 
 	//HELP
 	Interface * helpScreen = new Interface(HELP);
-	helpScreen->loadImages();
+	helpScreen->load();
 	m_interfaces.push_back(helpScreen);
 
 	//WORLD
 	Interface * worldScreen = new Interface(WORLD);
-	worldScreen->loadImages();
+	worldScreen->load();
 	m_interfaces.push_back(worldScreen);
 
 	//ISLAND
 	Interface * islandScreen = new Interface(ISLAND);
-	islandScreen->loadImages();
+	islandScreen->load();
 	m_interfaces.push_back(islandScreen);
 
 	//ENDGAME
 	Interface * endGameScreen = new Interface(ENDGAME);
-	endGameScreen->loadImages();
+	endGameScreen->load();
 	m_interfaces.push_back(endGameScreen);
 }
 
@@ -123,8 +124,6 @@ void GameEngine::run()
 
 	//Initialisation de l'interface
 	loadInterfaces();
-	//Initialisation d'un partie actuellement : TEST SERA PAS LA PLUS TARD
-	m_actualGame = new ActualGame();
 
 	while(m_isRunning)
 	{
@@ -240,10 +239,51 @@ void GameEngine::render()
  * Change l'interface actuellement affichée
  * screen : Enum du nouvel écran de jeu
  */
-void GameEngine::changeScreen(const GameScreen & screen)
+void GameEngine::changeScreen(const GameScreen & previousScreen, const GameScreen & screen, int level, int island)
 {
 	if(screen < NB_SCREENS)
 	{
+		if(screen == GAME)
+		{
+			//Initialisation d'un partie
+			m_actualGame = new ActualGame();
+		}
+		else if(screen == SCORE)
+		{
+			if(previousScreen == TITLE)
+			{
+				//On récupère tous les scores du jeu
+				m_interfaces[screen]->loadXML(0, 0);
+			}
+			else if(previousScreen == ISLAND)
+			{
+				//On récupère les scores du niveau sélectionné
+				m_interfaces[screen]->loadXML(level, island);
+			}
+		}
+		else if(screen == ENDGAME)
+		{
+			//On récupère les scores pour le niveau qu'on vient de débloquer
+			m_interfaces[screen]->loadXML(level, island);
+		}
+		else if(screen == WORLD)
+		{
+			//On met à jour le nombre d'iles/niveaux débloqués avant d'afficher l'écran 
+			m_interfaces[screen]->loadXML(-1, -1);
+		}
+		else if(screen == ISLAND)
+		{
+			//On met à jour le nombre d'iles/niveaux débloqués avant d'afficher l'écran 
+			m_interfaces[screen]->loadXML(-1, -1);
+		}
+
+		//Suppression d'un niveau de jeu actuel en changeant d'écran de jeu autre que PAUSE
+		if(previousScreen == GAME && screen != PAUSE)
+		{
+			delete m_actualGame;
+			m_actualGame = NULL;
+		}
+
 		m_actualGameScreen = screen;
 	}
 }

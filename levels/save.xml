@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<scores nbIsland="1" nbLevel="5">
+	<level id="1">
+		<score player="BabyBool" value="6000"/>
+		<score player="Georges" value="5800"/>
+		<score player="BabyBool" value="5000"/>
+		<score player="BabyBool" value="4000"/>
+		<score player="BabyBool" value="3000"/>
+	</level>
+</scores>

@@ -3,7 +3,14 @@
 
 #include "Sprite.hpp"
 
+#ifdef _WIN32
+#include "SDL/SDL_ttf.h"
+#else
+#include <SDL/SDL_ttf.h>
+#endif
+
 #include <map>
+#include <sstream>
 
 class GameEngine;
 
@@ -24,6 +31,19 @@ enum GameScreen
 };
 
 /*
+* Leaderboard pour un niveau d'une ile précise
+*/
+typedef struct _leaderboard
+{
+	//Ile
+	unsigned int island;
+	//Niveau
+	unsigned int level;
+	//Multimap contenant le score(int) et le nom de la personne associée (std::string)
+	std::multimap< int, std::string > m_scores;
+} Leaderboard;
+
+/*
 * Ecran de jeu
 */
 class Interface
@@ -34,8 +54,10 @@ class Interface
 		//Destructeur
 		virtual ~Interface();
  
-		//Charge et stocke les images de l'interface
-		void loadImages();
+		//Charge l'interface et stocke les images de l'interface
+		void load();
+		//Chargement du XML des scores et des niveaux débloqués
+		void loadXML(int level = -1, int island = -1);
 
 		//Gère les opérations de l'interface
 		void update(GameEngine * gameEngine);
@@ -60,17 +82,28 @@ class Interface
 		unsigned int getNbAvailableLevels();
 
 	private :
-
+		//const unsigned int						m_nbLevelByIsland;
 		//Sprites des images de fond de l'interface
-		std::vector<Sprite*>		m_backgroundImages;
+		std::vector<Sprite*>					m_backgroundImages;
 		//Sprites des boutons de l'interface
-		std::vector<Sprite*>		m_buttonsImages;
+		std::vector<Sprite*>					m_buttonsImages;
 		//Type de l'interface
-		GameScreen					m_type;
+		GameScreen								m_type;
 		//Informations souris
-		int							m_mousePositionX;
-		int							m_mousePositionY;
-		int							m_clic;
+		int										m_mousePositionX;
+		int										m_mousePositionY;
+		int										m_clic;
+		//Nombre de niveaux débloqués
+		unsigned int							m_nbAvailableLevels;
+		//Nombre d'îles débloquées
+		unsigned int							m_nbAvailableIslands;
+
+		//Scores
+		std::vector<Leaderboard*>				m_leaderboards;
+		unsigned int							m_actualLeaderboard;
+		//Police d'écriture
+		TTF_Font *								m_font;
+		
 };
 
 #endif
