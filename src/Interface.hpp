@@ -30,22 +30,22 @@ class Interface
 {
 	public :
 		//Constructeur
-		Interface();
+		Interface(GameScreen type);
 		//Destructeur
 		virtual ~Interface();
  
 		//Charge et stocke les images de l'interface
-		void loadImages(const GameScreen & screen);
+		void loadImages();
 
 		//Gère les opérations de l'interface
-		void update();
+		void update(GameEngine * gameEngine);
 		//Gère l'affichage de l'interface
 		void render(SDL_Surface * screen, const int & width, const int & height);
 
 		//Gère les évènements de mouvement de la souris
 		void checkMouseMotionEvent(const SDL_MouseMotionEvent *event);
 		//Gère les évènements de la souris
-		void checkMouseEvent(GameEngine * gameEngine, const SDL_MouseButtonEvent *event);
+		void checkMouseEvent(const SDL_MouseButtonEvent *event);
 		//Gère les évènements clavier
 		void checkKeyboardEvent(const SDL_KeyboardEvent *event);
 
@@ -65,8 +65,12 @@ class Interface
 		std::vector<Sprite*>		m_backgroundImages;
 		//Sprites des boutons de l'interface
 		std::vector<Sprite*>		m_buttonsImages;
-		//Numéro du bouton actuellement sélectionné
-		int							m_buttonSelected;
+		//Type de l'interface
+		GameScreen					m_type;
+		//Informations souris
+		int							m_mousePositionX;
+		int							m_mousePositionY;
+		int							m_clic;
 };
 
 #endif

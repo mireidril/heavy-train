@@ -50,7 +50,6 @@ Sprite::Sprite(SDL_Surface * sdlSurface, int posX, int posY, int sizeX, int size
 	m_size->y = sizeY;
 	if(sdlSurface)
 	{
-	
 		SDL_Surface * tmp = SDL_DisplayFormatAlpha(sdlSurface);
 		SDL_FreeSurface(sdlSurface);
 		sdlSurface = tmp;
@@ -106,6 +105,13 @@ int Sprite::getPositionX(){
 }
 
 /**
+ * Getter position Y
+ */
+int Sprite::getPositionY(){
+	return m_position->y;
+}
+
+/**
  * Setter angle
  */
 void Sprite::setAngle(double & angle){
@@ -121,6 +127,9 @@ void Sprite::addImage(const char* imageFileName)
 	SDL_Surface * img = IMG_Load(imageFileName);
 	if(img)
 	{
+		SDL_Surface * tmp = SDL_DisplayFormatAlpha(img);
+		SDL_FreeSurface(img);
+		img = tmp;
 		m_frames.push_back(img);
 		m_nbFrames++;
 	}
