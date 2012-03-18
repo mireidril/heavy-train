@@ -2,24 +2,23 @@
 #define __BONUS_HPP__
 
 #include "Sprite.hpp"
+#include "PhysicalObject.hpp"
+
 enum BonusType
 {
 	STAR_DUST = 0,
 	ACCELERATOR
 };
 
-class Bonus
+class Bonus : public PhysicalObject
 {
 	public :
-		Bonus();
+		Bonus(BonusType type, int posX, int posY);
 		~Bonus();
 		//Return the type of the Bonus
 		BonusType getType();
 		//Return m_used
 		bool isUsed();
-		void setType(BonusType type);
-		void setPosX(int x);
-		void setPosY(int y);
 	private :
 		int m_posX;
 		int m_posY;

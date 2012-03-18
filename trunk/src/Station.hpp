@@ -9,7 +9,11 @@
 class Station : public Block
 {
 	public :
-		Station(int sizeX, int posX, int id);
+		Station(int sizeX, int id);
+
+		//Construit le bloc
+		virtual int build(b2World * world);
+
 		// Make the passengers take a step, and when they arrive at destination, add the passenger to the train or suppress it if it goes out of the station
 		void updatePassengers();
 		

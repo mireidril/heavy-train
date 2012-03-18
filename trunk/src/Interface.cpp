@@ -134,7 +134,7 @@ void Interface::load()
 void Interface::loadXML(int level, int island)
 {
 	//Récupère uniquement le nombre de niveaux débloqués
-	if(level >= 0 && island >= 0)
+	if(level <= 0 && island <= 0)
 	{
 		//A REMPLIR
 		
@@ -174,8 +174,6 @@ void Interface::loadXML(int level, int island)
 				m_leaderboards.push_back(levelL);
 			}
 		}
-
-		std::cout<<m_leaderboards.size()<<std::endl;
 	}
 	//Récupère les scores du niveau "level" de l'ile "island" : UTILISE APRES L'ECRAN ISLAND ou A L'ECRAN ENDGAME
 	else if(level > 0 && island > 0)

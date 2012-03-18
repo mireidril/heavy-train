@@ -49,14 +49,6 @@ void Animal::build(b2World * world){
 	m_body = world->CreateBody(&bd);
 	m_body->CreateFixture(&bodyShape, 0.1f);
 }
-/*
-void Animal::setType(const char * type){
-	int L = strlen(type);
-	memcpy (m_type, type, L*sizeof(char));
-}*/
-void Animal::setPosX(int x){
-	m_posX = x;
-}
 
 void Animal::scroll(int x){
 
@@ -89,9 +81,4 @@ void Animal::die(){
 	//animation
 	m_die = true;
 	std::cout << "collision" << std::endl;
-}
-
-
-void Animal::setPosY(int y){
-	m_posY = y;
 }
