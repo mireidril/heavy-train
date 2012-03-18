@@ -4,8 +4,11 @@
 /*
  * Constructeur
  */
-Interface::Interface()
-: m_buttonSelected(-1)
+Interface::Interface(GameScreen type)
+: m_type(type)
+, m_mousePositionX(-1)
+, m_mousePositionY(-1)
+, m_clic(-1)
 {}
 
 /*
@@ -13,7 +16,7 @@ Interface::Interface()
  */
 Interface::~Interface()
 {
-	for(unsigned int i = 0; i < m_buttonsImages.size(); ++i)
+	for(unsigned int i = 0; i < m_backgroundImages.size(); ++i)
 	{
 		delete m_backgroundImages[i];
 	}
@@ -26,22 +29,60 @@ Interface::~Interface()
 
 /*
  * Charge et stocke les images de l'interface
- * screen : enum correspondant au type d'interface
  */
-void Interface::loadImages(const GameScreen & screen)
+void Interface::loadImages()
 {
-	Sprite * background;
-	switch(screen)
+	switch(m_type)
 	{
 		case TITLE :
-			background = new Sprite("../img/screens/title_screen.png", 0, 0, 1024, 768);
-			assert(background);
-			m_backgroundImages.push_back(background);
+		{
+			m_backgroundImages.push_back(new Sprite("../img/screens/title_screen.png", 0, 0, 1024, 768));
+			//Buttons
 			break;
+		}
 		case PAUSE :
-			background = new Sprite("../img/screens/ecran1_test3.png", 0, 0, 800, 600);
-			assert(background);
-			m_backgroundImages.push_back(background);
+		{
+			m_backgroundImages.push_back(new Sprite("../img/screens/title_screen.png", 0, 0, 1024, 768));
+			break;
+		}
+		case SCORE :
+		{
+			m_backgroundImages.push_back(new Sprite("../img/screens/leaderboard.jpg", 0, 0, 1024, 768));
+			break;
+		}
+		case HELP :
+		{
+			m_backgroundImages.push_back(new Sprite("../img/screens/title_screen.png", 0, 0, 1024, 768));
+			break;
+		}
+		case ISLAND :
+		{
+			m_backgroundImages.push_back(new Sprite("../img/screens/level_select_background.jpg", 0, 0, 1024, 768));
+			break;
+		}
+		case WORLD :
+		{
+			m_backgroundImages.push_back(new Sprite("../img/screens/level_select_background.jpg", 0, 0, 1024, 768));
+			//Buttons
+			Sprite * isle1 = new Sprite("../img/screens/paradisio_unselected.png", 100, 200, 347, 290);
+			isle1->addImage("../img/screens/paradisio_selected.png");
+			m_buttonsImages.push_back(isle1);
+			Sprite * isle2 = new Sprite("../img/screens/dolfina_unselected.png", 500, 200, 347, 290);
+			isle2->addImage("../img/screens/dolfina_selected.png");
+			isle2->addImage("../img/screens/dolfina_locked.png");
+			m_buttonsImages.push_back(isle2);
+			Sprite * isle3 = new Sprite("../img/screens/chicken_island_unselected.png", 300, 400, 347, 290);
+			isle3->addImage("../img/screens/chicken_island_selected.png");
+			isle3->addImage("../img/screens/chicken_island_locked.png");
+			m_buttonsImages.push_back(isle3);
+			break;
+		}
+		case ENDGAME :
+		{
+			m_backgroundImages.push_back(new Sprite("../img/screens/title_screen.png", 0, 0, 1024, 768));
+			break;
+		}
+		default :
 			break;
 	}
 }
@@ -49,8 +90,30 @@ void Interface::loadImages(const GameScreen & screen)
 /*
  * Gère les opérations de l'interface
  */
-void Interface::update()
+void Interface::update(GameEngine * gameEngine)
 {
+	for(unsigned int i = 0; i < m_buttonsImages.size(); ++i)
+	{
+		if(m_mousePositionX >= m_buttonsImages[i]->getPositionX() && m_mousePositionX < (m_buttonsImages[i]->getPositionX() + m_buttonsImages[i]->getSizeX() ) &&
+		   m_mousePositionY >= m_buttonsImages[i]->getPositionY() && m_mousePositionY < (m_buttonsImages[i]->getPositionY() + m_buttonsImages[i]->getSizeY() ) )
+		{
+			if(m_clic == 1)
+			{
+				gameEngine->changeScreen(GAME);
+				m_clic = -1;
+			}
+			m_buttonsImages[i]->changeImageManually(1);
+		}
+		else
+		{
+			m_buttonsImages[i]->changeImageManually(0);
+		}
+	}
+
+	if(m_clic == 1)
+	{
+		m_clic = -1;
+	}
 }
 
 /*
@@ -63,9 +126,11 @@ void Interface::render(SDL_Surface * screen, const int & width, const int & heig
 {
 	for(unsigned int i = 0; i < m_backgroundImages.size(); ++i)
 	{
-		Sprite * img = m_backgroundImages[i];
-		assert(img);
-		img->draw(screen, width, height);
+		m_backgroundImages[i]->draw(screen, width, height);
+	}
+	for(unsigned int i = 0; i < m_buttonsImages.size(); ++i)
+	{
+		m_buttonsImages[i]->draw(screen, width, height);
 	}
 }
 
@@ -74,25 +139,26 @@ void Interface::render(SDL_Surface * screen, const int & width, const int & heig
  */
 void Interface::checkMouseMotionEvent(const SDL_MouseMotionEvent *event)
 {
-
+	m_mousePositionX = event->x;
+	m_mousePositionY = event->y;
 }
 
 /*
  * Gère les évènements de la souris
  */
-void Interface::checkMouseEvent(GameEngine * gameEngine, const SDL_MouseButtonEvent *event)
+void Interface::checkMouseEvent(const SDL_MouseButtonEvent *event)
 {
 	if( event->button == int(SDL_BUTTON_LEFT) && event->state == int(SDL_PRESSED) )
 	{
-		/*m_iMousePositionX = event->x;
-		m_iMousePositionY = event->y;
-		m_bButtonPressed = true;*/
+		m_clic = 0;
 	}
 
 	if( event->button == int(SDL_BUTTON_LEFT) && event->state == int(SDL_RELEASED) )
 	{
-		//m_bButtonPressed = false;
-		gameEngine->changeScreen(GAME);
+		if(m_clic == 0)
+		{
+			m_clic = 1;
+		}
 	}
 }
 

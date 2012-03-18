@@ -77,38 +77,38 @@ void GameEngine::initSDL()
 void GameEngine::loadInterfaces()
 {
 	//TITLE
-	Interface * titleScreen = new Interface;
-	titleScreen->loadImages(TITLE);
+	Interface * titleScreen = new Interface(TITLE);
+	titleScreen->loadImages();
 	m_interfaces.push_back(titleScreen);
 
 	//PAUSE
-	Interface * pauseScreen = new Interface;
-	pauseScreen->loadImages(PAUSE);
+	Interface * pauseScreen = new Interface(PAUSE);
+	pauseScreen->loadImages();
 	m_interfaces.push_back(pauseScreen);
 
 	//SCORE
-	Interface * scoreScreen = new Interface;
-	pauseScreen->loadImages(SCORE);
+	Interface * scoreScreen = new Interface(SCORE);
+	scoreScreen->loadImages();
 	m_interfaces.push_back(scoreScreen);
 
 	//HELP
-	Interface * helpScreen = new Interface;
-	pauseScreen->loadImages(HELP);
+	Interface * helpScreen = new Interface(HELP);
+	helpScreen->loadImages();
 	m_interfaces.push_back(helpScreen);
 
 	//WORLD
-	Interface * worldScreen = new Interface;
-	pauseScreen->loadImages(WORLD);
+	Interface * worldScreen = new Interface(WORLD);
+	worldScreen->loadImages();
 	m_interfaces.push_back(worldScreen);
 
 	//ISLAND
-	Interface * islandScreen = new Interface;
-	pauseScreen->loadImages(ISLAND);
+	Interface * islandScreen = new Interface(ISLAND);
+	islandScreen->loadImages();
 	m_interfaces.push_back(islandScreen);
 
 	//ENDGAME
-	Interface * endGameScreen = new Interface;
-	pauseScreen->loadImages(ENDGAME);
+	Interface * endGameScreen = new Interface(ENDGAME);
+	endGameScreen->loadImages();
 	m_interfaces.push_back(endGameScreen);
 }
 
@@ -145,7 +145,7 @@ void GameEngine::update()
 	if(m_actualGameScreen != GAME)
 	{
 		assert(m_actualGameScreen < m_interfaces.size() );
-		m_interfaces[m_actualGameScreen]->update();
+		m_interfaces[m_actualGameScreen]->update(this);
 	}
 	else
 	{
@@ -202,7 +202,7 @@ void GameEngine::update()
 			case SDL_MOUSEBUTTONDOWN:
 				if(m_actualGameScreen != GAME)
 				{
-					m_interfaces[m_actualGameScreen]->checkMouseEvent(this, &(event.button));
+					m_interfaces[m_actualGameScreen]->checkMouseEvent(&(event.button));
 				}
 				break;
 			case SDL_MOUSEMOTION:

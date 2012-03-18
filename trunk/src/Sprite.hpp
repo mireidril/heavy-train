@@ -38,6 +38,7 @@ class Sprite
 		void setPositionX(int x);
 		void setPositionY(int y);
 		int getPositionX();
+		int getPositionY();
 		void setAngle(double & angle);
 
 		//Charge et ajoute une image au sprite
