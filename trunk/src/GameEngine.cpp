@@ -232,7 +232,8 @@ void GameEngine::render()
 		m_actualGame->run(m_screen, m_windowsWidth, m_windowsHeight);		
 	}
 	// Met à jour l'affichage
-	SDL_Flip(m_screen);
+	//SDL_Flip(m_screen);
+	SDL_UpdateRect(m_screen, 0, 0, m_windowsWidth, m_windowsHeight);
 }
 
 /*

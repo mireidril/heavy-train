@@ -9,6 +9,7 @@ PhysicalObject::PhysicalObject()
 , m_smoothedAngle(INFINITE)
 {
 	m_sprite = NULL;
+	m_body = NULL;
 	clearSmoothAngleAndPosition();
 }
 
@@ -83,6 +84,9 @@ double PhysicalObject::getAngleSmoothed()
 
 void PhysicalObject::clearSmoothAngleAndPosition()
 {
-	m_smoothedPosition = m_previousPosition = m_body->GetPosition();
-	m_smoothedAngle = m_previousAngle = m_body->GetAngle();
+	if(m_body)
+	{
+		m_smoothedPosition = m_previousPosition = m_body->GetPosition();
+		m_smoothedAngle = m_previousAngle = m_body->GetAngle();
+	}
 }

@@ -9,23 +9,19 @@ Train::Train ()
 {
 	//la corps de la loco
 	//position de la loco
-	SDL_Rect * pos = new SDL_Rect;
-	pos->x = 260; pos->y = 0; 
+	int x = 260; int y = 0; 
 	//taille de la loco
-	SDL_Rect * size = new SDL_Rect;
-	size->x = 166; size->y = 117;
-	PhysicalObject * loco = new PhysicalObject(new Sprite("../img/elements/loco.png",  pos,  size));
+	int sizeX = 166; int sizeY = 166;
+	PhysicalObject * loco = new PhysicalObject(new Sprite("../img/elements/loco.png",  x, y, sizeX, sizeY));
 	m_physicalObjects.push_back(loco);
 
 	//les roues de la loco
 	//position des roues
-	SDL_Rect * posr = new SDL_Rect;
-	posr->x = 0; posr->y = 0; 
+	x = 0; y = 0; 
 	//taille roues
-	SDL_Rect * sizer = new SDL_Rect;
-	sizer->x = 39; sizer->y = 36;
-	PhysicalObject * roue1 = new PhysicalObject(new Sprite("../img/elements/roue.png",  posr,  sizer));	
-	PhysicalObject * roue2 = new PhysicalObject(new Sprite("../img/elements/roue.png",  posr,  sizer));
+	sizeX = 39; sizeY = 36;
+	PhysicalObject * roue1 = new PhysicalObject(new Sprite("../img/elements/roue.png",  x, y, sizeX, sizeY));
+	PhysicalObject * roue2 = new PhysicalObject(new Sprite("../img/elements/roue.png",  x, y, sizeX, sizeY));
 	m_physicalObjects.push_back(roue1);//roue1
 	m_physicalObjects.push_back(roue2);//roue2
 	// add wagons

@@ -3,18 +3,28 @@
 /**
  * Constructeur
  */
-Sprite::Sprite(const char* imageFileName, SDL_Rect * pos, SDL_Rect * size)
+Sprite::Sprite(const char* imageFileName, int posX, int posY, int sizeX, int sizeY)
 : m_actualFrame(0)
 , m_nbFrames(0)
-, m_position(pos)
+, m_position(NULL)
 , m_angle(0.0)
-, m_size(size)
+, m_size(NULL)
 , m_timeActualFrame(0)
 , m_timeFrame(10)
 {
+	m_position = new SDL_Rect();
+	m_position->x = posX;
+	m_position->y = posY;
+	m_size = new SDL_Rect();
+	m_size->x = sizeX;
+	m_size->y = sizeY;
 	SDL_Surface * img = IMG_Load(imageFileName);
 	if(img)
 	{
+		SDL_Surface * tmp = SDL_DisplayFormatAlpha(img);
+		SDL_FreeSurface(img);
+		img = tmp;
+		
 		m_frames.push_back(img);
 		m_nbFrames++;
 	}
@@ -23,20 +33,31 @@ Sprite::Sprite(const char* imageFileName, SDL_Rect * pos, SDL_Rect * size)
 /**
  * Constructeur
  */
-Sprite::Sprite(SDL_Surface * sdlSurface, SDL_Rect * pos, SDL_Rect * size)
+Sprite::Sprite(SDL_Surface * sdlSurface, int posX, int posY, int sizeX, int sizeY)
 : m_actualFrame(0)
 , m_nbFrames(0)
-, m_position(pos)
+, m_position(NULL)
 , m_angle(0.0)
-, m_size(size)
+, m_size(NULL)
 , m_timeActualFrame(0)
 , m_timeFrame(10)
 {
+	m_position = new SDL_Rect();
+	m_position->x = posX;
+	m_position->y = posY;
+	m_size = new SDL_Rect();
+	m_size->x = sizeX;
+	m_size->y = sizeY;
 	if(sdlSurface)
 	{
-		m_frames.push_back(sdlSurface);
-		m_nbFrames++;
+	
+		SDL_Surface * tmp = SDL_DisplayFormatAlpha(sdlSurface);
+		SDL_FreeSurface(sdlSurface);
+		sdlSurface = tmp;
 	}
+
+	m_frames.push_back(sdlSurface);
+	m_nbFrames++;
 }
 
 
@@ -50,8 +71,8 @@ Sprite::~Sprite()
 		SDL_FreeSurface(m_frames[i]);
 	}
 
-	//delete m_position;
-	//delete m_size;
+	delete m_position;
+	delete m_size;
 }
 
 /**
@@ -98,7 +119,6 @@ void Sprite::setAngle(double & angle){
 void Sprite::addImage(const char* imageFileName)
 {
 	SDL_Surface * img = IMG_Load(imageFileName);
-	img = SDL_DisplayFormat(img);
 	if(img)
 	{
 		m_frames.push_back(img);

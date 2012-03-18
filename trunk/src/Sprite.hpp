@@ -29,8 +29,8 @@ class Sprite
 {
 	public :
 		//Constructeurs
-		Sprite(const char* imageFileName, SDL_Rect * pos, SDL_Rect * size);
-		Sprite(SDL_Surface * sdlSurface, SDL_Rect * pos, SDL_Rect * size);
+		Sprite(const char* imageFileName, int posX, int posY, int sizeX, int sizeY);
+		Sprite(SDL_Surface * sdlSurface, int posX, int posY, int sizeX, int sizeY);
 		//Destructeur
 		virtual ~Sprite();
 		// Setter position & angle

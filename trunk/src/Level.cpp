@@ -2,32 +2,19 @@
 /*Level Constructor */
 Level::Level () 
 {
-        //All the blocks of the level
-        SDL_Rect * pos = new SDL_Rect;
-        pos->x = 0;
-        pos->y = 0;
+    //All the blocks of the level
+	m_blocks.push_back(new Block(GROUND, 2048, 0, 0));
 
-		m_blocks.push_back(new Block(GROUND, 2048, 0, 0));
-
-        //m_departureTime = ...;
-        //m_position = ...;
-        m_islandNum = 0;
-        m_levelNum = 0;
-        //m_backgroundImages = ;
-        //m_idStations= ...;
-
-	SDL_Rect * size = new SDL_Rect;
-	size->x = 1024; size->y = 768; 
-	SDL_Rect * posBg = new SDL_Rect();
-        posBg->x = 0; posBg->y = 0;
-	SDL_Rect * posBg2 = new SDL_Rect();
-        posBg2->x = 0; posBg2->y = 0;
-	SDL_Rect * posBg3 = new SDL_Rect();
-        posBg3->x = 0; posBg3->y = 0;
-	m_backgroundImages.push_back(new Sprite("../img/niveau2/sky.png",  posBg,  size));
-	m_backgroundImages.push_back(new Sprite("../img/niveau2/moutains.png", posBg2,  size));
-	m_backgroundImages.push_back(new Sprite("../img/niveau2/tree.png", posBg3,  size));
-
+    //m_departureTime = ...;
+    //m_position = ...;
+    m_islandNum = 0;
+    m_levelNum = 0;
+    //m_backgroundImages = ;
+    //m_idStations= ...;
+	
+	m_backgroundImages.push_back(new Sprite("../img/niveau2/sky.png",  0, 0, 1024, 768));
+	m_backgroundImages.push_back(new Sprite("../img/niveau2/moutains.png", 0, 350, 1024, 350));
+	//m_backgroundImages.push_back(new Sprite("../img/niveau2/tree.png", 0, 0, 1024, 768));
 }
 
 Level::~Level() 
@@ -230,7 +217,7 @@ void Level::loadAndBuild(const int & isle, const int & lvl){
 
 void Level::render(SDL_Surface * screen, int w, int h)
 {
-	//drawBackgrounds(screen,  w,  h);
+	drawBackgrounds(screen,  w,  h);
 	drawBlocks(screen, w, h);
 }
 
@@ -251,7 +238,8 @@ void Level::drawBlocks(SDL_Surface * screen, int w, int h)
  */
 void Level::drawBackgrounds(SDL_Surface * screen, int w, int h)
 {
-   m_backgroundImages[0]->draw(screen, w, h); 
-   m_backgroundImages[1]->draw(screen, w, h);
-   m_backgroundImages[2]->draw(screen, w, h);  
+	for(int i = 0; i < m_backgroundImages.size(); ++i)
+	{
+		m_backgroundImages[i]->draw(screen, w, h); 
+	}
 }

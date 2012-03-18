@@ -30,30 +30,16 @@ Interface::~Interface()
  */
 void Interface::loadImages(const GameScreen & screen)
 {
-	SDL_Rect * position = new SDL_Rect;
-	SDL_Rect * size = new SDL_Rect;
 	Sprite * background;
 	switch(screen)
 	{
 		case TITLE :
-			assert(position);
-			position->x = 0;
-			position->y = 0;
-			assert(size);
-			size->x = 1024;
-			size->y = 768;
-			background = new Sprite("../img/screens/title_screen.png", position, size);
+			background = new Sprite("../img/screens/title_screen.png", 0, 0, 1024, 768);
 			assert(background);
 			m_backgroundImages.push_back(background);
 			break;
 		case PAUSE :
-			assert(position);
-			position->x = 0;
-			position->y = 0;
-			assert(size);
-			size->x = 800;
-			size->y = 600;
-			background = new Sprite("../img/screens/ecran1_test3.png", position, size);
+			background = new Sprite("../img/screens/ecran1_test3.png", 0, 0, 800, 600);
 			assert(background);
 			m_backgroundImages.push_back(background);
 			break;

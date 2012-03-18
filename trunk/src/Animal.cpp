@@ -9,17 +9,16 @@ Animal::Animal(int type)
 	m_typeAnimal= type;
 
 	//sprite animal
-	SDL_Rect * pos = new SDL_Rect;	
-	pos->x = 0; pos->y = 0; 
+	int x = 0; int y = 0;
+	int sizeX = 150, sizeY = 53;
 	//taille de l'animal
-	SDL_Rect * size = new SDL_Rect;
 	if (m_typeAnimal==0){
-		size->x = 150; size->y = 53;
-		m_sprite = new Sprite("../img/animaux/tatou.png",  pos,  size);
+		sizeX = 150; sizeY = 53;
+		m_sprite = new Sprite("../img/animaux/tatou.png",  x, y,  sizeX, sizeY);
 	}
 	else {
-		size->x = 150; size->y = 53;
-		m_sprite = new Sprite("../img/animaux/tatou.png",  pos,  size);
+		sizeX = 150; sizeY = 53;
+		m_sprite = new Sprite("../img/animaux/tatou.png",  x, y, sizeX, sizeY);
 	}
 
 }
