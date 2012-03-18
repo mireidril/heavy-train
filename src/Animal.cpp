@@ -17,9 +17,13 @@ Animal::Animal(int type, int x, int y)
 		sizeX = 150; sizeY = 53;
 		m_sprite = new Sprite("../img/animaux/tatou.png",  xp-40, yp,  sizeX, sizeY);
 	}
+	else if (m_typeAnimal==1){
+		sizeX = 150; sizeY = 53;
+		m_sprite = new Sprite("../img/animaux/coyote.png",  xp-40, yp, sizeX, sizeY);
+	}
 	else {
 		sizeX = 150; sizeY = 53;
-		m_sprite = new Sprite("../img/animaux/tatou.png",  xp-40, yp, sizeX, sizeY);
+		m_sprite = new Sprite("../img/animaux/vache.png",  xp-40, yp, sizeX, sizeY);
 	}
 
 }
