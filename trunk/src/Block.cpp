@@ -123,10 +123,10 @@ void Block::setBonus(BonusType type, int x, int y)
 }
 void Block::setAnimal(const char * type, int x, int y) 
 {
-	Animal * animal = new Animal(0);
+	Animal * animal = new Animal(0, x, y);
 	//animal->setType(type);
-	animal->setPosX(x);
-	animal->setPosY(y);
+	//animal->setPosX(x);
+	//animal->setPosY(y);
 	m_animals.push_back(animal);
 }
 //Retourne l'identifiant du point à l'ordonnée la plus basse
@@ -293,9 +293,16 @@ void Block::draw(SDL_Surface * screen, const int & width, const int & height)
 {
 	if(m_sprite)
 		m_sprite->draw(screen, width, height);
-
+	
 	for (int i=0; i< m_animals.size(); i++) {
-		m_animals[i]->draw(screen, width, height);
+		if (m_animals[i]->isDie()) {
+			delete m_animals[i];
+			 m_animals.erase(m_animals.begin()+i);
+			
+		}
+		else {
+			m_animals[i]->draw(screen, width, height);
+		}
 	}
 
 }
