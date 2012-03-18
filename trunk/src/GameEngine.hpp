@@ -7,7 +7,6 @@
 #ifdef _WIN32
 #include "SDL/SDL.h"
 #include "tinyXML/tinyxml.h"
-#include "SDL/SDL_ttf.h"
 #include "SDL/SDL_mixer.h"
 #include "SDL/SDL_image.h"
 #include "SDL/SDL_framerate.h"
@@ -37,6 +36,8 @@ class GameEngine
 		void initSDL();
 		//Crée les écrans de jeu
 		void loadInterfaces();
+		//Chargement du XML des scores et des niveaux débloqués
+		void loadXML();
 		
 		//Contient la boucle principale du jeu
 		void run();
@@ -46,7 +47,7 @@ class GameEngine
 		void render();
 
 		//Change l'interface actuellement affichée
-		void changeScreen(const GameScreen & screen);
+		void changeScreen(const GameScreen & previousScreen, const GameScreen & screen, int level = -1, int island = -1);
 		//Renvoie l'énum de l'interface actuellement affichée
 		GameScreen getActualGameScreen();
 

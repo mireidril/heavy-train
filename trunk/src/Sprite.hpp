@@ -41,6 +41,9 @@ class Sprite
 		int getPositionY();
 		void setAngle(double & angle);
 
+		//Retourne l'identifiant de l'image actuelle
+		unsigned int getActualFrame() { return m_actualFrame; };
+
 		//Charge et ajoute une image au sprite
 		void addImage(const char* imageFileName);
 		//Ajoute une image au sprite
