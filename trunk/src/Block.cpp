@@ -63,8 +63,8 @@ Block::Block(BlockType type, int sizeX, int posX, int id)
 			break;
 
 	}
-
 	m_sprite = NULL;
+	setAnimal(0, 30, 20);
 	
 }
 
@@ -123,8 +123,8 @@ void Block::setBonus(BonusType type, int x, int y)
 }
 void Block::setAnimal(const char * type, int x, int y) 
 {
-	Animal * animal = new Animal();
-	animal->setType(type);
+	Animal * animal = new Animal(0);
+	//animal->setType(type);
 	animal->setPosX(x);
 	animal->setPosY(y);
 	m_animals.push_back(animal);
@@ -288,6 +288,10 @@ void Block::scroll(const int & x)
 {
 	if(m_sprite)
 		m_sprite->setPositionX(m_sprite->getPositionX() + x);
+
+	for (int i=0; i< m_animals.size(); i++) {
+		m_animals[i]->scroll(x);
+	}
 }
 
 
@@ -295,6 +299,11 @@ void Block::draw(SDL_Surface * screen, const int & width, const int & height)
 {
 	if(m_sprite)
 		m_sprite->draw(screen, width, height);
+
+	for (int i=0; i< m_animals.size(); i++) {
+		m_animals[i]->draw(screen, width, height);
+	}
+
 }
 
 /*
@@ -467,6 +476,10 @@ void Block::build(b2World * world)
 		}
 		break;
 	}
-	
+	//construction des animaux
+	for (int i=0; i< m_animals.size(); i++) {
+		m_animals[i]->build(world);
+	}
 	createImage();
+
 }
