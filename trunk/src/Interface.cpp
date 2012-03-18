@@ -140,7 +140,7 @@ void Interface::loadXML(int level, int island)
 		
 		//TESTS : à virer après le chargement XML
 		m_nbAvailableLevels = 1;
-		m_nbAvailableIslands = 2;
+		m_nbAvailableIslands = 3;
 	}
 	
 	//Récupère tous les scores : UTILISE APRES L'ECRAN TITLE

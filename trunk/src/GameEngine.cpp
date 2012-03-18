@@ -125,6 +125,8 @@ void GameEngine::run()
 	//Initialisation de l'interface
 	loadInterfaces();
 
+	m_actualGame = new ActualGame(); //A BIENTOT VIRER
+
 	while(m_isRunning)
 	{
 		update();
