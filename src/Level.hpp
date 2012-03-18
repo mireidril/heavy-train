@@ -21,13 +21,15 @@ class Level
 {
 	public :
 		//Constructor
-		Level();
+		Level(b2World * world, unsigned int level, unsigned int island);
 		//Destructor
 		virtual ~Level();
 		//Move the level horizontally
 		void scrollLevel(const int & x);
 		//Load and build the level n°lvl of the island n°isle
-		void loadAndBuild(const int & isle, const int & lvl);
+		void loadAndBuild();
+		//Construit tous les blocs
+		void buildBlocks();
 		Block * getBlock(unsigned int i);
 
 		//Réinitialise les valeurs des PhysicalObjects après un smooth pour coller au framerate
@@ -37,6 +39,8 @@ class Level
 		void drawBlocks(SDL_Surface * screen, int w, int h);
 		void drawBackgrounds(SDL_Surface * screen, int w, int h);
 	private :
+		//World
+		b2World * m_world;
 		//All the blocks of the level
 		std::vector<Block*>	m_blocks;
 		//Departure time of the level
@@ -44,9 +48,9 @@ class Level
 		//Position of the level at the screen (bottom-left of the first block)
 		SDL_Rect*	m_position;
 		//Numero of the level’s island
-		int	m_islandNum;
+		unsigned int	m_islandNum;
 		//Numero of the level
-		int	m_levelNum;
+		unsigned int	m_levelNum;
 		//Background image of the level
 		std::vector<Sprite*> m_backgroundImages;
 		//Numeros of the blocks which are stations

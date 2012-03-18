@@ -13,22 +13,28 @@
 
 enum BlockType
 {
+	NOTHING = -1,
 	GROUND = 0,
 	PRECIPICE,
 	STATION,
 	TUNNEL,
 	JUNCTION_UP,
-	JUNCTION_DOWN
+	JUNCTION_DOWN,
+	NB_BLOCK_TYPES
 };
 
 class Block
 {
 	public :
-		Block(BlockType type, int sizeX, int posX, int id);
+		Block(int sizeX, int id, int speed = -1);
+		Block::Block(BlockType type, int sizeX, int id, int speed = -1);
 		virtual ~Block();
 
+		//Attribue un type au bloc
+		void setBlockType(BlockType type);
+
 		//Construit le bloc
-		void build(b2World * world);
+		virtual int build(b2World * world);
 
 		//Crée l'image correspondant au type du bloc
 		void createImage();
@@ -41,14 +47,9 @@ class Block
 		
 		//Attribue m_body au bloc
 		void setBody(b2Body * body);
-		//Attribue m_id au bloc
-		void setId(int num);
-		//Attribue m_sizeX au bloc
-		void setSizeX(int size);
-		//Attribue m_type au bloc
-		void setType(BlockType type);
 
-		void setSpeed(int speed); //utile ?
+		//Attribue une posX au bloc
+		void setPosX(const int & x);
 
 		//Ajoute un point dans m_points
 		void addPoint(int x, int y);
@@ -77,13 +78,15 @@ class Block
 		BlockType m_type;
 		//Identifiant du bloc dans le niveau
 		int m_id;
+		//Vitesse maximale que le joueur doit respecter. -1 si pas de vitesse maximale
+		int m_maxSpeed;
 
 		//Si le bloc est GROUND, tous les points de la spline de base sont stockés ici
 		std::vector<SDL_Rect*> m_points;
 		//Tous les points du body sont stockés ici
 		std::vector<b2Vec2> m_groundPoints;
 		
-		int m_maxSpeed; //utile ?
+		
 		//Bonus present in the block
 		std::vector <Bonus*> m_bonus;
 		//Animals present in the block

@@ -7,11 +7,12 @@
  * posX est la position du bloc en pixels dans l'espace
  */
 
-Block::Block(BlockType type, int sizeX, int posX, int id)
-: m_type(type)
-, m_posX(posX)
+Block::Block(int sizeX, int id, int speed)
+: m_type(NOTHING)
+, m_posX(-1)
 , m_sizeX(sizeX)
 , m_id(id)
+, m_maxSpeed(speed)
 , m_hillSegmentWidth(10)
 , m_sizeXMin(256)
 , m_sizeXMax(2048)
@@ -19,7 +20,7 @@ Block::Block(BlockType type, int sizeX, int posX, int id)
 , m_y (668)
 , m_tunnelHeight (200)
 {
-	SDL_Rect * p1, *p01, *p2, *p3, *p4, *p5, *p6;
+	/*SDL_Rect * p1, *p01, *p2, *p3, *p4, *p5, *p6;
 	switch(type)
 	{
 		case GROUND :
@@ -62,10 +63,37 @@ Block::Block(BlockType type, int sizeX, int posX, int id)
 			m_sizeX = sizeX;
 			break;
 
-	}
+	}*/
 	m_sprite = NULL;
-	setAnimal(0, 30, 20);
+	SDL_Rect * pos = new SDL_Rect; pos->x = 0; pos->y = m_y;
+	m_points.push_back(pos);
+	//setAnimal(0, 30, 20);
 	
+}
+
+/*
+ * Block Constructor
+ * sizeX est la dimension du bloc en pixel
+ * posX est la position du bloc en pixels dans l'espace
+ */
+
+Block::Block(BlockType type, int sizeX, int id, int speed)
+: m_type(NOTHING)
+, m_posX(-1)
+, m_sizeX(sizeX)
+, m_id(id)
+, m_maxSpeed(speed)
+, m_hillSegmentWidth(10)
+, m_sizeXMin(256)
+, m_sizeXMax(2048)
+, m_sizeYMin(384)
+, m_y (668)
+, m_tunnelHeight (200)
+{
+	m_sprite = NULL;
+	SDL_Rect * pos = new SDL_Rect; pos->x = 0; pos->y = m_y;
+	m_points.push_back(pos);
+	//setAnimal(0, 30, 20);
 }
 
 Block::~Block() 
@@ -74,9 +102,23 @@ Block::~Block()
 	{
 		delete m_points[i];
 	}
+	for( unsigned int i = 0; i < m_bonus.size(); ++i)
+	{
+		delete m_bonus[i];
+	}
+	for( unsigned int i = 0; i < m_animals.size(); ++i)
+	{
+		delete m_animals[i];
+	}
 
 	delete m_sprite;
-	//supprimer le body
+}
+
+//Attribue un type au bloc
+void Block::setBlockType(BlockType type)
+{
+	if(type > -1 && type < NB_BLOCK_TYPES)
+		m_type = type;
 }
 
 
@@ -88,22 +130,12 @@ b2Body * Block::getBody()
 void Block::setBody(b2Body * body) 
 {
 	m_body = body;
-} 
-void Block::setId(int num) 
+}
+
+//Attribue une posX au bloc
+void Block::setPosX(const int & x)
 {
-	m_id = num;
-} 
-void Block::setSizeX(int size) 
-{
-	m_sizeX = size;
-}  
-void Block::setType(BlockType type) 
-{
-	m_type = type;
-}  
-void Block::setSpeed(int speed) 
-{
-	m_maxSpeed = speed;
+	m_posX = x;
 }
 
 void Block::addPoint(int x, int y) 
@@ -113,22 +145,28 @@ void Block::addPoint(int x, int y)
 	pts->y = y;
 	m_points.push_back(pts);
 } 
+
 void Block::setBonus(BonusType type, int x, int y) 
 {
-	Bonus * bonus = new Bonus();
-	bonus->setType(type);
-	bonus->setPosX(x);
-	bonus->setPosY(y);
+	Bonus * bonus = new Bonus(type, x, y);
 	m_bonus.push_back(bonus);
 }
+
 void Block::setAnimal(const char * type, int x, int y) 
 {
+	if (strcmp(type,"tatou")==0)
+	{
+		//etc...
+	}
+	else
+	{
+		return;
+	}
+
 	Animal * animal = new Animal(0, x, y);
-	//animal->setType(type);
-	//animal->setPosX(x);
-	//animal->setPosY(y);
 	m_animals.push_back(animal);
 }
+
 //Retourne l'identifiant du point à l'ordonnée la plus basse
 int Block::getYMinPoint()
 {
@@ -201,6 +239,10 @@ void Block::createImage()
 				Sprite::convertMetersToPixels(&x1, &y1, WINDOWS_W, WINDOWS_H);
 				Sprite::convertMetersToPixels(&x2, &y2, WINDOWS_W, WINDOWS_H);
 
+				//Pour l'image, on retire posX
+				x1 -= m_posX;
+				x2 -= m_posX;
+
 				//Remplissage du haut de l'écran par du noir
 				int nbSide = 4;
 				Sint16 * xPolygon = new Sint16[nbSide];
@@ -214,7 +256,7 @@ void Block::createImage()
 				delete [] yPolygon;
 			}
 	
-			SDL_SaveBMP(mask, "masque.bmp");
+			//SDL_SaveBMP(mask, "masque.bmp");
 
 			//Chargement de l'image ground
 			SDL_Surface * ground = IMG_Load("../img/levels/ground.png");
@@ -224,7 +266,7 @@ void Block::createImage()
 			}
 			//Changement de la taille pour correspondre à la taille du bloc
 			ground->w = m_sizeX;
-			SDL_SaveBMP(ground, "ground2.bmp");
+			//SDL_SaveBMP(ground, "ground2.bmp");
 
 			//Construction de l'image du bloc
 			SDL_Surface * imageTest = SDL_CreateRGBSurface(SDL_HWSURFACE, m_sizeX, (int) m_sizeYMin, 32, rmask, gmask, bmask, amask);
@@ -245,9 +287,9 @@ void Block::createImage()
 				}
 			}
 
-			SDL_SaveBMP(imageTest, "bloc.bmp");
+			//SDL_SaveBMP(imageTest, "bloc.bmp");
 
-			m_sprite = new Sprite(imageTest, 0, (Sint16) m_sizeYMin, m_sizeX, m_sizeYMin);
+			m_sprite = new Sprite(imageTest, m_posX, (Sint16) m_sizeYMin, m_sizeX, m_sizeYMin);
 
 			SDL_FreeSurface(mask);
 			SDL_FreeSurface(ground);
@@ -310,43 +352,55 @@ void Block::draw(SDL_Surface * screen, const int & width, const int & height)
 /*
  * Block construction
  */
-void Block::build(b2World * world)
+int Block::build(b2World * world)
 {
+	//Taille en mètre
+	/*double size = m_sizeX;
+	Sprite::convertPixelsToMeters(&size, NULL, WINDOWS_W, WINDOWS_H);
+	//PosX en mètre
+	double pos = m_posX;
+	Sprite::convertPixelsToMeters(&pos, NULL, WINDOWS_W, WINDOWS_H);*/
+
 	switch(m_type)
 	{
 		case GROUND:
 		{
 			//Vérification taille de la future spline
 			//On suppose que les points sont dans l'ordre et que le x du premier point > 0
-			if(m_points[m_points.size() - 1]->x < m_sizeXMin)
+			if(m_points.size() > 1)
 			{
-				m_points[m_points.size() - 1]->x = (Sint16) m_sizeXMin;
-			}
-			else if(m_points[m_points.size() - 1]->x > m_sizeXMax)
-			{
-				m_points[m_points.size() - 1]->x = (Sint16) m_sizeXMax;
-			}
-			m_sizeX = m_points[m_points.size() - 1]->x;
-
-			int id = getYMinPoint();
-			if( id != -1)
-			{
-				assert(id < m_points.size());
-				if(m_points[id]->y < m_sizeYMin)
+				if(m_points[m_points.size() - 1]->x < m_sizeXMin)
 				{
-					m_points[id]->y = (Sint16) m_sizeYMin;
+					m_points[m_points.size() - 1]->x = (Sint16) m_sizeXMin;
+				}
+				else if(m_points[m_points.size() - 1]->x > m_sizeXMax)
+				{
+					m_points[m_points.size() - 1]->x = (Sint16) m_sizeXMax;
+				}
+
+				int id = getYMinPoint();
+				if( id != -1)
+				{
+					assert(id < m_points.size());
+					if(m_points[id]->y < m_sizeYMin)
+					{
+						m_points[id]->y = (Sint16) m_sizeYMin;
+					}
+				}
+
+				id = getYMaxPoint();
+				if( id != -1 )
+				{
+					assert(id < m_points.size());
+					if(m_points[id]->y > m_y)
+					{
+						m_points[id]->y = m_y;
+					}
 				}
 			}
-
-			id = getYMaxPoint();
-			if( id != -1 )
-			{
-				assert(id < m_points.size());
-				if(m_points[id]->y > WINDOWS_H)
-				{
-					m_points[id]->y = WINDOWS_H;
-				}
-			}
+			//Ajout du dernier point
+			SDL_Rect * last = new SDL_Rect; last->x = m_sizeX; last->y = m_y;
+			m_points.push_back(last);
 			
 			//Smoothing de la spline et conversion des pixels en mètres
 			b2Vec2 p1, p2;
@@ -354,10 +408,11 @@ void Block::build(b2World * world)
 			int hSegments;
 			double dx, da, yMid, ampl;
 			double x, y;
+
 			for(unsigned int i = 1; i < m_points.size(); ++i)
 			{
-				p1 = b2Vec2(m_points[i-1]->x, m_points[i-1]->y);
-				p2 = b2Vec2(m_points[i]->x, m_points[i]->y);
+				p1 = b2Vec2(m_points[i-1]->x + m_posX, m_points[i-1]->y);
+				p2 = b2Vec2(m_points[i]->x + m_posX, m_points[i]->y);
 
 				hSegments = (int) floorf( (p2.x - p1.x) / m_hillSegmentWidth );
 				dx = (p2.x - p1.x) / hSegments;
@@ -416,13 +471,15 @@ void Block::build(b2World * world)
 				m_body->CreateFixture(&shape, 0);
 			}
 		}
+
+		std::cout<<"GROUND!!"<<std::endl;
 		break;
 
-		case STATION :
+		/*case STATION :
 		{
 			//On suppose que la taille de la gare est supérieure à zéro
 			b2BodyDef groundBodyDef;
-			groundBodyDef.position.Set(m_posX, 0); //Position à changer plus tard
+			groundBodyDef.position.Set(pos, 0); //Position à changer plus tard
 			m_body = world->CreateBody(&groundBodyDef);
 
 			b2EdgeShape shape;
@@ -436,7 +493,7 @@ void Block::build(b2World * world)
 			shape.Set(p1, p2);
 			m_body->CreateFixture(&shape, 0);
 			break;
-		}
+		}*/
 
 		case TUNNEL :
 		{
@@ -469,18 +526,24 @@ void Block::build(b2World * world)
 			plafond.Set(p1, p2);
 			m_body->CreateFixture(&plafond, 0);
 		}
+		std::cout<<"TUNNEL!!"<<std::endl;
 		break;
 
 		case PRECIPICE :
 		{
 			//Pas de body
 		}
+		std::cout<<"TROUUUU!!"<<std::endl;
 		break;
 	}
+
 	//construction des animaux
 	for (int i=0; i< m_animals.size(); i++) {
 		m_animals[i]->build(world);
 	}
+
+	//Construction de l'image
 	createImage();
 
+	return m_sizeX;
 }

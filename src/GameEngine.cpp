@@ -125,7 +125,7 @@ void GameEngine::run()
 	//Initialisation de l'interface
 	loadInterfaces();
 
-	m_actualGame = new ActualGame(); //A BIENTOT VIRER
+	m_actualGame = new ActualGame(1, 1); //A BIENTOT VIRER
 
 	while(m_isRunning)
 	{
@@ -247,8 +247,8 @@ void GameEngine::changeScreen(const GameScreen & previousScreen, const GameScree
 	{
 		if(screen == GAME)
 		{
-			//Initialisation d'un partie
-			m_actualGame = new ActualGame();
+			//Initialisation d'une partie
+			m_actualGame = new ActualGame(level, island);
 		}
 		else if(screen == SCORE)
 		{

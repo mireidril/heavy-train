@@ -15,12 +15,12 @@
 				<option hours="12" minutes="00" leaving="0" entering="10"/>
 			</station>
 			<block type="GROUND" size="1024" num="1">
-				<obstacle type="animal" posX="200" posY="10" />
-				<point x="100" y = "384" />
-				<point x="256" y = "600" />
-				<point x="512" y = "450" />
-				<point x="768" y = "500" />
-				<point x="900" y = "384" />
+				<obstacle type="animal" nom="ta tou" posX="200" posY="10" />
+				<point x="100" y = "600" />
+				<point x="256" y = "660" />
+				<point x="512" y = "660" />
+				<point x="768" y = "550" />
+				<point x="900" y = "660" />
 			</block>
 			<block type="TUNNEL" size="100" num="1">
 			</block>

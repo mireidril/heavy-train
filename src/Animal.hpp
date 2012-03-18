@@ -16,11 +16,7 @@ class Animal : public PhysicalObject
 		//When the animal gets in contact with the train, change the displayed image of the animal then delete it
 		void die();
 		//When the train whistles next to the animal, change the displayed image of the animal then delete it
-		void flee();  
-		
-		void setType(const char * type);
-		void setPosX(int x);
-		void setPosY(int y);
+		void flee();
 
 		void build(b2World * world);
 		void draw(SDL_Surface * screen, const int & width, const int & height);

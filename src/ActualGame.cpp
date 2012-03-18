@@ -5,7 +5,7 @@ double PhysicalObject::fixedTimestepAccumulatorRatio;
 /*
  * ActualGame Constructor
  */
-ActualGame::ActualGame()
+ActualGame::ActualGame(unsigned int level, unsigned int island)
 : m_lastPosXTrain (INFINITE)
 {
 	std::cout << "Actual Game" << std::endl;
@@ -26,10 +26,9 @@ ActualGame::ActualGame()
 	m_velocityIterations = 6;
 	m_positionIterations = 2;
 
-	m_actualLevel= new Level();
-	/* Test pour tracer le premier bloc du level actuel*/
-	Block * actualBlock =  m_actualLevel->getBlock(0);
-	actualBlock->build(m_world);
+	//Charge le niveau
+	m_actualLevel= new Level(m_world, level, island);
+
 	/* test pour tracer le train */
 	m_train = new Train();
 	m_train->build(m_world);
@@ -81,7 +80,7 @@ void ActualGame::run(SDL_Surface * screen, int w, int h)
 		n = 0;
 		last_time = current_time;
     }
-	std::cout<<"FPS : "<<fps<<std::endl;
+	//std::cout<<"FPS : "<<fps<<std::endl;
 
 	//Actualise la simulation
 	runSimulation();

@@ -13,7 +13,7 @@
 class ActualGame
 {
 	public :
-		ActualGame();
+		ActualGame(unsigned int level, unsigned int island);
 		virtual ~ActualGame();
 		void runSimulation();
 		//Scrolle le niveau en fonction du déplacement du train
