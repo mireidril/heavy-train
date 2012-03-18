@@ -10,7 +10,7 @@ class Animal : public PhysicalObject
 {
 	public :
 		//Constructeur
-		Animal(int type);
+		Animal(int type, int x, int y);
 		//Destructeur
 		virtual ~Animal();
 		//When the animal gets in contact with the train, change the displayed image of the animal then delete it
@@ -25,11 +25,13 @@ class Animal : public PhysicalObject
 		void build(b2World * world);
 		void draw(SDL_Surface * screen, const int & width, const int & height);
 		void scroll(int x);
+		bool isDie();
 	private :
 		int m_posX;
 		int m_posY;
 		int m_typeAnimal;//0:tatou 1:coyote 2:vache
 		char * m_type;
 		Sprite * m_sprite;
+		bool m_die;//Pour dire quand le train est mort à Bloc
 };
 #endif

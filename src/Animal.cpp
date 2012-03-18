@@ -1,24 +1,25 @@
 #include "Animal.hpp"
 
 
-Animal::Animal(int type)
+Animal::Animal(int type, int x, int y)
 :PhysicalObject()
 {
-	m_posX = 0;
-	m_posY = 0;
+	m_posX = x;
+	m_posY = y;
 	m_typeAnimal= type;
+	m_die = false;
 
 	//sprite animal
-	int x = 0; int y = 0;
+	int xp = x*1024/40; int yp = y*768/30;
 	int sizeX = 150, sizeY = 53;
 	//taille de l'animal
 	if (m_typeAnimal==0){
 		sizeX = 150; sizeY = 53;
-		m_sprite = new Sprite("../img/animaux/tatou.png",  x, y,  sizeX, sizeY);
+		m_sprite = new Sprite("../img/animaux/tatou.png",  xp-40, yp,  sizeX, sizeY);
 	}
 	else {
 		sizeX = 150; sizeY = 53;
-		m_sprite = new Sprite("../img/animaux/tatou.png",  x, y, sizeX, sizeY);
+		m_sprite = new Sprite("../img/animaux/tatou.png",  xp-40, yp, sizeX, sizeY);
 	}
 
 }
@@ -54,9 +55,12 @@ void Animal::setPosX(int x){
 }
 
 void Animal::scroll(int x){
-	
-	double x2 = m_posX*1024/40;
-	m_sprite->setPositionX(x2+x);
+
+	m_sprite->setPositionX(m_sprite->getPositionX()+x);
+}
+
+bool Animal::isDie() {
+	return m_die;
 }
 
 void Animal::draw(SDL_Surface * screen, const int & width, const int & height){
@@ -66,10 +70,21 @@ void Animal::draw(SDL_Surface * screen, const int & width, const int & height){
 	double angledegrees = angle*180/M_PI;
 	double x = bodyPos.x;
 	double y = bodyPos.y;
-	//std::cout << x <<std::endl;
-	m_sprite->convertMetersToPixels(&x, &y,  width,  height);
-	m_sprite->setPositionY( y);
-	m_sprite->draw(screen,  width,  height);
+	if (x == m_posX){
+		m_sprite->convertMetersToPixels(&x, &y,  width,  height);
+		m_sprite->setPositionY( y);
+		m_sprite->setAngle (angle);
+		m_sprite->draw(screen,  width,  height);
+	}
+	else {
+		die();
+	}
+}
+
+void Animal::die(){
+	//animation
+	m_die = true;
+	std::cout << "collision" << std::endl;
 }
 
 
