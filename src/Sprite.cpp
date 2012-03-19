@@ -10,7 +10,7 @@ Sprite::Sprite(const char* imageFileName, int posX, int posY, int sizeX, int siz
 , m_angle(0.0)
 , m_size(NULL)
 , m_timeActualFrame(0)
-, m_timeFrame(10)
+, m_timeFrame(3)
 {
 	m_position = new SDL_Rect();
 	m_position->x = posX;
@@ -72,6 +72,14 @@ Sprite::~Sprite()
 
 	delete m_position;
 	delete m_size;
+}
+
+
+/**
+ * Setter Nbframes
+ */
+void Sprite::setNbFrames(int x){
+	m_nbFrames = x;
 }
 
 /**
@@ -195,21 +203,27 @@ double Sprite::getSizeY(){
 
 
 /**
- * Change l'image actuellement affichée après un temps donné (m_timeFrame)
+ * Change l'image actuellement affichée après un temps donné (m_timeFrame) et renvoi false si l'anim est terminé
  */
-void Sprite::animate()
+bool Sprite::animate()
 {
 	if(m_nbFrames > 1)
 	{
 		//incrémenter m_timeActualFrame (TODO : en secondes et pas en frame)
-		m_actualFrame++;
+		m_timeActualFrame++;
+		 
 		if(m_timeActualFrame >= m_timeFrame)
 		{
 			m_timeActualFrame = 0;
 			m_actualFrame++;
 			if(m_actualFrame >= m_nbFrames)
 			{
+				
 				m_actualFrame = 0;
+				return false;
+			}
+			else {
+				return true;
 			}
 		}
 	}
