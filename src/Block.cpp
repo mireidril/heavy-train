@@ -67,7 +67,6 @@ Block::Block(int sizeX, int id, int speed)
 	m_sprite = NULL;
 	SDL_Rect * pos = new SDL_Rect; pos->x = 0; pos->y = m_y;
 	m_points.push_back(pos);
-	//setAnimal(0, 30, 20);
 	
 }
 
@@ -93,7 +92,7 @@ Block::Block(BlockType type, int sizeX, int id, int speed)
 	m_sprite = NULL;
 	SDL_Rect * pos = new SDL_Rect; pos->x = 0; pos->y = m_y;
 	m_points.push_back(pos);
-	//setAnimal(0, 30, 20);
+	
 }
 
 Block::~Block() 
@@ -154,16 +153,8 @@ void Block::setBonus(BonusType type, int x, int y)
 
 void Block::setAnimal(const char * type, int x, int y) 
 {
-	if (strcmp(type,"tatou")==0)
-	{
-		//etc...
-	}
-	else
-	{
-		return;
-	}
-
-	Animal * animal = new Animal(0, x, y);
+	std::cout << "setanimal" << std::endl;
+	Animal * animal = new Animal(type, x, y);
 	m_animals.push_back(animal);
 }
 
@@ -343,6 +334,7 @@ void Block::draw(SDL_Surface * screen, const int & width, const int & height)
 			
 		}
 		else {
+			
 			m_animals[i]->draw(screen, width, height);
 		}
 	}
@@ -360,6 +352,14 @@ int Block::build(b2World * world)
 	//PosX en mètre
 	double pos = m_posX;
 	Sprite::convertPixelsToMeters(&pos, NULL, WINDOWS_W, WINDOWS_H);*/
+
+
+
+	//construction des animaux
+	for (int i=0; i< m_animals.size(); i++) {	
+		m_animals[i]->build(world);
+	}
+
 
 	switch(m_type)
 	{
@@ -537,10 +537,6 @@ int Block::build(b2World * world)
 		break;
 	}
 
-	//construction des animaux
-	for (int i=0; i< m_animals.size(); i++) {
-		m_animals[i]->build(world);
-	}
 
 	//Construction de l'image
 	createImage();
