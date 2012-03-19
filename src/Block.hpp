@@ -27,7 +27,7 @@ class Block
 {
 	public :
 		Block(int sizeX, int id, int speed = -1);
-		Block::Block(BlockType type, int sizeX, int id, int speed = -1);
+		Block(BlockType type, int sizeX, int id, int speed = -1);
 		virtual ~Block();
 
 		//Attribue un type au bloc
