@@ -33,7 +33,8 @@ class Sprite
 		Sprite(SDL_Surface * sdlSurface, int posX, int posY, int sizeX, int sizeY);
 		//Destructeur
 		virtual ~Sprite();
-		// Setter position & angle
+		// Setter position & angle & nbframes
+		void setNbFrames(int x);
 		void setPosition(int x, int y);
 		void setPositionX(int x);
 		void setPositionY(int y);
@@ -49,7 +50,7 @@ class Sprite
 		//Ajoute une image au sprite
 		void addImage(SDL_Surface * sdlSurface);
 		//Change l'image actuellement affichée après un temps donné (m_timeFrame)
-		void animate();
+		bool animate();
 		//Dessine le sprite à l'écran
 		void draw(SDL_Surface * screen, const int & width, const int & height);
 		//Change l'image actuellement affichée par une autre

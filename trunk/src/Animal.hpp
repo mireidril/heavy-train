@@ -3,6 +3,8 @@
 
 #include "PhysicalObject.hpp"
 #include "Sprite.hpp"
+#include <sstream>
+
 /*
 * Animal qui est un obstacle.
 */

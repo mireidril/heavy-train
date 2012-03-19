@@ -16,7 +16,15 @@ Animal::Animal(const char * type, int x, int y)
 	if (strcmp(type,"tatou")==0)
 	{
 		sizeX = 150; sizeY = 53;
-		m_sprite = new Sprite("../img/animaux/tatou.png",  x-40, y,  sizeX, sizeY);
+		m_sprite = new Sprite("../img/animaux/tatou1.png",  x-40, y,  sizeX, sizeY);
+		for (int i=2; i<8; i++) {
+			 std::ostringstream oss;
+			 oss << i;
+			std::string s1 = "../img/animaux/tatou"; 
+			std::string s2 = ".png"; 
+			std::string s3 = s1 + oss.str() +s2;
+			m_sprite->addImage(s3.c_str());
+		}
 	}
 	else if (strcmp(type,"coyote")==0)
 	{
@@ -28,7 +36,6 @@ Animal::Animal(const char * type, int x, int y)
 		m_sprite = new Sprite("../img/animaux/vache.png",  x-40, y, sizeX, sizeY);
 	}
 
-	std::cout << "posX" << m_posX << std::endl;
 
 }
 Animal::~Animal() 
@@ -69,14 +76,21 @@ void Animal::draw(SDL_Surface * screen, const int & width, const int & height){
 	double angledegrees = angle*180/M_PI;
 	double x = bodyPos.x;
 	double y = bodyPos.y;
-	if (abs(x - m_posX)<2){
+	if (abs(x - m_posX)<0.01){
 		m_sprite->convertMetersToPixels(&x, &y,  width,  height);
-		m_sprite->setPositionY( y);
+		m_sprite->setPositionY( y-40);
 		m_sprite->setAngle (angle);
 		m_sprite->draw(screen,  width,  height);
+		
 	}
 	else {
-		die();
+		
+		if (m_sprite->animate()) {
+			m_sprite->draw(screen,  width,  height);
+		}
+		else {
+			die();
+		}
 	}
 }
 
