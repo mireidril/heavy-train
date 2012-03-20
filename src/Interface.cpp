@@ -49,14 +49,30 @@ void Interface::load()
 		case TITLE :
 		{
 			//Background Images
-			m_backgroundImages.push_back(new Sprite("../img/screens/title_screen.png", 0, 0, 1024, 768));
+			m_backgroundImages.push_back(new Sprite("../img/screens/menu_background.jpg", 0, 0, 1024, 768));
 			//Buttons Images
+			Sprite * play = new Sprite("../img/screens/play_button_unselected.png", 425, 250, 153, 83);
+			play->addImage("../img/screens/play_button_selected.png");
+			Sprite * score = new Sprite("../img/screens/scores_button_unselected.png", 390, 335, 249, 74);
+			score->addImage("../img/screens/scores_button_selected.png");
+			Sprite * instruc = new Sprite("../img/screens/instructions_button_unselected.png", 400, 409, 425, 67);
+			instruc->addImage("../img/screens/instructions_button_selected.png");
+			Sprite * option = new Sprite("../img/screens/options_button_unselected.png", 400, 450, 260, 66);
+			option->addImage("../img/screens/options_button_selected.png");
+			Sprite * quit = new Sprite("../img/screens/quit_button_unselected.png", 400, 500, 145, 59);
+			quit->addImage("../img/screens/quit_button_selected.png");
+
+			m_buttonsImages.push_back(play);
+			m_buttonsImages.push_back(score);
+			m_buttonsImages.push_back(instruc);
+			m_buttonsImages.push_back(option);
+			m_buttonsImages.push_back(quit);
 			break;
 		}
 		case PAUSE :
 		{
 			//Background Images
-			m_backgroundImages.push_back(new Sprite("../img/screens/title_screen.png", 0, 0, 1024, 768));
+			m_backgroundImages.push_back(new Sprite("../img/screens/ecran1_test3.png", 0, 0, 1024, 768));
 			break;
 		}
 		case SCORE :
@@ -79,7 +95,7 @@ void Interface::load()
 		case HELP :
 		{
 			//Background Images
-			m_backgroundImages.push_back(new Sprite("../img/screens/title_screen.png", 0, 0, 1024, 768));
+			m_backgroundImages.push_back(new Sprite("../img/screens/ecran1_test3.png", 0, 0, 1024, 768));
 			break;
 		}
 		case ISLAND :
@@ -122,7 +138,7 @@ void Interface::load()
 		case ENDGAME :
 		{
 			//Background Images
-			m_backgroundImages.push_back(new Sprite("../img/screens/title_screen.png", 0, 0, 1024, 768));
+			m_backgroundImages.push_back(new Sprite("../img/screens/ecran1_test3.png", 0, 0, 1024, 768));
 			break;
 		}
 		default :
@@ -140,7 +156,7 @@ void Interface::loadXML(int level, int island)
 		
 		//TESTS : à virer après le chargement XML
 		m_nbAvailableLevels = 1;
-		m_nbAvailableIslands = 3;
+		m_nbAvailableIslands = 2;
 	}
 	
 	//Récupère tous les scores : UTILISE APRES L'ECRAN TITLE
@@ -212,7 +228,7 @@ void Interface::update(GameEngine * gameEngine)
 			}
 			
 			//Si on est dans l'écran WORLD, on ne change pas l'image des îles non débloquées
-			if( !(m_type == WORLD && i >= m_nbAvailableIslands) )
+			if( ! (m_type == WORLD && i >= m_nbAvailableIslands) )
 			{
 				m_buttonsImages[i]->changeImageManually(1);
 			}
