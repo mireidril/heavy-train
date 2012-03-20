@@ -58,6 +58,10 @@ class Block
 		//Retourne l'identifiant du point à l'ordonnée la plus grande
 		int getYMaxPoint();
 
+		//Retourne la position en x de début et de fin du bloc
+		double getPosInMeters();
+		double getEndBlockPosInMeters();
+
 		//Dessine le bloc
 		void setBonus(BonusType type, int x, int y);
 		void setAnimal(const char * type, int x, int y);

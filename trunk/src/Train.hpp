@@ -60,12 +60,12 @@ class Train
 
 	void keyboard( const SDL_KeyboardEvent *event);
 
-	//Donne la position actuelle du body
-	b2Vec2 getBodyPosition();
+	//Donne la position actuelle de la locomotive
+	b2Vec2 getLocoBodyPosition();
+	//Donne la taille actuelle de la locomotive
+	b2Vec2 getBodySize() { return m_size; };
 	
-	Sprite * getSprite() {return m_physicalObjects[0]->getSprite(); };
-
-
+	Sprite * getSprite() { return m_physicalObjects[0]->getSprite(); };
 
    private :
 	//Current speed of the train
@@ -102,5 +102,9 @@ class Train
 	b2Joint* m_joints[2];
 	//The two wagons of the game
 	std::vector<Wagon*> m_wagons;
+	//Taille de la locomotive
+	b2Vec2	m_size;
+	//Nombre de wagons
+	unsigned int m_nbWagons;
 };
 #endif

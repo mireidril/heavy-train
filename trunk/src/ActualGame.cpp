@@ -6,11 +6,10 @@ double PhysicalObject::fixedTimestepAccumulatorRatio;
  * ActualGame Constructor
  */
 ActualGame::ActualGame(unsigned int level, unsigned int island)
-: m_lastPosXTrain (INFINITE),
-  m_actualBlock(0)
+: m_lastPosXTrain (INFINITE)
+, m_actualBlock(0)
 {
 	std::cout << "Actual Game" << std::endl;
-
 	b2Vec2 gravity(0.0f, -10.0f);
 	// Construct a world object, which will hold and simulate the rigid bodies.
 	m_world = new b2World(gravity);
@@ -88,6 +87,7 @@ void ActualGame::run(SDL_Surface * screen, int w, int h)
 	
 	//Dessine le niveau & le train
 	m_train->updatePosition();
+	updateActualBlock();
 	scroll();
 	m_actualLevel->render(screen, w, h);
 	m_train->drawSprite(screen,w,h);
@@ -97,10 +97,32 @@ void ActualGame::run(SDL_Surface * screen, int w, int h)
 	m_world->DrawDebugData();
 }
 
+void ActualGame::updateActualBlock()
+{
+	double headLocoX = m_train->getLocoBodyPosition().x /*+ m_train->getBodySize().x*/;
+
+	Block * actualBlock = m_actualLevel->getBlock(m_actualBlock);
+	if(actualBlock != NULL)
+	{
+		double posX = actualBlock->getPosInMeters();
+		double endPosX = actualBlock->getEndBlockPosInMeters();
+		if(headLocoX > endPosX )
+		{
+			if(m_actualBlock + 1 < m_actualLevel->getNbBlocks() )
+				m_actualBlock++;
+		}
+		else if(headLocoX < posX )
+		{
+			if(m_actualBlock - 1 >= 0 )
+				m_actualBlock--;
+		}
+	}
+}
+
 void ActualGame::scroll()
 {
 	//Récupération de la dernière position du train
-	b2Vec2 currentPos = m_train->getBodyPosition();
+ 	b2Vec2 currentPos = m_train->getLocoBodyPosition();
 	if( m_lastPosXTrain != INFINITE )
 	{
 		double x = m_lastPosXTrain - currentPos.x;

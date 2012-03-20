@@ -31,6 +31,7 @@ class Level
 		//Construit tous les blocs
 		void buildBlocks();
 		Block * getBlock(unsigned int i);
+		unsigned int getNbBlocks() { return m_blocks.size(); } ;
 
 		//Réinitialise les valeurs des PhysicalObjects après un smooth pour coller au framerate
 		void clearAllSmoothAngleAndPosition();
