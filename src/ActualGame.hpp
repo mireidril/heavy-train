@@ -25,20 +25,20 @@ class ActualGame
 		void checkKeyboardEvent(const SDL_KeyboardEvent *event);
 		void run(SDL_Surface * screen, int w, int h);
 		//Add points to the total score
-		void updateTotalScore(const int & points);
+		void updateTotalScore();
 		//Add points to the passenger score
-		void updatePassengerScore(const int & points);
+		void updatePassengerScore();
 		//Add points to the time score
-		void updateTimeScore(const int & points);
+		void updateTimeScore();
 		//Add points to the satisfaction score
-		void updateSatisfactionScore(const int & points);
+		void updateSatisfactionScore();
 		//Add points to the stardust score
 		//void updateStarDustScore(const int & points);
 		void updateStarDustScore();
 		//Add points to the obstacle score
 		void updateObstacleScore();
 		//Update the total score when stopping at a station
-		void calculateStopScore(const int & points);
+		//void calculateStopScore();
 		//If an animal is visible on screen, return true
 		bool isAnimalOnScreen();
 		//At the end of a level, save the total score of the player in the xml file
@@ -70,8 +70,8 @@ class ActualGame
 		static const int m_onTimeInfTenPoint = 1400;
 		//How many points the player gains if he arrives on time at the station
 		static const int m_onTimePoint = 5000;
-		int m_missStationPoint;
-		int m_nbPassengerPoint;
+		static const int m_missStationPoint = -2500;
+		static const int m_nbPassengerPoint = 200;
 
 		Level * m_actualLevel;
 		Train * m_train;
