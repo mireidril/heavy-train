@@ -10,7 +10,7 @@ Sprite::Sprite(const char* imageFileName, int posX, int posY, int sizeX, int siz
 , m_angle(0.0)
 , m_size(NULL)
 , m_timeActualFrame(0)
-, m_timeFrame(3)
+, m_timeFrame(4)
 {
 	m_position = new SDL_Rect();
 	m_position->x = posX;

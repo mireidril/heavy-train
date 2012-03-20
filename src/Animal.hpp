@@ -24,11 +24,13 @@ class Animal : public PhysicalObject
 		void draw(SDL_Surface * screen, const int & width, const int & height);
 		void scroll(int x);
 		bool isDie();
+		void keyboard( const SDL_KeyboardEvent *event);
 	private :
 		double m_posX;
 		double m_posY;
 		const char * m_type;
 		Sprite * m_sprite;
 		bool m_die;//Pour dire quand le train est mort à Bloc
+		bool m_tchou;// Pour signaler quand le train a thou
 };
 #endif
