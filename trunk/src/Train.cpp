@@ -229,43 +229,46 @@ void Train::clearAllSmoothAngleAndPosition()
  */
 void Train::keyboard( const SDL_KeyboardEvent *event)
 {
-	
-	switch ( (event->keysym).sym)
-	{
-	case SDLK_LEFT:
-		m_spring1->SetMotorSpeed(m_speed);
-		m_spring2->SetMotorSpeed(m_speed);
-		m_wagons[0]->setMotorSpeed(m_speed);
-		m_wagons[1]->setMotorSpeed(m_speed);
-		break;
 
-	case SDLK_UP:
-		m_spring1->SetMotorSpeed(0.0f);
-		m_spring2->SetMotorSpeed(0.0f);
-		m_wagons[0]->setMotorSpeed(0.0f);
-		m_wagons[1]->setMotorSpeed(0.0f);
-		break;
+	m_spring1->SetMotorSpeed(0.0f);
+	m_spring2->SetMotorSpeed(0.0f);
+	m_wagons[0]->setMotorSpeed(0.0f);
+	m_wagons[1]->setMotorSpeed(0.0f);
 
-	case SDLK_RIGHT:
-		m_spring1->SetMotorSpeed(-m_speed);
-		m_spring2->SetMotorSpeed(-m_speed);
-		m_wagons[0]->setMotorSpeed(-m_speed);
-		m_wagons[1]->setMotorSpeed(-m_speed);
-		break;
+	if (event->type == SDL_KEYDOWN){
+		switch ( (event->keysym).sym)
+		{
+		case SDLK_LEFT:
+			m_spring1->SetMotorSpeed(m_speed);
+			m_spring2->SetMotorSpeed(m_speed);
+			m_wagons[0]->setMotorSpeed(m_speed);
+			m_wagons[1]->setMotorSpeed(m_speed);
+			break;
 
-	case 'q':
-		m_hz = b2Max(0.0f, m_hz - 1.0f);
-		m_spring1->SetSpringFrequencyHz(m_hz);
-		m_spring2->SetSpringFrequencyHz(m_hz);
-		break;
+		case SDLK_UP:
 
-	case 'e':
-		m_hz += 1.0f;
-		m_spring1->SetSpringFrequencyHz(m_hz);
-		m_spring2->SetSpringFrequencyHz(m_hz);
-		break;
-	default:
-		break;
+
+		case SDLK_RIGHT:
+			m_spring1->SetMotorSpeed(-m_speed);
+			m_spring2->SetMotorSpeed(-m_speed);
+			m_wagons[0]->setMotorSpeed(-m_speed);
+			m_wagons[1]->setMotorSpeed(-m_speed);
+			break;
+
+		case 'q':
+			m_hz = b2Max(0.0f, m_hz - 1.0f);
+			m_spring1->SetSpringFrequencyHz(m_hz);
+			m_spring2->SetSpringFrequencyHz(m_hz);
+			break;
+
+		case 'e':
+			m_hz += 1.0f;
+			m_spring1->SetSpringFrequencyHz(m_hz);
+			m_spring2->SetSpringFrequencyHz(m_hz);
+			break;
+		default:
+			break;
+		}
 	}
 }
 
