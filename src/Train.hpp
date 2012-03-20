@@ -3,9 +3,11 @@
 
 #ifdef _WIN32
 #include "Box2D/Box2D.h"
+#include "SDL/SDL.h"
 #include "SDL/SDL_mixer.h"
 #else
 #include <Box2D/Box2D.h>
+#include <SDL/SDL.h>
 #include <SDL/SDL_mixer.h>
 #endif
 
@@ -84,6 +86,7 @@ class Train
 	int m_shaken;
 	// Sound of the tchoutchou
 	Mix_Chunk * m_tchoutchouSound;	
+	int channel;
 	// Sounf of the scared passengers
 	Mix_Chunk * m_passengerSound;
 
