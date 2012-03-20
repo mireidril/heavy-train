@@ -29,6 +29,12 @@ Train::Train ()
 	// add wagons
 	m_wagons.push_back(new Wagon(164));
 	m_wagons.push_back(new Wagon(65));
+	
+	//sounds
+	m_tchoutchouSound = Mix_LoadWAV("../musics/tchoutchou.ogg");
+	if(m_tchoutchouSound == NULL) {
+		printf("Unable to load OGG file: %s\n", Mix_GetError());
+	}
 
 }
 
@@ -256,6 +262,11 @@ void Train::keyboard( const SDL_KeyboardEvent *event)
 			m_wagons[0]->setMotorSpeed(-m_speed);
 			m_wagons[1]->setMotorSpeed(-m_speed);
 			break;
+		case SDLK_SPACE:
+			channel = Mix_PlayChannel(-1, m_tchoutchouSound, 0);
+			if(channel == -1) {
+				printf("Unable to play OGG file: %s\n", Mix_GetError());
+			}
 
 		case 'q':
 			m_hz = b2Max(0.0f, m_hz - 1.0f);
