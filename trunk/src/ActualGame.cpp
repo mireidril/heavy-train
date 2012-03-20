@@ -6,7 +6,8 @@ double PhysicalObject::fixedTimestepAccumulatorRatio;
  * ActualGame Constructor
  */
 ActualGame::ActualGame(unsigned int level, unsigned int island)
-: m_lastPosXTrain (INFINITE)
+: m_lastPosXTrain (INFINITE),
+  m_actualBlock(0)
 {
 	std::cout << "Actual Game" << std::endl;
 
@@ -145,6 +146,12 @@ void ActualGame::clearAllSmoothAngleAndPosition()
 void ActualGame::checkKeyboardEvent(const SDL_KeyboardEvent *event)
 {
 	m_train->keyboard(event);
+	if (m_actualLevel->getBlock(m_actualBlock+1)){	
+		m_actualLevel->getBlock(m_actualBlock)->keyboard(event);
+	}
+	if (m_actualLevel->getBlock(m_actualBlock+1)){
+		m_actualLevel->getBlock(m_actualBlock+1)->keyboard(event);
+	}
 }
 
 

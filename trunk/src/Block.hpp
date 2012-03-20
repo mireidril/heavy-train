@@ -63,6 +63,8 @@ class Block
 		void setAnimal(const char * type, int x, int y);
 		void draw(SDL_Surface * screen, const int & width, const int & height);
 
+		void keyboard(const SDL_KeyboardEvent *event);
+
 		
 	protected :
 		//Sprite du bloc

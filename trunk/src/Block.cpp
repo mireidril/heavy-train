@@ -341,6 +341,14 @@ void Block::draw(SDL_Surface * screen, const int & width, const int & height)
 
 }
 
+
+void Block::keyboard(const SDL_KeyboardEvent *event){
+	for (int i=0; i<m_animals.size(); i++) {
+		m_animals[i]->keyboard(event);
+	}
+
+}
+
 /*
  * Block construction
  */

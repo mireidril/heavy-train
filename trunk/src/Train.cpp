@@ -229,6 +229,7 @@ void Train::clearAllSmoothAngleAndPosition()
  */
 void Train::keyboard( const SDL_KeyboardEvent *event)
 {
+	
 	switch ( (event->keysym).sym)
 	{
 	case SDLK_LEFT:
@@ -262,6 +263,8 @@ void Train::keyboard( const SDL_KeyboardEvent *event)
 		m_hz += 1.0f;
 		m_spring1->SetSpringFrequencyHz(m_hz);
 		m_spring2->SetSpringFrequencyHz(m_hz);
+		break;
+	default:
 		break;
 	}
 }
