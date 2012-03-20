@@ -42,7 +42,8 @@ void Station::setEnter(int enter)
 	m_nbEnteringPassengers = enter;
 }
 
-void Station::initPassengers(){
+void Station::initPassengers()
+{
 	Passenger *p ;
 	for(int i = 0; i< m_nbEnteringPassengers; i++ )
 	{

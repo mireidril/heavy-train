@@ -283,6 +283,7 @@ void Wagon::deletePassenger(Passenger* p)
 	delete p;
 	p = NULL;
 }
-int Wagon::getNbPassengerWagon(){
+int Wagon::getNbPassengerWagon()
+{
 	return m_passengersCount;
 }
