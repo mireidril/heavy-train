@@ -90,7 +90,9 @@ class GameEngine
 
 		//Partie de jeu actuellement jouée
 		ActualGame*					m_actualGame;
-
+		
+		//Musique
+		Mix_Music *musique;
 };
 
 #endif

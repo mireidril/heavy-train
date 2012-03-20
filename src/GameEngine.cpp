@@ -66,7 +66,7 @@ void GameEngine::initSDL()
 		std::cerr << "Can't initialize SDL_mixer " << std::endl;
 		m_isRunning = false;
 	}
-
+	
 	//Framerate
 	SDL_initFramerate(&m_FPSManager);
 	SDL_setFramerate(&m_FPSManager, 60);
@@ -121,6 +121,15 @@ void GameEngine::run()
 	std::cout << "Game Engine run" << std::endl;
 	//Initialisation SDL
 	initSDL();
+	
+	//musique
+	Mix_AllocateChannels(20);
+	Mix_VolumeMusic(MIX_MAX_VOLUME/2);
+	Mix_Volume(0, MIX_MAX_VOLUME);
+	musique = Mix_LoadMUS("../musics/rednex.ogg");
+	Mix_PlayMusic(musique, -1);
+	//
+
 
 	//Initialisation de l'interface
 	loadInterfaces();
