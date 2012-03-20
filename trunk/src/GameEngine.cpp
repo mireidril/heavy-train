@@ -199,6 +199,13 @@ void GameEngine::update()
 					}
 				}
 				break;
+			case SDL_KEYUP:
+				if(m_actualGameScreen == GAME)
+				{
+					assert(m_actualGame);
+					m_actualGame->checkKeyboardEvent(&(event.key));
+				}
+				break;
 			case SDL_MOUSEBUTTONUP:
 			case SDL_MOUSEBUTTONDOWN:
 				if(m_actualGameScreen != GAME)
