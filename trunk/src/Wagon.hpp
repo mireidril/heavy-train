@@ -44,6 +44,7 @@ class Wagon{
 	void drawSprite(SDL_Surface * screen, const int & width, const int & height, const int & posXLocoSprite, const double & posXLocoBody);
 	void setMotorSpeed(float speed);
 
+	int getNbPassengerWagon();
    private :
 	// Number of passengers that the wagon have when it quits the station
 	int m_originalNumberOfPassengers;
