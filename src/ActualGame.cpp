@@ -149,24 +149,29 @@ void ActualGame::checkKeyboardEvent(const SDL_KeyboardEvent *event)
 
 
 //Update durant le jeu !!!
-void ActualGame::updateStarDustScore(){
+void ActualGame::updateStarDustScore()
+{
 	m_starDustScore += m_starsPoint;
 }
-void ActualGame::updateObstacleScore(){
+void ActualGame::updateObstacleScore()
+{
 	//m_obstacleScore= ;
 }
 //Update a la gare !!!
-void ActualGame::updatePassengerScore(){
-	//il faut implementer getNbPassenger
+void ActualGame::updatePassengerScore()
+{
 	m_passengerScore+=(m_nbPassengerPoint*m_train->getNbPassengers());
 }
-void ActualGame::updateTimeScore(){
+void ActualGame::updateTimeScore()
+{
 
 }
-void ActualGame::updateSatisfactionScore(){
+void ActualGame::updateSatisfactionScore()
+{
 
 }
-void ActualGame::updateTotalScore(){
+void ActualGame::updateTotalScore()
+{
 	m_totalScore += m_starDustScore;
 	m_totalScore += m_passengerScore;
 	m_totalScore += m_timeScore;

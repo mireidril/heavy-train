@@ -272,7 +272,8 @@ b2Vec2 Train::getBodyPosition()
 	return m_physicalObjects[0]->getPosition();
 }
 
-int Train::getNbPassengers(){
+int Train::getNbPassengers()
+{
 	int nbWagon = m_wagons.size();
 	int nbPassenger =0;
 	for(int i=0; i<nbWagon ; i++){
