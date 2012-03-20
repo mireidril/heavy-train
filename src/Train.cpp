@@ -6,6 +6,8 @@
  */
 
 Train::Train () 
+: m_size (4.0, 3.0)
+, m_nbWagons(2)
 {
 	//la corps de la loco
 	//position de la loco
@@ -124,10 +126,10 @@ void Train::build(b2World * world)
 
 	b2PolygonShape chassis;
 	b2Vec2 vertices[4];
-	vertices[0].Set(-2.0f, -1.5f);
-	vertices[1].Set(2.0f, -1.5f);
-	vertices[2].Set(2.0f, 1.5f);
-	vertices[3].Set(-2.0f, 1.5f);
+	vertices[0].Set(- (m_size.x/2.0), - (m_size.y/2.0));
+	vertices[1].Set(m_size.x/2.0, - (m_size.y/2.0));
+	vertices[2].Set(m_size.x/2.0, m_size.y/2.0);
+	vertices[3].Set(- (m_size.x/2.0), m_size.y/2.0);
 	chassis.Set(vertices, 4);//locomotive
 
 	m_physicalObjects[0]->setBody(world->CreateBody(&bd));
@@ -272,12 +274,11 @@ void Train::keyboard( const SDL_KeyboardEvent *event)
 	}
 }
 
-//Donne la position actuelle du body
-b2Vec2 Train::getBodyPosition()
+//Donne la position actuelle du body de la loco
+b2Vec2 Train::getLocoBodyPosition()
 {
 	return m_physicalObjects[0]->getPosition();
 }
-
 int Train::getNbPassengers()
 {
 	int nbWagon = m_wagons.size();

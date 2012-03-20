@@ -191,6 +191,22 @@ int Block::getYMaxPoint()
 	return idMax;
 }
 
+double Block::getPosInMeters()
+{
+	double pos = m_posX;
+	Sprite::convertPixelsToMeters(&pos, NULL, WINDOWS_W, WINDOWS_H);
+	return pos;
+}
+
+double Block::getEndBlockPosInMeters()
+{
+	double size = m_sizeX;
+	Sprite::convertPixelsToMeters(&size, NULL, WINDOWS_W, WINDOWS_H);
+	double pos = m_posX;
+	Sprite::convertPixelsToMeters(&pos, NULL, WINDOWS_W, WINDOWS_H);
+	return pos + size;
+}
+
 void Block::createImage()
 {
 	#if SDL_BYTEORDER == SDL_BIG_ENDIAN

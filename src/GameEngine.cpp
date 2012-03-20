@@ -304,3 +304,11 @@ GameScreen GameEngine::getActualGameScreen()
 {
 	return m_actualGameScreen;
 }
+
+/*
+ * Quitte le jeu
+ */
+void GameEngine::quit()
+{
+	m_isRunning = false;
+}

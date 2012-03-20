@@ -53,13 +53,13 @@ void Interface::load()
 			//Buttons Images
 			Sprite * play = new Sprite("../img/screens/play_button_unselected.png", 425, 250, 153, 83);
 			play->addImage("../img/screens/play_button_selected.png");
-			Sprite * score = new Sprite("../img/screens/scores_button_unselected.png", 390, 335, 249, 74);
+			Sprite * score = new Sprite("../img/screens/scores_button_unselected.png", 390, 333, 249, 74);
 			score->addImage("../img/screens/scores_button_selected.png");
-			Sprite * instruc = new Sprite("../img/screens/instructions_button_unselected.png", 400, 409, 425, 67);
+			Sprite * instruc = new Sprite("../img/screens/instructions_button_unselected.png", 315, 407, 425, 67);
 			instruc->addImage("../img/screens/instructions_button_selected.png");
-			Sprite * option = new Sprite("../img/screens/options_button_unselected.png", 400, 450, 260, 66);
+			Sprite * option = new Sprite("../img/screens/options_button_unselected.png", 390, 474, 260, 66);
 			option->addImage("../img/screens/options_button_selected.png");
-			Sprite * quit = new Sprite("../img/screens/quit_button_unselected.png", 400, 500, 145, 59);
+			Sprite * quit = new Sprite("../img/screens/quit_button_unselected.png", 425, 540, 145, 59);
 			quit->addImage("../img/screens/quit_button_selected.png");
 
 			m_buttonsImages.push_back(play);
@@ -135,6 +135,10 @@ void Interface::load()
 			m_buttonsImages.push_back(isle3);
 			break;
 		}
+		case OPTIONS :
+		{
+			break;
+		}
 		case ENDGAME :
 		{
 			//Background Images
@@ -149,6 +153,8 @@ void Interface::load()
 //Chargement du XML des scores et des niveaux débloqués
 void Interface::loadXML(int level, int island)
 {
+	m_leaderboards.clear();
+
 	//Récupère uniquement le nombre de niveaux débloqués
 	if(level <= 0 && island <= 0)
 	{
@@ -257,6 +263,19 @@ void Interface::update(GameEngine * gameEngine)
 				switch(buttonChosen)
 				{
 					case 0:
+						gameEngine->changeScreen(m_type, WORLD, -1, -1);
+						break;
+					case 1:
+						gameEngine->changeScreen(m_type, SCORE, 0, 0);
+						break;
+					case 2:
+						gameEngine->changeScreen(m_type, HELP, -1, -1);
+						break;
+					case 3:
+						gameEngine->changeScreen(m_type, OPTIONS, -1, -1);
+						break;
+					case 4:
+						gameEngine->quit();
 						break;
 					default:
 						break;
@@ -300,10 +319,12 @@ void Interface::update(GameEngine * gameEngine)
 				//Si on clique sur une île
 				if(buttonChosen < m_nbAvailableIslands)
 				{
-					gameEngine->changeScreen(m_type, GAME);
+					gameEngine->changeScreen(m_type, GAME, 1, buttonChosen+1);
 				}
 				break;
 			}
+			case OPTIONS:
+				break;
 			case ENDGAME :
 			{
 				break;
@@ -374,10 +395,12 @@ void Interface::render(SDL_Surface * screen, const int & width, const int & heig
 		text = TTF_RenderText_Blended(m_font, string2.str().c_str(),  color);
 		SDL_BlitSurface(text, NULL, screen, &position);
 			
-		std::multimap< int, std::string >::const_iterator it;
+		std::multimap< int, std::string >::const_iterator it = m_leaderboards[m_actualLeaderboard]->m_scores.end();
 		int posY = 0;
-		for(it = m_leaderboards[m_actualLeaderboard]->m_scores.begin(); it != m_leaderboards[m_actualLeaderboard]->m_scores.end() ; ++it)
+		do
 		{
+			--it;
+
 			string1.str(std::string());  
 			string1 << it->second << "                " << it->first;
 				
@@ -388,6 +411,8 @@ void Interface::render(SDL_Surface * screen, const int & width, const int & heig
 
 			posY++;
 		}
+		while(it != m_leaderboards[m_actualLeaderboard]->m_scores.begin());
+
 		SDL_FreeSurface(text);
 	}
 }
@@ -428,7 +453,7 @@ void Interface::checkKeyboardEvent(const SDL_KeyboardEvent *event)
 	switch(event->keysym.sym)
 	{
 		case SDLK_UP :
-			std::cout<<"UP arrow"<<std::endl;
+			//std::cout<<"UP arrow"<<std::endl;
 			break;
 		default:
 			break;

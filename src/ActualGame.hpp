@@ -16,6 +16,8 @@ class ActualGame
 		ActualGame(unsigned int level, unsigned int island);
 		virtual ~ActualGame();
 		void runSimulation();
+
+		void updateActualBlock();
 		//Scrolle le niveau en fonction du déplacement du train
 		void scroll();
 

@@ -27,7 +27,8 @@ enum GameScreen
 	ISLAND,
 	ENDGAME,
 	GAME,
-	NB_SCREENS
+	NB_SCREENS,
+	OPTIONS
 };
 
 /*
