@@ -8,6 +8,7 @@
 Train::Train () 
 : m_size (4.0, 3.0)
 , m_nbWagons(2)
+, m_channel(-1)
 {
 	//la corps de la loco
 	//position de la loco
@@ -239,16 +240,33 @@ void Train::clearAllSmoothAngleAndPosition()
  */
 void Train::keyboard( const SDL_KeyboardEvent *event)
 {
-
-	m_spring1->SetMotorSpeed(0);
-	m_spring2->SetMotorSpeed(0);
-	m_wagons[0]->setMotorSpeed(0);
-	m_wagons[1]->setMotorSpeed(0);
-
-	if (event->type == SDL_KEYDOWN){
+	if (event->type == SDL_KEYUP)
+	{
 		switch ( (event->keysym).sym)
 		{
+			case SDLK_LEFT:
+			case SDLK_RIGHT:
+				m_spring1->SetMotorSpeed(0);
+				m_spring2->SetMotorSpeed(0);
+				m_wagons[0]->setMotorSpeed(0);
+				m_wagons[1]->setMotorSpeed(0);
+			break;
+		}
+	}
+	else if (event->type == SDL_KEYDOWN)
+	{
+		switch ( (event->keysym).sym)
+		{
+		case SDLK_SPACE:
+			if( m_channel == -1 || Mix_Playing(m_channel) == 0 )
+				m_channel = Mix_PlayChannel(-1, m_tchoutchouSound, 0);
+			if( m_channel == -1) {
+				printf("Unable to play OGG file: %s\n", Mix_GetError());
+			}
+			break;
+
 		case SDLK_LEFT:
+
 			m_speed = 20;
 			m_spring1->SetMotorSpeed(m_speed);
 			m_spring2->SetMotorSpeed(m_speed);
@@ -257,7 +275,7 @@ void Train::keyboard( const SDL_KeyboardEvent *event)
 			break;
 
 		case SDLK_UP:
-
+			break;
 
 		case SDLK_RIGHT:
 			m_speed = -20;
@@ -266,11 +284,6 @@ void Train::keyboard( const SDL_KeyboardEvent *event)
 			m_wagons[0]->setMotorSpeed(m_speed);
 			m_wagons[1]->setMotorSpeed(m_speed);
 			break;
-		case SDLK_SPACE:
-			channel = Mix_PlayChannel(-1, m_tchoutchouSound, 0);
-			if(channel == -1) {
-				printf("Unable to play OGG file: %s\n", Mix_GetError());
-			}
 
 		case 'q':
 			m_hz = b2Max(0.0f, m_hz - 1.0f);
