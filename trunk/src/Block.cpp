@@ -327,13 +327,9 @@ void Block::createImage()
 						}
 					}
 					//On trace le ground
-					else if(y < m_y && y >= station->h)
+					else if(y >= station->h)
 					{
 						yG = (ground->h - sizeYGround) + (y - station->h);
-						if(y == station->h)
-						std::cout<<yG<<std::endl;
-						if(y == m_y - 1)
-						std::cout<<yG<<std::endl;
 						actualPixel = Sprite::getpixel(ground, x, yG);
 						Sprite::putpixel(imageTest, x, y, actualPixel);
 					}
@@ -390,7 +386,7 @@ void Block::createImage()
 						Sprite::putpixel(imageTest, x, y, actualPixel);
 					}
 					//On trace le ground
-					else if(y < m_y && y >= tunnel->h)
+					else if(y >= tunnel->h)
 					{
 						yG = (ground->h - sizeYGround) + (y - tunnel->h);
 						actualPixel = Sprite::getpixel(ground, x, yG);
@@ -434,20 +430,14 @@ void Block::draw(SDL_Surface * screen, const int & width, const int & height)
 {
 	if(m_sprite)
 		m_sprite->draw(screen, width, height);
-	
-	for (int i=0; i< m_animals.size(); i++) {
-		if (m_animals[i]->isDie()) {
-			std::cout<<"DIE ANIMAL !!"<<std::endl;
-			delete m_animals[i];
-			m_animals.erase(m_animals.begin()+i);
-			
-		}
-		else {
-			
+
+	for (unsigned int i = 0; i < m_animals.size(); ++i)
+	{
+		if ( !m_animals[i]->isDie() )
+		{
 			m_animals[i]->draw(screen, width, height);
 		}
 	}
-
 }
 
 
@@ -476,7 +466,6 @@ int Block::build(b2World * world)
 	for (int i=0; i< m_animals.size(); i++) {	
 		m_animals[i]->build(world);
 	}
-
 
 	switch(m_type)
 	{
@@ -631,7 +620,7 @@ int Block::build(b2World * world)
 			sol.Set(p1, p2);
 			m_body->CreateFixture(&sol, 0);
 
-			//Sol du tunnel
+			//Plafond du tunnel
 			b2EdgeShape plafond;
 			x1 = m_posX; y1 = m_y - m_tunnelHeight;
 			x2 = m_posX + m_sizeX; y2 = m_y - m_tunnelHeight;
@@ -641,18 +630,63 @@ int Block::build(b2World * world)
 			p2.x = (float32) x2; p2.y = (float32) y2;
 			plafond.Set(p1, p2);
 			m_body->CreateFixture(&plafond, 0);
+
+			//Bords gauche et droits du tunnel
+			b2EdgeShape leftEdge;
+			x1 = m_posX; y1 = m_y - m_tunnelHeight;
+			x2 = m_posX; y2 = 0;
+			Sprite::convertPixelsToMeters(&x1, &y1, WINDOWS_W, WINDOWS_H);
+			Sprite::convertPixelsToMeters(&x2, &y2, WINDOWS_W, WINDOWS_H);
+			p1.x = (float32) x1; p1.y = (float32) y1;
+			p2.x = (float32) x2; p2.y = (float32) y2;
+			leftEdge.Set(p1, p2);
+			m_body->CreateFixture(&leftEdge, 0);
+
+			b2EdgeShape rightEdge;
+			x1 = m_posX + m_sizeX; y1 = m_y - m_tunnelHeight;
+			x2 = m_posX + m_sizeX; y2 = 0;
+			Sprite::convertPixelsToMeters(&x1, &y1, WINDOWS_W, WINDOWS_H);
+			Sprite::convertPixelsToMeters(&x2, &y2, WINDOWS_W, WINDOWS_H);
+			p1.x = (float32) x1; p1.y = (float32) y1;
+			p2.x = (float32) x2; p2.y = (float32) y2;
+			rightEdge.Set(p1, p2);
+			m_body->CreateFixture(&rightEdge, 0);
 		}
 		std::cout<<"TUNNEL!!"<<std::endl;
 		break;
 
 		case PRECIPICE :
 		{
-			//Pas de body
+
+			//On suppose que la taille du tunnel est supérieure à zéro
+			b2BodyDef groundBodyDef;
+			groundBodyDef.position.Set(0, 0); //Position à changer plus tard
+			m_body = world->CreateBody(&groundBodyDef);
+
+			//Bords gauche et droits du précipice
+			b2EdgeShape leftEdge;
+			double x1 = m_posX; double y1 = m_y;
+			double x2 = m_posX; double y2 = WINDOWS_H;
+			Sprite::convertPixelsToMeters(&x1, &y1, WINDOWS_W, WINDOWS_H);
+			Sprite::convertPixelsToMeters(&x2, &y2, WINDOWS_W, WINDOWS_H);
+			b2Vec2 p1((float32) x1, (float32) y1);
+			b2Vec2 p2((float32) x2, (float32) y2);
+			leftEdge.Set(p1, p2);
+			m_body->CreateFixture(&leftEdge, 0);
+
+			b2EdgeShape rightEdge;
+			x1 = m_posX + m_sizeX; y1 = m_y;
+			x2 = m_posX + m_sizeX; y2 = WINDOWS_H;
+			Sprite::convertPixelsToMeters(&x1, &y1, WINDOWS_W, WINDOWS_H);
+			Sprite::convertPixelsToMeters(&x2, &y2, WINDOWS_W, WINDOWS_H);
+			p1.x = (float32) x1; p1.y = (float32) y1;
+			p2.x = (float32) x2; p2.y = (float32) y2;
+			rightEdge.Set(p1, p2);
+			m_body->CreateFixture(&rightEdge, 0);
 		}
 		std::cout<<"TROUUUU!!"<<std::endl;
 		break;
 	}
-
 
 	//Construction de l'image
 	createImage();

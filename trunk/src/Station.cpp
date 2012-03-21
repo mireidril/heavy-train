@@ -1,4 +1,5 @@
 #include "Station.hpp"
+#include "Level.hpp"
 
 Station::Station(int sizeX, int id, Level * l)
 :Block(STATION, sizeX, id, l, -1)
@@ -26,8 +27,32 @@ int Station::build(b2World * world)
 	b2Vec2 p2((float32) x2, (float32) y2);
 	shape.Set(p1, p2);
 	m_body->CreateFixture(&shape, 0);
-
-	std::cout<<"GARRREEE!!"<<std::endl;
+	
+	//On mets des murs aux bords du niveau
+	if(m_id == 0)
+	{
+		b2EdgeShape leftLevel;
+		double x = 0; double y = 0;
+		double x_ = 0; double y_ = WINDOWS_H;
+		Sprite::convertPixelsToMeters(&x, &y, WINDOWS_W, WINDOWS_H);
+		Sprite::convertPixelsToMeters(&x_, &y_, WINDOWS_W, WINDOWS_H);
+		b2Vec2 p((float32) x, (float32) y);
+		b2Vec2 p_((float32) x_, (float32) y_);
+		leftLevel.Set(p, p_);
+		m_body->CreateFixture(&leftLevel, 0);
+	}
+	if(m_id == m_level->getNbBlocks() - 1)
+	{
+		b2EdgeShape leftLevel;
+		double x = m_posX + m_sizeX; double y = 0;
+		double x_ = m_posX + m_sizeX; double y_ = WINDOWS_H;
+		Sprite::convertPixelsToMeters(&x, &y, WINDOWS_W, WINDOWS_H);
+		Sprite::convertPixelsToMeters(&x_, &y_, WINDOWS_W, WINDOWS_H);
+		b2Vec2 p((float32) x, (float32) y);
+		b2Vec2 p_((float32) x_, (float32) y_);
+		leftLevel.Set(p, p_);
+		m_body->CreateFixture(&leftLevel, 0);
+	}
 
 	createImage();
 
