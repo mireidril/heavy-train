@@ -86,7 +86,7 @@ class Train
 	int m_shaken;
 	// Sound of the tchoutchou
 	Mix_Chunk * m_tchoutchouSound;	
-	int channel;
+	int m_channel;
 	// Sounf of the scared passengers
 	Mix_Chunk * m_passengerSound;
 
