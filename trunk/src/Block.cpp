@@ -344,6 +344,17 @@ void Block::createImage()
 
 		case TUNNEL :
 		{
+			int sizeYGround = WINDOWS_H - m_y;
+
+			//Chargement de l'image tunnel
+			SDL_Surface * tunnel = IMG_Load("../img/levels/tunnel2D_opacite80test.png");
+			tunnel->w = m_sizeX;
+		
+			if(!tunnel)
+			{
+				return;
+			}
+
 			//Chargement de l'image ground
 			SDL_Surface * ground = NULL;
 			if(m_level && m_level->getGroundImage() )
@@ -351,6 +362,7 @@ void Block::createImage()
 				ground = SDL_CreateRGBSurfaceFrom(m_level->getGroundImage()->pixels, m_level->getGroundImage()->w, m_level->getGroundImage()->h, 32, m_level->getGroundImage()->pitch, rmask, gmask, bmask, amask);
 				//Changement de la taille pour correspondre à la taille du bloc
 				ground->w = m_sizeX;
+				//ground->h = sizeYImage;
 			}
 			
 			if(!ground)
@@ -358,17 +370,35 @@ void Block::createImage()
 				return;
 			}
 
+			//Construction de l'image du bloc
+			SDL_Surface * imageTest = SDL_CreateRGBSurface(SDL_HWSURFACE, m_sizeX, (int) sizeYGround + tunnel->h, 32, rmask, gmask, bmask, amask);
 			Uint32 actualPixel;
+			unsigned int xG = 0, yG = 0;
+
 			for(int x = 0; x < m_sizeX; ++x)
 			{
-				for(int y = 0; y < m_y - m_sizeYMin; ++y)
+				for(int y = 0; y < sizeYGround + tunnel->h; ++y)
 				{
-					actualPixel = 0x00000000;
-					Sprite::putpixel(ground, x, y, actualPixel);
+					//On trace le tunnel
+					if(y < tunnel->h)
+					{
+						actualPixel = Sprite::getpixel(tunnel, x, y);
+						Sprite::putpixel(imageTest, x, y, actualPixel);
+					}
+					//On trace le ground
+					else if(y < m_y && y >= tunnel->h)
+					{
+						yG = (ground->h - sizeYGround) + (y - tunnel->h);
+						actualPixel = Sprite::getpixel(ground, x, yG);
+						Sprite::putpixel(imageTest, x, y, actualPixel);
+					}
 				}
 			}
+			SDL_SaveBMP(imageTest, "test.bmp");
+			m_sprite = new Sprite(imageTest, m_posX, (Sint16) m_y - tunnel->h, m_sizeX, (int) sizeYGround + tunnel->h);
 
-			m_sprite = new Sprite(ground, m_posX, (Sint16) m_sizeYMin, m_sizeX, m_y - m_sizeYMin);
+			SDL_FreeSurface(tunnel);
+			SDL_FreeSurface(ground);
 
 		}
 		break;
