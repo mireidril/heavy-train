@@ -13,7 +13,6 @@
 
 #include <map>
 #include <sstream>
-#include <pair>
 
 class GameEngine;
 
