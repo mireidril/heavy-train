@@ -9,7 +9,7 @@
 class Station : public Block
 {
 	public :
-		Station(int sizeX, int id);
+		Station(int sizeX, int id, Level * l);
 
 		//Construit le bloc
 		virtual int build(b2World * world);

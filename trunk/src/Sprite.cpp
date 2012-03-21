@@ -263,6 +263,31 @@ void Sprite::draw(SDL_Surface * screen, const int & width, const int & height)
 	}
 }
 
+//Dessine le sprite à l'écran à la position x, y
+void Sprite::drawAtPosition(SDL_Surface * screen, const int & x, const int & y, const int & width, const int & height, const unsigned int numFrame)
+{
+	if(numFrame < m_nbFrames)
+	{
+		//Rotation et zoom
+		float zoomX = (float)width /m_size->x;
+		float zoomY = (float)height/m_size->y;
+		SDL_Surface * image = rotozoomSurfaceXY(m_frames[numFrame], m_angle, 1.0, 1.0, 1);
+
+		//Dessine à sa position
+		SDL_Rect * realPos = new SDL_Rect;
+		realPos->x = x;
+		realPos->y = y;
+		//On le dessine seulement s'il est visible à l'écran
+		if(realPos->x >= - m_size->x && realPos->x <= width && realPos->y >= - m_size->y && realPos->y <= height )
+		{
+			SDL_BlitSurface(image, NULL, screen, realPos);
+		}
+		
+		delete realPos;
+		SDL_FreeSurface(image);
+	}
+}
+
 /**
  * Change l'image actuellement affichée par une autre
  */

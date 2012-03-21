@@ -11,6 +11,8 @@
 #include <Box2D/Box2D.h>
 #endif
 
+class Level;
+
 enum BlockType
 {
 	NOTHING = -1,
@@ -26,8 +28,8 @@ enum BlockType
 class Block
 {
 	public :
-		Block(int sizeX, int id, int speed = -1);
-		Block(BlockType type, int sizeX, int id, int speed = -1);
+		Block(int sizeX, int id, Level* l, int speed = -1);
+		Block(BlockType type, int sizeX, int id, Level* l, int speed = -1);
 		virtual ~Block();
 
 		//Attribue un type au bloc
@@ -71,6 +73,8 @@ class Block
 
 		
 	protected :
+		//Pointeur vers le niveau actuel
+		Level * m_level;
 		//Sprite du bloc
 		Sprite * m_sprite;
 		//Body du bloc
