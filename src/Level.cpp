@@ -6,17 +6,8 @@ Level::Level(b2World * world, unsigned int level, unsigned int island)
 , m_position(NULL)
 , m_islandNum(island)
 , m_levelNum(level)
+, m_groundImage(NULL)
 {
-    //All the blocks of the level
-	//m_blocks.push_back(new Block(GROUND, 2048, 0, 0));
-
-    //m_backgroundImages = ;
-    //m_idStations= ...;
-	
-	//m_backgroundImages.push_back(new Sprite("../img/niveau2/sky.png",  0, 0, 1024, 768));
-	//m_backgroundImages.push_back(new Sprite("../img/niveau2/moutains.png", 0, 350, 1024, 350));
-	//m_backgroundImages.push_back(new Sprite("../img/niveau2/tree.png", 0, 0, 1024, 768));
-
 	loadAndBuild();
 	buildBlocks();
 }
@@ -81,6 +72,7 @@ void Level::loadAndBuild()
 {
 	TiXmlDocument doc("../levels/levels.xml");
 	int num, sizeX, speed = -1;
+	std::string path;
 	Block * vBlock;
 	Station * vStation;
 
@@ -114,6 +106,27 @@ void Level::loadAndBuild()
 						while (contenuLevel)
 						{
 							//si la balise dans level correspond a la balise block on entre dans ce if
+							if (strcmp(contenuLevel->Value(),"sprite")==0)
+							{
+								path = contenuLevel->Attribute("img");
+						
+								if( strcmp(contenuLevel->Attribute("type"),"ground") == 0 )
+								{
+									loadGroundImage(path);
+								}
+								else if( strcmp(contenuLevel->Attribute("type"),"background") == 0 )
+								{
+									if(contenuLevel->Attribute("img2") )
+									{
+										addBackgroundImage(path, contenuLevel->Attribute("img2"));
+									}
+									else
+									{
+										addBackgroundImage(path);
+									}
+								}
+							}
+							//si la balise dans level correspond a la balise block on entre dans ce if
 							if (strcmp(contenuLevel->Value(),"block")==0)
 							{
 								//on est dans une balise block !
@@ -124,7 +137,7 @@ void Level::loadAndBuild()
 									speed = atoi(contenuLevel->Attribute("speed") );
 								}
 
-								vBlock = new Block(sizeX, num, speed);
+								vBlock = new Block(sizeX, num, this, speed);
 
 								if (strcmp(contenuLevel->Attribute("type"),"GROUND")==0)
 								{
@@ -232,7 +245,7 @@ void Level::loadAndBuild()
 								num = atoi(contenuLevel->Attribute("num"));
 								sizeX = atoi(contenuLevel->Attribute("size"));
 
-								vStation = new Station(sizeX, num); // smartpointer
+								vStation = new Station(sizeX, num, this); // smartpointer
 
 								//variable element qui check les balises contenu dans block
 								TiXmlElement *contenuStation = contenuLevel->FirstChildElement();
@@ -294,6 +307,26 @@ void Level::loadAndBuild()
 	}
 }
 
+//Ajoute une image de fond
+void Level::addBackgroundImage(const std::string & path, const std::string & path2)
+{
+	Sprite * backg = new Sprite(path.c_str(), 0, 0, 1024, 768);
+	if(path2 != "")
+	{
+		backg->addImage(path2.c_str());
+	}
+	if(backg != NULL)
+	{
+		m_backgroundImages.push_back(backg);
+	}
+}
+
+//Crée un Sprite pour m_ground
+void Level::loadGroundImage(const std::string & path)
+{
+	m_groundImage = IMG_Load(path.c_str());
+}
+
 //Construit tous les blocs
 void Level::buildBlocks()
 {
@@ -330,6 +363,34 @@ void Level::drawBackgrounds(SDL_Surface * screen, int w, int h)
 {
 	for(int i = 0; i < m_backgroundImages.size(); ++i)
 	{
-		m_backgroundImages[i]->draw(screen, w, h); 
+		m_backgroundImages[i]->draw(screen, w, h);
+		//Si c'est pas l'image de fond
+		if( i > 0 )
+		{
+			int leftPosX = m_backgroundImages[i]->getPositionX();
+			int rightPosX = m_backgroundImages[i]->getPositionX() + m_backgroundImages[i]->getSizeX();
+
+			if(leftPosX < 0)
+			{
+				int step = leftPosX + m_backgroundImages[i]->getSizeX();
+				m_backgroundImages[i]->drawAtPosition(screen, step, m_backgroundImages[i]->getPositionY(), w, h, 1);
+
+				if(leftPosX < -WINDOWS_W)
+				{
+					m_backgroundImages[i]->setPositionX(WINDOWS_W);
+				}
+			}
+			
+			if( rightPosX > WINDOWS_W)
+			{
+				int step = rightPosX - m_backgroundImages[i]->getSizeX(); 
+				m_backgroundImages[i]->drawAtPosition(screen, step - m_backgroundImages[i]->getSizeX(), m_backgroundImages[i]->getPositionY(), w, h, 1);
+				
+				if(leftPosX > WINDOWS_W)
+				{
+					m_backgroundImages[i]->setPositionX(-WINDOWS_W);
+				}
+			}
+		}
 	}
 }

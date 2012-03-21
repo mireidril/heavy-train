@@ -3,7 +3,9 @@
 	<island id="1">
 		<level id="1">
 			<departure hour="12" minutes="00" seconds="00"/>
-			<sprite img="flatGround.png" />
+			<sprite type="ground" img="../img/levels/level2/niveau2-sol2.png"/>
+			<sprite type="background" img="../img/levels/level1/niveau1-sky.png" />
+			<sprite type="background" img="../img/levels/level3/niveau3-2-bg3.png" img2="../img/levels/level3/niveau3-2-bg3.png" />
 			<infobulle type="aide" numBloc="3" declenche="false">
 				<sprite img="info1.png" />
 			</infobulle>

@@ -28,6 +28,12 @@ class Level
 		void scrollLevel(const int & x);
 		//Load and build the level n°lvl of the island n°isle
 		void loadAndBuild();
+		//Ajoute une image de fond
+		void addBackgroundImage(const std::string & path, const std::string & path2 = "");
+		//Crée un Sprite pour m_ground
+		void loadGroundImage(const std::string & path);
+		//Retourne le sprite du sol du niveau
+		SDL_Surface * getGroundImage() { return m_groundImage; } ;
 		//Construit tous les blocs
 		void buildBlocks();
 		Block * getBlock(unsigned int i);
@@ -54,6 +60,8 @@ class Level
 		unsigned int	m_levelNum;
 		//Background image of the level
 		std::vector<Sprite*> m_backgroundImages;
+		//Ground image of the level
+		SDL_Surface *		m_groundImage;
 		//Numeros of the blocks which are stations
 		std::vector<int> m_idStations;
 };

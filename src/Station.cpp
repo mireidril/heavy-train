@@ -1,7 +1,7 @@
 #include "Station.hpp"
 
-Station::Station(int sizeX, int id)
-:Block(STATION, sizeX, id, -1)
+Station::Station(int sizeX, int id, Level * l)
+:Block(STATION, sizeX, id, l, -1)
 {
 
 }
@@ -25,6 +25,8 @@ int Station::build(b2World * world)
 	m_body->CreateFixture(&shape, 0);
 
 	std::cout<<"GARRREEE!!"<<std::endl;
+
+	createImage();
 
 	return m_sizeX;
 }

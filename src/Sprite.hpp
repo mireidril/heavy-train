@@ -31,6 +31,7 @@ class Sprite
 		//Constructeurs
 		Sprite(const char* imageFileName, int posX, int posY, int sizeX, int sizeY);
 		Sprite(SDL_Surface * sdlSurface, int posX, int posY, int sizeX, int sizeY);
+
 		//Destructeur
 		virtual ~Sprite();
 		// Setter position & angle & nbframes
@@ -53,6 +54,8 @@ class Sprite
 		bool animate(int debut, int fin);
 		//Dessine le sprite à l'écran
 		void draw(SDL_Surface * screen, const int & width, const int & height);
+		//Dessine le sprite à l'écran à la position x, y
+		void drawAtPosition(SDL_Surface * screen, const int & x, const int & y, const int & width, const int & height, const unsigned int numFrame = 0);
 		//Change l'image actuellement affichée par une autre
 		void changeImageManually(const int & imageNum);
 

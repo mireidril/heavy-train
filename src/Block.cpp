@@ -1,5 +1,5 @@
 #include "Block.hpp"
-
+#include "Level.hpp"
 
 /*
  * Block Constructor
@@ -7,8 +7,9 @@
  * posX est la position du bloc en pixels dans l'espace
  */
 
-Block::Block(int sizeX, int id, int speed)
-: m_type(NOTHING)
+Block::Block(int sizeX, int id, Level* l, int speed)
+: m_level(l)
+, m_type(NOTHING)
 , m_posX(-1)
 , m_sizeX(sizeX)
 , m_id(id)
@@ -76,8 +77,9 @@ Block::Block(int sizeX, int id, int speed)
  * posX est la position du bloc en pixels dans l'espace
  */
 
-Block::Block(BlockType type, int sizeX, int id, int speed)
-: m_type(NOTHING)
+Block::Block(BlockType type, int sizeX, int id, Level* l, int speed)
+: m_level(l)
+, m_type(type)
 , m_posX(-1)
 , m_sizeX(sizeX)
 , m_id(id)
@@ -266,13 +268,19 @@ void Block::createImage()
 			//SDL_SaveBMP(mask, "masque.bmp");
 
 			//Chargement de l'image ground
-			SDL_Surface * ground = IMG_Load("../img/levels/ground.png");
+			SDL_Surface * ground = NULL;
+			if(m_level && m_level->getGroundImage() )
+			{
+				ground = SDL_CreateRGBSurfaceFrom(m_level->getGroundImage()->pixels, m_level->getGroundImage()->w, m_level->getGroundImage()->h, 32, m_level->getGroundImage()->pitch, m_level->getGroundImage()->format->Rmask, m_level->getGroundImage()->format->Gmask, m_level->getGroundImage()->format->Bmask, m_level->getGroundImage()->format->Amask);
+				//Changement de la taille pour correspondre à la taille du bloc
+				ground->w = m_sizeX;
+			}
+			
 			if(!ground)
 			{
-				std::cout<<std::endl;
+				return;
 			}
-			//Changement de la taille pour correspondre à la taille du bloc
-			ground->w = m_sizeX;
+
 			//SDL_SaveBMP(ground, "ground2.bmp");
 
 			//Construction de l'image du bloc
@@ -305,19 +313,69 @@ void Block::createImage()
 
 		case STATION :
 		{
-			//Créer une image avec du plat et la gare au milieu ?
+			//Chargement de l'image ground
+			SDL_Surface * ground = NULL;
+			if(m_level && m_level->getGroundImage() )
+			{
+				ground = IMG_Load("../img/levels/level2/niveau2-sol2.png");
+				//ground = SDL_CreateRGBSurfaceFrom(m_level->getGroundImage()->pixels, m_level->getGroundImage()->w, m_level->getGroundImage()->h, 32, m_level->getGroundImage()->pitch, rmask, gmask, bmask, amask);
+				//Changement de la taille pour correspondre à la taille du bloc
+				ground->w = m_sizeX;
+			}
+			
+			if(!ground)
+			{
+				return;
+			}
+
+			Uint32 actualPixel;
+			for(int x = 0; x < m_sizeX; ++x)
+			{
+				for(int y = 0; y < m_y - m_sizeYMin; ++y)
+				{
+					actualPixel = 0x00000000;
+					Sprite::putpixel(ground, x, y, actualPixel);
+				}
+			}
+
+			m_sprite = new Sprite(ground, m_posX, (Sint16) m_sizeYMin, m_sizeX, m_y - m_sizeYMin);
 		}
 		break;
 
 		case TUNNEL :
 		{
-			//Créer une image avec les bords du tunnel aux extrémités ?
+			//Chargement de l'image ground
+			SDL_Surface * ground = NULL;
+			if(m_level && m_level->getGroundImage() )
+			{
+				ground = SDL_CreateRGBSurfaceFrom(m_level->getGroundImage()->pixels, m_level->getGroundImage()->w, m_level->getGroundImage()->h, 32, m_level->getGroundImage()->pitch, rmask, gmask, bmask, amask);
+				//Changement de la taille pour correspondre à la taille du bloc
+				ground->w = m_sizeX;
+			}
+			
+			if(!ground)
+			{
+				return;
+			}
+
+			Uint32 actualPixel;
+			for(int x = 0; x < m_sizeX; ++x)
+			{
+				for(int y = 0; y < m_y - m_sizeYMin; ++y)
+				{
+					actualPixel = 0x00000000;
+					Sprite::putpixel(ground, x, y, actualPixel);
+				}
+			}
+
+			m_sprite = new Sprite(ground, m_posX, (Sint16) m_sizeYMin, m_sizeX, m_y - m_sizeYMin);
+
 		}
 		break;
 
 		case PRECIPICE :
 		{
-			//Créer une image avec les bords du précipice aux extrémités ?
+			//RIEN
 		}
 		break;
 	}
@@ -345,8 +403,9 @@ void Block::draw(SDL_Surface * screen, const int & width, const int & height)
 	
 	for (int i=0; i< m_animals.size(); i++) {
 		if (m_animals[i]->isDie()) {
+			std::cout<<"DIE ANIMAL !!"<<std::endl;
 			delete m_animals[i];
-			 m_animals.erase(m_animals.begin()+i);
+			m_animals.erase(m_animals.begin()+i);
 			
 		}
 		else {
@@ -495,8 +554,7 @@ int Block::build(b2World * world)
 				m_body->CreateFixture(&shape, 0);
 			}
 		}
-
-		std::cout<<"GROUND!!"<<std::endl;
+		
 		break;
 
 		/*case STATION :
