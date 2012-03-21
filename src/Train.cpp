@@ -11,9 +11,9 @@ Train::Train ()
 {
 	//la corps de la loco
 	//position de la loco
-	int x = 260; int y = 0; 
+	int x = 250; int y = 0; 
 	//taille de la loco
-	int sizeX = 166; int sizeY = 166;
+	int sizeX = 130; int sizeY = 87;
 	PhysicalObject * loco = new PhysicalObject(new Sprite("../img/elements/loco.png",  x, y, sizeX, sizeY));
 	m_physicalObjects.push_back(loco);
 
@@ -27,8 +27,8 @@ Train::Train ()
 	m_physicalObjects.push_back(roue1);//roue1
 	m_physicalObjects.push_back(roue2);//roue2
 	// add wagons
-	m_wagons.push_back(new Wagon(164));
-	m_wagons.push_back(new Wagon(65));
+	m_wagons.push_back(new Wagon(160));
+	m_wagons.push_back(new Wagon(70));
 	
 	//sounds
 	m_tchoutchouSound = Mix_LoadWAV("../musics/tchoutchou.ogg");
@@ -77,18 +77,26 @@ void Train::drawSprite(SDL_Surface * screen, const int & width, const int & heig
 	m_physicalObjects[0]->getSprite()->convertMetersToPixels(&xLoco, &y,  width,  height);
 	if (angle>=0){
 		//x = x-50*cos(angle)-35*sin(angle); 
-		y = y-50*sin(angle)-35*cos(angle);
+		y = y-8-50*sin(angle)-35*cos(angle);
 	}
 	else {
 		//x = x+50*cos(M_PI-angle)+35*sin(M_PI-angle); 
-		y = y+50*sin(M_PI-angle)+35*cos(M_PI-angle);
+		y = y-8+50*sin(M_PI-angle)+35*cos(M_PI-angle);
 	}
 
 	m_physicalObjects[0]->getSprite()->setPositionY( y);
 	m_physicalObjects[0]->getSprite()->setAngle(angledegrees);
-	m_physicalObjects[0]->getSprite()->draw(screen, width, height);
+	
 
-	//roues
+	
+
+	m_wagons[1]->drawSprite(screen, width, height,xLocoSprite+8 , xLoco );
+	m_wagons[0]->drawSprite(screen, width, height, xLocoSprite+8 , xLoco);
+	
+	m_physicalObjects[0]->getSprite()->draw(screen, width, height);// dessiner la loco
+
+
+	//roues de la loco
 	double x;
 	for (int i=1; i<3; i++){
 		bodyPos = m_physicalObjects[i]->getPosition(); 
@@ -96,11 +104,11 @@ void Train::drawSprite(SDL_Surface * screen, const int & width, const int & heig
 		m_physicalObjects[i]->getSprite()->convertMetersToPixelsY(  &y,  width,  height);
 		angle = m_physicalObjects[0]->getAngle();
 		if (angle>=0){
-			x= m_physicalObjects[0]->getSprite()->getPositionX()+60*sin(angle)+(i-1)*70*cos(angle);
+			x= m_physicalObjects[0]->getSprite()->getPositionX()+10+60*sin(angle)+(i-1)*70*cos(angle);
 			y = y-10*sin(angle)-10*cos(angle);
 		}
 		else {
-			x= m_physicalObjects[0]->getSprite()->getPositionX()+12*sin(angle)+(i-1)*70*cos(angle);
+			x= m_physicalObjects[0]->getSprite()->getPositionX()+10+12*sin(angle)+(i-1)*70*cos(angle);
 			y = y-10*sin(M_PI-angle)+10*cos(M_PI-angle);
 		}
 		m_physicalObjects[i]->getSprite()->setPosition(x,y);
@@ -108,10 +116,6 @@ void Train::drawSprite(SDL_Surface * screen, const int & width, const int & heig
 		m_physicalObjects[i]->getSprite()->setAngle(angle);
 		m_physicalObjects[i]->getSprite()->draw(screen, width, height);
 	}
-
-
-	m_wagons[0]->drawSprite(screen, width, height, xLocoSprite , xLoco);
-	m_wagons[1]->drawSprite(screen, width, height,xLocoSprite , xLoco );
 }
 
 /*
@@ -178,8 +182,8 @@ void Train::build(b2World * world)
 
 	//wagon build
 
-	m_wagons[0]->build(world, 8, high);
-	m_wagons[1]->build(world, 4, high);
+	m_wagons[0]->build(world, 7.8, high);
+	m_wagons[1]->build(world, 4.2, high);
 	
 	// pour joindre la loco et le wagon1
 	b2DistanceJointDef jdd;
@@ -238,15 +242,16 @@ void Train::clearAllSmoothAngleAndPosition()
 void Train::keyboard( const SDL_KeyboardEvent *event)
 {
 
-	m_spring1->SetMotorSpeed(0.0f);
-	m_spring2->SetMotorSpeed(0.0f);
-	m_wagons[0]->setMotorSpeed(0.0f);
-	m_wagons[1]->setMotorSpeed(0.0f);
+	m_spring1->SetMotorSpeed(m_speed);
+	m_spring2->SetMotorSpeed(m_speed);
+	m_wagons[0]->setMotorSpeed(m_speed);
+	m_wagons[1]->setMotorSpeed(m_speed);
 
 	if (event->type == SDL_KEYDOWN){
 		switch ( (event->keysym).sym)
 		{
 		case SDLK_LEFT:
+			m_speed = 20;
 			m_spring1->SetMotorSpeed(m_speed);
 			m_spring2->SetMotorSpeed(m_speed);
 			m_wagons[0]->setMotorSpeed(m_speed);
@@ -257,10 +262,11 @@ void Train::keyboard( const SDL_KeyboardEvent *event)
 
 
 		case SDLK_RIGHT:
-			m_spring1->SetMotorSpeed(-m_speed);
-			m_spring2->SetMotorSpeed(-m_speed);
-			m_wagons[0]->setMotorSpeed(-m_speed);
-			m_wagons[1]->setMotorSpeed(-m_speed);
+			m_speed = -20;
+			m_spring1->SetMotorSpeed(m_speed);
+			m_spring2->SetMotorSpeed(m_speed);
+			m_wagons[0]->setMotorSpeed(m_speed);
+			m_wagons[1]->setMotorSpeed(m_speed);
 			break;
 		case SDLK_SPACE:
 			channel = Mix_PlayChannel(-1, m_tchoutchouSound, 0);
