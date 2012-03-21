@@ -76,15 +76,13 @@ void Train::drawSprite(SDL_Surface * screen, const int & width, const int & heig
 	y = bodyPos.y;
 	m_physicalObjects[0]->getSprite()->convertMetersToPixels(&xLoco, &y,  width,  height);
 	if (angle>=0){
-		//x = x-50*cos(angle)-35*sin(angle); 
 		y = y-8-50*sin(angle)-35*cos(angle);
 	}
 	else {
-		//x = x+50*cos(M_PI-angle)+35*sin(M_PI-angle); 
 		y = y-8+50*sin(M_PI-angle)+35*cos(M_PI-angle);
 	}
 
-	m_physicalObjects[0]->getSprite()->setPositionY( y);
+	m_physicalObjects[0]->getSprite()->setPositionY(  y);
 	m_physicalObjects[0]->getSprite()->setAngle(angledegrees);
 	
 
@@ -105,11 +103,11 @@ void Train::drawSprite(SDL_Surface * screen, const int & width, const int & heig
 		angle = m_physicalObjects[0]->getAngle();
 		if (angle>=0){
 			x= m_physicalObjects[0]->getSprite()->getPositionX()+10+60*sin(angle)+(i-1)*70*cos(angle);
-			y = y-10*sin(angle)-10*cos(angle);
+			y = y-10+10*sin(angle);//-10*cos(angle);
 		}
 		else {
 			x= m_physicalObjects[0]->getSprite()->getPositionX()+10+12*sin(angle)+(i-1)*70*cos(angle);
-			y = y-10*sin(M_PI-angle)+10*cos(M_PI-angle);
+			y = y-10;//+10*sin(M_PI-angle)+10*cos(M_PI-angle);
 		}
 		m_physicalObjects[i]->getSprite()->setPosition(x,y);
 		angle = m_physicalObjects[i]->getAngle()*180/M_PI;
@@ -242,10 +240,10 @@ void Train::clearAllSmoothAngleAndPosition()
 void Train::keyboard( const SDL_KeyboardEvent *event)
 {
 
-	m_spring1->SetMotorSpeed(m_speed);
-	m_spring2->SetMotorSpeed(m_speed);
-	m_wagons[0]->setMotorSpeed(m_speed);
-	m_wagons[1]->setMotorSpeed(m_speed);
+	m_spring1->SetMotorSpeed(0);
+	m_spring2->SetMotorSpeed(0);
+	m_wagons[0]->setMotorSpeed(0);
+	m_wagons[1]->setMotorSpeed(0);
 
 	if (event->type == SDL_KEYDOWN){
 		switch ( (event->keysym).sym)
