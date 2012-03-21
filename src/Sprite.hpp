@@ -49,8 +49,8 @@ class Sprite
 		void addImage(const char* imageFileName);
 		//Ajoute une image au sprite
 		void addImage(SDL_Surface * sdlSurface);
-		//Change l'image actuellement affichée après un temps donné (m_timeFrame)
-		bool animate();
+		//Change l'image actuellement affichée après un temps donné (m_timeFrame) de l'image debut à l'image fin
+		bool animate(int debut, int fin);
 		//Dessine le sprite à l'écran
 		void draw(SDL_Surface * screen, const int & width, const int & height);
 		//Change l'image actuellement affichée par une autre
