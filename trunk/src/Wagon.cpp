@@ -14,7 +14,7 @@ Wagon::Wagon (int posX)
 	m_areDoorOpened= false;
 
 	int x = posX; int y =0;
-	int sizeX = 82, sizeY = 59;
+	int sizeX = 110, sizeY = 66;
 	PhysicalObject * wagon = new PhysicalObject(new Sprite("../img/elements/wagon.png",  x, y,  sizeX, sizeY) );
 	m_physicalObjects.push_back(wagon);
 	sizeX = 23; sizeY = 23; 
@@ -89,11 +89,11 @@ void Wagon::drawSprite(SDL_Surface * screen, const int & width, const int & heig
 		m_physicalObjects[i]->getSprite()->convertMetersToPixelsY( &y,  width,  height); 
 		angle = m_physicalObjects[0]->getAngle();
 		if (angle>=0){
-			x= m_physicalObjects[0]->getSprite()->getPositionX()+8+40*sin(angle)+(i-1)*52*cos(angle);
+			x= m_physicalObjects[0]->getSprite()->getPositionX()+10+40*sin(angle)+(i-1)*52*cos(angle);
 			y = y-10*sin(angle)-10*cos(angle);
 		}
 		else {
-			x= m_physicalObjects[0]->getSprite()->getPositionX()+8+10*sin(angle)+(i-1)*52*cos(angle);
+			x= m_physicalObjects[0]->getSprite()->getPositionX()+10+10*sin(angle)+(i-1)*52*cos(angle);
 			y = y-10*sin(M_PI-angle)+10*cos(M_PI-angle);
 		}
 		m_physicalObjects[i]->getSprite()->setPosition(x, y);
