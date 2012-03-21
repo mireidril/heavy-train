@@ -154,65 +154,115 @@ void Interface::load()
 void Interface::loadXML(int level, int island)
 {
 	m_leaderboards.clear();
-
-	//Récupère uniquement le nombre de niveaux débloqués
-	if(level <= 0 && island <= 0)
-	{
-		//A REMPLIR
-		
-		//TESTS : à virer après le chargement XML
-		m_nbAvailableLevels = 1;
-		m_nbAvailableIslands = 2;
-	}
 	
-	//Récupère tous les scores : UTILISE APRES L'ECRAN TITLE
-	if(level == 0 && island == 0) 
+	TiXmlDocument doc("../levels/save.xml");
+	int score;
+	std::string player;
+	Leaderboard l;
+	
+	if(!doc.LoadFile())
 	{
-		/*S'il n'y a rien dans le XML concernant un niveau, on ajoute le leaderboard suivant
-		Leaderboard * levelL = new Leaderboard;
-		levelL->island = island;
-		levelL->level = level;
-		for(unsigned int i = 1; i < 5; ++i)
-		{
-			levelL->m_scores.insert(std::make_pair(i * 1000, "BabyBool"));
+		std::cerr << "erreur lors du chargement du XML des scores" << std::endl;
+		std::cerr << "error #" << doc.ErrorId() << " : " << doc.ErrorDesc() << std::endl;
+		exit(0);
+	}
+	else
+	{
+	
+		//permet de sécuriser le pacours des noeud (dans le cas ou l'un des noeuds n'existerait pas)
+		TiXmlHandle hdl(&doc);
+		std::cerr << "Interface.cpp : après TiXmlHandle hdl(&doc) " << std::endl;
+		TiXmlElement *level = hdl.FirstChildElement().FirstChildElement().Element();
+		
+		if(!level){
+			std::cerr << "le noeud à atteindre n'existe pas" << std::endl;
+			exit(0);
 		}
-		m_leaderboards.push_back(levelL);
-		*/
+		
+		if(atoi(level->Attribute("id")) == 1){
+		TiXmlElement *scorePlayer = level->FirstChildElement();
+			while(scorePlayer){
+				player = scorePlayer->Attribute("player");
+				score = atoi(scorePlayer->Attribute("value"));
+				std::cout<<"player : "<<player<<std::endl;
+				std::cout<<"value : "<<score<<std::endl;
+			  	//l.m_scores.insert ( std::pair<std::string,int>(player,score) );
+			  	scorePlayer = scorePlayer->NextSiblingElement(); 
+		
 
-		//A REMPLIR
-
-		//TESTS : à virer après le chargement XML
-		for(unsigned int i = 1; i <= m_nbAvailableIslands; ++i)
-		{
-			for(unsigned int l = 1; l <= m_nbAvailableLevels; ++l)
-			{
-				Leaderboard * levelL = new Leaderboard;
-				levelL->island = i;
-				levelL->level = l;
-				for(unsigned int i = 1; i < 6; ++i)
-				{
-					levelL->m_scores.insert(std::make_pair(i * 1000, "Level" ) );
-				}
-				m_leaderboards.push_back(levelL);
 			}
 		}
-	}
-	//Récupère les scores du niveau "level" de l'ile "island" : UTILISE APRES L'ECRAN ISLAND ou A L'ECRAN ENDGAME
-	else if(level > 0 && island > 0)
-	{
-		/*S'il n'y a rien dans le XML concernant un niveau, on ajoute le leaderboard suivant
-		Leaderboard * levelL = new Leaderboard;
-		levelL->island = island;
-		levelL->level = level;
-		for(unsigned int i = 1; i < 5; ++i)
-		{
-			levelL->m_scores.insert(std::make_pair(i * 1000, "BabyBool"));
-		}
-		m_leaderboards.push_back(levelL);
-		*/
+		
+		
 
-		//A REMPLIR
+
 	}
+	
+	
+	
+	/////////////////////////////////////
+	
+	
+			//Récupère uniquement le nombre de niveaux débloqués
+		/*if(level <= 0 && island <= 0)
+		{
+			//A REMPLIR
+		
+			//TESTS : à virer après le chargement XML
+			m_nbAvailableLevels = 1;
+			m_nbAvailableIslands = 2;
+		}
+	
+		//Récupère tous les scores : UTILISE APRES L'ECRAN TITLE
+		if(level == 0 && island == 0) 
+		{*/
+			/*S'il n'y a rien dans le XML concernant un niveau, on ajoute le leaderboard suivant
+			Leaderboard * levelL = new Leaderboard;
+			levelL->island = island;
+			levelL->level = level;
+			for(unsigned int i = 1; i < 5; ++i)
+			{
+				levelL->m_scores.insert(std::make_pair(i * 1000, "BabyBool"));
+			}
+			m_leaderboards.push_back(levelL);
+			*/
+
+			//A REMPLIR
+
+			//TESTS : à virer après le chargement XML
+			/*for(unsigned int i = 1; i <= m_nbAvailableIslands; ++i)
+			{
+				for(unsigned int l = 1; l <= m_nbAvailableLevels; ++l)
+				{
+					Leaderboard * levelL = new Leaderboard;
+					levelL->island = i;
+					levelL->level = l;
+					for(unsigned int i = 1; i < 6; ++i)
+					{
+						levelL->m_scores.insert(std::make_pair(i * 1000, "Level" ) );
+					}
+					m_leaderboards.push_back(levelL);
+				}
+			}
+		}
+		//Récupère les scores du niveau "level" de l'ile "island" : UTILISE APRES L'ECRAN ISLAND ou A L'ECRAN ENDGAME
+		else if(level > 0 && island > 0)
+		{*/
+			/*S'il n'y a rien dans le XML concernant un niveau, on ajoute le leaderboard suivant
+			Leaderboard * levelL = new Leaderboard;
+			levelL->island = island;
+			levelL->level = level;
+			for(unsigned int i = 1; i < 5; ++i)
+			{
+				levelL->m_scores.insert(std::make_pair(i * 1000, "BabyBool"));
+			}
+			m_leaderboards.push_back(levelL);
+			*/
+
+			//A REMPLIR
+		//}
+
+
 }
 
 /*

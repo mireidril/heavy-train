@@ -5,12 +5,15 @@
 
 #ifdef _WIN32
 #include "SDL/SDL_ttf.h"
+#include "tinyXML/tinyxml.h"
 #else
 #include <SDL/SDL_ttf.h>
+#include <tinyxml.h>
 #endif
 
 #include <map>
 #include <sstream>
+#include <pair>
 
 class GameEngine;
 
