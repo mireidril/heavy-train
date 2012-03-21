@@ -92,7 +92,7 @@ class GameEngine
 		ActualGame*					m_actualGame;
 		
 		//Musique
-		Mix_Music *musique;
+		Mix_Music *					m_musique;
 };
 
 #endif

@@ -107,7 +107,7 @@ void Interface::load()
 		case WORLD :
 		{
 			//Récupération des informations du XML
-			loadXML();
+			loadXML(0, 0);
 			//Background Images
 			m_backgroundImages.push_back(new Sprite("../img/screens/level_select_background.jpg", 0, 0, 1024, 768));
 			//Buttons Images
@@ -168,54 +168,51 @@ void Interface::loadXML(int level, int island)
 	}
 	else
 	{
-	
 		//permet de sécuriser le pacours des noeud (dans le cas ou l'un des noeuds n'existerait pas)
 		TiXmlHandle hdl(&doc);
-		std::cerr << "Interface.cpp : après TiXmlHandle hdl(&doc) " << std::endl;
-		TiXmlElement *level = hdl.FirstChildElement().FirstChildElement().Element();
-		
-		if(!level){
+		std::cout << "Interface.cpp : après TiXml " << std::endl;
+		TiXmlElement * xmlScores = hdl.FirstChildElement().Element();
+		TiXmlElement * xmlLevel = hdl.FirstChildElement().FirstChildElement().Element();
+
+		/*if(!level)
+		{
 			std::cerr << "le noeud à atteindre n'existe pas" << std::endl;
 			exit(0);
 		}
 		
-		if(atoi(level->Attribute("id")) == 1){
-		TiXmlElement *scorePlayer = level->FirstChildElement();
-			while(scorePlayer){
+		if(atoi(level->Attribute("id")) == 1)
+		{
+			TiXmlElement *scorePlayer = level->FirstChildElement();
+			while(scorePlayer)
+			{
 				player = scorePlayer->Attribute("player");
 				score = atoi(scorePlayer->Attribute("value"));
 				std::cout<<"player : "<<player<<std::endl;
 				std::cout<<"value : "<<score<<std::endl;
 			  	//l.m_scores.insert ( std::pair<std::string,int>(player,score) );
-			  	scorePlayer = scorePlayer->NextSiblingElement(); 
-		
-
+			  	scorePlayer = scorePlayer->NextSiblingElement();
 			}
-		}
-		
-		
-
-
-	}
+		}*/
 	
-	
-	
-	/////////////////////////////////////
-	
-	
-			//Récupère uniquement le nombre de niveaux débloqués
-		/*if(level <= 0 && island <= 0)
+		//Récupère uniquement le nombre de niveaux débloqués
+		if(level <= 0 && island <= 0)
 		{
-			//A REMPLIR
-		
-			//TESTS : à virer après le chargement XML
-			m_nbAvailableLevels = 1;
-			m_nbAvailableIslands = 2;
+			if(xmlScores)
+			{
+				m_nbAvailableLevels = atoi(xmlScores->Attribute("nbLevel") );
+				m_nbAvailableIslands = atoi(xmlScores->Attribute("nbIsland") );
+			}
+			else
+			{
+				std::cerr<< "Problemes a la recuperation du nb d'iles et de niveaux debloques" <<std::endl;
+				m_nbAvailableLevels = 1;
+				m_nbAvailableIslands = 1;
+			}
 		}
 	
 		//Récupère tous les scores : UTILISE APRES L'ECRAN TITLE
 		if(level == 0 && island == 0) 
-		{*/
+		{
 			/*S'il n'y a rien dans le XML concernant un niveau, on ajoute le leaderboard suivant
 			Leaderboard * levelL = new Leaderboard;
 			levelL->island = island;
@@ -227,10 +224,22 @@ void Interface::loadXML(int level, int island)
 			m_leaderboards.push_back(levelL);
 			*/
 
+			if(xmlScores)
+			{
+				m_nbAvailableLevels = atoi(xmlScores->Attribute("nbLevel") );
+				m_nbAvailableIslands = atoi(xmlScores->Attribute("nbIsland") );
+			}
+			else
+			{
+				std::cerr<< "Problemes a la recuperation du nb d'iles et de niveaux debloques" <<std::endl;
+				m_nbAvailableLevels = 1;
+				m_nbAvailableIslands = 1;
+			}
+
 			//A REMPLIR
 
 			//TESTS : à virer après le chargement XML
-			/*for(unsigned int i = 1; i <= m_nbAvailableIslands; ++i)
+			for(unsigned int i = 1; i <= m_nbAvailableIslands; ++i)
 			{
 				for(unsigned int l = 1; l <= m_nbAvailableLevels; ++l)
 				{
@@ -247,7 +256,7 @@ void Interface::loadXML(int level, int island)
 		}
 		//Récupère les scores du niveau "level" de l'ile "island" : UTILISE APRES L'ECRAN ISLAND ou A L'ECRAN ENDGAME
 		else if(level > 0 && island > 0)
-		{*/
+		{
 			/*S'il n'y a rien dans le XML concernant un niveau, on ajoute le leaderboard suivant
 			Leaderboard * levelL = new Leaderboard;
 			levelL->island = island;
@@ -260,9 +269,8 @@ void Interface::loadXML(int level, int island)
 			*/
 
 			//A REMPLIR
-		//}
-
-
+		}
+	}
 }
 
 /*

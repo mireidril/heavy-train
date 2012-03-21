@@ -122,18 +122,15 @@ void GameEngine::run()
 	//Initialisation SDL
 	initSDL();
 	
+	//Initialisation de l'interface
+	loadInterfaces();
+
 	//musique
 	Mix_AllocateChannels(20);
 	Mix_VolumeMusic(MIX_MAX_VOLUME/2);
 	Mix_Volume(0, MIX_MAX_VOLUME);
-	musique = Mix_LoadMUS("../musics/rednex.ogg");
-	Mix_PlayMusic(musique, -1);
-	//
-
-
-	//Initialisation de l'interface
-	loadInterfaces();
-
+	m_musique = Mix_LoadMUS("../musics/rednex.ogg");
+	Mix_PlayMusic(m_musique, -1);
 	m_actualGame = new ActualGame(1, 1); //A BIENTOT VIRER
 
 	while(m_isRunning)
@@ -265,6 +262,14 @@ void GameEngine::changeScreen(const GameScreen & previousScreen, const GameScree
 		{
 			//Initialisation d'une partie
 			m_actualGame = new ActualGame(level, island);
+
+			//musique
+			Mix_AllocateChannels(20);
+			Mix_VolumeMusic(MIX_MAX_VOLUME/2);
+			Mix_Volume(0, MIX_MAX_VOLUME);
+			m_musique = Mix_LoadMUS("../musics/rednex.ogg");
+			Mix_PlayMusic(m_musique, -1);
+
 		}
 		else if(screen == SCORE)
 		{
@@ -298,6 +303,7 @@ void GameEngine::changeScreen(const GameScreen & previousScreen, const GameScree
 		//Suppression d'un niveau de jeu actuel en changeant d'écran de jeu autre que PAUSE
 		if(previousScreen == GAME && screen != PAUSE)
 		{
+			Mix_PauseMusic();
 			delete m_actualGame;
 			m_actualGame = NULL;
 		}
