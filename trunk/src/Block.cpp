@@ -21,50 +21,10 @@ Block::Block(int sizeX, int id, Level* l, int speed)
 , m_y (668)
 , m_tunnelHeight (200)
 {
-	/*SDL_Rect * p1, *p01, *p2, *p3, *p4, *p5, *p6;
-	switch(type)
-	{
-		case GROUND :
-			p1 = new SDL_Rect;
-			p1->x = posX;
-			p1->y = m_y;
-			p01 = new SDL_Rect;
-			p01->x = 10;
-			p01->y = 404;
-			p2 = new SDL_Rect;
-			p2->x = 256;
-			p2->y = 550;
-			p3 = new SDL_Rect;
-			p3->x = 512;
-			p3->y = 600;
-			p4 = new SDL_Rect;
-			p4->x = 768;
-			p4->y = 450;
-			p5 = new SDL_Rect;
-			p5->x = 1024;
-			p5->y = m_y;
-			p6 = new SDL_Rect;
-			p6->x = posX+sizeX;
-			p6->y = m_y;
-			m_points.push_back(p1);
-			m_points.push_back(p01);
-			m_points.push_back(p2);
-			m_points.push_back(p3);
-			m_points.push_back(p4);
-			m_points.push_back(p5);
-			m_points.push_back(p6);
-			break;
-		case PRECIPICE :
-			break;
-		case STATION :
-			break;
-		case TUNNEL :
-			break;
-		default:
-			m_sizeX = sizeX;
-			break;
+	SDL_Surface * station = IMG_Load("../img/levels/station.png");
+	if(station)
+		m_sizeXMinStation = station->w;
 
-	}*/
 	m_sprite = NULL;
 	SDL_Rect * pos = new SDL_Rect; pos->x = 0; pos->y = m_y;
 	m_points.push_back(pos);
@@ -91,6 +51,10 @@ Block::Block(BlockType type, int sizeX, int id, Level* l, int speed)
 , m_y (668)
 , m_tunnelHeight (200)
 {
+	SDL_Surface * station = IMG_Load("../img/levels/station.png");
+	if(station)
+		m_sizeXMinStation = station->w;
+
 	m_sprite = NULL;
 	SDL_Rect * pos = new SDL_Rect; pos->x = 0; pos->y = m_y;
 	m_points.push_back(pos);
@@ -313,12 +277,21 @@ void Block::createImage()
 
 		case STATION :
 		{
+			int sizeYGround = WINDOWS_H - m_y;
+
+			//Chargement de l'image gare
+			SDL_Surface * station = IMG_Load("../img/levels/station.png");
+		
+			if(!station)
+			{
+				return;
+			}
+
 			//Chargement de l'image ground
 			SDL_Surface * ground = NULL;
 			if(m_level && m_level->getGroundImage() )
 			{
-				ground = IMG_Load("../img/levels/level2/niveau2-sol2.png");
-				//ground = SDL_CreateRGBSurfaceFrom(m_level->getGroundImage()->pixels, m_level->getGroundImage()->w, m_level->getGroundImage()->h, 32, m_level->getGroundImage()->pitch, rmask, gmask, bmask, amask);
+				ground = SDL_CreateRGBSurfaceFrom(m_level->getGroundImage()->pixels, m_level->getGroundImage()->w, m_level->getGroundImage()->h, 32, m_level->getGroundImage()->pitch, rmask, gmask, bmask, amask);
 				//Changement de la taille pour correspondre à la taille du bloc
 				ground->w = m_sizeX;
 			}
@@ -328,17 +301,49 @@ void Block::createImage()
 				return;
 			}
 
+			//Construction de l'image du bloc
+			int startPosS = (m_sizeX - station->w) / 2;
+			int xS = 0;
+			SDL_Surface * imageTest = SDL_CreateRGBSurface(SDL_HWSURFACE, m_sizeX, (int) sizeYGround + station->h, 32, rmask, gmask, bmask, amask);
 			Uint32 actualPixel;
+			unsigned int xG = 0, yG = 0;
+
 			for(int x = 0; x < m_sizeX; ++x)
 			{
-				for(int y = 0; y < m_y - m_sizeYMin; ++y)
+				for(int y = 0; y < sizeYGround + station->h; ++y)
 				{
-					actualPixel = 0x00000000;
-					Sprite::putpixel(ground, x, y, actualPixel);
+					//On trace le tunnel
+					if(y < station->h)
+					{
+						if(x >= startPosS && x < startPosS + station->w)
+						{
+							xS = x - startPosS;
+							actualPixel = Sprite::getpixel(station, xS, y);
+							Sprite::putpixel(imageTest, x, y, actualPixel);
+						}
+						else
+						{
+							Sprite::putpixel(imageTest, x, y, 0x00000000);
+						}
+					}
+					//On trace le ground
+					else if(y < m_y && y >= station->h)
+					{
+						yG = (ground->h - sizeYGround) + (y - station->h);
+						if(y == station->h)
+						std::cout<<yG<<std::endl;
+						if(y == m_y - 1)
+						std::cout<<yG<<std::endl;
+						actualPixel = Sprite::getpixel(ground, x, yG);
+						Sprite::putpixel(imageTest, x, y, actualPixel);
+					}
 				}
 			}
+			SDL_SaveBMP(imageTest, "test.bmp");
+			m_sprite = new Sprite(imageTest, m_posX, (Sint16) m_y - station->h, m_sizeX, (int) sizeYGround + station->h);
 
-			m_sprite = new Sprite(ground, m_posX, (Sint16) m_sizeYMin, m_sizeX, m_y - m_sizeYMin);
+			SDL_FreeSurface(station);
+			SDL_FreeSurface(ground);
 		}
 		break;
 
@@ -362,7 +367,6 @@ void Block::createImage()
 				ground = SDL_CreateRGBSurfaceFrom(m_level->getGroundImage()->pixels, m_level->getGroundImage()->w, m_level->getGroundImage()->h, 32, m_level->getGroundImage()->pitch, rmask, gmask, bmask, amask);
 				//Changement de la taille pour correspondre à la taille du bloc
 				ground->w = m_sizeX;
-				//ground->h = sizeYImage;
 			}
 			
 			if(!ground)

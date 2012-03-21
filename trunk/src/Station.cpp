@@ -13,6 +13,9 @@ int Station::build(b2World * world)
 	groundBodyDef.position.Set(0, 0); //Position à changer plus tard
 	m_body = world->CreateBody(&groundBodyDef);
 
+	if(m_sizeX < m_sizeXMinStation)
+		m_sizeX = m_sizeXMinStation;
+
 	b2EdgeShape shape;
 	//Attention aux blocs mitoyens : y'a t-il besoin de mettre shape.m_hasVertex0 et shape.m_hasVertex3 ?
 	double x1 = m_posX, y1 = m_y;
