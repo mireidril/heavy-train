@@ -30,15 +30,40 @@ Animal::Animal(const char * type, int x, int y)
 	else if (strcmp(type,"coyote")==0)
 	{
 		sizeX = 150; sizeY = 53;
-		m_sprite = new Sprite("../img/animaux/coyote.png",  x-40, y,  sizeX, sizeY);
+		m_sprite = new Sprite("../img/animaux/coyote1.png",  x-40, y,  sizeX, sizeY);
+		for (int i=2; i<8; i++) {
+			 std::ostringstream oss;
+			 oss << i;
+			std::string s1 = "../img/animaux/coyote"; 
+			std::string s2 = ".png"; 
+			std::string s3 = s1 + oss.str() +s2;
+			m_sprite->addImage(s3.c_str());
+		}
 	}
 	else {
 		sizeX = 150; sizeY = 53;
-		m_sprite = new Sprite("../img/animaux/vache.png",  x-40, y, sizeX, sizeY);
+		m_sprite = new Sprite("../img/animaux/vache1.png",  x-40, y, sizeX, sizeY);
+		for (int i=2; i<8; i++) {
+			 std::ostringstream oss;
+			 oss << i;
+			std::string s1 = "../img/animaux/vache"; 
+			std::string s2 = ".png"; 
+			std::string s3 = s1 + oss.str() +s2;
+			m_sprite->addImage(s3.c_str());
+		}
+	}
+	for (int i=1; i<8; i++) {
+		 std::ostringstream oss;
+		 oss << i;
+		std::string s1 = "../img/animaux/collision"; 
+		std::string s2 = ".png"; 
+		std::string s3 = s1 + oss.str() +s2;
+		m_sprite->addImage(s3.c_str());
 	}
 
 
 }
+
 Animal::~Animal() 
 {
 	delete m_sprite;
@@ -77,22 +102,28 @@ void Animal::draw(SDL_Surface * screen, const int & width, const int & height){
 	double angledegrees = angle*180/M_PI;
 	double x = bodyPos.x;
 	double y = bodyPos.y;
-	if (m_tchou == true || abs(x - m_posX)>0.01){
-		
-		if (m_sprite->animate()) {
+	if (m_tchou == true){	
+		if (m_sprite->animate(0,7)) {
+			m_sprite->draw(screen,  width,  height);
+		}
+		else {
+			m_tchou = false;
+			die();
+		}		
+	}
+	else if ( abs(x - m_posX) > 0.1 ){
+		if (m_sprite->animate(8,15)) {
 			m_sprite->draw(screen,  width,  height);
 		}
 		else {
 			die();
-		}
-		
+		}			
 	}
-	else{
+	else {
 		m_sprite->convertMetersToPixels(&x, &y,  width,  height);
 		m_sprite->setPositionY( y-40);
 		m_sprite->setAngle (angle);
 		m_sprite->draw(screen,  width,  height);
-		
 	}
 
 }

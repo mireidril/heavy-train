@@ -201,11 +201,10 @@ double Sprite::getSizeY(){
 }
 
 
-
 /**
  * Change l'image actuellement affichée après un temps donné (m_timeFrame) et renvoi false si l'anim est terminé
  */
-bool Sprite::animate()
+bool Sprite::animate(int debut, int fin)
 {
 	if(m_nbFrames > 1)
 	{
@@ -215,11 +214,16 @@ bool Sprite::animate()
 		if(m_timeActualFrame >= m_timeFrame)
 		{
 			m_timeActualFrame = 0;
-			m_actualFrame++;
-			if(m_actualFrame >= m_nbFrames)
+			if (debut != 0) {
+				m_actualFrame= (m_actualFrame +debut + 1)%debut+debut;
+			}
+			else {
+				m_actualFrame++;	
+			}
+			if(m_actualFrame >= fin)
 			{
 				
-				m_actualFrame = 0;
+				m_actualFrame = debut;
 				return false;
 			}
 			else {
