@@ -17,7 +17,7 @@ Animal::Animal(const char * type, int x, int y)
 	if (strcmp(type,"tatou")==0)
 	{
 		sizeX = 150; sizeY = 53;
-		m_sprite = new Sprite("../img/animaux/tatou1.png",  x-40, y,  sizeX, sizeY);
+		m_sprite = new Sprite("../img/animaux/tatou1.png",  x-75, y,  sizeX, sizeY);
 		for (int i=2; i<8; i++) {
 			 std::ostringstream oss;
 			 oss << i;
@@ -30,7 +30,7 @@ Animal::Animal(const char * type, int x, int y)
 	else if (strcmp(type,"coyote")==0)
 	{
 		sizeX = 150; sizeY = 53;
-		m_sprite = new Sprite("../img/animaux/coyote1.png",  x-40, y,  sizeX, sizeY);
+		m_sprite = new Sprite("../img/animaux/coyote1.png",  x-70, y,  sizeX, sizeY);
 		for (int i=2; i<8; i++) {
 			 std::ostringstream oss;
 			 oss << i;
@@ -42,7 +42,7 @@ Animal::Animal(const char * type, int x, int y)
 	}
 	else {
 		sizeX = 150; sizeY = 53;
-		m_sprite = new Sprite("../img/animaux/vache1.png",  x-40, y, sizeX, sizeY);
+		m_sprite = new Sprite("../img/animaux/vache1.png",  x-70, y, sizeX, sizeY);
 		for (int i=2; i<8; i++) {
 			 std::ostringstream oss;
 			 oss << i;
@@ -67,6 +67,7 @@ Animal::Animal(const char * type, int x, int y)
 Animal::~Animal() 
 {
 	delete m_sprite;
+
 }
 
 void Animal::build(b2World * world){
@@ -76,10 +77,10 @@ void Animal::build(b2World * world){
 	bd.position.Set(m_posX, m_posY);//position initial de l'animal
 	b2PolygonShape bodyShape;
 	b2Vec2 vertices[4];
-	vertices[0].Set(-1.0f, -1.f);
-	vertices[1].Set(1.0f, -1.f);
-	vertices[2].Set(1.0f, 1.f);
-	vertices[3].Set(-1.0f, 1.f);
+	vertices[0].Set(-1.8f, -1.f);
+	vertices[1].Set(1.8f, -1.f);
+	vertices[2].Set(1.8f, 1.f);
+	vertices[3].Set(-1.8f, 1.f);
 	bodyShape.Set(vertices, 4);//corpds de l'animal
 
 	m_body = world->CreateBody(&bd);
@@ -121,7 +122,7 @@ void Animal::draw(SDL_Surface * screen, const int & width, const int & height){
 	}
 	else {
 		m_sprite->convertMetersToPixels(&x, &y,  width,  height);
-		m_sprite->setPositionY( y-40);
+		m_sprite->setPositionY( y-60);
 		m_sprite->setAngle (angle);
 		m_sprite->draw(screen,  width,  height);
 	}
@@ -129,9 +130,7 @@ void Animal::draw(SDL_Surface * screen, const int & width, const int & height){
 }
 
 void Animal::die(){
-	//animation
 	m_die = true;
-	std::cout << "collision" << std::endl;
 }
 
 
