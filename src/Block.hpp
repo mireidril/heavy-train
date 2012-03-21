@@ -103,6 +103,7 @@ class Block
 		std::vector <Animal*> m_animals;
 
 		//Min and Max size in pixels
+		double m_sizeXMinStation;
 		const double m_sizeXMin;
 		const double m_sizeXMax;
 		const double m_sizeYMin;
