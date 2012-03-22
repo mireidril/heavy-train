@@ -174,13 +174,13 @@ void Wagon::build(b2World * world, double x, float high)
 		frameRoof.Set(vertices, 4);
 		b2FixtureDef fixtureRoof;
 		fixtureRoof.shape = &frameRoof;
-		fixtureRoof.density = 5.0f;
+		fixtureRoof.density = 0.1f;
 		fixtureRoof.filter.groupIndex = -1; // So it doesn't collide with passengers
 		//*/
 	
 		m_physicalObjects[0]->getBody()->CreateFixture(&frameBot, 5.0f);
-		m_physicalObjects[0]->getBody()->CreateFixture(&frameLeft, 5.0f);
-		m_physicalObjects[0]->getBody()->CreateFixture(&frameRight, 5.0f);
+		m_physicalObjects[0]->getBody()->CreateFixture(&frameLeft, 0.1f);
+		m_physicalObjects[0]->getBody()->CreateFixture(&frameRight, 0.1f);
 		m_physicalObjects[0]->getBody()->CreateFixture(&fixtureRoof);
 		//m_physicalObjects[0]->getBody()->CreateFixture(&chassisToit, 1.0f);
 	}
