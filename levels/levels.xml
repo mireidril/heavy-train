@@ -21,7 +21,7 @@
 			<block type="TUNNEL" size="100" num="2">
 			</block>
 			<block type="GROUND" size="1024" num="1">
-				<obstacle type="animal" nom="tatou" posX="1000" posY="300" />
+				<obstacle type="animal" nom="vache" posX="1610" posY="300" />
 				<point x="100" y = "600" />
 				<point x="256" y = "660" />
 				<point x="512" y = "660" />
