@@ -17,7 +17,7 @@
 			<station size="200">
 				<option hours="12" minutes="00" leaving="0" entering="10"/>
 			</station>
-			<block type="PRECIPICE" size=="500">
+			<block type="PRECIPICE" size="500">
 			</block>
 			<block type="GROUND" size="1024">
 				<obstacle type="animal" nom="vache" posX="1610" posY="300" />
