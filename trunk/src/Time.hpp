@@ -26,6 +26,7 @@ class Time
 		//Time operator+(const Time& time1, const Time& time2);
 		//Time operator-(const Time& time1, const Time& time2);
 		Time& operator=(const Time& time);
+		int getMinutes();
 	private :
 		//Hours
 		unsigned int m_hours;
