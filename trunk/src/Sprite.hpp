@@ -60,7 +60,6 @@ class Sprite
 		void changeImageManually(const int & imageNum);
 
 		static void convertMetersToPixels (double * x, double * y, const int & width, const int & height);
-		static void convertMetersToPixelsY ( double * y, const int & width, const int & height);
 		static void convertPixelsToMeters (double * x, double * y, const int & width, const int & height);
 		
 		double getSizeX();

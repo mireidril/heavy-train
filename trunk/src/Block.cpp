@@ -426,7 +426,7 @@ void Block::scroll(const int & x)
 }
 
 
-void Block::draw(SDL_Surface * screen, const int & width, const int & height)
+void Block::draw(SDL_Surface * screen, const int & width, const int & height, b2World * world)
 {
 	if(m_sprite)
 		m_sprite->draw(screen, width, height);
