@@ -292,14 +292,18 @@ void Wagon::takeOffPassenger(int n, Station * station)
 {
 	if( m_passengersCount == 0 )
 		return;
-	//On parcourt a partir du dernier élément
-	std::list<Passenger*>::reverse_iterator it;
-	for ( it = m_passengers.rbegin(); it != m_passengers.rend(); it++)
+
+	std::list<Passenger*>::iterator it;
+	for ( it = m_passengers.begin(); it != m_passengers.end(); ++it)
 	{
-		if( (*it)->getIsEjected() == false)
-			;//printf("TODO");
+		station->m_passengers.push_back(*it);
+
+		PhysicalObject::m_world->DestroyJoint((*it)->getJoint());
+		(*it)->setJoint(NULL);
+		m_passengersCount --;
+		(*it)->switchStatic();
 	}
-	
+	m_passengers.erase(m_passengers.begin(), it);
 }
 
 int Wagon::getNbPassengerWagon()

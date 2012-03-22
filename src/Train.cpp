@@ -386,22 +386,48 @@ void Train::setIsAtStation(bool b)
 
 void Train::takeOffPassengers(Station *station)
 {
-	int nbLeavingPassengers = station->getNbLeavingPassengers();
-	/*std::list<Passenger*>::iterator it;
-	for ( it = station->m_passengers.begin(); it != station->m_passengers.end() ; it++)
-	{
+	int n = station->getNbLeavingPassengers();
+	int nPassengers = getNbPassengers();
+	if( n > nPassengers )
+		n = nPassengers;
 
-	}*/
+	int nWagons = m_wagons.size();
+	while( n != 0 ){
+		for (int i=0; i< nWagons; ++i)
+		{
+			int nbPassengersToTakeOff;
+			// Si c'est le dernier wagon, ejecter tous les passagers de là
+			if( i == nWagons - 1){
+				nbPassengersToTakeOff = n;
+			}else{
+				// On choisit un nombre au hasard de passagers à ejecter
+				nbPassengersToTakeOff = rand() % (n+1);
+			}
+
+			if( nbPassengersToTakeOff > m_wagons[i]->getNbPassengerWagon())
+				nbPassengersToTakeOff == m_wagons[i]->getNbPassengerWagon();
+			//On retire les passagers
+			m_wagons[i]->takeOffPassenger(nbPassengersToTakeOff, station);
+			n-= nbPassengersToTakeOff;
+		}
+	}
+	
+	std::cout<<"m_passengersCount : "<<getNbPassengers()<<std::endl;
 }
 
 void Train::takeInPassengers(Station *station)
 {
 	int nbEnteringPassengers = station->getNbEnteringPassengers();
+	if( nbEnteringPassengers == 0 )
+		return;
 	std::list<Passenger*>::iterator it;
 	bool isNotEntered;
 	std::list<Passenger*>::iterator itEnd = station->m_passengers.end();
 	for ( it = station->m_passengers.begin(); it != itEnd ; ++it)
 	{
+		if( nbEnteringPassengers == 0 ){
+			break;
+		}
 		//On check si le train est plein ou non
 		if( getNbPassengers() >= getMaxCapacity() )
 			return;
@@ -416,9 +442,7 @@ void Train::takeInPassengers(Station *station)
 			}
 		}
 		nbEnteringPassengers --;
-		if( nbEnteringPassengers == 0 ){
-			break;
-		}
+		
 	}
 	//On les supprime de la station
 	station->m_passengers.erase(station->m_passengers.begin(), it);
