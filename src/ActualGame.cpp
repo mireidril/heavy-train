@@ -1,4 +1,5 @@
 #include "ActualGame.hpp"
+#include "GameEngine.hpp"
 
 double PhysicalObject::fixedTimestepAccumulatorRatio;
 
@@ -12,6 +13,8 @@ ActualGame::ActualGame(unsigned int level, unsigned int island)
 , m_timer(NULL)
 , m_train(NULL)
 , m_totalScore(0)
+, m_gameOver(false)
+, m_lastStation(0)
 {
 	std::cout << "Actual Game" << std::endl;
 	b2Vec2 gravity(0.0f, -10.0f);
@@ -88,8 +91,13 @@ ActualGame::~ActualGame()
 /*
  * ActualGame run: est appele dans le game Engine: update le world et dessine les elements
  */
-void ActualGame::run(SDL_Surface * screen, int w, int h)
+void ActualGame::run(GameEngine * gameEngine, SDL_Surface * screen, int w, int h)
 {
+	if(m_actualLevel->getNbBlocks() == 0)
+	{
+		gameEngine->changeScreen(GAME, TITLE, -1, -1);
+		return;
+	}
 
 	//Calcule FPS
 	static double current_time = 0;
@@ -110,19 +118,42 @@ void ActualGame::run(SDL_Surface * screen, int w, int h)
 	//std::cout<<"FPS : "<<fps<<std::endl;
 
 	//Actualise la simulation
-	runSimulation();
+	if(!m_gameOver)
+	{
+		runSimulation();
 	
-	//Dessine le niveau & le train
-	updateActualBlock();
-	scroll();
+		//Dessine le niveau & le train
+		updateActualBlock();
+		scroll();
 
-	m_actualLevel->render(screen, w, h, this, m_world);
-	drawInterface(screen, w, h);
-	m_train->drawSprite(screen, w, h);
+		m_actualLevel->render(screen, w, h, this, m_world);
+		drawInterface(screen, w, h);
+		m_train->drawSprite(screen, w, h);
 
-	fooDrawInstance->SetFlags( b2Draw::e_shapeBit );
-	//Affichage des formes physiques pour Debug
-	m_world->DrawDebugData();
+
+		fooDrawInstance->SetFlags( b2Draw::e_shapeBit );
+		//Affichage des formes physiques pour Debug
+		m_world->DrawDebugData();
+
+		checkVictoryConditions();
+		if(m_train->checkiIfTrainIsReturned())
+		{
+			m_gameOver = true;
+		}
+	}
+	else
+	{
+		gameEngine->changeScreen(GAME, GAMEOVER, -1, -1);
+		//gameEngine->changeScreen(GAME, ENDGAME, m_actualLevel->getLevelNum(), m_actualLevel->getIslandNum());
+	}
+}
+
+void ActualGame::teleportTrainToLastStation()
+{
+	m_gameOver = false;
+	double x = m_actualLevel->getBlock(m_lastStation)->getPosX();
+	Sprite::convertPixelsToMeters(&x, NULL, WINDOWS_W, WINDOWS_H);
+	//TODO déplacer le body du train à la dernière station passée
 }
 
 void ActualGame::drawInterface(SDL_Surface * screen, const int & w, const int & h)
@@ -221,7 +252,7 @@ void ActualGame::drawInterface(SDL_Surface * screen, const int & w, const int & 
 
 void ActualGame::updateActualBlock()
 {
-	double headLocoX = m_train->getLocoBodyPosition().x /*+ m_train->getBodySize().x*/;
+	double headLocoX = m_train->getLocoBodyPosition().x;
 
 	Block * actualBlock = m_actualLevel->getBlock(m_actualBlock);
 	if(actualBlock != NULL)
@@ -238,6 +269,12 @@ void ActualGame::updateActualBlock()
 			if(m_actualBlock - 1 >= 0 )
 				m_actualBlock--;
 		}
+
+		if(m_actualLevel->getBlock(m_actualBlock)->getType() == STATION && m_actualBlock > m_lastStation)
+		{
+			m_lastStation = m_actualBlock;
+		}
+
 		//Pour vérifier l'entrée en gare
 		if( !m_train->getIsAtStation() && actualBlock->getType() == STATION && !m_train->getBody(0)->IsAwake() )
 		{
@@ -282,19 +319,23 @@ void ActualGame::scroll()
 	//Récupération de la dernière position du train
  	b2Vec2 currentPos = m_train->getLocoBodyPosition();
 	//Récupération de la position du dernier bloc
-	double lastBlockPosX = m_actualLevel->getBlock(m_actualLevel->getNbBlocks() - 1)->getPosX() + m_actualLevel->getBlock(m_actualLevel->getNbBlocks() - 1)->getSizeX();
-	if(lastBlockPosX < WINDOWS_W)
+	Block * b = m_actualLevel->getBlock(m_actualLevel->getNbBlocks() - 1);
+	if(b)
 	{
-		std::cout<<"lol"<<std::endl;
-	}
-	else if( m_lastPosXTrain != INFINITE )
-	{
-		double x = m_lastPosXTrain - currentPos.x;
-		Sprite::convertMetersToPixels(&x, NULL, WINDOWS_W, WINDOWS_H);
+		double lastBlockPosX = b->getPosX() + b->getSizeX();
+		if(lastBlockPosX < WINDOWS_W)
+		{
+			std::cout<<"lol"<<std::endl;
+		}
+		else if( m_lastPosXTrain != INFINITE )
+		{
+			double x = m_lastPosXTrain - currentPos.x;
+			Sprite::convertMetersToPixels(&x, NULL, WINDOWS_W, WINDOWS_H);
 
-		m_actualLevel->scrollLevel(x);
+			m_actualLevel->scrollLevel(x);
+		}
+		m_lastPosXTrain = currentPos.x;
 	}
-	m_lastPosXTrain = currentPos.x;
 }
 
 void ActualGame::runSimulation()
@@ -379,9 +420,17 @@ void ActualGame::smoothAllBodyPositions()
 	}
 }
 
-void ActualGame::checkKeyboardEvent(const SDL_KeyboardEvent *event)
+void ActualGame::checkVictoryConditions()
 {
-	m_train->keyboard(event);
+	if(m_train->getBody(0)->GetPosition().y < 0)
+	{
+		m_gameOver = true;
+	}
+}
+
+void ActualGame::checkKeyboardEvent(GameEngine* g, const SDL_KeyboardEvent *event)
+{
+	m_train->keyboard(g, event);
 	if (m_actualLevel->getBlock(m_actualBlock)){	
 		m_actualLevel->getBlock(m_actualBlock)->keyboard(event);
 	}

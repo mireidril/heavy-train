@@ -42,6 +42,7 @@ class Sprite
 		int getPositionX();
 		int getPositionY();
 		void setAngle(double & angle);
+		int getNbFrames() {return m_nbFrames;};
 
 		//Retourne l'identifiant de l'image actuelle
 		unsigned int getActualFrame() { return m_actualFrame; };

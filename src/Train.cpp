@@ -1,5 +1,5 @@
 #include "Train.hpp"
-
+#include "GameEngine.hpp"
 
 /*
  * Train Constructor 
@@ -52,6 +52,32 @@ Train::~Train ()
 		delete m_wagons[i]; 
 	}
 	//suppr bodies, + sounds
+}
+
+bool Train::checkiIfTrainIsReturned()
+{
+	//On vérifie le gros body du train
+	double angledegrees = m_physicalObjects[0]->getAngle()*180/M_PI;
+	if( abs(angledegrees) > 90)
+	{
+		m_spring1->SetMotorSpeed(0);
+		m_spring2->SetMotorSpeed(0);
+		return true;
+	}
+
+	//On vérifie parmi tous les body des wagons
+	for(unsigned int i = 0 ; i < m_wagons.size(); ++i)
+	{
+		double angledegrees = m_wagons[i]->getPhysicalObjects()[0]->getAngle()*180/M_PI;
+		{
+			if( abs(angledegrees) > 130)
+			{
+				return true;
+			}
+		}
+	}
+
+	return false;
 }
 
 //Ejects n passengers from the wagons
@@ -266,7 +292,7 @@ void Train::jump(){
 /*
  * Train keyboard
  */
-void Train::keyboard( const SDL_KeyboardEvent *event)
+void Train::keyboard(GameEngine* g, const SDL_KeyboardEvent *event)
 {
 	if (event->type == SDL_KEYUP)
 	{
@@ -285,6 +311,9 @@ void Train::keyboard( const SDL_KeyboardEvent *event)
 	{
 		switch ( (event->keysym).sym)
 		{
+		case SDLK_ESCAPE:
+			g->changeScreen(GAME, PAUSE, -1, -1);
+			break;
 		case SDLK_SPACE:
 			if( m_channel == -1 || Mix_Playing(m_channel) == 0 )
 				m_channel = Mix_PlayChannel(-1, m_tchoutchouSound, 0);

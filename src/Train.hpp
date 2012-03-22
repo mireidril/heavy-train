@@ -15,6 +15,8 @@
 #include "Bonus.hpp"
 #include "Wagon.hpp"
 
+class GameEngine;
+
 class Train
 {
 	public :
@@ -24,6 +26,7 @@ class Train
 	//Destructeur
 	virtual ~Train();
 
+	bool checkiIfTrainIsReturned();
 	//Apply the force m_impetus to move the train
 	void speedUp();
 	//Apply the force -m_impetus to move the train
@@ -59,7 +62,7 @@ class Train
 	// Creer la physique du train
 	void build(b2World * world);
 
-	void keyboard( const SDL_KeyboardEvent *event);
+	void keyboard(GameEngine* g, const SDL_KeyboardEvent *event);
 
 	//Donne la position actuelle de la locomotive
 	b2Vec2 getLocoBodyPosition();

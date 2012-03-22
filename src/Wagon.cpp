@@ -103,8 +103,6 @@ void Wagon::setMotorSpeed(float speed)
 }
 
 
-
-
 /*
  * wagon construction
  */
