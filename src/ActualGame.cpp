@@ -240,6 +240,7 @@ void ActualGame::updateObstacleScore()
 {
 	//s'augmente a chaque collision avec un animal => compte le nombre d'animal shoutés
 	m_obstacleScore++;
+	std::cout << m_obstacleScore <<std::endl;
 }
 //Update a la gare !!!
 void ActualGame::updatePassengerScore()
@@ -281,7 +282,8 @@ void ActualGame::updateSatisfactionScore()
 	{
 		m_satisfactionScore -= m_stopStationPoint;
 	}
-	//check la mauvaise conduite en fonction de mshaken
+	*/
+	/*//check la mauvaise conduite en fonction de mshaken
 	if(m_shaken > ____)
 	{
 		m_satisfactionScore +=( m_drivePoint*15);
@@ -303,4 +305,8 @@ void ActualGame::updateTotalScore()
 	m_totalScore += m_passengerScore;
 	m_totalScore += m_timeScore;
 	m_totalScore += m_satisfactionScore;
+}
+Train * ActualGame::getTrain()
+{
+	return m_train;
 }

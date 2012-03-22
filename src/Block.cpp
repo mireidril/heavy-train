@@ -29,7 +29,7 @@ Block::Block(int sizeX, int id, Level* l, int speed)
 	m_sprite = NULL;
 	SDL_Rect * pos = new SDL_Rect; pos->x = 0; pos->y = m_y;
 	m_points.push_back(pos);
-	
+
 }
 
 /*
@@ -59,7 +59,7 @@ Block::Block(BlockType type, int sizeX, int id, Level* l, int speed)
 	m_sprite = NULL;
 	SDL_Rect * pos = new SDL_Rect; pos->x = 0; pos->y = m_y;
 	m_points.push_back(pos);
-	
+
 }
 
 Block::~Block() 
@@ -123,6 +123,10 @@ void Block::setAnimal(const char * type, int x, int y)
 	std::cout << "setanimal" << std::endl;
 	Animal * animal = new Animal(type, x, y);
 	m_animals.push_back(animal);
+
+	bool booleen = false;
+	m_passageDansMort.push_back(booleen);
+
 }
 
 //Retourne l'identifiant du point à l'ordonnée la plus basse
@@ -438,11 +442,15 @@ void Block::draw(SDL_Surface * screen, const int & width, const int & height, Ac
 		if ( !m_animals[i]->isDie() )
 		{
 			m_animals[i]->draw(screen, width, height);
-			 ////////////////////////////////////////////////////////////////////////////////////////////////
+			
+		}else if (m_animals[i]->isDie() && m_passageDansMort[i]==false){
+		 ////////////////////////////////////////////////////////////////////////////////////////////////
 			/*appeller la fonction update score ici
 			appeler aussi la fonction ejectPassenger dans m_train-> Wagons -> passenger
 			*/////////////////////////
-			//game->updateObstacleScore();
+			game->updateObstacleScore();
+			game->getTrain()->ejectPassengers(3);
+			m_passageDansMort[i]=true;
 		}
 	}
 }
