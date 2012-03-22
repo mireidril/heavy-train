@@ -178,7 +178,7 @@ void Wagon::build(b2World * world, double x, float high)
 		fixtureRoof.filter.groupIndex = -1; // So it doesn't collide with passengers
 		//*/
 	
-		m_physicalObjects[0]->getBody()->CreateFixture(&frameBot, 2.0f);
+		m_physicalObjects[0]->getBody()->CreateFixture(&frameBot, 3.0f);
 		m_physicalObjects[0]->getBody()->CreateFixture(&frameLeft, 0.1f);
 		m_physicalObjects[0]->getBody()->CreateFixture(&frameRight, 0.1f);
 		m_physicalObjects[0]->getBody()->CreateFixture(&fixtureRoof);
@@ -189,7 +189,7 @@ void Wagon::build(b2World * world, double x, float high)
 
 	b2FixtureDef fd;
 	fd.shape = &circle;
-	fd.density = 3.0f;
+	fd.density = 5.0f;
 	fd.friction = 0.9f;
 
 	bd.position.Set(x-1.0f, high+7.9f);
