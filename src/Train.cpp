@@ -254,8 +254,9 @@ b2Body * Train::getBody(unsigned int i)
 }
 //Permet au train de sauter en 3 fois. La première pulsion est exercée sur loco puis wagon1 puis wagon2
 void Train::jump(){
+	//une force est appliquée au centre de gravité du train afin de lui permettre de sauter
 			m_physicalObjects[0]->getBody()->ApplyForce(b2Vec2(10, m_jumpImpetus),m_physicalObjects[0]->getBody()->GetWorldCenter());
-
+	// une force moins importante permet aux wagons de suivre le mouvement du saut
 	for (int i=0; i< m_wagons.size(); i++){
 				m_wagons[i]->getBody(0)->ApplyForce(b2Vec2(10, m_jumpImpetus+200),m_wagons[i]->getBody(0)->GetWorldCenter());
 	}
@@ -301,7 +302,11 @@ void Train::keyboard( const SDL_KeyboardEvent *event)
 			break;
 
 		case SDLK_UP:
-			if(m_physicalObjects[0]->getPosition().y < 7){ 
+		// le train ne peut pas sauter plus haut que la valeur définie afin de limiter le nombre possible de sauts successifs
+		// le train ne peut pas sauter lorsqu'il est à une position inférieure à celle définie. 
+		// ex ;lorsqu'il tombre dans un précipice, il ne peut plus sauter.
+		printf("\n\n %f",m_physicalObjects[0]->getPosition().y);
+			if(m_physicalObjects[0]->getPosition().y < 8 && m_physicalObjects[0]->getPosition().y > 4){ 
 				jump();
 			}
 		break;
