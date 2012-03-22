@@ -88,7 +88,12 @@ void Wagon::drawSprite(SDL_Surface * screen, const int & width, const int & heig
 		m_physicalObjects[i]->getSprite()->draw(screen, width, height);
 	}
 
-
+	//Passagers
+	std::list<Passenger*>::iterator it;
+	for ( it = m_passengers.begin(); it != m_passengers.end() ; it++)
+	{
+		(*it)->drawSprite(screen, width, height);
+	}
 }
 
 void Wagon::setMotorSpeed(float speed)

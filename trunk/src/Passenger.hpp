@@ -31,6 +31,9 @@ class Passenger : public PhysicalObject
 		bool getIsEjected();
 		void setIsEjected(bool );
 
+		//Dessine le passager à l'écran
+		void drawSprite(SDL_Surface * screen, const int & width, const int & height);
+
 		//Taille des passagers
 		static const float m_width;
 		static const float m_height;

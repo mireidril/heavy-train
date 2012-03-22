@@ -5,7 +5,7 @@ const float Passenger::m_width = .5f;
 const float Passenger::m_height = 1.0f;
 
 Passenger::Passenger(double x, double y)
-: PhysicalObject(NULL)
+	: PhysicalObject(new Sprite("../img/passengers/passagers5.png", x, y, 16, 30))
 {
 	m_speed = 1.0f;
 	m_isEjected = false;
@@ -56,6 +56,11 @@ Passenger::Passenger(double x, double y)
 	//Assignation des Fixtures ( pour créer les formes)
 	getBody()->CreateFixture( &fd );
 	getBody()->CreateFixture( &fd2 );
+
+	//Sprite init
+	double xMeter, yMeter;
+	Sprite::convertMetersToPixels(&xMeter, &yMeter, WINDOWS_W, WINDOWS_H);
+	m_sprite->setPositionX(xMeter);
 }
 
 //Destructor
@@ -89,15 +94,6 @@ void Passenger::switchStatic(){
 void Passenger::switchDynamic(){
 	//Change le body en actif ( participe aux collisions )
 	getBody()->SetActive(true);
-
-	//Initialisation du joint
-	/*b2DistanceJointDef jointDef;
-	jointDef.bodyA = m_body;
-	// TODO 
-	//jointDef.bodyB = myBodyB;
-	//jointDef.localAnchorA = m_body->GetCenterPosition(); 
-	//jointDef.localAnchorB = wagon body 
-	m_joint = (b2DistanceJoint*)(PhysicalObject::m_world)->CreateJoint(&jointDef);*/
 }
 
 void Passenger::setDestinationPoint( double x, double y ){
@@ -118,4 +114,21 @@ bool Passenger::getIsEjected(){
 
 void Passenger::setIsEjected(bool b){
 	m_isEjected = b;
+}
+
+void Passenger::drawSprite(SDL_Surface * screen, const int & width, const int & height)
+{
+	double x, y; 
+	b2Vec2 bodyPos;
+	double angle,angledegrees;
+	bodyPos = getPosition();
+	angle = getAngle();
+	angledegrees= angle*180/M_PI;
+	x = bodyPos.x;
+	y = bodyPos.y;
+	Sprite::convertMetersToPixels(&x, &y,  width,  height);
+	m_sprite->setPositionY(x);
+	m_sprite->setPositionY(y-60);
+	m_sprite->setAngle (angle);
+	m_sprite->draw(screen,  width,  height);
 }
