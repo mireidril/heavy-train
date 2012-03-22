@@ -161,22 +161,7 @@ void ActualGame::runSimulation()
 }
 
 void ActualGame::clearAllSmoothAngleAndPosition()
-{
-	//m_actualLevel->clearAllSmoothAngleAndPosition();
-	//m_train->clearAllSmoothAngleAndPosition();
-
-	/*for (b2Body * b = m_world->GetBodyList (); b != NULL; b = b->GetNext ())
-	{
-		if (b->GetType () == b2_staticBody)
-		{
-			continue;
-		}
- 
-		PhysicsComponent & c = PhysicsComponent::b2BodyToPhysicsComponent (b);
-		c.smoothedPosition_ = c.previousPosition_ = b->GetPosition ();
-		c.smoothedAngle_ = c.previousAngle_ = b->GetAngle ();
-	}*/
-	
+{	
 	b2Vec2 smoothedPosition_, previousPosition_;
 	double smoothedAngle_, previousAngle_;
 	for(int i = 0; i < m_train->getPhysicalObjects().size(); ++i)
@@ -206,17 +191,6 @@ void ActualGame::smoothAllBodyPositions()
 {
 	const float oneMinusRatio = 1.f - fixedTimestepAccumulatorRatio;
  
-	/*for (b2Body * b = m_world->GetBodyList (); b != NULL; b = b->GetNext ())
-	{
-		if (b->GetType () == b2_staticBody)
-		{
-			continue;
-		}
- 
-		PhysicsComponent & c = PhysicsComponent::b2BodyToPhysicsComponent (b);
-		c.smoothedPosition_ = fixedTimestepAccumulatorRatio * b->GetPosition () + oneMinusRatio * c.previousPosition_;
-		c.smoothedAngle_ = fixedTimestepAccumulatorRatio* b->GetAngle () + oneMinusRatio * c.previousAngle_;
-	}*/
 	b2Vec2 smoothedPosition_;
 	double smoothedAngle_;
 	for(int i = 0; i < m_train->getPhysicalObjects().size(); ++i)

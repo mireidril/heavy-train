@@ -55,9 +55,6 @@ class Train
 	// Creer la physique du train
 	void build(b2World * world);
 
-	//Réinitialise les valeurs des PhysicalObjects après un smooth pour coller au framerate
-	void clearAllSmoothAngleAndPosition();
-
 	void keyboard( const SDL_KeyboardEvent *event);
 
 	//Donne la position actuelle de la locomotive

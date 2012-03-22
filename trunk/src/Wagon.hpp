@@ -39,9 +39,6 @@ class Wagon{
 	b2Body * getBody(unsigned int i);
 	std::vector<PhysicalObject *> getPhysicalObjects() { return m_physicalObjects; };
 
-	//Réinitialise les valeurs des PhysicalObjects après un smooth pour coller au framerate
-	void clearAllSmoothAngleAndPosition();
-
 	void drawSprite(SDL_Surface * screen, const int & width, const int & height, const int & posXLocoSprite, const double & posXLocoBody);
 	void setMotorSpeed(float speed);
 
