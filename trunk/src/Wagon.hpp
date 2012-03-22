@@ -45,6 +45,7 @@ class Wagon{
 	void setMotorSpeed(float speed);
 
 	int getNbPassengerWagon();
+	int getMaxCapacity() {return m_maxCapacity;};
    private :
 	// Number of passengers that the wagon have when it quits the station
 	int m_originalNumberOfPassengers;

@@ -7,7 +7,7 @@ SDL_Surface * Sprite::screen;
  */
 
 GameEngine::GameEngine()
-: m_actualGameScreen(TITLE)
+: m_actualGameScreen(GAME)
 , m_nbAvailableIslands(1)
 , m_nbAvailableLevels(1)
 , m_screen(NULL)

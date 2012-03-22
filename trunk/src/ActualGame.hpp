@@ -6,9 +6,13 @@
 
 #ifdef _WIN32
 #include "Box2D/Box2D.h"
+#include "SDL/SDL_ttf.h"
 #else
 #include <Box2D/Box2D.h>
+#include <SDL/SDL_ttf.h>
 #endif
+
+#include <sstream>
 
 class ActualGame
 {
@@ -27,6 +31,7 @@ class ActualGame
 
 		void checkKeyboardEvent(const SDL_KeyboardEvent *event);
 		void run(SDL_Surface * screen, int w, int h);
+		void drawInterface(SDL_Surface * screen, const int & w, const int & h);
 		//Add points to the total score
 		void updateTotalScore();
 		//Add points to the passenger score
@@ -91,5 +96,9 @@ class ActualGame
 
 		//On stocke ici la dernière position du train avant scrolling
 		double m_lastPosXTrain;
+
+		//Images de l'interface et positions des textes
+		TTF_Font * m_font;
+		std::vector<Sprite*> m_interfaceImages;
 };
 #endif
