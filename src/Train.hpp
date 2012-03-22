@@ -66,6 +66,9 @@ class Train
 	b2Vec2 getLocoBodyPosition();
 	//Donne la taille actuelle de la locomotive
 	b2Vec2 getBodySize() { return m_size; };
+
+	b2Body * getBody(unsigned int i);
+
 	
 	Sprite * getSprite() { return m_physicalObjects[0]->getSprite(); };
 
@@ -101,6 +104,8 @@ class Train
 	float32 m_speed; 
 	// fréquence du wheel joint
 	float32 m_hz; 
+	// le saut est lancé
+	bool m_isJumping;
 	// pour joindre les wagons et le train
 	b2Joint* m_joints[2];
 	//The two wagons of the game
