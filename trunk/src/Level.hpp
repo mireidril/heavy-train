@@ -42,8 +42,8 @@ class Level
 		//Réinitialise les valeurs des PhysicalObjects après un smooth pour coller au framerate
 		void clearAllSmoothAngleAndPosition();
 
-		void render(SDL_Surface * screen, int w, int h);
-		void drawBlocks(SDL_Surface * screen, int w, int h);
+		void render(SDL_Surface * screen, int w, int h, b2World * world);
+		void drawBlocks(SDL_Surface * screen, int w, int h, b2World * world);
 		void drawBackgrounds(SDL_Surface * screen, int w, int h);
 	private :
 		//World
