@@ -45,7 +45,7 @@ class ActualGame
 		bool isAnimalOnScreen();
 		//At the end of a level, save the total score of the player in the xml file
 		void saveScore(const std::string & player);
-
+		Train * getTrain();
 	private :
 		Time * m_timer;
 		int m_totalScore;

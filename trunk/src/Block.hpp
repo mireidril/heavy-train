@@ -93,7 +93,7 @@ class Block
 		int m_id;
 		//Vitesse maximale que le joueur doit respecter. -1 si pas de vitesse maximale
 		int m_maxSpeed;
-
+		std::vector <bool> m_passageDansMort;
 		//Si le bloc est GROUND, tous les points de la spline de base sont stockés ici
 		std::vector<SDL_Rect*> m_points;
 		//Tous les points du body sont stockés ici
