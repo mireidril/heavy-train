@@ -257,10 +257,10 @@ void ActualGame::trainAtStation()
 	//Si premier arrêt : les passagers descendent et on compte les points
 	if( !station->getHasStoppedBefore() )
 	{
-		std::cout<<"Train at station ! Entering passengers : "<<station->getNbEnteringPassengers()<<std::endl;
+		std::cout<<"Train at station ! Entering passengers : "<<station->getNbEnteringPassengers()<<" Leaving passengers : "<<station->getNbLeavingPassengers()<<std::endl;
 		station->setHasStoppedBefore(true);
 		
-		//m_train->takeOffPassengers( n,station);
+		m_train->takeOffPassengers(station);
 
 		//Les passagers montent
 		m_train->takeInPassengers(station);
