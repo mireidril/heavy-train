@@ -71,7 +71,7 @@ void Level::scrollLevel(const int & x)
 void Level::loadAndBuild()
 {
 	TiXmlDocument doc("../levels/levelstestcloclo.xml");
-	int num, sizeX, speed = -1;
+	int sizeX, speed = -1;
 	std::string path;
 	Block * vBlock;
 	Station * vStation;
@@ -131,7 +131,6 @@ void Level::loadAndBuild()
 							if (strcmp(contenuLevel->Value(),"block")==0)
 							{
 								//on est dans une balise block !
-								num = atoi(contenuLevel->Attribute("num") );
 								sizeX = atoi(contenuLevel->Attribute("size") );
 								if(contenuLevel->Attribute("speed"))
 								{
@@ -244,7 +243,6 @@ void Level::loadAndBuild()
 							else if (strcmp(contenuLevel->Value(),"station")==0)
 							{
 								//on est dans la balise station / gare
-								num = atoi(contenuLevel->Attribute("num"));
 								sizeX = atoi(contenuLevel->Attribute("size"));
 
 								vStation = new Station(sizeX, numBlock, this); // smartpointer
