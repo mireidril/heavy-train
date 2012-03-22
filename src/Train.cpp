@@ -31,6 +31,9 @@ Train::Train ()
 	m_wagons.push_back(new Wagon(160));
 	m_wagons.push_back(new Wagon(70));
 	
+	// force of jump()
+	m_jumpImpetus = 300;
+	
 	//sounds
 	m_tchoutchouSound = Mix_LoadWAV("../musics/tchoutchou.ogg");
 	if(m_tchoutchouSound == NULL) {
@@ -251,10 +254,10 @@ b2Body * Train::getBody(unsigned int i)
 }
 //Permet au train de sauter en 3 fois. La première pulsion est exercée sur loco puis wagon1 puis wagon2
 void Train::jump(){
-			m_physicalObjects[0]->getBody()->ApplyForce(b2Vec2(10, 300),m_physicalObjects[0]->getBody()->GetWorldCenter());
+			m_physicalObjects[0]->getBody()->ApplyForce(b2Vec2(10, m_jumpImpetus),m_physicalObjects[0]->getBody()->GetWorldCenter());
 
 	for (int i=0; i< m_wagons.size(); i++){
-				m_wagons[i]->getBody(0)->ApplyForce(b2Vec2(10, 500),m_wagons[i]->getBody(0)->GetWorldCenter());
+				m_wagons[i]->getBody(0)->ApplyForce(b2Vec2(10, m_jumpImpetus+200),m_wagons[i]->getBody(0)->GetWorldCenter());
 	}
 }
 
@@ -298,7 +301,9 @@ void Train::keyboard( const SDL_KeyboardEvent *event)
 			break;
 
 		case SDLK_UP:
-			jump();
+			if(m_physicalObjects[0]->getPosition().y < 7){ 
+				jump();
+			}
 		break;
 
 		case SDLK_RIGHT:
