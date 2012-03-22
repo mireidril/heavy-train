@@ -22,6 +22,10 @@ class ActualGame
 		void runSimulation();
 
 		void updateActualBlock();
+		//Gère l'arrêt du train en gare
+		void trainAtStation();
+		//Gère le départ du train de la gare
+		void trainLeavingStation();
 		//Scrolle le niveau en fonction du déplacement du train
 		void scroll();
 

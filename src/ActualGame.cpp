@@ -238,8 +238,30 @@ void ActualGame::updateActualBlock()
 			if(m_actualBlock - 1 >= 0 )
 				m_actualBlock--;
 		}
+		//Pour vérifier l'entrée en gare
+		if( !m_train->getIsAtStation() && actualBlock->getType() == STATION && !m_train->getBody(0)->IsAwake() )
+		{
+			trainAtStation();
+		}else if( m_train->getIsAtStation() && ( actualBlock->getType() != STATION || m_train->getBody(0)->IsAwake() ) )
+		{
+			trainLeavingStation();
+		}
 	}
 }
+
+void ActualGame::trainAtStation()
+{
+	std::cout<<"Train en gare !"<<std::endl;
+	m_train->setIsAtStation(true);
+
+}
+
+void ActualGame::trainLeavingStation()
+{
+	std::cout<<"\tTrain part de gare !"<<std::endl;
+	m_train->setIsAtStation(false);
+}
+
 
 void ActualGame::scroll()
 {

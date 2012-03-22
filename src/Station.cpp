@@ -56,6 +56,8 @@ int Station::build(b2World * world)
 
 	createImage();
 
+	initPassengers();
+
 	return m_sizeX;
 }
 
