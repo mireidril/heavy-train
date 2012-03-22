@@ -129,6 +129,11 @@ void Block::setAnimal(const char * type, int x, int y)
 
 }
 
+BlockType Block::getType()
+{
+	return m_type;
+}
+
 //Retourne l'identifiant du point à l'ordonnée la plus basse
 int Block::getYMinPoint()
 {

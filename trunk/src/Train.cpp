@@ -9,6 +9,7 @@ Train::Train ()
 : m_size (4.0, 3.0)
 , m_nbWagons(2)
 , m_channel(-1)
+, m_isAtStation(false)
 {
 	//la corps de la loco
 	//position de la loco
@@ -317,6 +318,7 @@ void Train::keyboard( const SDL_KeyboardEvent *event)
 			m_spring2->SetMotorSpeed(m_speed);
 			m_wagons[0]->setMotorSpeed(m_speed);
 			m_wagons[1]->setMotorSpeed(m_speed);
+
 			break;
 
 		case 'q':
@@ -363,6 +365,21 @@ int Train::getMaxCapacity()
 	{
 		nb += m_wagons[i]->getMaxCapacity();
 	}
-
 	return nb;
+}
+
+
+float32 Train::getSpeed()
+{
+	return m_speed;
+}
+
+bool Train::getIsAtStation()
+{
+	return m_isAtStation;
+}
+
+void Train::setIsAtStation(bool b)
+{
+	m_isAtStation = b;
 }

@@ -64,6 +64,9 @@ class Train
 	//Donne la taille actuelle de la locomotive
 	b2Vec2 getBodySize() { return m_size; };
 
+	float32 getSpeed();
+	bool getIsAtStation();
+	void setIsAtStation(bool b);
 	b2Body * getBody(unsigned int i);
 	std::vector<PhysicalObject *> getPhysicalObjects() { return m_physicalObjects; };
 
@@ -105,6 +108,8 @@ class Train
 	float32 m_hz; 
 	// le saut est lancé
 	bool m_isJumping;
+	//Si le train est arreté en gare
+	bool m_isAtStation;
 	// pour joindre les wagons et le train
 	b2Joint* m_joints[2];
 	//The two wagons of the game

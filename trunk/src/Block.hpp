@@ -61,6 +61,8 @@ class Block
 		//Retourne l'identifiant du point à l'ordonnée la plus grande
 		int getYMaxPoint();
 
+		BlockType getType();
+
 		//Retourne la position en x de début et de fin du bloc
 		int getPosX() {return m_posX;};
 		int getSizeX() {return m_sizeX;};
