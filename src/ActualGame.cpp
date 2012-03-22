@@ -89,7 +89,7 @@ void ActualGame::run(SDL_Surface * screen, int w, int h)
 	m_train->updatePosition();
 	updateActualBlock();
 	scroll();
-	m_actualLevel->render(screen, w, h);
+	m_actualLevel->render(screen, w, h, m_world);
 	m_train->drawSprite(screen,w,h);
 
 	fooDrawInstance->SetFlags( b2Draw::e_shapeBit );
@@ -168,7 +168,7 @@ void ActualGame::clearAllSmoothAngleAndPosition()
 void ActualGame::checkKeyboardEvent(const SDL_KeyboardEvent *event)
 {
 	m_train->keyboard(event);
-	if (m_actualLevel->getBlock(m_actualBlock+1)){	
+	if (m_actualLevel->getBlock(m_actualBlock)){	
 		m_actualLevel->getBlock(m_actualBlock)->keyboard(event);
 	}
 	if (m_actualLevel->getBlock(m_actualBlock+1)){

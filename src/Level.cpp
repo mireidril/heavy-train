@@ -70,7 +70,7 @@ void Level::scrollLevel(const int & x)
  */
 void Level::loadAndBuild()
 {
-	TiXmlDocument doc("../levels/levels.xml");
+	TiXmlDocument doc("../levels/levelstestcloclo.xml");
 	int num, sizeX, speed = -1;
 	std::string path;
 	Block * vBlock;
@@ -338,20 +338,20 @@ void Level::buildBlocks()
 	}
 }
 
-void Level::render(SDL_Surface * screen, int w, int h)
+void Level::render(SDL_Surface * screen, int w, int h, b2World * world)
 {
 	drawBackgrounds(screen,  w,  h);
-	drawBlocks(screen, w, h);
+	drawBlocks(screen, w, h, world);
 }
 
 /*
  * Level dessine tous les blocs du vector
  */
-void Level::drawBlocks(SDL_Surface * screen, int w, int h)
+void Level::drawBlocks(SDL_Surface * screen, int w, int h, b2World * world)
 {
 	for (unsigned int i=0; i<m_blocks.size(); i++) 
 	{
-		m_blocks.at(i)->draw( screen, w, h);
+		m_blocks.at(i)->draw( screen, w, h, world);
 	}
 }
 

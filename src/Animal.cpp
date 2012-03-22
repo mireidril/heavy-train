@@ -139,13 +139,10 @@ void Animal::die(){
  */
 void Animal::keyboard( const SDL_KeyboardEvent *event)
 {
-	
 	switch ( (event->keysym).sym)
 	{
 	case SDLK_SPACE:
-		m_tchou = true;
-		
-		
+		m_tchou = true;		
 		break;
 	default:
 		break;
