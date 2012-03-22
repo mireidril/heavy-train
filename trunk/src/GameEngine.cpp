@@ -7,7 +7,7 @@ SDL_Surface * Sprite::screen;
  */
 
 GameEngine::GameEngine()
-: m_actualGameScreen(GAME)
+: m_actualGameScreen(TITLE)
 , m_nbAvailableIslands(1)
 , m_nbAvailableLevels(1)
 , m_screen(NULL)
@@ -107,6 +107,11 @@ void GameEngine::loadInterfaces()
 	islandScreen->load();
 	m_interfaces.push_back(islandScreen);
 
+	//GAMEOVER
+	Interface * gameOverScreen = new Interface(GAMEOVER);
+	gameOverScreen->load();
+	m_interfaces.push_back(gameOverScreen);
+
 	//ENDGAME
 	Interface * endGameScreen = new Interface(ENDGAME);
 	endGameScreen->load();
@@ -124,14 +129,6 @@ void GameEngine::run()
 	
 	//Initialisation de l'interface
 	loadInterfaces();
-
-	//musique
-	Mix_AllocateChannels(20);
-	Mix_VolumeMusic(MIX_MAX_VOLUME/2);
-	Mix_Volume(0, MIX_MAX_VOLUME);
-	m_musique = Mix_LoadMUS("../musics/rednex.ogg");
-	//Mix_PlayMusic(m_musique, -1);
-	m_actualGame = new ActualGame(1, 1); //A BIENTOT VIRER
 
 	while(m_isRunning)
 	{
@@ -174,11 +171,11 @@ void GameEngine::update()
 				break;
 			*/
 			case SDL_KEYDOWN:
-				if(event.key.keysym.sym == SDLK_ESCAPE)
+				/*if(event.key.keysym.sym == SDLK_ESCAPE)
 				{
 					m_isRunning = false;
-				}
-				else if(event.key.keysym.sym == SDLK_F11)
+				}*/
+				if(event.key.keysym.sym == SDLK_F11)
 				{
 					if(!m_isFullScreen)
 					{
@@ -197,7 +194,7 @@ void GameEngine::update()
 					if(m_actualGameScreen == GAME)
 					{
 						assert(m_actualGame);
-						m_actualGame->checkKeyboardEvent(&(event.key));
+						m_actualGame->checkKeyboardEvent(this, &(event.key));
 					}
 					else
 					{
@@ -209,7 +206,7 @@ void GameEngine::update()
 				if(m_actualGameScreen == GAME)
 				{
 					assert(m_actualGame);
-					m_actualGame->checkKeyboardEvent(&(event.key));
+					m_actualGame->checkKeyboardEvent(this, &(event.key));
 				}
 				break;
 			case SDL_MOUSEBUTTONUP:
@@ -243,7 +240,7 @@ void GameEngine::render()
 	}
 	else
 	{
-		m_actualGame->run(m_screen, m_windowsWidth, m_windowsHeight);		
+		m_actualGame->run(this, m_screen, m_windowsWidth, m_windowsHeight);		
 	}
 	// Met à jour l'affichage
 	//SDL_Flip(m_screen);
@@ -258,7 +255,7 @@ void GameEngine::changeScreen(const GameScreen & previousScreen, const GameScree
 {
 	if(screen < NB_SCREENS)
 	{
-		if(screen == GAME)
+		if(screen == GAME && previousScreen != PAUSE && previousScreen != GAMEOVER)
 		{
 			//Initialisation d'une partie
 			m_actualGame = new ActualGame(level, island);
@@ -271,7 +268,12 @@ void GameEngine::changeScreen(const GameScreen & previousScreen, const GameScree
 			//Mix_PlayMusic(m_musique, -1);
 
 		}
-		else if(screen == SCORE)
+		/*else if(screen == GAME && previousScreen == GAMEOVER)
+		{
+			m_actualGame->teleportTrainToLastStation();
+		}*/
+
+		if(screen == SCORE)
 		{
 			if(previousScreen == TITLE)
 			{
@@ -299,13 +301,27 @@ void GameEngine::changeScreen(const GameScreen & previousScreen, const GameScree
 			//On met à jour le nombre d'iles/niveaux débloqués avant d'afficher l'écran 
 			m_interfaces[screen]->loadXML(-1, -1);
 		}
-
-		//Suppression d'un niveau de jeu actuel en changeant d'écran de jeu autre que PAUSE
-		if(previousScreen == GAME && screen != PAUSE)
+		else if( (screen == TITLE && previousScreen == PAUSE) || (screen == TITLE && previousScreen == GAMEOVER) ) 
 		{
 			Mix_PauseMusic();
 			delete m_actualGame;
 			m_actualGame = NULL;
+		}
+		else if(screen == HELP)
+		{
+			m_interfaces[screen]->setPreviousScreen(previousScreen);
+		}
+
+		//Suppression d'un niveau de jeu actuel en changeant d'écran de jeu autre que PAUSE
+		if(previousScreen == GAME && screen != PAUSE && screen != GAMEOVER )
+		{
+			Mix_PauseMusic();
+			delete m_actualGame;
+			m_actualGame = NULL;
+			if(screen == ENDGAME)
+			{
+				m_interfaces[screen]->loadXML(level, island);
+			}
 		}
 
 		m_actualGameScreen = screen;

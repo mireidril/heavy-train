@@ -31,7 +31,7 @@ class Level
 		//Load and build the level n°lvl of the island n°isle
 		void loadAndBuild();
 		//Ajoute une image de fond
-		void addBackgroundImage(const std::string & path, const std::string & path2 = "");
+		void addBackgroundImage(const std::string & path, const int & posY, const std::string & path2 = "");
 		//Crée un Sprite pour m_ground
 		void loadGroundImage(const std::string & path);
 		//Retourne le sprite du sol du niveau
@@ -48,6 +48,9 @@ class Level
 		void drawBlocks(SDL_Surface * screen, int w, int h, ActualGame * game, b2World * world);
 
 		void drawBackgrounds(SDL_Surface * screen, int w, int h);
+
+		unsigned int getIslandNum() { return m_islandNum;};
+		unsigned int getLevelNum() { return m_levelNum;};
 	private :
 		//World
 		b2World * m_world;

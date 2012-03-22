@@ -14,6 +14,8 @@
 
 #include <sstream>
 
+class GameEngine;
+
 class ActualGame
 {
 	public :
@@ -21,6 +23,7 @@ class ActualGame
 		virtual ~ActualGame();
 		void runSimulation();
 
+		void checkVictoryConditions();
 		void updateActualBlock();
 		//Gère l'arrêt du train en gare
 		void trainAtStation();
@@ -29,12 +32,14 @@ class ActualGame
 		//Scrolle le niveau en fonction du déplacement du train
 		void scroll();
 
+		void teleportTrainToLastStation();
+
 		//Réinitialise les valeurs des PhysicalObjects après un smooth pour coller au framerate
 		void clearAllSmoothAngleAndPosition();
 		void smoothAllBodyPositions();
 
-		void checkKeyboardEvent(const SDL_KeyboardEvent *event);
-		void run(SDL_Surface * screen, int w, int h);
+		void checkKeyboardEvent(GameEngine* g, const SDL_KeyboardEvent *event);
+		void run(GameEngine * g, SDL_Surface * screen, int w, int h);
 		void drawInterface(SDL_Surface * screen, const int & w, const int & h);
 		//Add points to the total score
 		void updateTotalScore();
@@ -65,6 +70,7 @@ class ActualGame
 		int m_starDustScore;
 		int m_obstacleScore;
 		int m_actualBlock;
+		unsigned int m_lastStation;
 		//Factor of how many passengers will leave the train
 		float m_animalsFactor;
 		//Factor of how many passengers will leave the train while in a limit speed zone
@@ -104,5 +110,8 @@ class ActualGame
 		//Images de l'interface et positions des textes
 		TTF_Font * m_font;
 		std::vector<Sprite*> m_interfaceImages;
+
+		//True si le joueur se trouve en condition de game over
+		bool m_gameOver;
 };
 #endif

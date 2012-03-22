@@ -72,7 +72,7 @@ void Level::scrollLevel(const int & x)
 void Level::loadAndBuild()
 {
 	TiXmlDocument doc("../levels/levelstestcloclo.xml");
-	int sizeX, speed = -1;
+	int sizeX, posY = 0,speed = -1;
 	std::string path;
 	Block * vBlock;
 	Station * vStation;
@@ -111,6 +111,12 @@ void Level::loadAndBuild()
 							if (strcmp(contenuLevel->Value(),"sprite")==0)
 							{
 								path = contenuLevel->Attribute("img");
+
+								posY = 0;
+								if(contenuLevel->Attribute("posY") )
+								{
+									posY = atoi(contenuLevel->Attribute("posY") );
+								}
 						
 								if( strcmp(contenuLevel->Attribute("type"),"ground") == 0 )
 								{
@@ -120,11 +126,11 @@ void Level::loadAndBuild()
 								{
 									if(contenuLevel->Attribute("img2") )
 									{
-										addBackgroundImage(path, contenuLevel->Attribute("img2"));
+										addBackgroundImage(path, posY, contenuLevel->Attribute("img2"));
 									}
 									else
 									{
-										addBackgroundImage(path);
+										addBackgroundImage(path, posY);
 									}
 								}
 							}
@@ -310,9 +316,9 @@ void Level::loadAndBuild()
 }
 
 //Ajoute une image de fond
-void Level::addBackgroundImage(const std::string & path, const std::string & path2)
+void Level::addBackgroundImage(const std::string & path, const int & posY, const std::string & path2)
 {
-	Sprite * backg = new Sprite(path.c_str(), 0, 0, 1024, 768);
+	Sprite * backg = new Sprite(path.c_str(), 0, posY, 1024, 768);
 	if(path2 != "")
 	{
 		backg->addImage(path2.c_str());
@@ -353,7 +359,6 @@ void Level::render(SDL_Surface * screen, int w, int h, ActualGame * game, b2Worl
  * Level dessine tous les blocs du vector
  */
 void Level::drawBlocks(SDL_Surface * screen, int w, int h, ActualGame * game, b2World * world)
-
 {
 	for (unsigned int i=0; i<m_blocks.size(); i++) 
 	{
@@ -370,16 +375,18 @@ void Level::drawBackgrounds(SDL_Surface * screen, int w, int h)
 	for(int i = 0; i < m_backgroundImages.size(); ++i)
 	{
 		m_backgroundImages[i]->draw(screen, w, h);
+		int image2ToDraw = 0;
 		//Si c'est pas l'image de fond
 		if( i > 0 )
 		{
 			int leftPosX = m_backgroundImages[i]->getPositionX();
 			int rightPosX = m_backgroundImages[i]->getPositionX() + m_backgroundImages[i]->getSizeX();
+			image2ToDraw = m_backgroundImages[i]->getNbFrames() - 1;
 
 			if(leftPosX < 0)
 			{
 				int step = leftPosX + m_backgroundImages[i]->getSizeX();
-				m_backgroundImages[i]->drawAtPosition(screen, step, m_backgroundImages[i]->getPositionY(), w, h, 1);
+				m_backgroundImages[i]->drawAtPosition(screen, step, m_backgroundImages[i]->getPositionY(), w, h, image2ToDraw);
 
 				if(leftPosX < -WINDOWS_W)
 				{
@@ -390,7 +397,7 @@ void Level::drawBackgrounds(SDL_Surface * screen, int w, int h)
 			if( rightPosX > WINDOWS_W)
 			{
 				int step = rightPosX - m_backgroundImages[i]->getSizeX(); 
-				m_backgroundImages[i]->drawAtPosition(screen, step - m_backgroundImages[i]->getSizeX(), m_backgroundImages[i]->getPositionY(), w, h, 1);
+				m_backgroundImages[i]->drawAtPosition(screen, step - m_backgroundImages[i]->getSizeX(), m_backgroundImages[i]->getPositionY(), w, h, image2ToDraw);
 				
 				if(leftPosX > WINDOWS_W)
 				{

@@ -27,6 +27,7 @@ enum GameScreen
 	HELP,
 	WORLD,
 	ISLAND,
+	GAMEOVER,
 	ENDGAME,
 	GAME,
 	NB_SCREENS,
@@ -84,6 +85,8 @@ class Interface
 		//Renvoie le nombre de niveaux débloqués pour la dernière île débloquée
 		unsigned int getNbAvailableLevels();
 
+		void setPreviousScreen(GameScreen s) {m_previousScreen = s;};
+
 	private :
 		//const unsigned int						m_nbLevelByIsland;
 		//Sprites des images de fond de l'interface
@@ -106,6 +109,11 @@ class Interface
 		unsigned int							m_actualLeaderboard;
 		//Police d'écriture
 		TTF_Font *								m_font;
+		//Boolean pour savoir à quelle page on est pour ENDGAME
+		bool									m_page;
+		std::stringstream						m_name;
+		//Ecran précédent, parfois nécéssaire
+		GameScreen								m_previousScreen;
 		
 };
 
