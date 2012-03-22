@@ -1,5 +1,6 @@
 #include "Block.hpp"
 #include "Level.hpp"
+#include "ActualGame.hpp"
 
 /*
  * Block Constructor
@@ -426,7 +427,8 @@ void Block::scroll(const int & x)
 }
 
 
-void Block::draw(SDL_Surface * screen, const int & width, const int & height, b2World * world)
+void Block::draw(SDL_Surface * screen, const int & width, const int & height, ActualGame * game, b2World * world)
+
 {
 	if(m_sprite)
 		m_sprite->draw(screen, width, height);
@@ -436,6 +438,11 @@ void Block::draw(SDL_Surface * screen, const int & width, const int & height, b2
 		if ( !m_animals[i]->isDie() )
 		{
 			m_animals[i]->draw(screen, width, height);
+			 ////////////////////////////////////////////////////////////////////////////////////////////////
+			/*appeller la fonction update score ici
+			appeler aussi la fonction ejectPassenger dans m_train-> Wagons -> passenger
+			*/////////////////////////
+			//game->updateObstacleScore();
 		}
 	}
 }

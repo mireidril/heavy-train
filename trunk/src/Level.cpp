@@ -1,4 +1,5 @@
 #include "Level.hpp"
+#include "ActualGame.hpp"
 /*Level Constructor */
 Level::Level(b2World * world, unsigned int level, unsigned int island) 
 : m_world (world)
@@ -339,20 +340,24 @@ void Level::buildBlocks()
 	}
 }
 
-void Level::render(SDL_Surface * screen, int w, int h, b2World * world)
+void Level::render(SDL_Surface * screen, int w, int h, ActualGame * game, b2World * world)
+
 {
 	drawBackgrounds(screen,  w,  h);
-	drawBlocks(screen, w, h, world);
+
+	drawBlocks(screen, w, h, game, world);
+
 }
 
 /*
  * Level dessine tous les blocs du vector
  */
-void Level::drawBlocks(SDL_Surface * screen, int w, int h, b2World * world)
+void Level::drawBlocks(SDL_Surface * screen, int w, int h, ActualGame * game, b2World * world)
+
 {
 	for (unsigned int i=0; i<m_blocks.size(); i++) 
 	{
-		m_blocks.at(i)->draw( screen, w, h, world);
+		m_blocks.at(i)->draw (screen, w, h, game, world);
 	}
 }
 

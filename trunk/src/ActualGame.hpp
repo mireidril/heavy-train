@@ -30,7 +30,7 @@ class ActualGame
 		//Add points to the total score
 		void updateTotalScore();
 		//Add points to the passenger score
-		void updatePassengerScore();
+		void updatePassengerScore(); 
 		//Add points to the time score
 		void updateTimeScore();
 		//Add points to the satisfaction score
@@ -39,7 +39,7 @@ class ActualGame
 		//void updateStarDustScore(const int & points);
 		void updateStarDustScore();
 		//Add points to the obstacle score
-		void updateObstacleScore();
+		void updateObstacleScore(); //pas besoin de cette fonction puisqu'on diminue les passagers au fur et a mesure et on calculera le score a la fin
 		//Update the total score when stopping at a station
 		//void calculateStopScore();
 		//If an animal is visible on screen, return true
@@ -58,7 +58,7 @@ class ActualGame
 		int m_obstacleScore;
 		int m_actualBlock;
 		//Factor of how many passengers will leave the train
-		static float m_animalsFactor;
+		float m_animalsFactor;
 		//Factor of how many passengers will leave the train while in a limit speed zone
 		static float m_speedLimitFactor;
 		//How many points the player gains for each start dust
