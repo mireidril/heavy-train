@@ -225,20 +225,6 @@ void Train::jump(){
 	}
 }
 
-//Réinitialise les valeurs des PhysicalObjects après un smooth pour coller au framerate
-void Train::clearAllSmoothAngleAndPosition()
-{
-	for(int i = 0; i < m_physicalObjects.size(); ++i)
-	{
-		m_physicalObjects[i]->clearSmoothAngleAndPosition();
-	}
-
-	for(int i = 0; i < m_wagons.size(); ++i)
-	{
-		m_wagons[i]->clearAllSmoothAngleAndPosition();
-	}
-}
-
 /*
  * Train keyboard
  */

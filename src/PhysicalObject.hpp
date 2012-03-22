@@ -36,13 +36,6 @@ class PhysicalObject
 		//Ratio calculé en fonction du framerate
 		static double fixedTimestepAccumulatorRatio;
 
-		//Retourne la position smoothée en fonction de framerate de m_body
-		b2Vec2 getPositionSmoothed();
-		//Retourne l'angle smoothé en fonction de framerate de m_body
-		double getAngleSmoothed();
-		//Réinitialise les valeurs après un smooth
-		void clearSmoothAngleAndPosition();
-
 		//Retourne la position du body
 		b2Vec2 getPosition();
 		//Retourne l'angle du body

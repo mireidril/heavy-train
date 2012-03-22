@@ -43,20 +43,6 @@ b2Body * Wagon::getBody(unsigned int i)
 }
 
 /*
- * Réinitialise les valeurs des PhysicalObjects après un smooth pour coller au framerate
- */
-void Wagon::clearAllSmoothAngleAndPosition()
-{
-	for(int i = 0; i < m_physicalObjects.size(); ++i)
-	{
-		m_physicalObjects[i]->clearSmoothAngleAndPosition();
-	}
-
-	for (std::list<Passenger*>::iterator it = m_passengers.begin(); it != m_passengers.end(); it++)
-		(*it)->clearSmoothAngleAndPosition();
-}
-
-/*
  * draw the wagon on the screen
  */
 void Wagon::drawSprite(SDL_Surface * screen, const int & width, const int & height, const int & posXLocoSprite, const double & posXLocoBody)

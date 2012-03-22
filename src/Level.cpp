@@ -75,6 +75,7 @@ void Level::loadAndBuild()
 	std::string path;
 	Block * vBlock;
 	Station * vStation;
+	int numBlock = 0;
 
 	if(!doc.LoadFile())
 	{
@@ -137,7 +138,8 @@ void Level::loadAndBuild()
 									speed = atoi(contenuLevel->Attribute("speed") );
 								}
 
-								vBlock = new Block(sizeX, num, this, speed);
+								vBlock = new Block(sizeX, numBlock, this, speed);
+								numBlock++;
 
 								if (strcmp(contenuLevel->Attribute("type"),"GROUND")==0)
 								{
@@ -245,7 +247,8 @@ void Level::loadAndBuild()
 								num = atoi(contenuLevel->Attribute("num"));
 								sizeX = atoi(contenuLevel->Attribute("size"));
 
-								vStation = new Station(sizeX, num, this); // smartpointer
+								vStation = new Station(sizeX, numBlock, this); // smartpointer
+								numBlock++;
 
 								//variable element qui check les balises contenu dans block
 								TiXmlElement *contenuStation = contenuLevel->FirstChildElement();
