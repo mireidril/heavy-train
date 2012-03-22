@@ -43,6 +43,9 @@ ActualGame::ActualGame(unsigned int level, unsigned int island)
 	m_world->SetDebugDraw( fooDrawInstance );
 
 	m_starDustScore = 0;
+	m_obstacleScore = 0;
+	m_animalsFactor = -1.5;
+	m_satisfactionScore = 0;
 }
 ActualGame::~ActualGame()
 {
@@ -88,7 +91,9 @@ void ActualGame::run(SDL_Surface * screen, int w, int h)
 	//Dessine le niveau & le train
 	updateActualBlock();
 	scroll();
-	m_actualLevel->render(screen, w, h, m_world);
+
+	m_actualLevel->render(screen, w, h, this, m_world);
+
 	m_train->drawSprite(screen,w,h);
 
 	fooDrawInstance->SetFlags( b2Draw::e_shapeBit );
@@ -233,7 +238,8 @@ void ActualGame::updateStarDustScore()
 }
 void ActualGame::updateObstacleScore()
 {
-	//m_obstacleScore= ;
+	//s'augmente a chaque collision avec un animal => compte le nombre d'animal shoutés
+	m_obstacleScore++;
 }
 //Update a la gare !!!
 void ActualGame::updatePassengerScore()
@@ -242,11 +248,54 @@ void ActualGame::updatePassengerScore()
 }
 void ActualGame::updateTimeScore()
 {
-
+	/*Time * temps = new Time(0,0,0);
+	Time * tempsAvance = new Time(0, 10,0);
+	if(m_timer < temps) // >10 en retard
+	{
+		for(int i = 0 ; i < abs(m_timer->getMinutes()) ; i++)
+		{
+			m_timeScore -= m_timePoint;
+		}
+	}else if(m_timer > temps && m_timer <= tempsAvance) // >10 en avance
+	{
+		m_timeScore += m_onTimeInfTenPoint;
+	}else if(m_timer > tempsAvance) // <10 en avance
+	{
+		m_timeScore += m_timePoint;
+	}else //a l'heure
+	{
+		m_timeScore += m_onTimePoint;
+	}*/
 }
 void ActualGame::updateSatisfactionScore()
 {
+	m_satisfactionScore += m_obstacleScore * m_animalsFactor;
+	//point quand on rate une station
+	/*if()
+		m_satisfactionScore += m_missStationPoint;
+	//checkLaPosition du trin et met a jour score
+	if(m_trains->checkPositionStation() == true)
+	{
+		m_satisfactionScore += m_stopStationPoint;
+	}else
+	{
+		m_satisfactionScore -= m_stopStationPoint;
+	}
+	//check la mauvaise conduite en fonction de mshaken
+	if(m_shaken > ____)
+	{
+		m_satisfactionScore +=( m_drivePoint*15);
+	}else if(m_shaken > ____  && m_skahen < ___)
+	{
+		m_satisfactionScore +=( m_drivePoint*10);
+	}else if(m_shaken > 0  && m_skahen < ___)
+	{
+		m_satisfactionScore +=( m_drivePoint*5);
+	}
 
+	*/
+	//satisfaction en fonction du nombre de passager arrivé a destination
+	m_satisfactionScore += m_train->getNbPassengers()*200;
 }
 void ActualGame::updateTotalScore()
 {
@@ -254,5 +303,4 @@ void ActualGame::updateTotalScore()
 	m_totalScore += m_passengerScore;
 	m_totalScore += m_timeScore;
 	m_totalScore += m_satisfactionScore;
-	m_totalScore += m_obstacleScore;
 }
