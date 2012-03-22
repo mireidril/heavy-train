@@ -50,15 +50,6 @@ Train::~Train ()
 	//suppr bodies, + sounds
 }
 
-//Update the vertical position of the Train’s sprite according to the physical simulation
-void Train::updatePosition()
-{
-	for(unsigned int i = 0; i < m_physicalObjects.size(); ++i)
-	{
-		m_physicalObjects[i]->updatePositions();
-	}
-}
-
 /*
  * draw the train on the screen
  */

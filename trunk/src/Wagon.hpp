@@ -37,6 +37,7 @@ class Wagon{
 
 	void build(b2World * world, double x, float high);
 	b2Body * getBody(unsigned int i);
+	std::vector<PhysicalObject *> getPhysicalObjects() { return m_physicalObjects; };
 
 	//Réinitialise les valeurs des PhysicalObjects après un smooth pour coller au framerate
 	void clearAllSmoothAngleAndPosition();

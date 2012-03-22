@@ -37,13 +37,16 @@ Sprite * PhysicalObject::getSprite(){
 	return m_sprite;
 }
 
-void PhysicalObject::updatePositions()
+void PhysicalObject::updatePositions(b2Vec2 pos, double angle)
 {
-	m_previousPosition = m_smoothedPosition;
-	m_smoothedPosition = getPositionSmoothed();
-	
-	m_previousAngle = m_smoothedAngle;
-	m_smoothedAngle = getAngleSmoothed();
+	m_smoothedPosition = pos;
+	m_smoothedAngle = angle;
+}
+
+void PhysicalObject::updatePreviousPositions(b2Vec2 pos, double angle)
+{
+	m_previousPosition = pos;
+	m_previousAngle = angle;
 }
 
 b2Vec2 PhysicalObject::getPositionSmoothed()
@@ -68,6 +71,17 @@ double PhysicalObject::getAngle()
 {
 	return m_smoothedAngle;
 }
+
+b2Vec2 PhysicalObject::getPreviousPosition()
+{
+	return m_previousPosition;
+}
+
+double PhysicalObject::getPreviousAngle()
+{
+	return m_previousAngle;
+}
+
 
 double PhysicalObject::getAngleSmoothed()
 {

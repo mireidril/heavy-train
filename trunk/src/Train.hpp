@@ -34,8 +34,6 @@ class Train
 	void whistle();
 	//When the train is stopped at a station, check if he is well-placed, at the center of the platform
 	void checkPositionStation();
-	//Update the vertical position of the Train’s sprite according to the physical simulation
-	void updatePosition();
 	//When the train derail, change the displayed image of the train then the player restart at the last station reached
 	void derail();
 	//Use a bonus
@@ -68,7 +66,9 @@ class Train
 	b2Vec2 getBodySize() { return m_size; };
 
 	b2Body * getBody(unsigned int i);
+	std::vector<PhysicalObject *> getPhysicalObjects() { return m_physicalObjects; };
 
+	std::vector<Wagon*> getWagons() {return m_wagons;};
 	
 	Sprite * getSprite() { return m_physicalObjects[0]->getSprite(); };
 

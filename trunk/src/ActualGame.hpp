@@ -23,6 +23,7 @@ class ActualGame
 
 		//Réinitialise les valeurs des PhysicalObjects après un smooth pour coller au framerate
 		void clearAllSmoothAngleAndPosition();
+		void smoothAllBodyPositions();
 
 		void checkKeyboardEvent(const SDL_KeyboardEvent *event);
 		void run(SDL_Surface * screen, int w, int h);

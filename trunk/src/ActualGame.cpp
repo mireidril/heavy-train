@@ -86,7 +86,6 @@ void ActualGame::run(SDL_Surface * screen, int w, int h)
 	runSimulation();
 	
 	//Dessine le niveau & le train
-	m_train->updatePosition();
 	updateActualBlock();
 	scroll();
 	m_actualLevel->render(screen, w, h, m_world);
@@ -157,12 +156,88 @@ void ActualGame::runSimulation()
 	}
  
 	m_world->ClearForces();
+
+	smoothAllBodyPositions();
 }
 
 void ActualGame::clearAllSmoothAngleAndPosition()
 {
-	m_actualLevel->clearAllSmoothAngleAndPosition();
-	m_train->clearAllSmoothAngleAndPosition();
+	//m_actualLevel->clearAllSmoothAngleAndPosition();
+	//m_train->clearAllSmoothAngleAndPosition();
+
+	/*for (b2Body * b = m_world->GetBodyList (); b != NULL; b = b->GetNext ())
+	{
+		if (b->GetType () == b2_staticBody)
+		{
+			continue;
+		}
+ 
+		PhysicsComponent & c = PhysicsComponent::b2BodyToPhysicsComponent (b);
+		c.smoothedPosition_ = c.previousPosition_ = b->GetPosition ();
+		c.smoothedAngle_ = c.previousAngle_ = b->GetAngle ();
+	}*/
+	
+	b2Vec2 smoothedPosition_, previousPosition_;
+	double smoothedAngle_, previousAngle_;
+	for(int i = 0; i < m_train->getPhysicalObjects().size(); ++i)
+	{
+		b2Body * b = m_train->getPhysicalObjects()[i]->getBody();
+		smoothedPosition_ = previousPosition_ = b->GetPosition ();
+		smoothedAngle_ = previousAngle_ = b->GetAngle ();
+		m_train->getPhysicalObjects()[i]->updatePositions(smoothedPosition_, smoothedAngle_);
+		m_train->getPhysicalObjects()[i]->updatePreviousPositions(smoothedPosition_, smoothedAngle_);
+	}
+
+	for(int i = 0; i < m_train->getWagons().size(); ++i)
+	{
+		Wagon * w = m_train->getWagons()[i];
+		for(int j = 0; j < w->getPhysicalObjects().size(); ++j)
+		{
+			b2Body * b = w->getPhysicalObjects()[j]->getBody();
+			smoothedPosition_ = previousPosition_ = b->GetPosition ();
+			smoothedAngle_ = previousAngle_ = b->GetAngle ();
+			w->getPhysicalObjects()[j]->updatePositions(smoothedPosition_, smoothedAngle_);
+			w->getPhysicalObjects()[j]->updatePreviousPositions(smoothedPosition_, smoothedAngle_);
+		}
+	}
+}
+
+void ActualGame::smoothAllBodyPositions()
+{
+	const float oneMinusRatio = 1.f - fixedTimestepAccumulatorRatio;
+ 
+	/*for (b2Body * b = m_world->GetBodyList (); b != NULL; b = b->GetNext ())
+	{
+		if (b->GetType () == b2_staticBody)
+		{
+			continue;
+		}
+ 
+		PhysicsComponent & c = PhysicsComponent::b2BodyToPhysicsComponent (b);
+		c.smoothedPosition_ = fixedTimestepAccumulatorRatio * b->GetPosition () + oneMinusRatio * c.previousPosition_;
+		c.smoothedAngle_ = fixedTimestepAccumulatorRatio* b->GetAngle () + oneMinusRatio * c.previousAngle_;
+	}*/
+	b2Vec2 smoothedPosition_;
+	double smoothedAngle_;
+	for(int i = 0; i < m_train->getPhysicalObjects().size(); ++i)
+	{
+		b2Body * b = m_train->getPhysicalObjects()[i]->getBody();
+		b2Vec2 smoothedPosition_ = fixedTimestepAccumulatorRatio * b->GetPosition () + oneMinusRatio * m_train->getPhysicalObjects()[i]->getPreviousPosition();
+		double smoothedAngle_ = fixedTimestepAccumulatorRatio* b->GetAngle () + oneMinusRatio * m_train->getPhysicalObjects()[i]->getPreviousAngle();
+		m_train->getPhysicalObjects()[i]->updatePositions(smoothedPosition_, smoothedAngle_);
+	}
+
+	for(int i = 0; i < m_train->getWagons().size(); ++i)
+	{
+		Wagon * w = m_train->getWagons()[i];
+		for(int j = 0; j < w->getPhysicalObjects().size(); ++j)
+		{
+			b2Body * b = w->getPhysicalObjects()[j]->getBody();
+			smoothedPosition_ = fixedTimestepAccumulatorRatio * b->GetPosition () + oneMinusRatio * w->getPhysicalObjects()[j]->getPreviousPosition();
+			smoothedAngle_ = fixedTimestepAccumulatorRatio* b->GetAngle () + oneMinusRatio * w->getPhysicalObjects()[j]->getPreviousAngle();
+			w->getPhysicalObjects()[j]->updatePositions(smoothedPosition_, smoothedAngle_);
+		}
+	}
 }
 
 void ActualGame::checkKeyboardEvent(const SDL_KeyboardEvent *event)
