@@ -305,12 +305,17 @@ void Interface::update(GameEngine * gameEngine)
 		if(m_mousePositionX >= m_buttonsImages[i]->getPositionX() && m_mousePositionX < (m_buttonsImages[i]->getPositionX() + m_buttonsImages[i]->getSizeX() ) &&
 		   m_mousePositionY >= m_buttonsImages[i]->getPositionY() && m_mousePositionY < (m_buttonsImages[i]->getPositionY() + m_buttonsImages[i]->getSizeY() ) )
 		{
-			if(m_clic == 1 && !(m_type == WORLD && i >= m_nbAvailableIslands) )
+			if(m_clic == 1 &&  !(m_type == WORLD && i >= m_nbAvailableIslands) )
 			{
 				buttonChosen = i;
 				m_clic = -1;
 			}
-			
+			else if(m_clic == 1 &&  m_type == WORLD && i == m_buttonsImages.size() - 1 )
+			{
+				buttonChosen = i;
+				m_clic = -1;
+			}
+
 			//Si on est dans l'écran WORLD, on ne change pas l'image des îles non débloquées
 			if( ! (m_type == WORLD && i >= m_nbAvailableIslands) || (m_type == WORLD && i == m_buttonsImages.size() - 1) )
 			{
