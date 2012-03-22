@@ -73,6 +73,10 @@ void Interface::load()
 		{
 			//Background Images
 			m_backgroundImages.push_back(new Sprite("../img/screens/ecran1_test3.png", 0, 0, 1024, 768));
+			//Button images
+			Sprite * returnB = new Sprite("../img/screens/return_button_unselected.png", 25, 648, 160, 100);
+			returnB->addImage("../img/screens/return_button_selected.png");
+			m_buttonsImages.push_back(returnB);
 			break;
 		}
 		case SCORE :
@@ -86,9 +90,12 @@ void Interface::load()
 			leftArrow1->addImage("../img/screens/leftArrow_selected.png");
 			Sprite * rightArrow1 = new Sprite("../img/screens/rightArrow_unselected.png", 650, 160, 60, 50);
 			rightArrow1->addImage("../img/screens/rightArrow_selected.png");
+			Sprite * returnB = new Sprite("../img/screens/return_button_unselected.png", 25, 648, 160, 100);
+			returnB->addImage("../img/screens/return_button_selected.png");
 			
 			m_buttonsImages.push_back(leftArrow1);
 			m_buttonsImages.push_back(rightArrow1);
+			m_buttonsImages.push_back(returnB);
 
 			break;
 		}
@@ -96,6 +103,10 @@ void Interface::load()
 		{
 			//Background Images
 			m_backgroundImages.push_back(new Sprite("../img/screens/ecran1_test3.png", 0, 0, 1024, 768));
+			//Button images
+			Sprite * returnB = new Sprite("../img/screens/return_button_unselected.png", 25, 648, 160, 100);
+			returnB->addImage("../img/screens/return_button_selected.png");
+			m_buttonsImages.push_back(returnB);
 			break;
 		}
 		case ISLAND :
@@ -119,6 +130,9 @@ void Interface::load()
 			Sprite * isle3 = new Sprite("../img/screens/chicken_island_unselected.png", 300, 400, 347, 290);
 			isle3->addImage("../img/screens/chicken_island_selected.png");
 			isle3->addImage("../img/screens/chicken_island_locked.png");
+			
+			Sprite * returnB = new Sprite("../img/screens/return_button_unselected.png", 25, 648, 160, 100);
+			returnB->addImage("../img/screens/return_button_selected.png");
 
 			switch(m_nbAvailableIslands)
 			{
@@ -133,6 +147,7 @@ void Interface::load()
 			m_buttonsImages.push_back(isle1);
 			m_buttonsImages.push_back(isle2);
 			m_buttonsImages.push_back(isle3);
+			m_buttonsImages.push_back(returnB);
 			break;
 		}
 		case OPTIONS :
@@ -142,7 +157,12 @@ void Interface::load()
 		case ENDGAME :
 		{
 			//Background Images
-			m_backgroundImages.push_back(new Sprite("../img/screens/ecran1_test3.png", 0, 0, 1024, 768));
+			m_backgroundImages.push_back(new Sprite("../img/screens/score_level.png", 0, 0, 1024, 768));
+			//Button Images
+			Sprite * returnB = new Sprite("../img/screens/return_button_unselected.png", 25, 648, 160, 100);
+			returnB->addImage("../img/screens/return_button_selected.png");
+
+			m_buttonsImages.push_back(returnB);
 			break;
 		}
 		default :
@@ -292,7 +312,7 @@ void Interface::update(GameEngine * gameEngine)
 			}
 			
 			//Si on est dans l'écran WORLD, on ne change pas l'image des îles non débloquées
-			if( ! (m_type == WORLD && i >= m_nbAvailableIslands) )
+			if( ! (m_type == WORLD && i >= m_nbAvailableIslands) || (m_type == WORLD && i == m_buttonsImages.size() - 1) )
 			{
 				m_buttonsImages[i]->changeImageManually(1);
 			}
@@ -300,7 +320,7 @@ void Interface::update(GameEngine * gameEngine)
 		else
 		{
 			//Si on est dans l'écran WORLD, on ne change pas l'image des îles non débloquées
-			if(m_type == WORLD && i >= m_nbAvailableIslands) 
+			if(m_type == WORLD && i >= m_nbAvailableIslands && (i != m_buttonsImages.size() - 1) ) 
 			{
 				m_buttonsImages[i]->changeImageManually(2);
 			}
@@ -342,6 +362,10 @@ void Interface::update(GameEngine * gameEngine)
 			}
 			case PAUSE :
 			{
+				if(buttonChosen == m_buttonsImages.size() - 1)
+				{
+					gameEngine->changeScreen(m_type, GAME, -1, -1);
+				}
 				break;
 			}
 			case SCORE :
@@ -361,11 +385,19 @@ void Interface::update(GameEngine * gameEngine)
 						m_actualLeaderboard++;
 					}
 				}
+				else if(buttonChosen == m_buttonsImages.size() - 1)
+				{
+					gameEngine->changeScreen(m_type, TITLE, -1, -1);
+				}
 
 				break;
 			}
 			case HELP :
 			{
+				if(buttonChosen == m_buttonsImages.size() - 1)
+				{
+					gameEngine->changeScreen(m_type, TITLE, -1, -1);
+				}
 				break;
 			}
 			case ISLAND :
@@ -379,12 +411,21 @@ void Interface::update(GameEngine * gameEngine)
 				{
 					gameEngine->changeScreen(m_type, GAME, 1, buttonChosen+1);
 				}
+				else if(buttonChosen == m_buttonsImages.size() - 1)
+				{
+					gameEngine->changeScreen(m_type, TITLE, -1, -1);
+				}
+				break;
 				break;
 			}
 			case OPTIONS:
 				break;
 			case ENDGAME :
 			{
+				if(buttonChosen == m_buttonsImages.size() - 1)
+				{
+					gameEngine->changeScreen(m_type, TITLE, -1, -1);
+				}
 				break;
 			}
 			default :
@@ -426,6 +467,11 @@ void Interface::render(SDL_Surface * screen, const int & width, const int & heig
 			if(m_actualLeaderboard < m_leaderboards.size() - 1)
 			{
 				m_buttonsImages[1]->draw(screen, width, height);
+			}
+			//Bouton Return
+			if( i  == m_buttonsImages.size() - 1)
+			{
+				m_buttonsImages[i]->draw(screen, width, height);
 			}
 		}
 	}

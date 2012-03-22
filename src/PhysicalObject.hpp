@@ -28,7 +28,8 @@ class PhysicalObject
 		Sprite * getSprite();
 
 		//Mets à jour les positions et angle actuelle et de la dernière frame
-		void updatePositions();
+		void updatePositions(b2Vec2 pos, double angle);
+		void updatePreviousPositions(b2Vec2 pos, double angle);
 
 		//Pointeur vers le m_world de ActualGame
 		static b2World * m_world;
@@ -46,6 +47,8 @@ class PhysicalObject
 		b2Vec2 getPosition();
 		//Retourne l'angle du body
 		double getAngle();
+		b2Vec2 getPreviousPosition();
+		double getPreviousAngle();
 	protected :
 		//Body of the physical object
 		b2Body * m_body;
