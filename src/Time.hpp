@@ -1,6 +1,16 @@
 #ifndef __TIME_HPP__
 #define __TIME_HPP__
 
+#ifdef _WIN32
+#include "time.h"
+#else
+#include <time.h>
+#endif
+
+#include <iostream>
+#include <cstdio>
+
+
 class Time
 {
 	public :
@@ -23,13 +33,17 @@ class Time
 		//Operators
 		Time& operator+=(const Time& time);
 		Time& operator-=(const Time& time);
-		//Time operator+(const Time& time1, const Time& time2);
-		//Time operator-(const Time& time1, const Time& time2);
-		Time& operator=(const Time& time);
-		Time& operator<(const Time& time);
-		Time& operator>(const Time& time);
-		Time& operator<=(const Time& time);
+		
+		bool isEqual(Time const& time) const;
+    		bool isLessThan(Time const& time) const;
+    		bool isHigherThan(Time const& time) const;
+    		bool isLessThanOrEqual(Time const& time) const;
+    		bool isHigherThanOrEqual(Time const& time) const;
+
+		int getHours();
 		int getMinutes();
+		int getSeconds();
+		
 	private :
 		//Hours
 		unsigned int m_hours;
@@ -40,4 +54,14 @@ class Time
 		//True if the Time is running
 		bool m_started;
 };
+
+
+		Time operator+(const Time& time1, const Time& time2);
+		Time operator-(const Time& time1, const Time& time2);
+		bool operator==(const Time& time1, const Time& time2);
+		bool operator<(const Time& time1, const Time& time2);
+		bool operator>(const Time& time1, const Time& time2);
+		bool operator<=(const Time& time1, const Time& time2);
+		bool operator>=(const Time& time1, const Time& time2);
+		
 #endif
