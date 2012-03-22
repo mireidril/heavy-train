@@ -242,7 +242,7 @@ void ActualGame::updateActualBlock()
 		if( !m_train->getIsAtStation() && actualBlock->getType() == STATION && !m_train->getBody(0)->IsAwake() )
 		{
 			trainAtStation();
-		}else if( m_train->getIsAtStation() && ( actualBlock->getType() != STATION || m_train->getBody(0)->IsAwake() ) )
+		}else if( m_train->getIsAtStation() &&  m_train->getBody(0)->IsAwake() )
 		{
 			trainLeavingStation();
 		}
@@ -251,9 +251,23 @@ void ActualGame::updateActualBlock()
 
 void ActualGame::trainAtStation()
 {
-	std::cout<<"Train en gare !"<<std::endl;
 	m_train->setIsAtStation(true);
+	Station* station = (Station*) m_actualLevel->getBlock(m_actualBlock);
 
+	//Si premier arrêt : les passagers descendent et on compte les points
+	if( !station->getHasStoppedBefore() )
+	{
+		std::cout<<"Train at station ! Entering passengers : "<<station->getNbEnteringPassengers()<<std::endl;
+		station->setHasStoppedBefore(true);
+		
+		//m_train->takeOffPassengers( n,station);
+
+		//Les passagers montent
+		m_train->takeInPassengers(station);
+
+	}
+	
+	
 }
 
 void ActualGame::trainLeavingStation()

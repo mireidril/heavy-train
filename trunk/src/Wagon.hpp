@@ -26,8 +26,8 @@ class Wagon{
 	void ejectLastPassenger();
 	// Appellé à l'arrêt aux gares, avant l'ouverture des portes. 
 	void deletePassenger(Passenger*);
-	// Make the passenger take off at the station
-	void takeOffPassenger(Passenger*, Station *);
+	// Make the n passengers take off at the station
+	void takeOffPassenger(int n, Station *);
 	// Open the wagon’s doors
 	void openDoors();
 	// Close the wagon’s doors
