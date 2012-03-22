@@ -36,7 +36,6 @@ class ActualGame
 		//Add points to the satisfaction score
 		void updateSatisfactionScore();
 		//Add points to the stardust score
-		//void updateStarDustScore(const int & points);
 		void updateStarDustScore();
 		//Add points to the obstacle score
 		void updateObstacleScore(); //pas besoin de cette fonction puisqu'on diminue les passagers au fur et a mesure et on calculera le score a la fin

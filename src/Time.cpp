@@ -8,3 +8,7 @@ Time::Time(int hours, int min, int sec){
 
 Time::~Time(){
 }
+
+int Time::getMinutes(){
+	return m_minutes;
+}
