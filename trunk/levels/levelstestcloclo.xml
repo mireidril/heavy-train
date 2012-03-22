@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<world>
+	<island id="1">
+		<level id="1">
+			<departure hour="12" minutes="00" seconds="00"/>
+			<sprite type="ground" img="../img/levels/level2/niveau2-sol2.png"/>
+			<sprite type="background" img="../img/levels/level1/niveau1-sky.png" />
+			<sprite type="background" img="../img/levels/level3/niveau3-2-bg3.png" img2="../img/levels/level3/niveau3-2-bg3.png" />
+			<infobulle type="aide" numBloc="3" declenche="false">
+				<sprite img="info1.png" />
+			</infobulle>
+			<infobulle type="standard" action="collision" declenche="false">
+				<sprite img="info2.png" />
+			</infobulle>
+
+			<station size="200" num="0">
+				<option hours="12" minutes="00" leaving="0" entering="10"/>
+			</station>
+			<block type="GROUND" size="1024" num="1">
+				<obstacle type="animal" nom="vache" posX="1610" posY="300" />
+				<point x="100" y = "600" />
+				<point x="256" y = "660" />
+				<point x="512" y = "660" />
+				<point x="768" y = "550" />
+				<point x="900" y = "660" />
+			</block>
+			<block type="GROUND" size="200" num="3">
+			</block>
+			<station size="600" num="5">
+				<option hours="12" minutes="05" leaving="10" entering="0"/>
+			</station>
+		</level>
+	</island>
+</world>
