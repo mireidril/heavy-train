@@ -8,6 +8,10 @@ double PhysicalObject::fixedTimestepAccumulatorRatio;
 ActualGame::ActualGame(unsigned int level, unsigned int island)
 : m_lastPosXTrain (INFINITE)
 , m_actualBlock(0)
+, m_actualTime(NULL)
+, m_timer(NULL)
+, m_train(NULL)
+, m_totalScore(0)
 {
 	std::cout << "Actual Game" << std::endl;
 	b2Vec2 gravity(0.0f, -10.0f);
@@ -46,10 +50,30 @@ ActualGame::ActualGame(unsigned int level, unsigned int island)
 	m_obstacleScore = 0;
 	m_animalsFactor = -1.5;
 	m_satisfactionScore = 0;
+
+	//Charges les images de l'interface
+	m_font =  TTF_OpenFont("../fonts/GOTHIC.TTF", 24);
+	m_interfaceImages.push_back(new Sprite("../img/interface/fond.png", 0, 0, 1024, 160) );
+	m_interfaceImages.push_back(new Sprite("../img/interface/time.png", 0, 5, 200, 48) );
+	m_interfaceImages.push_back(new Sprite("../img/interface/passengers.png", 230, 5, 200, 50) );
+	m_interfaceImages.push_back(new Sprite("../img/interface/speed.png", 520, 5, 200, 50) );
+	m_interfaceImages.push_back(new Sprite("../img/interface/score.png", 800, 5, 200, 58) );
+	m_interfaceImages.push_back(new Sprite("../img/interface/next.png", 0, 70, 200, 50) );
+	m_interfaceImages.push_back(new Sprite("../img/interface/time_left.png", 350, 70, 100, 36) );
 }
 ActualGame::~ActualGame()
 {
 	delete m_actualLevel;
+	TTF_CloseFont(m_font);
+
+	if(m_timer) delete m_timer;
+	if(m_actualTime) delete m_actualTime;
+
+	for(unsigned int i = 0; i < m_interfaceImages.size(); ++i)
+	{
+		delete m_interfaceImages[i];
+	}
+
 	delete m_train;
 	delete fooDrawInstance;
 	//supprimer m_world
@@ -93,12 +117,106 @@ void ActualGame::run(SDL_Surface * screen, int w, int h)
 	scroll();
 
 	m_actualLevel->render(screen, w, h, this, m_world);
-
-	m_train->drawSprite(screen,w,h);
+	drawInterface(screen, w, h);
+	m_train->drawSprite(screen, w, h);
 
 	fooDrawInstance->SetFlags( b2Draw::e_shapeBit );
 	//Affichage des formes physiques pour Debug
 	m_world->DrawDebugData();
+}
+
+void ActualGame::drawInterface(SDL_Surface * screen, const int & w, const int & h)
+{
+	for(unsigned int i = 0; i < m_interfaceImages.size(); ++i)
+	{
+		if(m_interfaceImages[i])
+			m_interfaceImages[i]->draw(screen, w, h);
+	}
+	
+	//Dessine les textes
+	std::stringstream ss;
+	SDL_Surface * surf;
+	SDL_Color black = {0, 0, 0};
+	SDL_Rect pos;
+
+	//Time
+	if(m_actualTime != NULL)
+	{
+		ss << m_actualTime->getHours() << ":" << m_actualTime->getMinutes() << ":" << m_actualTime->getSeconds();
+	}
+	else
+	{
+		ss << "00:00:00";
+	}
+	surf = TTF_RenderText_Blended(m_font, ss.str().c_str(), black);
+	pos.x = 75; pos.y = 25;
+	SDL_BlitSurface(surf, NULL, screen, &pos);
+	ss.str(std::string());
+
+	//Passengers
+	if(m_train != NULL)
+	{
+		ss << m_train->getNbPassengers() << "/" << m_train->getMaxCapacity();
+	}
+	else
+	{
+		ss << "00/00";
+	}
+	surf = TTF_RenderText_Blended(m_font, ss.str().c_str(), black);
+	pos.x = 300; pos.y = 25;
+	SDL_BlitSurface(surf, NULL, screen, &pos);
+	ss.str(std::string());
+
+	//Speed
+	if(m_train != NULL)
+	{
+		int velocity = abs( m_train->getBody(0)->GetLinearVelocity().x * 60 * 60 / 1000.0 );
+		ss << velocity << " km/h";
+	}
+	else
+	{
+		ss << "00 km/h";
+	}
+	surf = TTF_RenderText_Blended(m_font, ss.str().c_str(), black);
+	pos.x = 590; pos.y = 25;
+	SDL_BlitSurface(surf, NULL, screen, &pos);
+	ss.str(std::string());
+
+	//Score
+	int nbChiffre = m_totalScore; 
+	ss << m_totalScore << " pts";
+	surf = TTF_RenderText_Blended(m_font, ss.str().c_str(), black);
+	pos.x = 880; pos.y = 25;
+	SDL_BlitSurface(surf, NULL, screen, &pos);
+	ss.str(std::string());
+
+	//Next Stop
+	/*if( getNextStation() != NULL)
+	{
+		ss << m_actualTime->getHours() << ":" << m_actualTime->getMinutes() << ":" << m_actualTime->getSeconds();
+	}
+	else
+	{
+		ss << "00:00:00";
+	}
+	surf = TTF_RenderText_Blended(m_font, ss.str().c_str(), black);
+	pos.x = 75; pos.y = 150;
+	SDL_BlitSurface(surf, NULL, screen, &pos);
+	ss.str(std::string());*/
+
+	//Timer
+	if( m_timer != NULL)
+	{
+		ss << m_timer->getMinutes() << ":" << m_timer->getSeconds();
+	}
+	else
+	{
+		ss << "00:00";
+	}
+	surf = TTF_RenderText_Blended(m_font, ss.str().c_str(), black);
+	pos.x = 435; pos.y = 90;
+	SDL_BlitSurface(surf, NULL, screen, &pos);
+	ss.str(std::string());
 }
 
 void ActualGame::updateActualBlock()
@@ -127,7 +245,13 @@ void ActualGame::scroll()
 {
 	//Récupération de la dernière position du train
  	b2Vec2 currentPos = m_train->getLocoBodyPosition();
-	if( m_lastPosXTrain != INFINITE )
+	//Récupération de la position du dernier bloc
+	double lastBlockPosX = m_actualLevel->getBlock(m_actualLevel->getNbBlocks() - 1)->getPosX() + m_actualLevel->getBlock(m_actualLevel->getNbBlocks() - 1)->getSizeX();
+	if(lastBlockPosX < WINDOWS_W)
+	{
+		std::cout<<"lol"<<std::endl;
+	}
+	else if( m_lastPosXTrain != INFINITE )
 	{
 		double x = m_lastPosXTrain - currentPos.x;
 		Sprite::convertMetersToPixels(&x, NULL, WINDOWS_W, WINDOWS_H);

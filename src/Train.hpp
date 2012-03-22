@@ -44,6 +44,8 @@ class Train
 	void die();
 	//Return the total number of passengers in the train
 	int getNbPassengers();
+	//Returne le nombre maximal de passagers pouvant être dans le train
+	int getMaxCapacity();
 	//Ejects n passengers from the wagons
 	void ejectPassengers(int n);
 	// Take off n passengers at the Station

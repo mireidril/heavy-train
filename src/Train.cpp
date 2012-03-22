@@ -354,3 +354,15 @@ int Train::getNbPassengers()
 	}
 	return nbPassenger;
 }
+
+//Returne le nombre maximal de passagers pouvant être dans le train
+int Train::getMaxCapacity()
+{
+	int nb = 0;
+	for(unsigned int i = 0; i < m_wagons.size(); ++i)
+	{
+		nb += m_wagons[i]->getMaxCapacity();
+	}
+
+	return nb;
+}

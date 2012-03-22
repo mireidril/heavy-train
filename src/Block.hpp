@@ -62,6 +62,8 @@ class Block
 		int getYMaxPoint();
 
 		//Retourne la position en x de début et de fin du bloc
+		int getPosX() {return m_posX;};
+		int getSizeX() {return m_sizeX;};
 		double getPosInMeters();
 		double getEndBlockPosInMeters();
 

@@ -353,7 +353,7 @@ void Block::createImage()
 			int sizeYGround = WINDOWS_H - m_y;
 
 			//Chargement de l'image tunnel
-			SDL_Surface * tunnel = IMG_Load("../img/levels/tunnel2D_opacite80test.png");
+			SDL_Surface * tunnel = IMG_Load("../img/levels/tunnel.png");
 			tunnel->w = m_sizeX;
 		
 			if(!tunnel)
