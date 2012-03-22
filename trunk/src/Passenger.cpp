@@ -112,6 +112,10 @@ b2Joint * Passenger::getJoint(){
 	return m_joint;
 }
 
+bool Passenger::getIsEjected(){
+	return m_isEjected;
+}
+
 void Passenger::setIsEjected(bool b){
 	m_isEjected = b;
 }

@@ -28,6 +28,7 @@ class Passenger : public PhysicalObject
 		void setDestinationPoint( double x, double y );
 		void setJoint(b2Joint * );
 		b2Joint * getJoint();
+		bool getIsEjected();
 		void setIsEjected(bool );
 
 		//Taille des passagers

@@ -258,8 +258,19 @@ void Wagon::ejectPassenger(Passenger* p)
 	m_passengersCount --;
 
 	//On lui met une force vers le haut pour qu'il soit ejecté
-	p->getBody()->ApplyForce( b2Vec2(-10, 40), p->getBody()->GetPosition() );
+	p->getBody()->ApplyForce( b2Vec2(-3, 5), p->getBody()->GetPosition() );
+}
 
+// Eject the "last" (in the list) passenger by removing its joint, set the passenger’s “isEjected” to true. 
+void Wagon::ejectLastPassenger()
+{
+	if( m_passengersCount == 0 )
+		return;
+	//On parcourt a partir du dernier élément
+	std::list<Passenger*>::reverse_iterator it;
+	for ( it = m_passengers.rbegin(); (*it)->getIsEjected() == true; it++)
+		;
+	ejectPassenger((*it));
 }
 
 //On appellera deletePassenger à l'arret aux gares.
@@ -269,6 +280,7 @@ void Wagon::deletePassenger(Passenger* p)
 	delete p;
 	p = NULL;
 }
+
 int Wagon::getNbPassengerWagon()
 {
 	return m_passengersCount;

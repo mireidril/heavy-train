@@ -22,6 +22,8 @@ class Wagon{
 	void addPassenger(Passenger*);
 	// Eject the passenger by removing its joint, set the passenger’s “isEjected” to true. 
 	void ejectPassenger(Passenger*);
+	// Eject last passenger by removing its joint, set the passenger’s “isEjected” to true. 
+	void ejectLastPassenger();
 	// Appellé à l'arrêt aux gares, avant l'ouverture des portes. 
 	void deletePassenger(Passenger*);
 	// Make the passenger take off at the station
