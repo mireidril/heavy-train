@@ -17,7 +17,7 @@ Train::Train ()
 	int sizeX = 130; int sizeY = 87;
 	PhysicalObject * loco = new PhysicalObject(new Sprite("../img/elements/loco.png",  x, y, sizeX, sizeY));
 	m_physicalObjects.push_back(loco);
-
+	
 	//les roues de la loco
 	//position des roues
 	x = 0; y = 0; 
@@ -220,6 +220,19 @@ void Train::build(b2World * world)
 
 
 }
+b2Body * Train::getBody(unsigned int i)
+{
+	assert(i < m_physicalObjects.size());
+	return m_physicalObjects[i]->getBody();
+}
+//Permet au train de sauter en 3 fois. La première pulsion est exercée sur loco puis wagon1 puis wagon2
+void Train::jump(){
+			m_physicalObjects[0]->getBody()->ApplyForce(b2Vec2(10, 300),m_physicalObjects[0]->getBody()->GetWorldCenter());
+
+	for (int i=0; i< m_wagons.size(); i++){
+				m_wagons[i]->getBody(0)->ApplyForce(b2Vec2(10, 500),m_wagons[i]->getBody(0)->GetWorldCenter());
+	}
+}
 
 //Réinitialise les valeurs des PhysicalObjects après un smooth pour coller au framerate
 void Train::clearAllSmoothAngleAndPosition()
@@ -275,7 +288,8 @@ void Train::keyboard( const SDL_KeyboardEvent *event)
 			break;
 
 		case SDLK_UP:
-			break;
+			jump();
+		break;
 
 		case SDLK_RIGHT:
 			m_speed = -20;
