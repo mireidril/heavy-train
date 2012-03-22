@@ -48,8 +48,10 @@ class Train
 	int getMaxCapacity();
 	//Ejects n passengers from the wagons
 	void ejectPassengers(int n);
-	// Take off n passengers at the Station
-	void takeOffPassengers(int n, Station *);
+	// Take off passengers at the Station
+	void takeOffPassengers(Station *);
+	// Take in at the Station
+	void takeInPassengers(Station *);
 	//Check if the train is shaken
 	void isShaken();
 	// dessiner le train
@@ -71,6 +73,7 @@ class Train
 	std::vector<PhysicalObject *> getPhysicalObjects() { return m_physicalObjects; };
 
 	std::vector<Wagon*> getWagons() {return m_wagons;};
+	
 	
 	Sprite * getSprite() { return m_physicalObjects[0]->getSprite(); };
 

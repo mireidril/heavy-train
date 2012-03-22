@@ -2,13 +2,14 @@
 #include "Level.hpp"
 
 Station::Station(int sizeX, int id, Level * l)
-:Block(STATION, sizeX, id, l, -1)
+:Block(STATION, sizeX, id, l, -1), hasStoppedBefore(false)
 {
 
 }
 
 int Station::build(b2World * world)
 {
+	hasStoppedBefore = false;
 	//On suppose que la taille de la gare est supérieure à zéro
 	b2BodyDef groundBodyDef;
 	groundBodyDef.position.Set(0, 0); //Position à changer plus tard
@@ -80,8 +81,29 @@ void Station::initPassengers()
 	for(int i = 0; i< m_nbEnteringPassengers; i++ )
 	{
 		float x = rand()% (m_sizeX-5);
-		std::cout<<"float rand :"<<x<<" \tm_posX + x = "<<m_posX+x<<std::endl;
+		//std::cout<<"float rand :"<<x<<" \tm_posX + x = "<<m_posX+x<<std::endl;
 		p = new Passenger(m_posX + x, 0.0f);
 		m_passengers.push_back(p);
 	}
 }
+
+int Station::getNbEnteringPassengers()
+{
+	return m_nbEnteringPassengers;
+}
+
+int Station::getNbLeavingPassengers()
+{
+	return m_nbLeavingPassengers;
+}
+
+bool Station::getHasStoppedBefore()
+{
+	return hasStoppedBefore;
+}
+
+void Station::setHasStoppedBefore(bool b)
+{
+	hasStoppedBefore = b;
+}
+

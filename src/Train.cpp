@@ -383,3 +383,43 @@ void Train::setIsAtStation(bool b)
 {
 	m_isAtStation = b;
 }
+
+void Train::takeOffPassengers(Station *station)
+{
+	int nbLeavingPassengers = station->getNbLeavingPassengers();
+	/*std::list<Passenger*>::iterator it;
+	for ( it = station->m_passengers.begin(); it != station->m_passengers.end() ; it++)
+	{
+
+	}*/
+}
+
+void Train::takeInPassengers(Station *station)
+{
+	int nbEnteringPassengers = station->getNbEnteringPassengers();
+	std::list<Passenger*>::iterator it;
+	bool isNotEntered;
+	std::list<Passenger*>::iterator itEnd = station->m_passengers.end();
+	for ( it = station->m_passengers.begin(); it != itEnd ; ++it)
+	{
+		//On check si le train est plein ou non
+		if( getNbPassengers() >= getMaxCapacity() )
+			return;
+		//On le met dans un wagon AU PIF > < //idéalement le plus près
+		isNotEntered = true;
+		while(isNotEntered){
+			int iWagon = rand() % (m_nbWagons);
+			if( m_wagons[iWagon]->getNbPassengerWagon() < m_wagons[iWagon]->getMaxCapacity())
+			{
+				m_wagons[iWagon]->addPassenger(*it);
+				isNotEntered = false;
+			}
+		}
+		nbEnteringPassengers --;
+		if( nbEnteringPassengers == 0 ){
+			break;
+		}
+	}
+	//On les supprime de la station
+	station->m_passengers.erase(station->m_passengers.begin(), it);
+}

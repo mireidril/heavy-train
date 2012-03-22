@@ -104,6 +104,7 @@ void Wagon::setMotorSpeed(float speed)
 
 
 
+
 /*
  * wagon construction
  */
@@ -211,7 +212,7 @@ void Wagon::build(b2World * world, double x, float high)
 	m_spring2 = (b2WheelJoint*)world->CreateJoint(&jd);// joint pour la roue2
 
 	
-	//TEST Création de passagers A RETIRER PLUS TARD
+	/*TEST Création de passagers A RETIRER PLUS TARD
 	for(int i = 0; i< 20; i++ ){
 		Passenger *p = new Passenger(0.0f, 0.0f);
 		addPassenger(p);
@@ -284,6 +285,21 @@ void Wagon::deletePassenger(Passenger* p)
 	m_passengers.remove(p);
 	delete p;
 	p = NULL;
+}
+
+// Make the n passengers take off at the station
+void Wagon::takeOffPassenger(int n, Station * station)
+{
+	if( m_passengersCount == 0 )
+		return;
+	//On parcourt a partir du dernier élément
+	std::list<Passenger*>::reverse_iterator it;
+	for ( it = m_passengers.rbegin(); it != m_passengers.rend(); it++)
+	{
+		if( (*it)->getIsEjected() == false)
+			;//printf("TODO");
+	}
+	
 }
 
 int Wagon::getNbPassengerWagon()
