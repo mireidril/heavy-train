@@ -86,7 +86,7 @@ void Wagon::drawSprite(SDL_Surface * screen, const int & width, const int & heig
 	for (int i=1; i<3; i++){
 		bodyPos = m_physicalObjects[i]->getPosition();
 		y = bodyPos.y;
-		m_physicalObjects[i]->getSprite()->convertMetersToPixelsY( &y,  width,  height); 
+		m_physicalObjects[i]->getSprite()->convertMetersToPixels( NULL, &y,  width,  height); 
 		angle = m_physicalObjects[0]->getAngle();
 		if (angle>=0){
 			x= m_physicalObjects[0]->getSprite()->getPositionX()+10+40*sin(angle)+(i-1)*52*cos(angle);
