@@ -50,6 +50,39 @@ Train::~Train ()
 	//suppr bodies, + sounds
 }
 
+//Ejects n passengers from the wagons
+void Train::ejectPassengers(int n)
+{
+	int nPassengers = getNbPassengers();
+	if( n > nPassengers )
+		n = nPassengers;
+
+	int nWagons = m_wagons.size();
+	while( n != 0 ){
+		for (int i=0; i< nWagons; ++i)
+		{
+			int nbPassengersToEject;
+			// Si c'est le dernier wagon, ejecter tous les passagers de là
+			if( i == nWagons - 1){
+				nbPassengersToEject = n;
+			}else{
+				// On choisit un nombre au hasard de passagers à ejecter
+				nbPassengersToEject = rand() % (n+1);
+			}
+
+			if( nbPassengersToEject > m_wagons[i]->getNbPassengerWagon())
+				nbPassengersToEject == m_wagons[i]->getNbPassengerWagon();
+			//On retire les passagers
+			for (int j=0; j< nbPassengersToEject; ++j){
+				m_wagons[i]->ejectLastPassenger();
+				n--;
+			}
+			if( n == 0 )
+				return;
+		}
+	}
+}
+
 /*
  * draw the train on the screen
  */
@@ -286,6 +319,10 @@ void Train::keyboard( const SDL_KeyboardEvent *event)
 			m_hz += 1.0f;
 			m_spring1->SetSpringFrequencyHz(m_hz);
 			m_spring2->SetSpringFrequencyHz(m_hz);
+			break;
+		case SDLK_o:
+			//TEST A RETIRER
+			ejectPassengers(3);
 			break;
 		default:
 			break;
