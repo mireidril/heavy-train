@@ -21,7 +21,8 @@ class Bonus : public PhysicalObject
 		bool isUsed();
 		void build(b2World * world);
 		void setIsUsed(bool b);
-
+		void draw(SDL_Surface * screen, const int & width, const int & height);
+		void scroll(const int & x);
 	private :
 		int m_posX;
 		int m_posY;

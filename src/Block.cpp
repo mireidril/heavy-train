@@ -435,6 +435,9 @@ void Block::scroll(const int & x)
 	for (int i=0; i< m_animals.size(); i++) {
 		m_animals[i]->scroll(x);
 	}
+	for (int i=0; i< m_bonus.size(); i++) {
+		m_bonus[i]->scroll(x);
+	}
 }
 
 
@@ -461,6 +464,11 @@ void Block::draw(SDL_Surface * screen, const int & width, const int & height, Ac
 			std::cout<<"animal dead !"<<std::endl;
 			m_passageDansMort[i]=true;
 		}
+	}
+
+	
+	for(int i=0; i< m_bonus.size(); i++) {
+		m_bonus[i]->draw(screen, width, height);
 	}
 }
 
