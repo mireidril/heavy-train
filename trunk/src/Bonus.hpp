@@ -20,6 +20,7 @@ class Bonus : public PhysicalObject
 		//Return m_used
 		bool isUsed();
 		void build(b2World * world);
+		void setIsUsed(bool b);
 
 	private :
 		int m_posX;

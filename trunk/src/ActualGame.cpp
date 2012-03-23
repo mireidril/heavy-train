@@ -29,7 +29,7 @@ ActualGame::ActualGame(unsigned int level, unsigned int island)
 	PhysicalObject::m_world = m_world;
 	//Ajouter le contact listener
 	
-	m_world->SetContactListener(&myContactListenerInstance);
+	m_world->SetContactListener(this);
 	// Pour caler la simulation avec le framerate
 	fixedTimestepAccumulator = 0;
 	fixedTimestepAccumulatorRatio = 0;
@@ -575,7 +575,7 @@ Train * ActualGame::getTrain()
 }
 
 
-bool ActualGame::getObstacle(b2Contact* contact, PhysicalObject * physObject){
+bool ActualGame::getObstacle(b2Contact* contact, Bonus * bonus){
 	b2Fixture* fixtureA = contact->GetFixtureA();
 	b2Fixture* fixtureB = contact->GetFixtureB();
   
@@ -585,24 +585,45 @@ bool ActualGame::getObstacle(b2Contact* contact, PhysicalObject * physObject){
 	if ( ! (sensorA ^ sensorB) )
 		return false;
 	if ( sensorA ) { //Si A est le bonus
-		physObject = static_cast<PhysicalObject*>( fixtureA->GetBody()->GetUserData() );
+		bonus = (Bonus*)( fixtureA->GetBody()->GetUserData() );
 	}else{
-		physObject = static_cast<PhysicalObject*>( fixtureB->GetBody()->GetUserData() );
+		bonus = (Bonus*)( fixtureB->GetBody()->GetUserData() );
 	}
+	bonusEffect(bonus);
 	return true;
 }
 
+void ActualGame::bonusEffect(Bonus * bonus)
+{
+	if( ! bonus->isUsed() )
+	{
+		bonus->setIsUsed(true);
+		switch( bonus->getType() ) 
+		{
+		case STAR_DUST:
+			std::cout<<"Star dust !"<<std::endl;
+			updateStarDustScore();
+			break;
+		case ACCELERATOR :
+			std::cout<<"Accelerator !"<<std::endl;
+			break;
+		}
 
+	}
+}
 
 //main collision call back function
 
-void MyContactListener::BeginContact(b2Contact* contact) {
-	PhysicalObject * physObject = NULL;
-	if ( ActualGame::getObstacle(contact, physObject) )
-		std::cout<<"Collision between train and obstacle"<<std::endl;
+void ActualGame::BeginContact(b2Contact* contact) {
+	Bonus * bonus = NULL;
+	if ( getObstacle(contact, bonus) )
+	{
+		//std::cout<<"Collision between train and obstacle"<<std::endl;
+		//ActualGame::bonusEffect(bonus);
+	}
 }
 
-void MyContactListener::EndContact(b2Contact* contact) {
+void ActualGame::EndContact(b2Contact* contact) {
 	/*PhysicalObject * physObject = NULL;
     if ( ActualGame::getObstacle(contact, physObject) )
 		std::cout<<"Collision END between train and obstacle"<<std::endl;*/
