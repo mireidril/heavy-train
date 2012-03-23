@@ -197,8 +197,12 @@ void Train::build(b2World * world)
 	vertices[3].Set(- (m_size.x/2.0), m_size.y/2.0);
 	chassis.Set(vertices, 4);//locomotive
 
+	b2FixtureDef fixtureDef;
+	fixtureDef.density = 0.1f;
+	fixtureDef.shape = &chassis;
+	fixtureDef.filter.categoryBits = TRAIN;
 	m_physicalObjects[0]->setBody(world->CreateBody(&bd));
-	m_physicalObjects[0]->getBody()->CreateFixture(&chassis, 0.1f);
+	m_physicalObjects[0]->getBody()->CreateFixture(&fixtureDef);
 
 	b2CircleShape circle;
 	circle.m_radius = 0.5f;//rayon roues
@@ -207,6 +211,7 @@ void Train::build(b2World * world)
 	fd.shape = &circle;
 	fd.density = 3.0f;
 	fd.friction = 0.9f;
+	fd.filter.categoryBits = TRAIN;
 
 	bd.position.Set(10.6f, high+7.9f);//position de la roue1
 	m_physicalObjects[1]->setBody(world->CreateBody(&bd));
