@@ -101,9 +101,9 @@ void Train::ejectPassengers(int n)
 				// On choisit un nombre au hasard de passagers à ejecter
 				nbPassengersToEject = rand() % (n+1);
 			}
-
+			
 			if( nbPassengersToEject > m_wagons[i]->getNbPassengerWagon())
-				nbPassengersToEject == m_wagons[i]->getNbPassengerWagon();
+				nbPassengersToEject = m_wagons[i]->getNbPassengerWagon();
 			//On retire les passagers
 			for (int j=0; j< nbPassengersToEject; ++j){
 				m_wagons[i]->ejectLastPassenger();
@@ -438,12 +438,12 @@ void Train::takeOffPassengers(Station *station)
 			std::cout<<"nbPassengersToTakeOff : "<<nbPassengersToTakeOff<<" nPassengers:"<<m_wagons[i]->getNbPassengerWagon()<<std::endl;
 
 			if( nbPassengersToTakeOff > m_wagons[i]->getNbPassengerWagon())
-				nbPassengersToTakeOff == m_wagons[i]->getNbPassengerWagon();
+				nbPassengersToTakeOff = m_wagons[i]->getNbPassengerWagon();
 			//On retire les passagers
 			m_wagons[i]->takeOffPassenger(nbPassengersToTakeOff, station);
 			n-= nbPassengersToTakeOff;
 		}
-		std::cout<<"n : "<<n<<std::endl;
+		//std::cout<<"nbPassengersToEject:"<<nbPassengersToEject<<" m_wagons[i]->getNbPassengerWagon() : "<< m_wagons[i]->getNbPassengerWagon()<<std::endl;std::cout<<"n : "<<n<<std::endl;
 	}
 }
 
