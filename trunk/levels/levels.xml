@@ -6,32 +6,58 @@
 			<sprite type="ground" img="../img/levels/level2/niveau2-sol2.png"/>
 			<sprite type="background" img="../img/levels/level1/niveau1-sky.png" />
 			<sprite type="background" posY="518" img="../img/levels/level1/niveau1-mountain.png" />
-			<infobulle type="aide" numBloc="3" declenche="false">
-				<sprite img="info1.png" />
-			</infobulle>
-			<infobulle type="standard" action="collision" declenche="false">
+			
+			<!--<infobulle type="standard" action="collision" declenche="false">
 				<sprite img="info2.png" />
-			</infobulle>
+			</infobulle>-->
 
 			<station size="200">
 				<option hours="12" minutes="00" leaving="0" entering="10"/>
 			</station>
-			<block type="PRECIPICE" size="200">
+			<block type="GROUND" size="1024">
+				<obstacle type="animal" nom="vache" posX="800" posY="300" />
+				<!--<infobulle type="aide" declenche="false" posX="800">
+					<sprite img="info1.png" />
+				</infobulle>-->
+			</block>
+			<block type="TUNNEL" size="200">
+			<!--<infobulle type="aide" declenche="false" posX="800">
+					<sprite img="info1.png" />
+				</infobulle>-->
 			</block>
 			<block type="GROUND" size="1024">
-				<obstacle type="animal" nom="vache" posX="1610" posY="300" />
-				<point x="100" y = "600" />
-				<point x="256" y = "660" />
-				<point x="512" y = "660" />
-				<point x="768" y = "550" />
-				<point x="900" y = "660" />
+				<point x="400" y = "600" />
+				<point x="600" y = "660" />
 			</block>
-			<block type="PRECIPICE" size="300">
+			<station size="200">
+				<option hours="12" minutes="00" leaving="5" entering="15"/>
+				<!--<infobulle type="aide" declenche="false" posX="800">
+					<sprite img="info1.png" />
+				</infobulle>-->
+			</station>
+			<block type="GROUND" size="500">
 			</block>
-			<block type="GROUND" size="200">
+			<block type="PRECIPICE" size="100">
+				<!--<infobulle type="aide" declenche="false" posX="800">
+					<sprite img="info1.png" />
+				</infobulle>-->
+				<!--<obstacle type="bonus" nom="etoile" posX="50" posY="500" />-->
 			</block>
-			<station size="600">
-				<option hours="12" minutes="05" leaving="10" entering="0"/>
+			<block type="GROUND" size="1024">
+				<point x="500" y = "600" />
+			</block>
+			<station size="200">
+				<option hours="12" minutes="00" leaving="2" entering="50"/>
+			</station>
+			<block type="GROUND" size="2048">
+				<!--<infobulle type="aide" declenche="false" posX="800">
+					<sprite img="info1.png" />
+				</infobulle>-->
+				<!--<obstacle type="bonus" nom="accelerateur" posX="600" posY="500" />-->
+				<obstacle type="animal" nom="vache" posX="6000" posY="300" />
+			</block>
+			<station size="200">
+				<option hours="12" minutes="00" leaving="20" entering="0"/>
 			</station>
 		</level>
 	</island>
@@ -43,7 +69,7 @@
 			<sprite type="background" posY="418" img="../img/levels/level2/niveau2-2-bg2.png" img2="../img/levels/level2/niveau2-bg2.png" />
 			<sprite type="background" posY="388" img="../img/levels/level2/niveau2-2-bg3.png" img2="../img/levels/level2/niveau2-bg3.png" />
 
-			<station size="600">
+			<station size="200">
 				<option hours="12" minutes="00" leaving="0" entering="10"/>
 			</station>
 		

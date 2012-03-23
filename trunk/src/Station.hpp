@@ -27,6 +27,7 @@ class Station : public Block
 
 		int getNbEnteringPassengers();
 		int getNbLeavingPassengers();
+		SDL_Surface * getImgStation();
 
 		
 		// Passengers list on the station
@@ -40,5 +41,6 @@ class Station : public Block
 		int m_nbLeavingPassengers;
 		// Percentage of maximal capacity of the train entering at this station
 		int m_nbEnteringPassengers;
+		SDL_Surface * m_imgStation;
 };
 #endif

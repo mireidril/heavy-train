@@ -1,5 +1,6 @@
 #include "Level.hpp"
 #include "ActualGame.hpp"
+#include "HelpTip.hpp"
 /*Level Constructor */
 Level::Level(b2World * world, unsigned int level, unsigned int island) 
 : m_world (world)
@@ -174,10 +175,25 @@ void Level::loadAndBuild()
 													vBlock->setBonus(ACCELERATOR, atoi(contenuBlock->Attribute("posX")), atoi(contenuBlock->Attribute("posY")));
 												}
 											}
-										}
-										else if (strcmp(contenuBlock->Value(),"point")==0)
+										}else if (strcmp(contenuBlock->Value(),"point")==0)
 										{
 											vBlock->addPoint(atoi(contenuBlock->Attribute("x")), atoi(contenuBlock->Attribute("y")));
+										}else if (strcmp(contenuBlock->Value(),"infobulle")==0)
+										{
+											if (strcmp(contenuBlock->Attribute("type"),"aide") == 0)
+											{
+												/*HelpTip * infoAide = new HelpTip();
+												infoAide->setNumBlock(numBlock);
+												infoAide->setDeclenche(contenuLevel->Attribute("declenche"));
+												infoAide->setPosition(contenuLevel->Attribute("posX"));
+												TiXmlElement *contenuBulle = contenuLevel->FirstChildElement();
+												while (contenuBulle){
+													if (strcmp(contenuBulle->Value(),"sprite")==0){
+														infoAide->setSprite(contenuBulle->Attribute("img"));
+													}
+													contenuBulle = contenuBulle->NextSiblingElement();
+												}*/
+											}
 										}
 										contenuBlock = contenuBlock->NextSiblingElement();
 									}// fin du while dans le block
@@ -201,6 +217,22 @@ void Level::loadAndBuild()
 												else if (strcmp(contenuBlock->Attribute("nom"),"ACCELERATOR") == 0)
 												{
 													vBlock->setBonus(ACCELERATOR, atoi(contenuBlock->Attribute("posX")), atoi(contenuBlock->Attribute("posY")));
+												}
+											}else if (strcmp(contenuBlock->Value(),"infobulle")==0)
+											{
+												if (strcmp(contenuBlock->Attribute("type"),"aide") == 0)
+												{
+													/*HelpTip * infoAide = new HelpTip();
+													infoAide->setNumBlock(numBlock);
+													infoAide->setDeclenche(contenuLevel->Attribute("declenche"));
+													infoAide->setPosition(contenuLevel->Attribute("posX"));
+													TiXmlElement *contenuBulle = contenuLevel->FirstChildElement();
+													while (contenuBulle){
+														if (strcmp(contenuBulle->Value(),"sprite")==0){
+															infoAide->setSprite(contenuBulle->Attribute("img"));
+														}
+														contenuBulle = contenuBulle->NextSiblingElement();
+													}*/
 												}
 											}
 										}
@@ -231,6 +263,22 @@ void Level::loadAndBuild()
 												{
 													vBlock->setBonus(ACCELERATOR, atoi(contenuBlock->Attribute("posX")), atoi(contenuBlock->Attribute("posY")));
 												}
+											}
+										}else if (strcmp(contenuBlock->Value(),"infobulle")==0)
+										{
+											if (strcmp(contenuBlock->Attribute("type"),"aide") == 0)
+											{
+												/*HelpTip * infoAide = new HelpTip();
+												infoAide->setNumBlock(numBlock);
+												infoAide->setDeclenche(contenuLevel->Attribute("declenche"));
+												infoAide->setPosition(contenuLevel->Attribute("posX"));
+												TiXmlElement *contenuBulle = contenuLevel->FirstChildElement();
+												while (contenuBulle){
+													if (strcmp(contenuBulle->Value(),"sprite")==0){
+														infoAide->setSprite(contenuBulle->Attribute("img"));
+													}
+													contenuBulle = contenuBulle->NextSiblingElement();
+												}*/
 											}
 										}
 										contenuBlock = contenuBlock->NextSiblingElement();
@@ -266,7 +314,23 @@ void Level::loadAndBuild()
 										vStation->setTime(atoi(contenuStation->Attribute("hours")), atoi(contenuStation->Attribute("minutes")));
 										vStation->setLeaving(atoi(contenuStation->Attribute("leaving")));
 										vStation->setEnter(atoi(contenuStation->Attribute("entering")));
-									}
+									}else if (strcmp(contenuStation->Value(),"infobulle")==0)
+										{
+											if (strcmp(contenuStation->Attribute("type"),"aide") == 0)
+											{
+												/*HelpTip * infoAide = new HelpTip();
+												infoAide->setNumBlock(numBlock);
+												infoAide->setDeclenche(contenuLevel->Attribute("declenche"));
+												infoAide->setPosition(contenuLevel->Attribute("posX"));
+												TiXmlElement *contenuBulle = contenuLevel->FirstChildElement();
+												while (contenuBulle){
+													if (strcmp(contenuBulle->Value(),"sprite")==0){
+														infoAide->setSprite(contenuBulle->Attribute("img"));
+													}
+													contenuBulle = contenuBulle->NextSiblingElement();
+												}*/
+											}
+										}
 									contenuStation = contenuStation->NextSiblingElement();
 								}
 								m_blocks.push_back(vStation);
@@ -288,9 +352,9 @@ void Level::loadAndBuild()
 										contenuBulle = contenuBulle->NextSiblingElement();
 									}*/
 								}
-								else if (strcmp(contenuLevel->Attribute("type"),"aide") == 0)
+								/*else if (strcmp(contenuBlock->Attribute("type"),"aide") == 0)
 								{
-									/*HelpTip * infoAide = new HelpTip();
+									HelpTip * infoAide = new HelpTip();
 									infoAide->setNumBlock(contenuLevel->Attribute("numBlock"));
 									infoAide->setDeclenche(contenuLevel->Attribute("declenche"));
 									TiXmlElement *contenuBulle = contenuLevel->FirstChildElement();
@@ -299,8 +363,9 @@ void Level::loadAndBuild()
 											infoAide->setSprite(contenuBulle->Attribute("img"));
 										}
 										contenuBulle = contenuBulle->NextSiblingElement();
-									}*/
+									}
 								}
+								}*/
 							}
 
 							//}
