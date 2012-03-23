@@ -27,6 +27,9 @@ ActualGame::ActualGame(unsigned int level, unsigned int island)
 	// Construct a world object, which will hold and simulate the rigid bodies.
 	m_world = new b2World(gravity);
 	PhysicalObject::m_world = m_world;
+	//Ajouter le contact listener
+	
+	m_world->SetContactListener(&myContactListenerInstance);
 	// Pour caler la simulation avec le framerate
 	fixedTimestepAccumulator = 0;
 	fixedTimestepAccumulatorRatio = 0;
@@ -569,4 +572,38 @@ void ActualGame::updateTotalScore()
 Train * ActualGame::getTrain()
 {
 	return m_train;
+}
+
+
+bool ActualGame::getObstacle(b2Contact* contact, PhysicalObject * physObject){
+	b2Fixture* fixtureA = contact->GetFixtureA();
+	b2Fixture* fixtureB = contact->GetFixtureB();
+  
+	//make sure only one of the fixtures was a sensor
+	bool sensorA = fixtureA->IsSensor();
+	bool sensorB = fixtureB->IsSensor();
+	if ( ! (sensorA ^ sensorB) )
+		return false;
+	if ( sensorA ) { //Si A est le bonus
+		physObject = static_cast<PhysicalObject*>( fixtureA->GetBody()->GetUserData() );
+	}else{
+		physObject = static_cast<PhysicalObject*>( fixtureB->GetBody()->GetUserData() );
+	}
+	return true;
+}
+
+
+
+//main collision call back function
+
+void MyContactListener::BeginContact(b2Contact* contact) {
+	PhysicalObject * physObject = NULL;
+	if ( ActualGame::getObstacle(contact, physObject) )
+		std::cout<<"Collision between train and obstacle"<<std::endl;
+}
+
+void MyContactListener::EndContact(b2Contact* contact) {
+	/*PhysicalObject * physObject = NULL;
+    if ( ActualGame::getObstacle(contact, physObject) )
+		std::cout<<"Collision END between train and obstacle"<<std::endl;*/
 }
