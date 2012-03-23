@@ -59,6 +59,9 @@ ActualGame::ActualGame(unsigned int level, unsigned int island)
 	m_obstacleScore = 0;
 	m_animalsFactor = -1.5;
 	m_satisfactionScore = 0;
+	m_passengerScore = 0;
+	m_totalScore = 0;
+	m_timeScore = 0;
 
 	//Charges les images de l'interface
 	m_font =  TTF_OpenFont("../fonts/GOTHIC.TTF", 24);
@@ -304,7 +307,10 @@ void ActualGame::trainAtStation()
 		std::cout<<"Train at station ! Entering passengers : "<<station->getNbEnteringPassengers()<<" Leaving passengers : "<<station->getNbLeavingPassengers()<<std::endl;
 		station->setHasStoppedBefore(true);
 		
+		//updateTimeScore();
 		updatePassengerScore();
+		updateSatisfactionScore();
+		updateTotalScore();
 
 		m_train->takeOffPassengers(station);
 		
@@ -476,16 +482,18 @@ void ActualGame::updateObstacleScore()
 {
 	//s'augmente a chaque collision avec un animal => compte le nombre d'animal shoutés
 	m_obstacleScore++;
-	std::cout << m_obstacleScore <<std::endl;
+	std::cout << "obstacle SCORE : " << m_obstacleScore <<std::endl;
 }
 //Update a la gare !!!
 void ActualGame::updatePassengerScore()
 {
 	m_passengerScore+=(m_nbPassengerPoint*m_train->getNbPassengers());
+	std::cout << "PASSENGER SCORE : " << m_passengerScore <<std::endl;
+	std::cout << "*m_train->getNbPassengers() : " << m_train->getNbPassengers() <<std::endl;
 }
 void ActualGame::updateTimeScore()
 {
-	/*Time * temps = new Time(0,0,0);
+	Time * temps = new Time(0,0,0);
 	Time * tempsAvance = new Time(0, 10,0);
 	if(m_timer < temps) // >10 en retard
 	{
@@ -502,7 +510,7 @@ void ActualGame::updateTimeScore()
 	}else //a l'heure
 	{
 		m_timeScore += m_onTimePoint;
-	}*/
+	}
 }
 void ActualGame::updateSatisfactionScore()
 {
@@ -530,7 +538,6 @@ void ActualGame::updateSatisfactionScore()
 	{
 		m_satisfactionScore +=( m_drivePoint*5);
 	}
-
 	*/
 	//satisfaction en fonction du nombre de passager arrivé a destination
 	m_satisfactionScore += m_train->getNbPassengers()*200;
