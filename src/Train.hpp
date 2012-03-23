@@ -62,6 +62,8 @@ class Train
 	// Creer la physique du train
 	void build(b2World * world);
 
+	int getPixelsDistanceBetweenSpriteAndBody();
+
 	void keyboard(GameEngine* g, const SDL_KeyboardEvent *event);
 
 	//Donne la position actuelle de la locomotive

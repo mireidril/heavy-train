@@ -116,19 +116,19 @@ void Passenger::setIsEjected(bool b){
 	m_isEjected = b;
 }
 
-void Passenger::drawSprite(SDL_Surface * screen, const int & width, const int & height)
+void Passenger::drawSprite(SDL_Surface * screen, const int & width, const int & height, const int & diff)
 {
 	double x, y; 
 	b2Vec2 bodyPos;
 	double angle,angledegrees;
-	bodyPos = getPosition();
-	angle = getAngle();
+	bodyPos = getBody()->GetPosition();
+	angle = getBody()->GetAngle();
 	angledegrees= angle*180/M_PI;
 	x = bodyPos.x;
 	y = bodyPos.y;
 	Sprite::convertMetersToPixels(&x, &y,  width,  height);
-	m_sprite->setPositionY(x);
-	m_sprite->setPositionY(y-60);
+	m_sprite->setPositionX(x + diff + 35);
+	m_sprite->setPositionY(y-10);
 	m_sprite->setAngle (angle);
 	m_sprite->draw(screen,  width,  height);
 }

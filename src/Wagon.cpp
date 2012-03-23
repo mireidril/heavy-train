@@ -51,8 +51,16 @@ b2Body * Wagon::getBody(unsigned int i)
 /*
  * draw the wagon on the screen
  */
-void Wagon::drawSprite(SDL_Surface * screen, const int & width, const int & height, const int & posXLocoSprite, const double & posXLocoBody)
+void Wagon::drawSprite(SDL_Surface * screen, const int & width, const int & height, const int & posXLocoSprite, const double & posXLocoBody, int diff)
 {
+
+	//Passagers
+	std::list<Passenger*>::iterator it;
+	for ( it = m_passengers.begin(); it != m_passengers.end() ; it++)
+	{
+		(*it)->drawSprite(screen, width, height, diff);
+	}
+
 	double x,x2, y; 
 	b2Vec2 bodyPos;
 	double angle,angledegrees;
@@ -92,13 +100,6 @@ void Wagon::drawSprite(SDL_Surface * screen, const int & width, const int & heig
 		angle = m_physicalObjects[i]->getAngle()*180/M_PI;
 		m_physicalObjects[i]->getSprite()->setAngle(angle);
 		m_physicalObjects[i]->getSprite()->draw(screen, width, height);
-	}
-
-	//Passagers
-	std::list<Passenger*>::iterator it;
-	for ( it = m_passengers.begin(); it != m_passengers.end() ; it++)
-	{
-		(*it)->drawSprite(screen, width, height);
 	}
 }
 
