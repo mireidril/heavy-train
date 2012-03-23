@@ -446,6 +446,7 @@ void Train::takeOffPassengers(Station *station)
 void Train::takeInPassengers(Station *station)
 {
 	int nbEnteringPassengers = station->getNbEnteringPassengers();
+
 	if( nbEnteringPassengers == 0 )
 		return;
 	std::list<Passenger*>::iterator it;
@@ -474,4 +475,31 @@ void Train::takeInPassengers(Station *station)
 	}
 	//On les supprime de la station
 	station->m_passengers.erase(station->m_passengers.begin(), it);
+}
+
+void Train::checkPositionStation(Station *stationCode)
+{
+	//Donne la position actuelle de la locomotive
+	b2Vec2 positionTrain = m_physicalObjects[0]->getPosition();
+	//Donne la taille actuelle de la locomotive
+	b2Vec2 sizeTrain = m_size;
+	(stationCode->getSizeX() - stationCode->getImgStation()->w)/2;
+
+	std::cout << "position station sur le block    :    " << (stationCode->getSizeX() - stationCode->getImgStation()->w)/2 <<std::endl;
+	std::cout << "position TRAIN sur le block    :    "<<std::endl;
+	std::cout<< positionTrain.x <<std::endl;
+
+	/*
+	le début de la gare est à la position (m_sizeX - station->w) / 2;
+	int getPosX() {return m_posX;};
+		int getSizeX() {return m_sizeX;};
+avec station->w la width de l'image de la station
+
+
+
+double x = m_posX;
+Sprite::convertPixelsToMeters(&x, NULL, WINDOWS_W, WINDOWS_H);
+	*/
+	
+
 }

@@ -18,6 +18,7 @@
 #include "Station.hpp"
 
 class ActualGame;
+class HelpTip;
 
 class Level
 {

@@ -4,7 +4,7 @@
 Station::Station(int sizeX, int id, Level * l)
 :Block(STATION, sizeX, id, l, -1), hasStoppedBefore(false)
 {
-
+	m_imgStation = IMG_Load("../img/levels/station.png");
 }
 
 int Station::build(b2World * world)
@@ -116,3 +116,8 @@ void Station::setHasStoppedBefore(bool b)
 	hasStoppedBefore = b;
 }
 
+
+SDL_Surface * Station::getImgStation()
+{
+	return m_imgStation;
+}

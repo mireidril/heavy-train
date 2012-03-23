@@ -312,6 +312,8 @@ void ActualGame::trainAtStation()
 	m_train->setIsAtStation(true);
 	Station* station = (Station*) m_actualLevel->getBlock(m_actualBlock);
 
+	//m_train->checkPositionStation(station);
+	
 	//Si premier arrêt : les passagers descendent et on compte les points
 	if( !station->getHasStoppedBefore() )
 	{
@@ -324,9 +326,6 @@ void ActualGame::trainAtStation()
 		updateTotalScore();
 
 		m_train->takeOffPassengers(station);
-		
-		updateSatisfactionScore();
-		updateTotalScore();
 
 		//Les passagers montent
 		m_train->takeInPassengers(station);
@@ -536,18 +535,6 @@ void ActualGame::updateSatisfactionScore()
 	}else
 	{
 		m_satisfactionScore -= m_stopStationPoint;
-	}
-	*/
-	/*//check la mauvaise conduite en fonction de mshaken
-	if(m_shaken > ____)
-	{
-		m_satisfactionScore +=( m_drivePoint*15);
-	}else if(m_shaken > ____  && m_skahen < ___)
-	{
-		m_satisfactionScore +=( m_drivePoint*10);
-	}else if(m_shaken > 0  && m_skahen < ___)
-	{
-		m_satisfactionScore +=( m_drivePoint*5);
 	}
 	*/
 	//satisfaction en fonction du nombre de passager arrivé a destination

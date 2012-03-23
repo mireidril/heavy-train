@@ -36,7 +36,7 @@ class Train
 	//Make the train whistling
 	void whistle();
 	//When the train is stopped at a station, check if he is well-placed, at the center of the platform
-	void checkPositionStation();
+	void checkPositionStation(Station *station);
 	//When the train derail, change the displayed image of the train then the player restart at the last station reached
 	void derail();
 	//Use a bonus
