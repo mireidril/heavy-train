@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <world>
-	<island id="2">
+	<island id="1">
 		<level id="1">
 			<departure hour="12" minutes="00" seconds="00"/>
 			<sprite type="ground" img="../img/levels/level2/niveau2-sol2.png"/>
@@ -61,7 +61,7 @@
 			</station>
 		</level>
 	</island>
-	<island id="1">
+	<island id="2">
 		<level id="1">
 			<departure hour="16" minutes="00" seconds="00"/>
 			<sprite type="ground" img="../img/levels/level2/niveau2-sol2.png"/>
@@ -129,7 +129,7 @@
 				<point x="1450" y = "600" />
 			</block>
 			<block type="PRECIPICE" size="150">
-				<obstacle type="bonus" nom="STAR_DUST" posX="9800" posY="400" />
+				<obstacle type="bonus" nom="STAR_DUST" posX="10400" posY="300" />
 			</block>
 			<block type="GROUND" size="1000">
 				<obstacle type="animal" nom="coyote" posX="10200" posY="300" />
@@ -181,10 +181,10 @@
 			<block type="GROUND" size="400">
 			</block>
 			<block type="PRECIPICE" size="150">
-				<obstacle type="bonus" nom="STAR_DUST" posX="4250" posY="300" />
+				<obstacle type="bonus" nom="STAR_DUST" posX="4800" posY="300" />
 			</block>
 			<block type="GROUND" size="400">
-				<obstacle type="bonus" nom="STAR_DUST" posX="4500" posY="300" />
+				<!--<obstacle type="bonus" nom="STAR_DUST" posX="5000" posY="300" />-->
 			</block>
 			<block type="TUNNEL" size="200">
 			</block>
@@ -197,7 +197,7 @@
 				<option hours="10" minutes="00" leaving="7" entering="10"/>
 			</station>
 			<block type="GROUND" size="800">
-				<obstacle type="bonus" nom="ACCELERATOR" posX="6500" posY="300" />
+				<obstacle type="bonus" nom="ACCELERATOR" posX="6900" posY="300" />
 			</block>
 			<block type="GROUND" size="1000">
 				<point x="100" y = "660" />
