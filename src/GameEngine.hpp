@@ -57,12 +57,6 @@ class GameEngine
 		void pauseGame();
 		//Quitte le jeu
 		void quit();
-
-		//Joue une musique
-		void playMusic(const int & num);
-		//Stoppe la musique actuellement jouée
-		void stopMusic();
-
 	private : 
 		//Enum de l'interface actuellement affichée
 		GameScreen					m_actualGameScreen;
