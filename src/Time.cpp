@@ -45,18 +45,18 @@ void Time::updateTime(){
 		}*/
 		
 		    clock_t start, end;
-    double elapsed;
-    
-    end = clock();       
-    unsigned int timeInSeconds = this->m_seconds + this->m_minutes*60 + this->m_hours*3600  ;   
-    start = (clock_t)timeInSeconds;                                        
-    for (unsigned int i = 0 ; i<timeInSeconds ; i++){
-    	elapsed = ((double)end - start) / CLOCKS_PER_SEC;
-    	printf("%.2f secondes entre start et end.\n", elapsed);
-    	this->m_seconds = (unsigned int)elapsed%60;
-    	this->m_minutes = (unsigned int)(elapsed/60)%60; 
-    	this->m_hours = (unsigned int)elapsed/3600; 
-    }
+		    double elapsed;
+		    
+		    end = clock();       
+		    unsigned int timeInSeconds = this->m_seconds + this->m_minutes*60 + this->m_hours*3600  ;   
+		    start = (clock_t)timeInSeconds;                                        
+		    for (unsigned int i = 0 ; i<timeInSeconds ; i++){
+		    	elapsed = ((double)end - start) / CLOCKS_PER_SEC;
+		    	//printf("%.2f secondes entre start et end.\n", elapsed);
+		    	this->m_seconds = (unsigned int)elapsed%60;
+		    	this->m_minutes = (unsigned int)(elapsed/60)%60; 
+		    	this->m_hours = (unsigned int)elapsed/3600; 
+		    }
 
 	}
 }
