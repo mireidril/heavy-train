@@ -109,14 +109,11 @@ void Animal::draw(SDL_Surface * screen, const int & width, const int & height){
 		}		
 	}
 	else if ( abs(x - m_posX) > 0.1 ){
-
+		if( m_die == false )
+			die();
 		if (m_sprite->animate(8,15) || m_sprite->getActualFrame() == 0)
 		{
 			m_sprite->draw(screen,  width,  height);
-		}
-		else
-		{
-			die();
 		}
 	}
 	else if(! m_hasEscape) {

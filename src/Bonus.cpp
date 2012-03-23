@@ -15,6 +15,7 @@ Bonus::Bonus(BonusType type, int posX, int posY)
 			break;
 		case ACCELERATOR:
 			m_sprite = new Sprite("../img/bonus/anneau.png",  posX-75, posY);
+			
 			break;
 	}
 	build(PhysicalObject::m_world);
@@ -40,8 +41,8 @@ void Bonus::build(b2World * world)
 	float miWidth, miHeight;
 	switch(m_type){
 	case STAR_DUST:
-		miWidth = .5f;
-		miHeight = .5f;
+		miWidth = 1.5f;
+		miHeight = 1.0f;
 		break;
 	case ACCELERATOR:
 		miWidth = .5f;
@@ -84,10 +85,12 @@ BonusType  Bonus::getType()
 }
 
 void Bonus::draw(SDL_Surface * screen, const int & width, const int & height){
-	b2Vec2 bodyPos = m_body->GetPosition();
-	double x = bodyPos.x;
-	double y = bodyPos.y;
-	m_sprite->convertMetersToPixels(&x, &y,  width,  height);
-	m_sprite->setPositionY( y-60);
-	m_sprite->draw(screen,  width,  height);
+	if( !m_isUsed || m_type == ACCELERATOR){
+		b2Vec2 bodyPos = m_body->GetPosition();
+		double x = bodyPos.x;
+		double y = bodyPos.y;
+		m_sprite->convertMetersToPixels(&x, &y,  width,  height);
+		m_sprite->setPositionY( y-50);
+		m_sprite->draw(screen,  width,  height);
+	}
 }
