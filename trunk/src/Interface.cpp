@@ -557,6 +557,8 @@ void Interface::render(SDL_Surface * screen, const int & width, const int & heig
 			{
 				m_buttonsImages[1]->draw(screen, width, height);
 			}
+			
+			m_buttonsImages[2]->draw(screen, width, height);
 		}
 		else
 		{

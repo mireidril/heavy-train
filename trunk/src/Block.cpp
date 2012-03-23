@@ -20,7 +20,7 @@ Block::Block(int sizeX, int id, Level* l, int speed)
 , m_sizeXMax(2048)
 , m_sizeYMin(384)
 , m_y (668)
-, m_tunnelHeight (200)
+, m_tunnelHeight (125)
 {
 	SDL_Surface * station = IMG_Load("../img/levels/station.png");
 	if(station)

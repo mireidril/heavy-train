@@ -63,6 +63,8 @@ class Block
 
 		BlockType getType();
 
+		int get_m_y() {return m_y;};
+
 		//Retourne la position en x de début et de fin du bloc
 		int getPosX() {return m_posX;};
 		int getSizeX() {return m_sizeX;};

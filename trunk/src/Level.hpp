@@ -46,11 +46,13 @@ class Level
 
 		void render(SDL_Surface * screen, int w, int h, ActualGame * game, b2World * world);
 		void drawBlocks(SDL_Surface * screen, int w, int h, ActualGame * game, b2World * world);
+		void drawTunnels(SDL_Surface * screen, int w, int h, ActualGame * game, b2World * world);
 
 		void drawBackgrounds(SDL_Surface * screen, int w, int h);
 
 		unsigned int getIslandNum() { return m_islandNum;};
 		unsigned int getLevelNum() { return m_levelNum;};
+
 	private :
 		//World
 		b2World * m_world;
