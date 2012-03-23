@@ -508,6 +508,30 @@ void Interface::saveLeaderboard()
 	//Cherche si le leaderboard pour l'ile "m_leaderboards[m_actualLeaderboard]->island" et le niveau "m_leaderboards[m_actualLeaderboard]->level" existe déjà
 		//si c'est le cas on la remplace
 		//sinon on ajoute une nouvelle balise <leaderboard> avec les score dedans
+	m_leaderboards.clear();
+	
+	TiXmlDocument doc("../levels/save.xml");
+	int score;
+	std::string player;
+	Leaderboard l;
+	m_name.str(std::string());
+
+	if(!doc.LoadFile())
+	{
+		std::cerr << "erreur lors du chargement du XML des scores" << std::endl;
+		std::cerr << "error #" << doc.ErrorId() << " : " << doc.ErrorDesc() << std::endl;
+		exit(0);
+	}
+	else
+	{
+		//permet de sécuriser le pacours des noeud (dans le cas ou l'un des noeuds n'existerait pas)
+		TiXmlHandle hdl(&doc);
+		std::cout << "Interface.cpp : après TiXml " << std::endl;
+		TiXmlElement * xmlScores = hdl.FirstChildElement().Element();
+		TiXmlElement * xmlLevel = hdl.FirstChildElement().FirstChildElement().Element();
+
+
+	}
 }
 
 void Interface::saveLevelsUnlocked()
@@ -516,6 +540,29 @@ void Interface::saveLevelsUnlocked()
 	//Remplace les attributs de la balise score par 
 	 // nbIsland = m_leaderboards[m_actualLeaderboard]->island + 1
 	 // nbLevel = m_leaderboards[m_actualLeaderboard]->level
+	m_leaderboards.clear();
+	
+	TiXmlDocument doc("../levels/save.xml");
+	int score;
+	std::string player;
+	Leaderboard l;
+	m_name.str(std::string());
+
+	if(!doc.LoadFile())
+	{
+		std::cerr << "erreur lors du chargement du XML des scores" << std::endl;
+		std::cerr << "error #" << doc.ErrorId() << " : " << doc.ErrorDesc() << std::endl;
+		exit(0);
+	}
+	else
+	{
+		//permet de sécuriser le pacours des noeud (dans le cas ou l'un des noeuds n'existerait pas)
+		TiXmlHandle hdl(&doc);
+		std::cout << "Interface.cpp : après TiXml " << std::endl;
+		TiXmlElement * xmlScores = hdl.FirstChildElement().Element();
+
+
+	}
 }
 
 /*
