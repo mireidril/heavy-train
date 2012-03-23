@@ -232,26 +232,6 @@ void Interface::loadXML(int level, int island)
 		std::cout << "Interface.cpp : après TiXml " << std::endl;
 		TiXmlElement * xmlScores = hdl.FirstChildElement().Element();
 		TiXmlElement * xmlLevel = hdl.FirstChildElement().FirstChildElement().Element();
-
-		/*if(!level)
-		{
-			std::cerr << "le noeud à atteindre n'existe pas" << std::endl;
-			exit(0);
-		}
-		
-		if(atoi(level->Attribute("id")) == 1)
-		{
-			TiXmlElement *scorePlayer = level->FirstChildElement();
-			while(scorePlayer)
-			{
-				player = scorePlayer->Attribute("player");
-				score = atoi(scorePlayer->Attribute("value"));
-				std::cout<<"player : "<<player<<std::endl;
-				std::cout<<"value : "<<score<<std::endl;
-			  	//l.m_scores.insert ( std::pair<std::string,int>(player,score) );
-			  	scorePlayer = scorePlayer->NextSiblingElement();
-			}
-		}*/
 	
 		//Récupère uniquement le nombre de niveaux débloqués
 		if(xmlScores)
@@ -269,72 +249,57 @@ void Interface::loadXML(int level, int island)
 		//Récupère tous les scores : UTILISE APRES L'ECRAN TITLE
 		if(level == 0 && island == 0) 
 		{
-			/*S'il n'y a rien dans le XML concernant un niveau, on ajoute le leaderboard suivant
-			Leaderboard * levelL = new Leaderboard;
-			levelL->island = island;
-			levelL->level = level;
-			for(unsigned int i = 1; i < 5; ++i)
+			Leaderboard * l;
+			while(xmlLevel)
 			{
-				levelL->m_scores.insert(std::make_pair(i * 1000, "BabyBool"));
-			}
-			m_leaderboards.push_back(levelL);
-			*/
+				int i = atoi(xmlLevel->Attribute("island") );
+				int lvl = atoi(xmlLevel->Attribute("level") );
 
-			if(xmlScores)
-			{
-				m_nbAvailableLevels = atoi(xmlScores->Attribute("nbLevel") );
-				m_nbAvailableIslands = atoi(xmlScores->Attribute("nbIsland") );
-			}
-			else
-			{
-				std::cerr<< "Problemes a la recuperation du nb d'iles et de niveaux debloques" <<std::endl;
-				m_nbAvailableLevels = 1;
-				m_nbAvailableIslands = 1;
-			}
-
-			//A REMPLIR
-
-			//TESTS : à virer après le chargement XML
-			for(unsigned int i = 1; i <= m_nbAvailableIslands; ++i)
-			{
-				for(unsigned int l = 1; l <= m_nbAvailableLevels; ++l)
+				if( i <= m_nbAvailableIslands && lvl <= m_nbAvailableLevels)
 				{
-					Leaderboard * levelL = new Leaderboard;
-					levelL->island = i;
-					levelL->level = l;
-					for(unsigned int i = 1; i < 6; ++i)
+					l = new Leaderboard;
+
+					l->island = i;
+					l->level = lvl;
+
+					TiXmlElement *xmlScore1 = xmlLevel->FirstChildElement();
+					while (xmlScore1)
 					{
-						levelL->m_scores.insert(std::make_pair(i * 1000, "BabyBool" ) );
+						l->m_scores.insert(std::make_pair(atoi(xmlScore1->Attribute("value") ), xmlScore1->Attribute("player") ) );
+						xmlScore1 = xmlScore1->NextSiblingElement();
 					}
-					m_leaderboards.push_back(levelL);
+
+					m_leaderboards.push_back(l);
 				}
+				xmlLevel = xmlLevel->NextSiblingElement();
 			}
 		}
 		//Récupère les scores du niveau "level" de l'ile "island" : UTILISE APRES L'ECRAN ISLAND ou A L'ECRAN ENDGAME
 		else if(level > 0 && island > 0)
 		{
-			/*S'il n'y a rien dans le XML concernant un niveau, on ajoute le leaderboard suivant
-			Leaderboard * levelL = new Leaderboard;
-			levelL->island = island;
-			levelL->level = level;
-			for(unsigned int i = 1; i < 5; ++i)
+			Leaderboard * l;
+			while(xmlLevel)
 			{
-				levelL->m_scores.insert(std::make_pair(i * 1000, "BabyBool"));
-			}
-			m_leaderboards.push_back(levelL);
-			*/
+				int i = atoi(xmlLevel->Attribute("island") );
+				int lvl = atoi(xmlLevel->Attribute("level") );
+				if( i == island && lvl == level)
+				{
+					l = new Leaderboard;
 
-			//A REMPLIR
+					l->island = atoi(xmlLevel->Attribute("island"));
+					l->level = atoi(xmlLevel->Attribute("level"));
 
-			//TESTS : à virer après le chargement XML
-			Leaderboard * levelL = new Leaderboard;
-			levelL->island = level;
-			levelL->level = island;
-			for(unsigned int i = 1; i < 6; ++i)
-			{
-				levelL->m_scores.insert(std::make_pair(i * 1000, "BabyBool" ) );
+					TiXmlElement *xmlScore1 = xmlLevel->FirstChildElement();
+					while (xmlScore1)
+					{
+						l->m_scores.insert(std::make_pair(atoi(xmlScore1->Attribute("value") ), xmlScore1->Attribute("player") ) );
+						xmlScore1 = xmlScore1->NextSiblingElement();
+					}
+
+					m_leaderboards.push_back(l);
+				}
+				xmlLevel = xmlLevel->NextSiblingElement();
 			}
-			m_leaderboards.push_back(levelL);
 		}
 	}
 }

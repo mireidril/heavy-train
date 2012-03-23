@@ -1,16 +1,27 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<scores nbIsland="2" nbLevel="1">
+<scores nbIsland="1" nbLevel="1">
 	<leaderboard level="1" island ="1">
+		<score player="BabyBool" value="7000"/>
 		<score player="BabyBool" value="6000"/>
-		<score player="Georges" value="5800"/>
 		<score player="BabyBool" value="5000"/>
 		<score player="BabyBool" value="4000"/>
 		<score player="BabyBool" value="3000"/>
 	</leaderboard>
 	
-	<leaderboard level="2" island ="1">
-		<score player="joueur1" value="600"/>
-		<score player="joueur2" value="580"/>
+	<leaderboard level="1" island ="2">
+		<score player="BabyBool" value="7000"/>
+		<score player="BabyBool" value="6000"/>
+		<score player="BabyBool" value="5000"/>
+		<score player="BabyBool" value="4000"/>
+		<score player="BabyBool" value="3000"/>
+	</leaderboard>
+	
+	<leaderboard level="1" island ="3">
+		<score player="BabyBool" value="7000"/>
+		<score player="BabyBool" value="6000"/>
+		<score player="BabyBool" value="5000"/>
+		<score player="BabyBool" value="4000"/>
+		<score player="BabyBool" value="3000"/>
 	</leaderboard>
 	
 </scores>

@@ -105,7 +105,7 @@ ActualGame::~ActualGame()
 	}
 
 	delete m_train;
-	delete fooDrawInstance;
+	//delete fooDrawInstance;
 	//supprimer m_world
 	b2Body * body = m_world->GetBodyList();
 	while(body != NULL)
