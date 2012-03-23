@@ -19,14 +19,12 @@ class GameEngine;
 
 
 //main collision call back function
-class MyContactListener : public b2ContactListener
+class MyContactListener 
 {
-	void MyContactListener::BeginContact(b2Contact* contact);
-  
-	void MyContactListener::EndContact(b2Contact* contact) ;
+	
 };
 
-class ActualGame
+class ActualGame : public b2ContactListener
 {
 	public :
 		ActualGame(unsigned int level, unsigned int island);
@@ -79,7 +77,13 @@ class ActualGame
 		void saveScore(const std::string & player);
 		Train * getTrain();
 		//Sert a vérifier les collisions entre les obstacles et le train
-		static bool getObstacle(b2Contact* contact, PhysicalObject * physObject);
+		bool getObstacle(b2Contact* contact, Bonus * bonus);
+		//Applique l'effet du bonus
+		void bonusEffect(Bonus *);
+
+		void BeginContact(b2Contact* contact);
+		void EndContact(b2Contact* contact) ;
+
 	private :
 		Time * m_timer;
 		int m_totalScore;
@@ -113,7 +117,6 @@ class ActualGame
 		Level * m_actualLevel;
 		Train * m_train;
 		b2World * m_world;
-		MyContactListener myContactListenerInstance;
 		float32 m_timeStep;
 		int32 m_velocityIterations;
 		int32 m_positionIterations;

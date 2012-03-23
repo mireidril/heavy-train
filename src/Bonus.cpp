@@ -72,3 +72,13 @@ bool Bonus::isUsed()
 {
 	return m_isUsed;
 }
+
+void Bonus::setIsUsed(bool b)
+{
+	m_isUsed = b;
+}
+
+BonusType  Bonus::getType()
+{
+	return m_type;
+}
