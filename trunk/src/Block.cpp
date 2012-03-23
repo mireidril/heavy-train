@@ -78,6 +78,8 @@ Block::~Block()
 	}
 
 	delete m_sprite;
+	
+	std::cout<<"Destruction bloc"<<std::endl;
 }
 
 //Attribue un type au bloc
@@ -322,7 +324,7 @@ void Block::createImage()
 			{
 				for(int y = 0; y < sizeYGround + station->h; ++y)
 				{
-					//On trace le tunnel
+					//On trace la station
 					if(y < station->h)
 					{
 						if(x >= startPosS && x < startPosS + station->w)
@@ -437,18 +439,19 @@ void Block::scroll(const int & x)
 
 
 void Block::draw(SDL_Surface * screen, const int & width, const int & height, ActualGame * game, b2World * world)
-
 {
 	if(m_sprite)
 		m_sprite->draw(screen, width, height);
 
 	for (unsigned int i = 0; i < m_animals.size(); ++i)
 	{
-		if ( !m_animals[i]->isDie() )
+		if ( !m_animals[i]->isDie())
 		{
 			m_animals[i]->draw(screen, width, height);
 			
-		}else if (m_animals[i]->isDie() && m_passageDansMort[i]==false){
+		}
+		else if ( (m_animals[i]->isDie() && m_passageDansMort[i]==false)  )
+		{
 		 ////////////////////////////////////////////////////////////////////////////////////////////////
 			/*appeller la fonction update score ici
 			appeler aussi la fonction ejectPassenger dans m_train-> Wagons -> passenger

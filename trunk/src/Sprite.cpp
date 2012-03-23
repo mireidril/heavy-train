@@ -72,6 +72,8 @@ Sprite::~Sprite()
 
 	delete m_position;
 	delete m_size;
+	
+	std::cout<<"Destruction sprite"<<std::endl;
 }
 
 
@@ -217,7 +219,8 @@ bool Sprite::animate(int debut, int fin)
 				m_actualFrame = debut;
 				return false;
 			}
-			else {
+			else
+			{
 				return true;
 			}
 		}
