@@ -15,9 +15,10 @@ Bonus::Bonus(BonusType type, int posX, int posY)
 			break;
 		case ACCELERATOR:
 			m_sprite = new Sprite("../img/bonus/anneau.png",  posX-75, posY);
-			
+			std::cout<<"ACCELERATOR"<<std::endl;
 			break;
 	}
+	std::cout<<"BUILD BONUS"<<std::endl;
 	build(PhysicalObject::m_world);
 }
 
@@ -90,7 +91,10 @@ void Bonus::draw(SDL_Surface * screen, const int & width, const int & height){
 		double x = bodyPos.x;
 		double y = bodyPos.y;
 		m_sprite->convertMetersToPixels(&x, &y,  width,  height);
-		m_sprite->setPositionY( y-50);
+		if( m_type == ACCELERATOR )
+			m_sprite->setPositionY( y -90);
+		else
+			m_sprite->setPositionY( y-50);
 		m_sprite->draw(screen,  width,  height);
 	}
 }

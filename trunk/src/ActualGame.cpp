@@ -604,9 +604,6 @@ void ActualGame::bonusEffect(Bonus * bonus)
 			break;
 		case ACCELERATOR :
 			std::cout<<"Accelerator !"<<std::endl;
-			m_train->getBody(0)->ApplyForceToCenter(b2Vec2( 20, 0) );
-			m_train->getBody(1)->ApplyForceToCenter(b2Vec2( 20, 0) );
-			m_train->getBody(2)->ApplyForceToCenter(b2Vec2( 20, 0) );
 			break;
 		}
 
