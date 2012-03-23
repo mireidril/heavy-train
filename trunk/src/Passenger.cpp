@@ -66,9 +66,9 @@ Passenger::Passenger(double x, double y)
 //Destructor
 Passenger::~Passenger(){
 	/*if( m_isEjected == false )
-		breakJoint();*/
+		breakJoint();
 	if( m_destination != NULL )
-		delete m_destination;
+		delete m_destination;*/
 }
 
 void Passenger::breakJoint(){
