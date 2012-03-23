@@ -26,8 +26,6 @@ class Bonus : public PhysicalObject
 		BonusType m_type;
 		// False if the bonus is not used yet
 		bool m_used;
-		// Sprite of the bonus
-		Sprite* m_sprite;
 		//Acceleration value if accelerator is used
 		static int m_speedAccelerator;
 };

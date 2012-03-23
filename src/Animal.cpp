@@ -4,8 +4,8 @@
 Animal::Animal(const char * type, int x, int y)
 :PhysicalObject()
 {
-	m_posX = x*40/1024;
-	m_posY = y*30/768;
+	m_posX = x*40/WINDOWS_W;
+	m_posY = y*30/WINDOWS_H;
 	m_type = type;
 	m_die = false;
 	m_tchou = false;

@@ -29,7 +29,6 @@ class Animal : public PhysicalObject
 		double m_posX;
 		double m_posY;
 		const char * m_type;
-		Sprite * m_sprite;
 		bool m_die;//Pour dire quand le train est mort à Bloc
 		bool m_tchou;// Pour signaler quand le train a thou
 };

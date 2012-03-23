@@ -297,16 +297,20 @@ void Wagon::takeOffPassenger(int n, Station * station)
 		//Attention, j'ai rajouté ça parce que y'avait une erreur de seg quand le train avait des passagers à vider
 		if(m_passengersCount == 0)
 			return;
-
-		station->m_passengers.push_back(*it);
-
-		PhysicalObject::m_world->DestroyJoint((*it)->getJoint());
-		(*it)->setJoint(NULL);
-		m_passengersCount --;
-		(*it)->switchStatic();
+		if( !(*it)->getIsEjected() )
+		{
+			station->m_passengers.push_back(*it);
+			if( (*it)->getJoint() != NULL )
+			{
+				PhysicalObject::m_world->DestroyJoint((*it)->getJoint());
+				(*it)->setJoint(NULL);
+			}
+			m_passengersCount --;
+			(*it)->switchStatic();
+		}
 	}
-	if(it !=  m_passengers.end())
-		m_passengers.erase(m_passengers.begin(), it);
+	
+	m_passengers.erase(m_passengers.begin(), it);
 }
 
 int Wagon::getNbPassengerWagon()
