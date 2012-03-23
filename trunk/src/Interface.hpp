@@ -88,7 +88,7 @@ class Interface
 
 		void setPreviousScreen(GameScreen s) {m_previousScreen = s;};
 		void setNameRegistered(bool b) {m_nameRegistered = b;};
-		void setlevelUnlockedSaved(bool b) {m_levelUnlockedSaved = b;};
+		void setlevelUnlockedSaved(bool b) {m_levelUnlockedSaved = b; m_page = false;};
 
 		void setActualGameForScores(ActualGame * ag);
 

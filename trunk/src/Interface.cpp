@@ -66,15 +66,15 @@ void Interface::load()
 			score->addImage("../img/screens/scores_button_selected.png");
 			Sprite * instruc = new Sprite("../img/screens/instructions_button_unselected.png", 315, 407);
 			instruc->addImage("../img/screens/instructions_button_selected.png");
-			Sprite * option = new Sprite("../img/screens/options_button_unselected.png", 390, 474);
-			option->addImage("../img/screens/options_button_selected.png");
+			/*Sprite * option = new Sprite("../img/screens/options_button_unselected.png", 390, 474);
+			option->addImage("../img/screens/options_button_selected.png");*/
 			Sprite * quit = new Sprite("../img/screens/quit_button_unselected.png", 425, 540);
 			quit->addImage("../img/screens/quit_button_selected.png");
 
 			m_buttonsImages.push_back(play);
 			m_buttonsImages.push_back(score);
 			m_buttonsImages.push_back(instruc);
-			m_buttonsImages.push_back(option);
+			//m_buttonsImages.push_back(option);
 			m_buttonsImages.push_back(quit);
 			break;
 		}
@@ -366,9 +366,9 @@ void Interface::update(GameEngine * gameEngine)
 						gameEngine->changeScreen(m_type, HELP, -1, -1);
 						break;
 					case 3:
-						gameEngine->changeScreen(m_type, OPTIONS, -1, -1);
+						/*gameEngine->changeScreen(m_type, OPTIONS, -1, -1);
 						break;
-					case 4:
+					case 4:*/
 						gameEngine->quit();
 						break;
 					default:
@@ -507,9 +507,7 @@ void Interface::saveLeaderboard()
 	//Ouvre le XML save.xml
 	//Cherche si le leaderboard pour l'ile "m_leaderboards[m_actualLeaderboard]->island" et le niveau "m_leaderboards[m_actualLeaderboard]->level" existe déjà
 		//si c'est le cas on la remplace
-		//sinon on ajoute une nouvelle balise <leaderboard> avec les score dedans
-	m_leaderboards.clear();
-	
+		//sinon on ajoute une nouvelle balise <leaderboard> avec les score dedans	
 	TiXmlDocument doc("../levels/save.xml");
 	int score;
 	std::string player;
@@ -530,7 +528,29 @@ void Interface::saveLeaderboard()
 		TiXmlElement * xmlScores = hdl.FirstChildElement().Element();
 		TiXmlElement * xmlLevel = hdl.FirstChildElement().FirstChildElement().Element();
 
+		while(xmlLevel)
+		{
+			int i = atoi(xmlLevel->Attribute("island") );
+			int lvl = atoi(xmlLevel->Attribute("level") );
+			if( i == m_leaderboards[0]->island && lvl == m_leaderboards[0]->level)
+			{
+				TiXmlElement *xmlScore1 = xmlLevel->FirstChildElement();
+				std::multimap<int, std::string>::const_iterator it = m_leaderboards[0]->m_scores.begin();
+				while (xmlScore1 || it != m_leaderboards[0]->m_scores.end ())
+				{
+					xmlLevel->RemoveChild(xmlScore1);
+					TiXmlElement newScore("score");
+					newScore.SetAttribute("player", (*it).second.c_str());
+					newScore.SetAttribute("value", (*it).first);
+					xmlLevel->InsertEndChild(newScore);
 
+					++it;
+					xmlScore1 = xmlScore1->NextSiblingElement();
+				}
+			}
+			xmlLevel = xmlLevel->NextSiblingElement();
+		}
+		doc.SaveFile("../levels/save.xml");
 	}
 }
 
@@ -540,7 +560,6 @@ void Interface::saveLevelsUnlocked()
 	//Remplace les attributs de la balise score par 
 	 // nbIsland = m_leaderboards[m_actualLeaderboard]->island + 1
 	 // nbLevel = m_leaderboards[m_actualLeaderboard]->level
-	m_leaderboards.clear();
 	
 	TiXmlDocument doc("../levels/save.xml");
 	int score;
@@ -556,12 +575,16 @@ void Interface::saveLevelsUnlocked()
 	}
 	else
 	{
-		//permet de sécuriser le pacours des noeud (dans le cas ou l'un des noeuds n'existerait pas)
-		TiXmlHandle hdl(&doc);
-		std::cout << "Interface.cpp : après TiXml " << std::endl;
-		TiXmlElement * xmlScores = hdl.FirstChildElement().Element();
+		if( m_leaderboards[m_actualLeaderboard]->island + 1 <= 3)
+		{
+			//permet de sécuriser le pacours des noeud (dans le cas ou l'un des noeuds n'existerait pas)
+			TiXmlHandle hdl(&doc);
+			std::cout << "Interface.cpp : après TiXml " << std::endl;
+			TiXmlElement * xmlScores = hdl.FirstChildElement().Element();
 
-
+			xmlScores->SetAttribute("nbIsland", m_leaderboards[m_actualLeaderboard]->island + 1);
+			doc.SaveFile("../levels/save.xml");
+		}
 	}
 }
 
