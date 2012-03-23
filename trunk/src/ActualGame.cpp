@@ -564,7 +564,7 @@ void ActualGame::updateSatisfactionScore()
 }
 void ActualGame::updateTotalScore()
 {
-	m_totalScore += m_starDustScore;
+	m_totalScore = m_starDustScore;
 	m_totalScore += m_passengerScore;
 	m_totalScore += m_timeScore;
 	m_totalScore += m_satisfactionScore;
