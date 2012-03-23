@@ -162,7 +162,7 @@ void ActualGame::run(GameEngine * gameEngine, SDL_Surface * screen, int w, int h
 
 		//fooDrawInstance->SetFlags( b2Draw::e_shapeBit );
 		//Affichage des formes physiques pour Debug
-		//m_world->DrawDebugData();
+		m_world->DrawDebugData();
 
 		checkVictoryConditions();
 	}
@@ -591,22 +591,6 @@ bool ActualGame::getBonus(b2Contact* contact, Bonus * bonus){
 	return true;
 }
 
-bool ActualGame::getAnimal(b2Contact* contact, Animal * animal)
-{
-	b2Fixture* fixtureA = contact->GetFixtureA();
-	b2Fixture* fixtureB = contact->GetFixtureB();
-	if ( animal = (Animal*)( fixtureA->GetBody()->GetUserData() ) ) 
-	{ 
-		;
-	}else if(animal = (Animal*)( fixtureB->GetBody()->GetUserData() )){
-		;
-	}else{
-		return false;
-	}
-	animal->die();
-	return true;
-}
-
 void ActualGame::bonusEffect(Bonus * bonus)
 {
 	if( ! bonus->isUsed() )
@@ -621,13 +605,13 @@ void ActualGame::bonusEffect(Bonus * bonus)
 		case ACCELERATOR :
 			std::cout<<"Accelerator !"<<std::endl;
 			m_train->getBody(0)->ApplyForceToCenter(b2Vec2( 20, 0) );
+			m_train->getBody(1)->ApplyForceToCenter(b2Vec2( 20, 0) );
+			m_train->getBody(2)->ApplyForceToCenter(b2Vec2( 20, 0) );
 			break;
 		}
 
 	}
 }
-
-
 
 //main collision call back function
 
@@ -637,11 +621,6 @@ void ActualGame::BeginContact(b2Contact* contact) {
 	if( getBonus(contact, bonus) )
 	{
 	}
-	/*
-	else if( getAnimal( contact, animal) )
-	{
-	}
-	*/
 	
 }
 
