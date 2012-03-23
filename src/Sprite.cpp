@@ -3,7 +3,7 @@
 /**
  * Constructeur
  */
-Sprite::Sprite(const char* imageFileName, int posX, int posY, int sizeX, int sizeY)
+Sprite::Sprite(const char* imageFileName, int posX, int posY)
 : m_actualFrame(0)
 , m_nbFrames(0)
 , m_position(NULL)
@@ -16,8 +16,6 @@ Sprite::Sprite(const char* imageFileName, int posX, int posY, int sizeX, int siz
 	m_position->x = posX;
 	m_position->y = posY;
 	m_size = new SDL_Rect();
-	m_size->x = sizeX;
-	m_size->y = sizeY;
 	SDL_Surface * img = IMG_Load(imageFileName);
 	if(img)
 	{
@@ -25,6 +23,9 @@ Sprite::Sprite(const char* imageFileName, int posX, int posY, int sizeX, int siz
 		SDL_FreeSurface(img);
 		img = tmp;
 		
+		m_size->x = img->w;
+		m_size->y = img->h;
+
 		m_frames.push_back(img);
 		m_nbFrames++;
 	}
@@ -33,7 +34,7 @@ Sprite::Sprite(const char* imageFileName, int posX, int posY, int sizeX, int siz
 /**
  * Constructeur
  */
-Sprite::Sprite(SDL_Surface * sdlSurface, int posX, int posY, int sizeX, int sizeY)
+Sprite::Sprite(SDL_Surface * sdlSurface, int posX, int posY)
 : m_actualFrame(0)
 , m_nbFrames(0)
 , m_position(NULL)
@@ -46,13 +47,14 @@ Sprite::Sprite(SDL_Surface * sdlSurface, int posX, int posY, int sizeX, int size
 	m_position->x = posX;
 	m_position->y = posY;
 	m_size = new SDL_Rect();
-	m_size->x = sizeX;
-	m_size->y = sizeY;
 	if(sdlSurface)
 	{
 		SDL_Surface * tmp = SDL_DisplayFormatAlpha(sdlSurface);
 		SDL_FreeSurface(sdlSurface);
 		sdlSurface = tmp;
+
+		m_size->x = sdlSurface->w;
+		m_size->y = sdlSurface->h;
 	}
 
 	m_frames.push_back(sdlSurface);

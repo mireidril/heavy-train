@@ -34,4 +34,78 @@ Sous Linux
 ==== CREER SES NIVEAUX =====
 Vous voulez créer votre propre niveau ?
 Aucun problème, notre jeu le permet et même l'encourage !
-(je le finirais demain promis)
+Pour plus de détails, consultez les cahiers des charges
+
+Exemple de configuration d'un niveau :
+<world>
+	<island id="1">
+		<level id="1">
+			<!-- Heure de départ du niveau  -->
+			<departure hour="12" minutes="00" seconds="00"/>
+			
+			<!-- Image de sol de niveau : doit être de dimension 2048x384  -->
+			<sprite type="ground" img="../img/levels/level2/niveau2-sol2.png"/>
+			<!-- Image de sol de niveau : doit être de dimension 2048x384  -->
+			<sprite type="background" img="../img/levels/level1/niveau1-sky.png" />
+			<sprite type="background" posY="518" img="../img/levels/level1/niveau1-mountain.png" />
+			
+			<!-- Une infobulle de type "type" apparaîtra dans le niveau, après l'évennement "action"
+			<infobulle type="standard" action="collision" declenche="false">
+				<sprite img="info2.png" />
+			</infobulle>
+			
+			<!--station-->
+			<station size="200">
+				<option hours="12" minutes="00" leaving="0" entering="10"/>
+			</station>
+			<block type="GROUND" size="1024">
+				<obstacle type="animal" nom="vache" posX="800" posY="300" />
+				<!--<infobulle type="aide" declenche="false" posX="800">
+					<sprite img="info1.png" />
+				</infobulle>-->
+			</block>
+			<block type="TUNNEL" size="200">
+			<!--<infobulle type="aide" declenche="false" posX="800">
+					<sprite img="info1.png" />
+				</infobulle>-->
+			</block>
+			<block type="GROUND" size="1024">
+				<point x="400" y = "600" />
+				<point x="600" y = "660" />
+			</block>
+	<!--station-->
+			<station size="200">
+				<option hours="12" minutes="30" leaving="5" entering="15"/>
+				<!--<infobulle type="aide" declenche="false" posX="800">
+					<sprite img="info1.png" />
+				</infobulle>-->
+			</station>
+			<block type="GROUND" size="500">
+			</block>
+			<block type="PRECIPICE" size="100">
+				<!--<infobulle type="aide" declenche="false" posX="800">
+					<sprite img="info1.png" />
+				</infobulle>-->
+				<obstacle type="bonus" nom="etoile" posX="3200" posY="300" />
+			</block>
+			<block type="GROUND" size="1024">
+				<point x="500" y = "600" />
+			</block>
+	<!--station-->
+			<station size="200">
+				<option hours="13" minutes="00" leaving="2" entering="20"/>
+			</station>
+			<block type="GROUND" size="2048">
+				<!--<infobulle type="aide" declenche="false" posX="800">
+					<sprite img="info1.png" />
+				</infobulle>-->
+				<!--<obstacle type="bonus" nom="accelerateur" posX="600" posY="500" />-->
+				<obstacle type="animal" nom="vache" posX="6000" posY="300" />
+			</block>
+	<!--station-->
+			<station size="200">
+				<option hours="13" minutes="30" leaving="40" entering="0"/>
+			</station>
+		</level>
+	</island>
+</levels>

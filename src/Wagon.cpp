@@ -14,15 +14,12 @@ Wagon::Wagon (int posX)
 	m_areDoorOpened= false;
 
 	int x = posX; int y =0;
-	int sizeX = 110, sizeY = 66;
-	PhysicalObject * wagon = new PhysicalObject(new Sprite("../img/elements/wagon.png",  x, y,  sizeX, sizeY) );
+	PhysicalObject * wagon = new PhysicalObject(new Sprite("../img/elements/wagon.png",  x, y) );
 	m_physicalObjects.push_back(wagon);
-	sizeX = 23; sizeY = 23; 
 	x = posX+10; y=0;
-	PhysicalObject * roue1 = new PhysicalObject(new Sprite("../img/elements/roue.png", x, y,  sizeX, sizeY) );
+	PhysicalObject * roue1 = new PhysicalObject(new Sprite("../img/elements/roue.png", x, y) );
 	m_physicalObjects.push_back(roue1);
-	x = posX+50; y=0;	
-	PhysicalObject * roue2 = new PhysicalObject(new Sprite("../img/elements/roue.png", x, y,  sizeX, sizeY) );
+	PhysicalObject * roue2 = new PhysicalObject(new Sprite("../img/elements/roue.png", x, y) );
 	m_physicalObjects.push_back(roue2);
 
 

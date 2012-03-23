@@ -58,17 +58,17 @@ void Interface::load()
 		case TITLE :
 		{
 			//Background Images
-			m_backgroundImages.push_back(new Sprite("../img/screens/menu_background.jpg", 0, 0, 1024, 768));
+			m_backgroundImages.push_back(new Sprite("../img/screens/menu_background.jpg", 0, 0));
 			//Buttons Images
-			Sprite * play = new Sprite("../img/screens/play_button_unselected.png", 425, 250, 153, 83);
+			Sprite * play = new Sprite("../img/screens/play_button_unselected.png", 425, 250);
 			play->addImage("../img/screens/play_button_selected.png");
-			Sprite * score = new Sprite("../img/screens/scores_button_unselected.png", 390, 333, 249, 74);
+			Sprite * score = new Sprite("../img/screens/scores_button_unselected.png", 390, 333);
 			score->addImage("../img/screens/scores_button_selected.png");
-			Sprite * instruc = new Sprite("../img/screens/instructions_button_unselected.png", 315, 407, 425, 67);
+			Sprite * instruc = new Sprite("../img/screens/instructions_button_unselected.png", 315, 407);
 			instruc->addImage("../img/screens/instructions_button_selected.png");
-			Sprite * option = new Sprite("../img/screens/options_button_unselected.png", 390, 474, 260, 66);
+			Sprite * option = new Sprite("../img/screens/options_button_unselected.png", 390, 474);
 			option->addImage("../img/screens/options_button_selected.png");
-			Sprite * quit = new Sprite("../img/screens/quit_button_unselected.png", 425, 540, 145, 59);
+			Sprite * quit = new Sprite("../img/screens/quit_button_unselected.png", 425, 540);
 			quit->addImage("../img/screens/quit_button_selected.png");
 
 			m_buttonsImages.push_back(play);
@@ -81,13 +81,13 @@ void Interface::load()
 		case PAUSE :
 		{
 			//Background Images
-			m_backgroundImages.push_back(new Sprite("../img/screens/pause_screen.jpg", 0, 0, 1024, 768));
+			m_backgroundImages.push_back(new Sprite("../img/screens/pause_screen.jpg", 0, 0));
 			//Buttons Images
-			Sprite * bcontinue = new Sprite("../img/screens/continue_button_unselected.png", 350, 250, 298, 63);
+			Sprite * bcontinue = new Sprite("../img/screens/continue_button_unselected.png", 350, 250);
 			bcontinue->addImage("../img/screens/continue_button_selected.png");
-			Sprite * instruc = new Sprite("../img/screens/instructions_button_unselected.png", 315, 320, 425, 67);
+			Sprite * instruc = new Sprite("../img/screens/instructions_button_unselected.png", 315, 320);
 			instruc->addImage("../img/screens/instructions_button_selected.png");
-			Sprite * title = new Sprite("../img/screens/quit_button_unselected.png", 425, 400, 145, 59);
+			Sprite * title = new Sprite("../img/screens/quit_button_unselected.png", 425, 400);
 			title->addImage("../img/screens/quit_button_selected.png");
 
 			m_buttonsImages.push_back(bcontinue);
@@ -100,13 +100,13 @@ void Interface::load()
 			//Récupération des informations du XML
 			loadXML(0, 0);
 			//Background Images
-			m_backgroundImages.push_back(new Sprite("../img/screens/leaderboard.jpg", 0, 0, 1024, 768));
+			m_backgroundImages.push_back(new Sprite("../img/screens/leaderboard.jpg", 0, 0));
 			//Buttons Images
-			Sprite * leftArrow1 = new Sprite("../img/screens/leftArrow_unselected.png", 300, 160, 60, 50);
+			Sprite * leftArrow1 = new Sprite("../img/screens/leftArrow_unselected.png", 300, 160);
 			leftArrow1->addImage("../img/screens/leftArrow_selected.png");
-			Sprite * rightArrow1 = new Sprite("../img/screens/rightArrow_unselected.png", 650, 160, 60, 50);
+			Sprite * rightArrow1 = new Sprite("../img/screens/rightArrow_unselected.png", 650, 160);
 			rightArrow1->addImage("../img/screens/rightArrow_selected.png");
-			Sprite * returnB = new Sprite("../img/screens/return_button_unselected.png", 25, 648, 160, 100);
+			Sprite * returnB = new Sprite("../img/screens/return_button_unselected.png", 25, 648);
 			returnB->addImage("../img/screens/return_button_selected.png");
 			
 			m_buttonsImages.push_back(leftArrow1);
@@ -118,9 +118,9 @@ void Interface::load()
 		case HELP :
 		{
 			//Background Images
-			m_backgroundImages.push_back(new Sprite("../img/screens/instruction_screen.jpg", 0, 0, 1024, 768));
+			m_backgroundImages.push_back(new Sprite("../img/screens/instruction_screen.jpg", 0, 0));
 			//Button images
-			Sprite * returnB = new Sprite("../img/screens/return_button_unselected.png", 5, 655, 160, 100);
+			Sprite * returnB = new Sprite("../img/screens/return_button_unselected.png", 5, 655);
 			returnB->addImage("../img/screens/return_button_selected.png");
 			m_buttonsImages.push_back(returnB);
 			break;
@@ -128,7 +128,7 @@ void Interface::load()
 		case ISLAND :
 		{
 			//Background Images
-			m_backgroundImages.push_back(new Sprite("../img/screens/level_select_background.jpg", 0, 0, 1024, 768));
+			m_backgroundImages.push_back(new Sprite("../img/screens/level_select_background.jpg", 0, 0));
 			break;
 		}
 		case WORLD :
@@ -136,18 +136,18 @@ void Interface::load()
 			//Récupération des informations du XML
 			loadXML(0, 0);
 			//Background Images
-			m_backgroundImages.push_back(new Sprite("../img/screens/level_select_background.jpg", 0, 0, 1024, 768));
+			m_backgroundImages.push_back(new Sprite("../img/screens/level_select_background.jpg", 0, 0));
 			//Buttons Images
-			Sprite * isle1 = new Sprite("../img/screens/paradisio_unselected.png", 100, 200, 347, 290);
+			Sprite * isle1 = new Sprite("../img/screens/paradisio_unselected.png", 100, 200);
 			isle1->addImage("../img/screens/paradisio_selected.png");
-			Sprite * isle2 = new Sprite("../img/screens/dolfina_unselected.png", 500, 200, 347, 290);
+			Sprite * isle2 = new Sprite("../img/screens/dolfina_unselected.png", 500, 200);
 			isle2->addImage("../img/screens/dolfina_selected.png");
 			isle2->addImage("../img/screens/dolfina_locked.png");
-			Sprite * isle3 = new Sprite("../img/screens/chicken_island_unselected.png", 300, 400, 347, 290);
+			Sprite * isle3 = new Sprite("../img/screens/chicken_island_unselected.png", 300, 400);
 			isle3->addImage("../img/screens/chicken_island_selected.png");
 			isle3->addImage("../img/screens/chicken_island_locked.png");
 			
-			Sprite * returnB = new Sprite("../img/screens/return_button_unselected.png", 25, 648, 160, 100);
+			Sprite * returnB = new Sprite("../img/screens/return_button_unselected.png", 25, 648);
 			returnB->addImage("../img/screens/return_button_selected.png");
 
 			switch(m_nbAvailableIslands)
@@ -173,9 +173,9 @@ void Interface::load()
 		case GAMEOVER :
 		{
 			//Background Images
-			m_backgroundImages.push_back(new Sprite("../img/screens/game_over.png", 0, 0, 1024, 768));
+			m_backgroundImages.push_back(new Sprite("../img/screens/game_over.png", 0, 0));
 			//Button images
-			Sprite * returnb = new Sprite("../img/screens/return_button_unselected.png", 25, 648, 160, 100);
+			Sprite * returnb = new Sprite("../img/screens/return_button_unselected.png", 25, 648);
 			returnb->addImage("../img/screens/return_button_selected.png");
 			/*Sprite * retry = new Sprite("../img/screens/retry_button_unselected.png", 850, 648, 160, 100);
 			retry->addImage("../img/screens/retry_button_selected.png");*/
@@ -188,14 +188,14 @@ void Interface::load()
 		{
 			loadXML(1, 1);
 			//Background Images
-			m_backgroundImages.push_back(new Sprite("../img/screens/score_level.png", 0, 0, 1024, 768));
+			m_backgroundImages.push_back(new Sprite("../img/screens/score_level.png", 0, 0));
 			//Button Images
 			//Buttons Images
-			Sprite * leftArrow1 = new Sprite("../img/screens/leftArrow_unselected.png", 300, 160, 60, 50);
+			Sprite * leftArrow1 = new Sprite("../img/screens/leftArrow_unselected.png", 300, 160);
 			leftArrow1->addImage("../img/screens/leftArrow_selected.png");
-			Sprite * rightArrow1 = new Sprite("../img/screens/rightArrow_unselected.png", 650, 160, 60, 50);
+			Sprite * rightArrow1 = new Sprite("../img/screens/rightArrow_unselected.png", 650, 160);
 			rightArrow1->addImage("../img/screens/rightArrow_selected.png");
-			Sprite * returnB = new Sprite("../img/screens/return_button_unselected.png", 25, 648, 160, 100);
+			Sprite * returnB = new Sprite("../img/screens/return_button_unselected.png", 25, 648);
 			returnB->addImage("../img/screens/return_button_selected.png");
 
 			m_buttonsImages.push_back(leftArrow1);

@@ -385,7 +385,7 @@ void Level::loadAndBuild()
 //Ajoute une image de fond
 void Level::addBackgroundImage(const std::string & path, const int & posY, const std::string & path2)
 {
-	Sprite * backg = new Sprite(path.c_str(), 0, posY, 1024, 768);
+	Sprite * backg = new Sprite(path.c_str(), 0, posY);
 	if(path2 != "")
 	{
 		backg->addImage(path2.c_str());

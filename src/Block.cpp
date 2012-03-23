@@ -280,7 +280,7 @@ void Block::createImage()
 
 			//SDL_SaveBMP(imageTest, "bloc.bmp");
 
-			m_sprite = new Sprite(imageTest, m_posX, (Sint16) m_sizeYMin, m_sizeX, m_sizeYMin);
+			m_sprite = new Sprite(imageTest, m_posX, (Sint16) m_sizeYMin);
 
 			SDL_FreeSurface(mask);
 			SDL_FreeSurface(ground);
@@ -348,7 +348,7 @@ void Block::createImage()
 				}
 			}
 			SDL_SaveBMP(imageTest, "test.bmp");
-			m_sprite = new Sprite(imageTest, m_posX, (Sint16) m_y - station->h, m_sizeX, (int) sizeYGround + station->h);
+			m_sprite = new Sprite(imageTest, m_posX, (Sint16) m_y - station->h);
 
 			SDL_FreeSurface(station);
 			SDL_FreeSurface(ground);
@@ -407,7 +407,7 @@ void Block::createImage()
 				}
 			}
 			SDL_SaveBMP(imageTest, "test.bmp");
-			m_sprite = new Sprite(imageTest, m_posX, (Sint16) m_y - tunnel->h, m_sizeX, (int) sizeYGround + tunnel->h);
+			m_sprite = new Sprite(imageTest, m_posX, (Sint16) m_y - tunnel->h);
 
 			SDL_FreeSurface(tunnel);
 			SDL_FreeSurface(ground);

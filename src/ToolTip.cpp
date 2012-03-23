@@ -13,7 +13,7 @@ ToolTip::ToolTip(bool trigger, const char* image)
 ,m_sizeY(600)
 ,m_trigger(false)
 {
-	m_sprite = new Sprite(image,  m_posX, m_posY,  m_sizeX, m_sizeY);
+	m_sprite = new Sprite(image,  m_posX, m_posY);
 
 }
 
