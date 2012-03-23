@@ -173,11 +173,11 @@ void Wagon::build(b2World * world, double x, float high)
 		fixtureRoof.density = 0.1f;
 		fixtureRoof.filter.groupIndex = -1; // So it doesn't collide with passengers
 		//*/
-		fixtureRoof.filter.categoryBits = _entityCategory::TRAIN;
+		fixtureRoof.filter.categoryBits = TRAIN;
 		m_physicalObjects[0]->getBody()->CreateFixture(&fixtureRoof);
 
 		b2FixtureDef fixtureDef;
-		fixtureDef.filter.categoryBits = _entityCategory::TRAIN;
+		fixtureDef.filter.categoryBits = TRAIN;
 		fixtureDef.density = 3.0f;
 		fixtureDef.shape = &frameBot;
 		m_physicalObjects[0]->getBody()->CreateFixture(&fixtureDef);
