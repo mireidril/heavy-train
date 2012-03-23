@@ -110,7 +110,9 @@ class Block
 		std::vector <Bonus*> m_bonus;
 		//Animals present in the block
 		std::vector <Animal*> m_animals;
-
+		
+		//HelpTip* m_helptip;
+		
 		//Min and Max size in pixels
 		double m_sizeXMinStation;
 		const double m_sizeXMin;
