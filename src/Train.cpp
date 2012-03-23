@@ -52,6 +52,8 @@ Train::~Train ()
 		delete m_wagons[i]; 
 	}
 	//suppr bodies, + sounds
+	
+	std::cout<<"Destruction train"<<std::endl;
 }
 
 bool Train::checkiIfTrainIsReturned()

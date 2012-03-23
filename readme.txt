@@ -32,3 +32,6 @@ Sous Linux
 7. C'est fini ! Le makefile se situe dans le répertoire "linux"
 
 ==== CREER SES NIVEAUX =====
+Vous voulez créer votre propre niveau ?
+Aucun problème, notre jeu le permet et même l'encourage !
+(je le finirais demain promis)

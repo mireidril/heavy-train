@@ -19,7 +19,8 @@ PhysicalObject::PhysicalObject(Sprite * s)
 
 PhysicalObject::~PhysicalObject()
 {
-	delete m_sprite;
+	if(m_sprite)
+		delete m_sprite;
 	PhysicalObject::m_world->DestroyBody(getBody());
 }
 

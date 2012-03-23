@@ -26,6 +26,8 @@ Level::~Level()
 	}
 
 	delete m_position;
+	
+	std::cout<<"Destruction level"<<std::endl;
 }
 
 Block * Level::getBlock(unsigned int i)

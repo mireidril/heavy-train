@@ -78,8 +78,16 @@ ActualGame::~ActualGame()
 	delete m_actualLevel;
 	TTF_CloseFont(m_font);
 
-	if(m_timer) delete m_timer;
-	if(m_actualTime) delete m_actualTime;
+	if(m_timer)
+	{
+		delete m_timer;
+		m_timer = NULL;
+	}
+	if(m_actualTime)
+	{
+		delete m_actualTime;
+		m_actualTime = NULL;
+	}
 
 	for(unsigned int i = 0; i < m_interfaceImages.size(); ++i)
 	{
@@ -95,6 +103,8 @@ ActualGame::~ActualGame()
 		m_world->DestroyBody(body);
 		body = m_world->GetBodyList();
 	}
+	
+	std::cout<<"Destruction actual game"<<std::endl;
 }
 
 /*
@@ -294,6 +304,8 @@ void ActualGame::updateActualBlock()
 			trainLeavingStation();
 		}
 	}
+
+	std::cout<<m_actualBlock<<std::endl;
 }
 
 void ActualGame::trainAtStation()

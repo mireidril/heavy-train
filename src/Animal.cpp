@@ -66,7 +66,7 @@ Animal::Animal(const char * type, int x, int y)
 
 Animal::~Animal() 
 {
-
+	std::cout<<"Destruction animal"<<std::endl;
 }
 
 void Animal::build(b2World * world){
@@ -108,14 +108,15 @@ void Animal::draw(SDL_Surface * screen, const int & width, const int & height){
 		}
 		else {
 			m_tchou = false;
-			die();
 		}		
 	}
 	else if ( abs(x - m_posX) > 0.1 ){
-		if (m_sprite->animate(8,15)) {
+		if (m_sprite->animate(8,15) || m_sprite->getActualFrame() == 0)
+		{
 			m_sprite->draw(screen,  width,  height);
 		}
-		else {
+		else
+		{
 			die();
 		}			
 	}
