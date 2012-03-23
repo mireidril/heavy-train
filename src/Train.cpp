@@ -425,7 +425,7 @@ int Train::getPixelsDistanceBetweenSpriteAndBody()
 	Sprite::convertMetersToPixels(&bodyX, NULL, WINDOWS_W, WINDOWS_H);
 
 	int result = - (bodyX - m_physicalObjects[0]->getSprite()->getPositionX() );
-	std::cout<<result<<std::endl;
+	//std::cout<<result<<std::endl;
 	return result;
 }
 

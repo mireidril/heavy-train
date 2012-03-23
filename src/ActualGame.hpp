@@ -77,7 +77,9 @@ class ActualGame : public b2ContactListener
 		void saveScore(const std::string & player);
 		Train * getTrain();
 		//Sert a vérifier les collisions entre les obstacles et le train
-		bool getObstacle(b2Contact* contact, Bonus * bonus);
+		bool getBonus(b2Contact* contact, Bonus * bonus);
+
+		bool getAnimal(b2Contact* contact, Animal * animal);
 		//Applique l'effet du bonus
 		void bonusEffect(Bonus *);
 
