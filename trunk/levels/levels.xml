@@ -181,7 +181,7 @@
 			<block type="GROUND" size="400">
 			</block>
 			<block type="PRECIPICE" size="150">
-				<obstacle type="bonus" nom="STAR_DUST" posX="4800" posY="300" />
+				<obstacle type="bonus" nom="STAR_DUST" posX="4700" posY="300" />
 			</block>
 			<block type="GROUND" size="400">
 				<!--<obstacle type="bonus" nom="STAR_DUST" posX="5000" posY="300" />-->
