@@ -47,7 +47,7 @@
 				<point x="500" y = "600" />
 			</block>
 			<station size="200">
-				<option hours="12" minutes="00" leaving="2" entering="50"/>
+				<option hours="12" minutes="00" leaving="2" entering="20"/>
 			</station>
 			<block type="GROUND" size="2048">
 				<!--<infobulle type="aide" declenche="false" posX="800">
