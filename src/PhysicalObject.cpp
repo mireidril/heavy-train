@@ -21,7 +21,7 @@ PhysicalObject::~PhysicalObject()
 {
 	if(m_sprite)
 		delete m_sprite;
-	PhysicalObject::m_world->DestroyBody(getBody());
+	//PhysicalObject::m_world->DestroyBody(getBody());
 }
 
 b2Body * PhysicalObject::getBody()
