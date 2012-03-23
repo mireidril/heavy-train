@@ -36,9 +36,9 @@ Wagon::~Wagon ()
 	}
 	//Delete passengers
 	std::list<Passenger*>::iterator it;
-	for ( it = m_passengers.begin(); it != m_passengers.end(); ++it)
+	/*for ( it = m_passengers.begin(); it != m_passengers.end(); ++it)
 		if(*it)
-			delete *it;
+			delete *it;*/
 	m_passengers.clear();
 }
 
