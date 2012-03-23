@@ -793,7 +793,7 @@ void Interface::checkKeyboardEvent(const SDL_KeyboardEvent *event)
 
 void Interface::setActualGameForScores(ActualGame * ag)
 {
-	m_allScores.insert(std::make_pair("Obstacle points : ", ag->getObstacleScore()));
+	m_allScores.insert(std::make_pair("Obstacle hit : ", ag->getObstacleScore()));
 	m_allScores.insert(std::make_pair("StarDust points : ",ag->getStarDustScore()));
 	m_allScores.insert(std::make_pair("Passangers points : ",ag->getPassengerScore()));
 	m_allScores.insert(std::make_pair("Satisfaction points : ",ag->getSatisfactionScore()));

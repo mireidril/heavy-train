@@ -42,13 +42,6 @@
 			<sprite type="background" img="../img/levels/level2/niveau2-sky.jpg" />
 			<sprite type="background" posY="418" img="../img/levels/level2/niveau2-2-bg2.png" img2="../img/levels/level2/niveau2-bg2.png" />
 			<sprite type="background" posY="388" img="../img/levels/level2/niveau2-2-bg3.png" img2="../img/levels/level2/niveau2-bg3.png" />
-			
-			<infobulle type="aide" numBloc="3" declenche="false">
-				<sprite img="info1.png" />
-			</infobulle>
-			<infobulle type="standard" action="collision" declenche="false">
-				<sprite img="info2.png" />
-			</infobulle>
 
 			<station size="200">
 				<option hours="12" minutes="00" leaving="0" entering="10"/>
@@ -57,16 +50,20 @@
 			</block>
 			<block type="GROUND" size="1024">
 				<obstacle type="animal" nom="vache" posX="1610" posY="300" />
-				<point x="100" y = "600" />
-				<point x="256" y = "660" />
-				<point x="512" y = "660" />
-				<point x="768" y = "550" />
-				<point x="900" y = "660" />
 			</block>
 			<station size="200">
 				<option hours="12" minutes="00" leaving="0" entering="10"/>
 			</station>
-			<block type="PRECIPICE" size="200">
+			
+			<block type="GROUND" size="1024">
+				<obstacle type="animal" nom="tatou" posX="2610" posY="300" />
+			</block>
+			<station size="200">
+				<option hours="12" minutes="00" leaving="0" entering="10"/>
+			</station>
+			
+			<block type="GROUND" size="1024">
+				<obstacle type="animal" nom="coyotte" posX="3610" posY="300" />
 			</block>
 			<block type="GROUND" size="200">
 			</block>
