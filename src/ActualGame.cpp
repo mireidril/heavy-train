@@ -62,6 +62,13 @@ ActualGame::ActualGame(unsigned int level, unsigned int island)
 	m_passengerScore = 0;
 	m_totalScore = 0;
 	m_timeScore = 0;
+	
+	m_actualTime = new Time ();
+	m_actualTime->setToZero();
+	m_actualTime->setHours(0);
+	m_actualTime->setMinutes(0);
+	m_actualTime->setSeconds(10);
+	m_actualTime->startTime();
 
 	//Charges les images de l'interface
 	m_font =  TTF_OpenFont("../fonts/GOTHIC.TTF", 24);
@@ -191,7 +198,8 @@ void ActualGame::drawInterface(SDL_Surface * screen, const int & w, const int & 
 
 	//Time
 	if(m_actualTime != NULL)
-	{
+	{		
+		m_actualTime->updateTime();
 		ss << m_actualTime->getHours() << ":" << m_actualTime->getMinutes() << ":" << m_actualTime->getSeconds();
 	}
 	else
@@ -309,6 +317,7 @@ void ActualGame::updateActualBlock()
 
 void ActualGame::trainAtStation()
 {
+
 	m_train->setIsAtStation(true);
 	Station* station = (Station*) m_actualLevel->getBlock(m_actualBlock);
 
