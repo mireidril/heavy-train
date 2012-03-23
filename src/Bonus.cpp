@@ -3,7 +3,7 @@
 Bonus::Bonus(BonusType type, int posX, int posY)
 : PhysicalObject()
 , m_type(type)
-, m_used(false)
+, m_isUsed(false)
 {
 	m_posX = posX*40/WINDOWS_W;
 	m_posY = posY*30/WINDOWS_H;
@@ -64,4 +64,11 @@ void Bonus::build(b2World * world)
 	m_body = world->CreateBody(&bd);
 	m_body->CreateFixture(&fixtureDef);
 	m_body->SetGravityScale(0); // Il vole !
+
+	m_body->SetUserData(this);
+}
+
+bool Bonus::isUsed()
+{
+	return m_isUsed;
 }
