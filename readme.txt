@@ -30,3 +30,5 @@ Sous Linux
 5. Cliquez sur "Configure" puis choisissez "Unix Makefile" puis cliquez sur OK
 6. Cliquez une seconde fois sur "Configure" puis ensuite sur "Generate"
 7. C'est fini ! Le makefile se situe dans le répertoire "linux"
+
+==== CREER SES NIVEAUX =====

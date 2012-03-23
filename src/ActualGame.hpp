@@ -53,6 +53,14 @@ class ActualGame
 		void updateStarDustScore();
 		//Add points to the obstacle score
 		void updateObstacleScore(); //pas besoin de cette fonction puisqu'on diminue les passagers au fur et a mesure et on calculera le score a la fin
+
+		int getTotalScore() {return m_totalScore;};
+		int getPassengerScore() {return m_passengerScore;};
+		int getTimeScore() {return m_timeScore;};
+		int getSatisfactionScore() {return m_satisfactionScore;};
+		int getStarDustScore() {return m_starDustScore;};
+		int getObstacleScore() {return m_obstacleScore;};
+
 		//Update the total score when stopping at a station
 		//void calculateStopScore();
 		//If an animal is visible on screen, return true

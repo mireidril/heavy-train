@@ -15,6 +15,11 @@ ActualGame::ActualGame(unsigned int level, unsigned int island)
 , m_totalScore(0)
 , m_gameOver(false)
 , m_lastStation(0)
+, m_passengerScore(0)
+, m_timeScore(0)
+, m_satisfactionScore(0)
+, m_starDustScore(0)
+, m_obstacleScore(0)
 {
 	std::cout << "Actual Game" << std::endl;
 	b2Vec2 gravity(0.0f, -10.0f);
@@ -144,7 +149,7 @@ void ActualGame::run(GameEngine * gameEngine, SDL_Surface * screen, int w, int h
 	else
 	{
 		gameEngine->changeScreen(GAME, GAMEOVER, -1, -1);
-		//gameEngine->changeScreen(GAME, ENDGAME, m_actualLevel->getLevelNum(), m_actualLevel->getIslandNum());
+		//gameEngine->changeScreen(GAME, ENDGAME, m_actualLevel->getLevelNum(), m_actualLevel->getIslandNum()); //pour les tests
 	}
 }
 

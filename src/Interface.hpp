@@ -15,6 +15,7 @@
 #include <sstream>
 
 class GameEngine;
+class ActualGame;
 
 /*
 * Type d'interface
@@ -86,7 +87,12 @@ class Interface
 		unsigned int getNbAvailableLevels();
 
 		void setPreviousScreen(GameScreen s) {m_previousScreen = s;};
+		void setNameRegistered(bool b) {m_nameRegistered = b;};
 
+		void setActualGameForScores(ActualGame * ag);
+		int getScoreMin();
+		std::multimap< int, std::string >::iterator getScoreIdMinTotalScore();
+	
 	private :
 		//const unsigned int						m_nbLevelByIsland;
 		//Sprites des images de fond de l'interface
@@ -109,9 +115,13 @@ class Interface
 		unsigned int							m_actualLeaderboard;
 		//Police d'écriture
 		TTF_Font *								m_font;
+		TTF_Font *								m_littleFont;
 		//Boolean pour savoir à quelle page on est pour ENDGAME
 		bool									m_page;
 		std::stringstream						m_name;
+		bool									m_nameRegistered;
+		bool									m_leaderboardUpdated;
+		std::map<std::string, int>				m_allScores;
 		//Ecran précédent, parfois nécéssaire
 		GameScreen								m_previousScreen;
 		

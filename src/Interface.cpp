@@ -1,5 +1,6 @@
 #include "Interface.hpp"
 #include "GameEngine.hpp"
+#include "ActualGame.hpp"
 
 /*
  * Constructeur
@@ -15,8 +16,11 @@ Interface::Interface(GameScreen type)
 , m_page(0)
 , m_name("")
 , m_previousScreen(type)
+, m_nameRegistered (false)
+, m_leaderboardUpdated(false)
 {
-	m_font =  TTF_OpenFont("../fonts/GretoonHighlight.ttf", 40);
+	m_font =  TTF_OpenFont("../fonts/GretoonHighlight.ttf", 36);
+	m_littleFont =  TTF_OpenFont("../fonts/GretoonHighlight.ttf", 30);
 	m_name.str(std::string());
 }
 
@@ -181,6 +185,7 @@ void Interface::load()
 		}
 		case ENDGAME :
 		{
+			loadXML(1, 1);
 			//Background Images
 			m_backgroundImages.push_back(new Sprite("../img/screens/score_level.png", 0, 0, 1024, 768));
 			//Button Images
@@ -301,7 +306,7 @@ void Interface::loadXML(int level, int island)
 					levelL->level = l;
 					for(unsigned int i = 1; i < 6; ++i)
 					{
-						levelL->m_scores.insert(std::make_pair(i * 1000, "Level" ) );
+						levelL->m_scores.insert(std::make_pair(i * 1000, "BabyBool" ) );
 					}
 					m_leaderboards.push_back(levelL);
 				}
@@ -329,7 +334,7 @@ void Interface::loadXML(int level, int island)
 			levelL->level = island;
 			for(unsigned int i = 1; i < 6; ++i)
 			{
-				levelL->m_scores.insert(std::make_pair(i * 1000, "Level" ) );
+				levelL->m_scores.insert(std::make_pair(i * 1000, "BabyBool" ) );
 			}
 			m_leaderboards.push_back(levelL);
 		}
@@ -511,6 +516,16 @@ void Interface::update(GameEngine * gameEngine)
 	{
 		m_clic = -1;
 	}
+
+	//Autres actions
+	if(m_type == ENDGAME && m_nameRegistered && !m_leaderboardUpdated)
+	{
+		std::multimap< int, std::string >::iterator id = getScoreIdMinTotalScore();
+		Leaderboard * l = m_leaderboards[m_actualLeaderboard];
+		l->m_scores.insert(id, make_pair(m_allScores.at("Total points : "), m_name.str()) );
+		l->m_scores.erase(id);
+		m_leaderboardUpdated = true;
+	}
 }
 
 /*
@@ -591,9 +606,9 @@ void Interface::render(SDL_Surface * screen, const int & width, const int & heig
 			--it;
 
 			string1.str(std::string());  
-			string1 << it->second << "                " << it->first;
+			string1 << it->second << " : " << it->first;
 				
-			position.x = 240;
+			position.x = 350;
 			position.y = 310 + posY * 80;
 			text = TTF_RenderText_Blended(m_font, string1.str().c_str(),  color2);
 			SDL_BlitSurface(text, NULL, screen, &position);
@@ -613,19 +628,23 @@ void Interface::render(SDL_Surface * screen, const int & width, const int & heig
 			SDL_Surface * text;
 			std::stringstream string1, string2;
 			SDL_Color color = {255, 0, 0};
-			SDL_Color color2 = {255, 255, 0};
+			SDL_Color color2 = {232, 175, 20};
 
 			//On affiche chaque Leaderboard sur un écran et on ajoute des flèches pour naviguer entre les scores
 			string1.str(std::string());
 			string1 << "Enter your name : ";
-			
-			position.x = 400;
-			position.y = 150;
-			text = TTF_RenderText_Blended(m_font, string1.str().c_str(),  color);
-			SDL_BlitSurface(text, NULL, screen, &position);
-			position.y = 220;
-			text = TTF_RenderText_Blended(m_font, m_name.str().c_str(),  color);
-			SDL_BlitSurface(text, NULL, screen, &position);
+
+			int scoreMin = getScoreMin();
+			if(!m_nameRegistered && m_allScores.at("Total points : ") > scoreMin)
+			{
+				position.x = 400;
+				position.y = 150;
+				text = TTF_RenderText_Blended(m_font, string1.str().c_str(),  color);
+				SDL_BlitSurface(text, NULL, screen, &position);
+				position.y = 220;
+				text = TTF_RenderText_Blended(m_font, m_name.str().c_str(),  color);
+				SDL_BlitSurface(text, NULL, screen, &position);
+			}
 			
 			std::multimap< int, std::string >::const_iterator it = m_leaderboards[m_actualLeaderboard]->m_scores.end();
 			int posY = 0;
@@ -634,9 +653,9 @@ void Interface::render(SDL_Surface * screen, const int & width, const int & heig
 				--it;
 
 				string1.str(std::string());  
-				string1 << it->second << "                " << it->first;
+				string1 << it->second << " : " << it->first;
 				
-				position.x = 240;
+				position.x = 350;
 				position.y = 300 + posY * 80;
 				text = TTF_RenderText_Blended(m_font, string1.str().c_str(),  color2);
 				SDL_BlitSurface(text, NULL, screen, &position);
@@ -654,7 +673,7 @@ void Interface::render(SDL_Surface * screen, const int & width, const int & heig
 			SDL_Surface * text;
 			std::stringstream string1, string2;
 			SDL_Color color = {255, 0, 0};
-			SDL_Color color2 = {255, 255, 0};
+			SDL_Color color2 = {232, 175, 20};
 
 			//On affiche chaque Leaderboard sur un écran et on ajoute des flèches pour naviguer entre les scores
 			string1.str(std::string());
@@ -664,6 +683,24 @@ void Interface::render(SDL_Surface * screen, const int & width, const int & heig
 			position.y = 155;
 			text = TTF_RenderText_Blended(m_font, string1.str().c_str(),  color);
 			SDL_BlitSurface(text, NULL, screen, &position);
+
+			int posY = 0;
+			std::map< std::string, int >::const_iterator it = m_allScores.begin();
+			for(; it != m_allScores.end(); ++it)
+			{
+				position.x = 240;
+				position.y = 300 + posY * 80;
+
+				string1.str(std::string());  
+				string1 << it->first << it->second;
+				
+				position.x = 240;
+				position.y = 300 + posY * 70;
+				text = TTF_RenderText_Blended(m_littleFont, string1.str().c_str(),  color2);
+				SDL_BlitSurface(text, NULL, screen, &position);
+
+				posY++;
+			}
 			
 			SDL_FreeSurface(text);
 		}
@@ -708,18 +745,67 @@ void Interface::checkKeyboardEvent(const SDL_KeyboardEvent *event)
 		switch(event->keysym.sym)
 		{
 			case SDLK_BACKSPACE :
-				if(m_name.str().length() > 0)
+				if(m_name.str().length() > 0 && !m_nameRegistered)
 				{
-					//m_name.str().append(m_name.str(), 0, m_name.str().size() - 2);
+					std::string s = m_name.str();
+					s.erase(m_name.str().size() - 1);
+					m_name.str("");
+					m_name << s;
 				}
 				break;
+			case SDLK_RETURN:
+				m_nameRegistered = true;
+				break;
 			default:
-				if(m_name.str().length() < 8)
+				if(m_name.str().length() < 8 && !m_nameRegistered)
 					m_name << (char) (event->keysym.sym);
 				break;
 		}
 	}
 }
 
+void Interface::setActualGameForScores(ActualGame * ag)
+{
+	m_allScores.insert(std::make_pair("Obstacle points : ", ag->getObstacleScore()));
+	m_allScores.insert(std::make_pair("StarDust points : ",ag->getStarDustScore()));
+	m_allScores.insert(std::make_pair("Passangers points : ",ag->getPassengerScore()));
+	m_allScores.insert(std::make_pair("Satisfaction points : ",ag->getSatisfactionScore()));
+	m_allScores.insert(std::make_pair("Time points : ",ag->getTimeScore()));
+	m_allScores.insert(std::make_pair("Total points : ",ag->getTotalScore()));
+}
 
+int Interface::getScoreMin()
+{
+	Leaderboard * l = m_leaderboards[m_actualLeaderboard];
+	int scoreMin = INFINITE;
+	std::multimap< int, std::string >::iterator it;
+	for(it = l->m_scores.begin(); it != l->m_scores.end(); ++it)
+	{
+		if((*it).first < scoreMin)
+		{
+			scoreMin = (*it).first;
+		}
+	}
+
+	return scoreMin;
+}
+
+std::multimap< int, std::string >::iterator Interface::getScoreIdMinTotalScore()
+{
+	Leaderboard * l = m_leaderboards[m_actualLeaderboard];
+	int scoreMin = m_allScores.at("Total points : ");
+	std::multimap< int, std::string >::iterator id;
+
+	std::multimap< int, std::string >::iterator it;
+	for(it = l->m_scores.begin(); it != l->m_scores.end(); ++it)
+	{
+		if((*it).first < scoreMin)
+		{
+			scoreMin = (*it).first;
+			id = it;
+		}
+	}
+
+	return id;
+}
 

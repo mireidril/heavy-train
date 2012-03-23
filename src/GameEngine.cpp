@@ -290,6 +290,7 @@ void GameEngine::changeScreen(const GameScreen & previousScreen, const GameScree
 		{
 			//On récupère les scores pour le niveau qu'on vient de débloquer
 			m_interfaces[screen]->loadXML(level, island);
+			m_interfaces[screen]->setNameRegistered(false);
 		}
 		else if(screen == WORLD)
 		{
@@ -313,15 +314,16 @@ void GameEngine::changeScreen(const GameScreen & previousScreen, const GameScree
 		}
 
 		//Suppression d'un niveau de jeu actuel en changeant d'écran de jeu autre que PAUSE
-		if(previousScreen == GAME && screen != PAUSE && screen != GAMEOVER )
+		if(previousScreen == GAME && screen != PAUSE /*&& screen != GAMEOVER*/ )
 		{
-			Mix_PauseMusic();
-			delete m_actualGame;
-			m_actualGame = NULL;
 			if(screen == ENDGAME)
 			{
 				m_interfaces[screen]->loadXML(level, island);
+				m_interfaces[screen]->setActualGameForScores(m_actualGame);
 			}
+			Mix_PauseMusic();
+			delete m_actualGame;
+			m_actualGame = NULL;
 		}
 
 		m_actualGameScreen = screen;
