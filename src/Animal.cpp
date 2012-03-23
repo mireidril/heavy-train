@@ -66,7 +66,6 @@ Animal::Animal(const char * type, int x, int y)
 
 Animal::~Animal() 
 {
-	delete m_sprite;
 
 }
 
