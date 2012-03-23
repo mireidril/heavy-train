@@ -20,7 +20,10 @@ Bonus::Bonus(BonusType type, int posX, int posY)
 	build(PhysicalObject::m_world);
 }
 
-
+void Bonus::scroll(const int & x)
+{
+	m_sprite->setPositionX(m_sprite->getPositionX()+x);
+}
 
 Bonus::~Bonus() 
 {
@@ -78,4 +81,13 @@ void Bonus::setIsUsed(bool b)
 BonusType  Bonus::getType()
 {
 	return m_type;
+}
+
+void Bonus::draw(SDL_Surface * screen, const int & width, const int & height){
+	b2Vec2 bodyPos = m_body->GetPosition();
+	double x = bodyPos.x;
+	double y = bodyPos.y;
+	m_sprite->convertMetersToPixels(&x, &y,  width,  height);
+	m_sprite->setPositionY( y-60);
+	m_sprite->draw(screen,  width,  height);
 }
