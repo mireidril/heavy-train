@@ -85,7 +85,7 @@ ActualGame::ActualGame(unsigned int level, unsigned int island)
 }
 ActualGame::~ActualGame()
 {
-	delete m_actualLevel;
+	//delete m_actualLevel;
 	TTF_CloseFont(m_font);
 
 	if(m_timer)
