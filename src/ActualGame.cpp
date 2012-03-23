@@ -70,7 +70,7 @@ ActualGame::ActualGame(unsigned int level, unsigned int island)
 	m_actualTime->setToZero();
 	m_actualTime->setHours(0);
 	m_actualTime->setMinutes(0);
-	m_actualTime->setSeconds(10);
+	m_actualTime->setSeconds(1);
 	m_actualTime->startTime();
 
 	//Charges les images de l'interface
