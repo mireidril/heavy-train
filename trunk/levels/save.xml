@@ -7,4 +7,10 @@
 		<score player="BabyBool" value="4000"/>
 		<score player="BabyBool" value="3000"/>
 	</leaderboard>
+	
+	<leaderboard level="2" island ="1">
+		<score player="joueur1" value="600"/>
+		<score player="joueur2" value="580"/>
+	</leaderboard>
+	
 </scores>
