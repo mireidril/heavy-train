@@ -43,9 +43,10 @@
 			<sprite type="background" posY="418" img="../img/levels/level2/niveau2-2-bg2.png" img2="../img/levels/level2/niveau2-bg2.png" />
 			<sprite type="background" posY="388" img="../img/levels/level2/niveau2-2-bg3.png" img2="../img/levels/level2/niveau2-bg3.png" />
 
-			<station size="200">
+			<station size="600">
 				<option hours="12" minutes="00" leaving="0" entering="10"/>
 			</station>
+		
 			<block type="TUNNEL" size="200">
 				<obstacle type="bonus" nom="etoile" posX="220" posY="300" />
 			</block>
@@ -53,14 +54,14 @@
 				<obstacle type="animal" nom="vache" posX="1610" posY="300" />
 			</block>
 			<station size="200">
-				<option hours="12" minutes="00" leaving="0" entering="10"/>
+				<option hours="12" minutes="00" leaving="5" entering="15"/>
 			</station>
 			
 			<block type="GROUND" size="1024">
 				<obstacle type="animal" nom="tatou" posX="2610" posY="300" />
 			</block>
 			<station size="200">
-				<option hours="12" minutes="00" leaving="0" entering="10"/>
+				<option hours="12" minutes="00" leaving="10" entering="20"/>
 			</station>
 			
 			<block type="GROUND" size="1024">
