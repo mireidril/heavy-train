@@ -57,7 +57,7 @@
 				<obstacle type="animal" nom="vache" posX="6000" posY="300" />
 			</block>
 			<station size="200">
-				<option hours="12" minutes="00" leaving="20" entering="0"/>
+				<option hours="12" minutes="00" leaving="40" entering="0"/>
 			</station>
 		</level>
 	</island>
