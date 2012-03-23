@@ -108,7 +108,8 @@ void Animal::draw(SDL_Surface * screen, const int & width, const int & height){
 			m_hasEscape = true;
 		}		
 	}
-	/*else if ( abs(x - m_posX) > 0.1 ){
+	else if ( abs(x - m_posX) > 0.1 ){
+
 		if (m_sprite->animate(8,15) || m_sprite->getActualFrame() == 0)
 		{
 			m_sprite->draw(screen,  width,  height);
@@ -116,8 +117,8 @@ void Animal::draw(SDL_Surface * screen, const int & width, const int & height){
 		else
 		{
 			die();
-		}		
-	}*/
+		}
+	}
 	else if(! m_hasEscape) {
 		m_sprite->convertMetersToPixels(&x, &y,  width,  height);
 		m_sprite->setPositionY( y-60);

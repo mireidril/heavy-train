@@ -79,7 +79,6 @@ class ActualGame : public b2ContactListener
 		//Sert a vérifier les collisions entre les obstacles et le train
 		bool getBonus(b2Contact* contact, Bonus * bonus);
 
-		bool getAnimal(b2Contact* contact, Animal * animal);
 		//Applique l'effet du bonus
 		void bonusEffect(Bonus *);
 
