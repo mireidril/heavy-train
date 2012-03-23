@@ -41,7 +41,7 @@ class Wagon{
 	b2Body * getBody(unsigned int i);
 	std::vector<PhysicalObject *> getPhysicalObjects() { return m_physicalObjects; };
 
-	void drawSprite(SDL_Surface * screen, const int & width, const int & height, const int & posXLocoSprite, const double & posXLocoBody);
+	void drawSprite(SDL_Surface * screen, const int & width, const int & height, const int & posXLocoSprite, const double & posXLocoBody, int diff);
 	void setMotorSpeed(float speed);
 
 	int getNbPassengerWagon();

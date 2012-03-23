@@ -145,8 +145,8 @@ void Train::drawSprite(SDL_Surface * screen, const int & width, const int & heig
 
 	
 
-	m_wagons[1]->drawSprite(screen, width, height,xLocoSprite+8 , xLoco );
-	m_wagons[0]->drawSprite(screen, width, height, xLocoSprite+8 , xLoco);
+	m_wagons[1]->drawSprite(screen, width, height,xLocoSprite+8 , xLoco, getPixelsDistanceBetweenSpriteAndBody() );
+	m_wagons[0]->drawSprite(screen, width, height, xLocoSprite+8 , xLoco, getPixelsDistanceBetweenSpriteAndBody());
 	
 	m_physicalObjects[0]->getSprite()->draw(screen, width, height);// dessiner la loco
 
@@ -417,6 +417,16 @@ bool Train::getIsAtStation()
 void Train::setIsAtStation(bool b)
 {
 	m_isAtStation = b;
+}
+
+int Train::getPixelsDistanceBetweenSpriteAndBody()
+{
+	double bodyX = m_physicalObjects[0]->getPosition().x;
+	Sprite::convertMetersToPixels(&bodyX, NULL, WINDOWS_W, WINDOWS_H);
+
+	int result = - (bodyX - m_physicalObjects[0]->getSprite()->getPositionX() );
+	std::cout<<result<<std::endl;
+	return result;
 }
 
 void Train::takeOffPassengers(Station *station)
