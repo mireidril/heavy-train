@@ -77,9 +77,9 @@
 			</station>			
 			<block type="GROUND" size="500">
 			</block>
-			<!--<block type="PRECIPICE" size="150">
-				<obstacle type="bonus" nom="etoile" posX="800" posY="300" />
-			</block>-->
+			<block type="PRECIPICE" size="150">
+				<!--<obstacle type="bonus" nom="etoile" posX="800" posY="300" />-->
+			</block>
 			<block type="GROUND" size="2000">
 				<point x="400" y = "660" />
 				<point x="600" y = "600" />
@@ -105,9 +105,9 @@
 			<block type="GROUND" size="800">
 				<obstacle type="animal" nom="tatou" posX="5500" posY="300" />
 			</block>
-			<!--<block type="PRECIPICE" size="200">
-				<obstacle type="bonus" nom="etoile" posX="6000" posY="300" />
-			</block>	-->	
+			<block type="PRECIPICE" size="200">
+				<!--<obstacle type="bonus" nom="etoile" posX="6000" posY="300" />-->
+			</block>		
 			<block type="GROUND" size="1800">
 				<point x="500" y = "660" />
 				<point x="700" y = "550" />
@@ -115,9 +115,9 @@
 				<point x="1400" y = "600" />
 				<obstacle type="animal" nom="tatou" posX="7000" posY="300" />
 			</block>
-			<!--<block type="PRECIPICE" size="100">
-				<!--<obstacle type="bonus" nom="etoile" posX="7950" posY="300" />
-			</block>	-->	
+			<block type="PRECIPICE" size="100">
+				<!--<obstacle type="bonus" nom="etoile" posX="7950" posY="300" />-->
+			</block>		
 			<block type="GROUND" size="100">
 			</block>
 	<!--station-->		
@@ -131,48 +131,17 @@
 				<point x="900" y = "600" />
 				<point x="1450" y = "600" />
 			</block>
-			<!--<block type="PRECIPICE" size="150">
-				<!--<obstacle type="bonus" nom="etoile" posX="9800" posY="300" />
-			</block>-->
+			<block type="PRECIPICE" size="150">
+				<!--<obstacle type="bonus" nom="etoile" posX="9800" posY="300" />-->
+			</block>
 			<block type="GROUND" size="1000">
 				<obstacle type="animal" nom="coyote" posX="10200" posY="300" />
-				<obstacle type="animal" nom="vache" posX="10500" posY="300" />
 				<!--<obstacle type="bonus" nom="accelerateur" posX="10600" posY="300" />-->
-				<!--<obstacle type="bonus" nom="etoile" posX="10800" posY="300" />-->
 			</block>
 	<!--station-->
 			<station size="200">
 				<option hours="17" minutes="30" leaving="40" entering="0"/>
 			</station>
-			<!--<station size="200">
-				<option hours="12" minutes="00" leaving="0" entering="10"/>
-			</station>
-		
-			<block type="TUNNEL" size="200">
-				<obstacle type="bonus" nom="etoile" posX="220" posY="300" />
-			</block>
-			<block type="GROUND" size="1024">
-				<obstacle type="animal" nom="vache" posX="1610" posY="300" />
-			</block>
-			<station size="200">
-				<option hours="12" minutes="00" leaving="5" entering="15"/>
-			</station>
-			
-			<block type="GROUND" size="1024">
-				<obstacle type="animal" nom="tatou" posX="2610" posY="300" />
-			</block>
-			<station size="200">
-				<option hours="12" minutes="00" leaving="10" entering="20"/>
-			</station>
-			
-			<block type="GROUND" size="1024">
-				<obstacle type="animal" nom="coyotte" posX="3610" posY="300" />
-			</block>
-			<block type="GROUND" size="500">
-			</block>
-			<station size="1000">
-				<option hours="12" minutes="05" leaving="10" entering="0"/>
-			</station>-->
 		</level>
 	</island>
 	<island id="3">
@@ -183,33 +152,85 @@
 			<sprite type="background" posY="440" img="../img/levels/level3/niveau3-bg2.png"/>
 			<sprite type="background" posY="388" img="../img/levels/level3/niveau3-2-bg3.png" img2="../img/levels/level3/niveau3-bg3.png" />
 			
-			<infobulle type="aide" numBloc="3" declenche="false">
-				<sprite img="info1.png" />
-			</infobulle>
-			<infobulle type="standard" action="collision" declenche="false">
-				<sprite img="info2.png" />
-			</infobulle>
-
+	<!--station-->
 			<station size="200">
-				<option hours="12" minutes="00" leaving="0" entering="10"/>
-			</station>
-			<block type="PRECIPICE" size="10">
+				<option hours="9" minutes="00" leaving="0" entering="3"/>
+			</station>	
+			<block type="GROUND" size="1000">
+				<point x="100" y = "660" />
+				<point x="200" y = "600" />
+				<point x="300" y = "550" />
+				<point x="500" y = "600" />
+				<point x="650" y = "660" />
+				<point x="910" y = "600" />
 			</block>
-			<block type="GROUND" size="1024">
-				<obstacle type="animal" nom="vache" posX="1610" posY="300" />
+			<block type="GROUND" size="1000">
+				<obstacle type="animal" nom="vache" posX="1600" posY="300" />
+			</block>
+			<block type="GROUND" size="800">
 				<point x="100" y = "600" />
-				<point x="256" y = "660" />
-				<point x="512" y = "660" />
-				<point x="768" y = "550" />
-				<point x="900" y = "660" />
+				<point x="400" y = "500" />
+				<point x="600" y = "550" />
+				<point x="750" y = "600" />
 			</block>
-			<block type="PRECIPICE" size="300">
+			<block type="GROUND" size="600">
+				<obstacle type="animal" nom="vache" posX="3300" posY="300" />
 			</block>
-			<block type="GROUND" size="200">
+			
+	<!--station-->		
+			<station size="200">
+				<option hours="9" minutes="30" leaving="1" entering="5"/>
+			</station>	
+			<block type="GROUND" size="400">
 			</block>
-			<station size="600">
-				<option hours="12" minutes="05" leaving="10" entering="0"/>
+			<block type="PRECIPICE" size="150">
+				<obstacle type="bonus" nom="etoile" posX="4250" posY="300" />
+			</block>
+			<block type="GROUND" size="400">
+				<obstacle type="bonus" nom="etoile" posX="4500" posY="300" />
+			</block>
+			<block type="TUNNEL" size="200">
+			</block>
+			<block type="GROUND" size="1000">
+				<obstacle type="animal" nom="coyote" posX="5050" posY="300" />
+			</block>
+			
+	<!--station-->		
+			<station size="200">
+				<option hours="10" minutes="00" leaving="7" entering="10"/>
 			</station>
+			<block type="GROUND" size="800">
+				<obstacle type="bonus" nom="accelerateur" posX="6500" posY="300" />
+			</block>
+			<block type="GROUND" size="1000">
+				<point x="100" y = "660" />
+				<point x="200" y = "630" />
+				<point x="300" y = "700" />
+				<point x="500" y = "600" />
+				<point x="650" y = "610" />
+				<point x="910" y = "640" />
+			</block>
+			<block type="PRECIPICE" size="100">
+			</block>
+			<block type="GROUND" size="900">
+				<obstacle type="animal" nom="coyote" posX="8450" posY="300" />
+			</block>
+			<block type="GROUND" size="900">
+				<point x="100" y = "590" />
+				<point x="400" y = "630" />
+				<point x="600" y = "500" />
+				<point x="750" y = "600" />
+			</block>
+			
+	<!--station-->
+			<station size="200">
+				<option hours="10" minutes="30" leaving="10" entering="15"/>
+			</station>
+			
+	<!--statio
+			<station size="200">
+				<option hours="11" minutes="00" leaving="40" entering="0"/>
+			</station>n-->
 		</level>
 	</island>
 </world>
