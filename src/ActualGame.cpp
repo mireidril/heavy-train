@@ -305,7 +305,6 @@ void ActualGame::updateActualBlock()
 		}
 	}
 
-	std::cout<<m_actualBlock<<std::endl;
 }
 
 void ActualGame::trainAtStation()
