@@ -91,7 +91,7 @@
 				<option hours="16" minutes="30" leaving="2" entering="8"/>
 			</station>			
 			<block type="GROUND" size="1500">
-				<obstacle type="bonus" nom="ACCELERATOR" posX="3150" posY="300" />
+				<obstacle type="bonus" nom="ACCELERATOR" posX="3750" posY="300" />
 				<point x="800" y = "660" />
 				<point x="900" y = "620" />
 				<point x="1050" y = "580" />
@@ -103,7 +103,7 @@
 				<obstacle type="animal" nom="tatou" posX="5500" posY="300" />
 			</block>
 			<block type="PRECIPICE" size="200">
-				<obstacle type="bonus" nom="STAR_DUST" posX="6000" posY="400" />
+				<obstacle type="bonus" nom="STAR_DUST" posX="6400" posY="300" />
 			</block>		
 			<block type="GROUND" size="1800">
 				<point x="500" y = "660" />
@@ -113,7 +113,7 @@
 				<obstacle type="animal" nom="tatou" posX="7000" posY="300" />
 			</block>
 			<block type="PRECIPICE" size="100">
-				<obstacle type="bonus" nom="STAR_DUST" posX="7950" posY="400" />
+				<obstacle type="bonus" nom="STAR_DUST" posX="8350" posY="250" />
 			</block>		
 			<block type="GROUND" size="100">
 			</block>
@@ -122,8 +122,8 @@
 				<option hours="17" minutes="00" leaving="7" entering="15"/>
 			</station>
 			<block type="GROUND" size="1500">
-				<obstacle type="bonus" nom="ACCELERATOR" posX="8600" posY="300" />
-				<obstacle type="animal" nom="coyote" posX="8500" posY="300" />
+				<obstacle type="bonus" nom="ACCELERATOR" posX="9300" posY="300" />
+				<obstacle type="animal" nom="coyote" posX="9000" posY="300" />
 				<point x="600" y = "660" />
 				<point x="900" y = "600" />
 				<point x="1450" y = "600" />
