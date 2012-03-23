@@ -197,12 +197,8 @@ void Train::build(b2World * world)
 	vertices[3].Set(- (m_size.x/2.0), m_size.y/2.0);
 	chassis.Set(vertices, 4);//locomotive
 
-	b2FixtureDef fixtureDef;
-	fixtureDef.density = 0.1f;
-	fixtureDef.shape = &chassis;
-	fixtureDef.filter.categoryBits = _entityCategory::TRAIN;
 	m_physicalObjects[0]->setBody(world->CreateBody(&bd));
-	m_physicalObjects[0]->getBody()->CreateFixture(&fixtureDef);
+	m_physicalObjects[0]->getBody()->CreateFixture(&chassis, 0.1f);
 
 	b2CircleShape circle;
 	circle.m_radius = 0.5f;//rayon roues
@@ -211,7 +207,6 @@ void Train::build(b2World * world)
 	fd.shape = &circle;
 	fd.density = 3.0f;
 	fd.friction = 0.9f;
-	fd.filter.categoryBits = _entityCategory::TRAIN;
 
 	bd.position.Set(10.6f, high+7.9f);//position de la roue1
 	m_physicalObjects[1]->setBody(world->CreateBody(&bd));
@@ -425,7 +420,7 @@ void Train::takeOffPassengers(Station *station)
 	int nPassengers = getNbPassengers();
 	if( n > nPassengers )
 		n = nPassengers;
-	std::cout<<"n = "<<n<<std::endl;
+
 	int nWagons = m_wagons.size();
 	while( n != 0 ){
 		for (int i=0; i< nWagons; ++i)
@@ -438,11 +433,9 @@ void Train::takeOffPassengers(Station *station)
 				// On choisit un nombre au hasard de passagers à ejecter
 				nbPassengersToTakeOff = rand() % (n+1);
 			}
-			if( nbPassengersToTakeOff == 0 )
-				continue;
-			
+
 			if( nbPassengersToTakeOff > m_wagons[i]->getNbPassengerWagon())
-				nbPassengersToTakeOff = m_wagons[i]->getNbPassengerWagon();
+				nbPassengersToTakeOff == m_wagons[i]->getNbPassengerWagon();
 			//On retire les passagers
 			m_wagons[i]->takeOffPassenger(nbPassengersToTakeOff, station);
 			n-= nbPassengersToTakeOff;
