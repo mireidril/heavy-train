@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <world>
-	<island id="1">
+	<island id="2">
 		<level id="1">
 			<departure hour="12" minutes="00" seconds="00"/>
 			<sprite type="ground" img="../img/levels/level2/niveau2-sol2.png"/>
 			<sprite type="background" img="../img/levels/level1/niveau1-sky.png" />
 			<sprite type="background" posY="518" img="../img/levels/level1/niveau1-mountain.png" />
 			
-			<!--<infobulle type="standard" action="collision" declenche="false">
-				<sprite img="info2.png" />
-			</infobulle>-->
 	<!--station-->
 			<station size="200">
 				<option hours="12" minutes="00" leaving="0" entering="10"/>
@@ -42,7 +39,7 @@
 				<!--<infobulle type="aide" declenche="false" posX="800">
 					<sprite img="info1.png" />
 				</infobulle>-->
-				<obstacle type="bonus" nom="etoile" posX="3200" posY="300" />
+				<obstacle type="bonus" nom="STAR_DUST" posX="3600" posY="300" />
 			</block>
 			<block type="GROUND" size="1024">
 				<point x="500" y = "600" />
@@ -55,7 +52,7 @@
 				<!--<infobulle type="aide" declenche="false" posX="800">
 					<sprite img="info1.png" />
 				</infobulle>-->
-				<!--<obstacle type="bonus" nom="accelerateur" posX="600" posY="500" />-->
+				<!--<obstacle type="bonus" nom="ACCELERATOR" posX="600" posY="500" />-->
 				<obstacle type="animal" nom="vache" posX="6000" posY="300" />
 			</block>
 	<!--station-->
@@ -64,7 +61,7 @@
 			</station>
 		</level>
 	</island>
-	<island id="2">
+	<island id="1">
 		<level id="1">
 			<departure hour="16" minutes="00" seconds="00"/>
 			<sprite type="ground" img="../img/levels/level2/niveau2-sol2.png"/>
@@ -78,7 +75,7 @@
 			<block type="GROUND" size="500">
 			</block>
 			<block type="PRECIPICE" size="150">
-				<!--<obstacle type="bonus" nom="etoile" posX="800" posY="300" />-->
+				<obstacle type="bonus" nom="STAR_DUST" posX="1000" posY="300" />
 			</block>
 			<block type="GROUND" size="2000">
 				<point x="400" y = "660" />
@@ -86,15 +83,15 @@
 				<point x="900" y = "700" />
 				<point x="1000" y = "660" />
 				<obstacle type="animal" nom="vache" posX="1900" posY="300" />
-				<!--<obstacle type="bonus" nom="etoile" posX="2100" posY="300" />
-				<obstacle type="bonus" nom="accelerateur" posX="2600" posY="300" />-->
+				<obstacle type="bonus" nom="STAR_DUST" posX="2500" posY="200" />
+				<obstacle type="bonus" nom="ACCELERATOR" posX="2600" posY="300" />
 			</block>
 	<!--station-->		
 			<station size="200">
 				<option hours="16" minutes="30" leaving="2" entering="8"/>
 			</station>			
 			<block type="GROUND" size="1500">
-				<!--<obstacle type="bonus" nom="accelerateur" posX="3150" posY="300" />-->
+				<obstacle type="bonus" nom="ACCELERATOR" posX="3150" posY="300" />
 				<point x="800" y = "660" />
 				<point x="900" y = "620" />
 				<point x="1050" y = "580" />
@@ -106,7 +103,7 @@
 				<obstacle type="animal" nom="tatou" posX="5500" posY="300" />
 			</block>
 			<block type="PRECIPICE" size="200">
-				<!--<obstacle type="bonus" nom="etoile" posX="6000" posY="300" />-->
+				<obstacle type="bonus" nom="STAR_DUST" posX="6000" posY="400" />
 			</block>		
 			<block type="GROUND" size="1800">
 				<point x="500" y = "660" />
@@ -116,7 +113,7 @@
 				<obstacle type="animal" nom="tatou" posX="7000" posY="300" />
 			</block>
 			<block type="PRECIPICE" size="100">
-				<!--<obstacle type="bonus" nom="etoile" posX="7950" posY="300" />-->
+				<obstacle type="bonus" nom="STAR_DUST" posX="7950" posY="400" />
 			</block>		
 			<block type="GROUND" size="100">
 			</block>
@@ -125,18 +122,18 @@
 				<option hours="17" minutes="00" leaving="7" entering="15"/>
 			</station>
 			<block type="GROUND" size="1500">
-				<!--<obstacle type="bonus" nom="accelerateur" posX="8600" posY="300" />-->
+				<obstacle type="bonus" nom="ACCELERATOR" posX="8600" posY="300" />
 				<obstacle type="animal" nom="coyote" posX="8500" posY="300" />
 				<point x="600" y = "660" />
 				<point x="900" y = "600" />
 				<point x="1450" y = "600" />
 			</block>
 			<block type="PRECIPICE" size="150">
-				<!--<obstacle type="bonus" nom="etoile" posX="9800" posY="300" />-->
+				<obstacle type="bonus" nom="STAR_DUST" posX="9800" posY="400" />
 			</block>
 			<block type="GROUND" size="1000">
 				<obstacle type="animal" nom="coyote" posX="10200" posY="300" />
-				<!--<obstacle type="bonus" nom="accelerateur" posX="10600" posY="300" />-->
+				<obstacle type="bonus" nom="ACCELERATOR" posX="10600" posY="300" />
 			</block>
 	<!--station-->
 			<station size="200">
@@ -184,10 +181,10 @@
 			<block type="GROUND" size="400">
 			</block>
 			<block type="PRECIPICE" size="150">
-				<obstacle type="bonus" nom="etoile" posX="4250" posY="300" />
+				<obstacle type="bonus" nom="STAR_DUST" posX="4250" posY="300" />
 			</block>
 			<block type="GROUND" size="400">
-				<obstacle type="bonus" nom="etoile" posX="4500" posY="300" />
+				<obstacle type="bonus" nom="STAR_DUST" posX="4500" posY="300" />
 			</block>
 			<block type="TUNNEL" size="200">
 			</block>
@@ -200,7 +197,7 @@
 				<option hours="10" minutes="00" leaving="7" entering="10"/>
 			</station>
 			<block type="GROUND" size="800">
-				<obstacle type="bonus" nom="accelerateur" posX="6500" posY="300" />
+				<obstacle type="bonus" nom="ACCELERATOR" posX="6500" posY="300" />
 			</block>
 			<block type="GROUND" size="1000">
 				<point x="100" y = "660" />
