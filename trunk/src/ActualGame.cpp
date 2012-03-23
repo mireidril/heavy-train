@@ -573,7 +573,7 @@ Train * ActualGame::getTrain()
 }
 
 
-bool ActualGame::getObstacle(b2Contact* contact, Bonus * bonus){
+bool ActualGame::getBonus(b2Contact* contact, Bonus * bonus){
 	b2Fixture* fixtureA = contact->GetFixtureA();
 	b2Fixture* fixtureB = contact->GetFixtureB();
   
@@ -591,6 +591,22 @@ bool ActualGame::getObstacle(b2Contact* contact, Bonus * bonus){
 	return true;
 }
 
+bool ActualGame::getAnimal(b2Contact* contact, Animal * animal)
+{
+	b2Fixture* fixtureA = contact->GetFixtureA();
+	b2Fixture* fixtureB = contact->GetFixtureB();
+	if ( animal = (Animal*)( fixtureA->GetBody()->GetUserData() ) ) 
+	{ 
+		;
+	}else if(animal = (Animal*)( fixtureB->GetBody()->GetUserData() )){
+		;
+	}else{
+		return false;
+	}
+	animal->die();
+	return true;
+}
+
 void ActualGame::bonusEffect(Bonus * bonus)
 {
 	if( ! bonus->isUsed() )
@@ -604,21 +620,29 @@ void ActualGame::bonusEffect(Bonus * bonus)
 			break;
 		case ACCELERATOR :
 			std::cout<<"Accelerator !"<<std::endl;
+			m_train->getBody(0)->ApplyForceToCenter(b2Vec2( 20, 0) );
 			break;
 		}
 
 	}
 }
 
+
+
 //main collision call back function
 
 void ActualGame::BeginContact(b2Contact* contact) {
 	Bonus * bonus = NULL;
-	if ( getObstacle(contact, bonus) )
+	Animal * animal = NULL;
+	if( getBonus(contact, bonus) )
 	{
-		//std::cout<<"Collision between train and obstacle"<<std::endl;
-		//ActualGame::bonusEffect(bonus);
 	}
+	/*
+	else if( getAnimal( contact, animal) )
+	{
+	}
+	*/
+	
 }
 
 void ActualGame::EndContact(b2Contact* contact) {

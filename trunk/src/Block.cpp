@@ -458,6 +458,7 @@ void Block::draw(SDL_Surface * screen, const int & width, const int & height, Ac
 			*/////////////////////////
 			game->updateObstacleScore();
 			game->getTrain()->ejectPassengers(3);
+			std::cout<<"animal dead !"<<std::endl;
 			m_passageDansMort[i]=true;
 		}
 	}
