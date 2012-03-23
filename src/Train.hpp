@@ -79,9 +79,9 @@ class Train
 
 	std::vector<Wagon*> getWagons() {return m_wagons;};
 	
-	
 	Sprite * getSprite() { return m_physicalObjects[0]->getSprite(); };
-
+	void setUsingTimeAccelerator(int );
+	void decreaseTimeAccelerator();
    private :
 	//Current speed of the train
 	int m_actualSpeed;
