@@ -304,19 +304,25 @@ void ActualGame::trainAtStation()
 		std::cout<<"Train at station ! Entering passengers : "<<station->getNbEnteringPassengers()<<" Leaving passengers : "<<station->getNbLeavingPassengers()<<std::endl;
 		station->setHasStoppedBefore(true);
 		
+		updatePassengerScore();
+
 		m_train->takeOffPassengers(station);
+		
+		updateSatisfactionScore();
+		updateTotalScore();
 
 		//Les passagers montent
 		m_train->takeInPassengers(station);
 
+		
 	}
 	
-	
+	std::cout<<"Number of passangers : "<<m_train->getNbPassengers()<<std::endl;
 }
 
 void ActualGame::trainLeavingStation()
 {
-	std::cout<<"\tTrain part de gare !"<<std::endl;
+	std::cout<<"\tTrain leaving station !"<<std::endl;
 	m_train->setIsAtStation(false);
 }
 

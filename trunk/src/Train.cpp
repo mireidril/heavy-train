@@ -440,8 +440,6 @@ void Train::takeOffPassengers(Station *station)
 			n-= nbPassengersToTakeOff;
 		}
 	}
-	
-	std::cout<<"m_passengersCount : "<<getNbPassengers()<<std::endl;
 }
 
 void Train::takeInPassengers(Station *station)

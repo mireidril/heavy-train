@@ -120,7 +120,7 @@ void Block::setBonus(BonusType type, int x, int y)
 
 void Block::setAnimal(const char * type, int x, int y) 
 {
-	std::cout << "setanimal" << std::endl;
+	//std::cout << "setanimal" << std::endl;
 	Animal * animal = new Animal(type, x, y);
 	m_animals.push_back(animal);
 
