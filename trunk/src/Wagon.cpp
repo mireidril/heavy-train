@@ -34,6 +34,11 @@ Wagon::~Wagon ()
 	{
 		delete m_physicalObjects[i];
 	}
+	//Delete passengers
+	std::list<Passenger*>::iterator it;
+	for ( it = m_passengers.begin(); it != m_passengers.end(); ++it)
+		delete *it;
+	m_passengers.clear();
 }
 
 b2Body * Wagon::getBody(unsigned int i)
