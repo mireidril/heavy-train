@@ -335,7 +335,6 @@ void Train::keyboard(GameEngine* g, const SDL_KeyboardEvent *event)
 		// le train ne peut pas sauter plus haut que la valeur définie afin de limiter le nombre possible de sauts successifs
 		// le train ne peut pas sauter lorsqu'il est à une position inférieure à celle définie. 
 		// ex ;lorsqu'il tombre dans un précipice, il ne peut plus sauter.
-		printf("\n\n %f",m_physicalObjects[0]->getPosition().y);
 			if(m_physicalObjects[0]->getPosition().y < 8 && m_physicalObjects[0]->getPosition().y > 4){ 
 				jump();
 			}
