@@ -5,7 +5,7 @@ const float Passenger::m_width = .5f;
 const float Passenger::m_height = 1.0f;
 
 Passenger::Passenger(double x, double y)
-	: PhysicalObject(new Sprite("../img/passengers/passagers5.png", x, y, 16, 30))
+	: PhysicalObject(new Sprite("../img/passengers/passagers5.png", x, y))
 {
 	m_speed = 1.0f;
 	m_isEjected = false;
@@ -127,7 +127,7 @@ void Passenger::drawSprite(SDL_Surface * screen, const int & width, const int & 
 	x = bodyPos.x;
 	y = bodyPos.y;
 	Sprite::convertMetersToPixels(&x, &y,  width,  height);
-	m_sprite->setPositionX(x + diff + 35);
+	m_sprite->setPositionX(x + diff + 40);
 	m_sprite->setPositionY(y-10);
 	m_sprite->setAngle (angle);
 	m_sprite->draw(screen,  width,  height);

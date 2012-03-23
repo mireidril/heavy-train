@@ -11,14 +11,11 @@ Animal::Animal(const char * type, int x, int y)
 	m_tchou = false;
 	m_hasEscape = false;
 
-	//sprite animal
-	int sizeX, sizeY;
 	//taille de l'animal
 
 	if (strcmp(type,"tatou")==0)
 	{
-		sizeX = 150; sizeY = 53;
-		m_sprite = new Sprite("../img/animaux/tatou1.png",  x-75, y,  sizeX, sizeY);
+		m_sprite = new Sprite("../img/animaux/tatou1.png",  x-75, y);
 		for (int i=2; i<8; i++) {
 			 std::ostringstream oss;
 			 oss << i;
@@ -30,8 +27,7 @@ Animal::Animal(const char * type, int x, int y)
 	}
 	else if (strcmp(type,"coyote")==0)
 	{
-		sizeX = 150; sizeY = 53;
-		m_sprite = new Sprite("../img/animaux/coyote1.png",  x-70, y,  sizeX, sizeY);
+		m_sprite = new Sprite("../img/animaux/coyote1.png",  x-70, y);
 		for (int i=2; i<8; i++) {
 			 std::ostringstream oss;
 			 oss << i;
@@ -42,8 +38,7 @@ Animal::Animal(const char * type, int x, int y)
 		}
 	}
 	else {
-		sizeX = 150; sizeY = 53;
-		m_sprite = new Sprite("../img/animaux/vache1.png",  x-70, y, sizeX, sizeY);
+		m_sprite = new Sprite("../img/animaux/vache1.png",  x-70, y);
 		for (int i=2; i<8; i++) {
 			 std::ostringstream oss;
 			 oss << i;
@@ -129,7 +124,6 @@ void Animal::draw(SDL_Surface * screen, const int & width, const int & height){
 		m_sprite->setAngle (angle);
 		m_sprite->draw(screen,  width,  height);
 	}
-
 }
 
 void Animal::die(){

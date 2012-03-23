@@ -15,17 +15,15 @@ Train::Train ()
 	//position de la loco
 	int x = 250; int y = 0; 
 	//taille de la loco
-	int sizeX = 130; int sizeY = 87;
-	PhysicalObject * loco = new PhysicalObject(new Sprite("../img/elements/loco.png",  x, y, sizeX, sizeY));
+	PhysicalObject * loco = new PhysicalObject(new Sprite("../img/elements/loco.png",  x, y));
 	m_physicalObjects.push_back(loco);
 	
 	//les roues de la loco
 	//position des roues
 	x = 0; y = 0; 
 	//taille roues
-	sizeX = 39; sizeY = 36;
-	PhysicalObject * roue1 = new PhysicalObject(new Sprite("../img/elements/roue.png",  x, y, sizeX, sizeY));
-	PhysicalObject * roue2 = new PhysicalObject(new Sprite("../img/elements/roue.png",  x, y, sizeX, sizeY));
+	PhysicalObject * roue1 = new PhysicalObject(new Sprite("../img/elements/roue.png",  x, y));
+	PhysicalObject * roue2 = new PhysicalObject(new Sprite("../img/elements/roue.png",  x, y));
 	m_physicalObjects.push_back(roue1);//roue1
 	m_physicalObjects.push_back(roue2);//roue2
 	// add wagons

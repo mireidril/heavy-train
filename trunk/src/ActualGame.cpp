@@ -75,13 +75,13 @@ ActualGame::ActualGame(unsigned int level, unsigned int island)
 
 	//Charges les images de l'interface
 	m_font =  TTF_OpenFont("../fonts/GOTHIC.TTF", 24);
-	m_interfaceImages.push_back(new Sprite("../img/interface/fond.png", 0, 0, 1024, 160) );
-	m_interfaceImages.push_back(new Sprite("../img/interface/time.png", 0, 5, 200, 48) );
-	m_interfaceImages.push_back(new Sprite("../img/interface/passengers.png", 230, 5, 200, 50) );
-	m_interfaceImages.push_back(new Sprite("../img/interface/speed.png", 520, 5, 200, 50) );
-	m_interfaceImages.push_back(new Sprite("../img/interface/score.png", 800, 5, 200, 58) );
-	m_interfaceImages.push_back(new Sprite("../img/interface/next.png", 0, 70, 200, 50) );
-	m_interfaceImages.push_back(new Sprite("../img/interface/time_left.png", 350, 70, 100, 36) );
+	m_interfaceImages.push_back(new Sprite("../img/interface/fond.png", 0, 0 ));
+	m_interfaceImages.push_back(new Sprite("../img/interface/time.png", 0, 5 ));
+	m_interfaceImages.push_back(new Sprite("../img/interface/passengers.png", 230, 5 ));
+	m_interfaceImages.push_back(new Sprite("../img/interface/speed.png", 520, 5) );
+	m_interfaceImages.push_back(new Sprite("../img/interface/score.png", 800, 5) );
+	m_interfaceImages.push_back(new Sprite("../img/interface/next.png", 0, 70) );
+	m_interfaceImages.push_back(new Sprite("../img/interface/time_left.png", 350, 70) );
 }
 ActualGame::~ActualGame()
 {
@@ -162,7 +162,7 @@ void ActualGame::run(GameEngine * gameEngine, SDL_Surface * screen, int w, int h
 
 		//fooDrawInstance->SetFlags( b2Draw::e_shapeBit );
 		//Affichage des formes physiques pour Debug
-		m_world->DrawDebugData();
+		//m_world->DrawDebugData();
 
 		checkVictoryConditions();
 	}

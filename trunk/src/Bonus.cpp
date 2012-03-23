@@ -8,16 +8,13 @@ Bonus::Bonus(BonusType type, int posX, int posY)
 	m_posX = posX*40/WINDOWS_W;
 	m_posY = posY*30/WINDOWS_H;
 
-	int sizeX, sizeY;
 	//Sprite
 	switch(type){
 		case STAR_DUST:
-			sizeX = 250; sizeY = 120;
-			m_sprite = new Sprite("../img/bonus/star_dust.png",  posX-75, posY,  sizeX, sizeY);
+			m_sprite = new Sprite("../img/bonus/star_dust.png",  posX-75, posY);
 			break;
 		case ACCELERATOR:
-			sizeX = 200; sizeY = 400;
-			m_sprite = new Sprite("../img/bonus/anneau.png",  posX-75, posY,  sizeX, sizeY);
+			m_sprite = new Sprite("../img/bonus/anneau.png",  posX-75, posY);
 			break;
 	}
 	build(PhysicalObject::m_world);
