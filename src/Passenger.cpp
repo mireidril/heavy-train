@@ -65,10 +65,10 @@ Passenger::Passenger(double x, double y)
 
 //Destructor
 Passenger::~Passenger(){
-	breakJoint();
-	PhysicalObject::m_world->DestroyBody(getBody());
-	setBody(NULL);
-	delete m_destination;
+	if( m_isEjected == false )
+		breakJoint();
+	if( m_destination != NULL )
+		delete m_destination;
 }
 
 void Passenger::breakJoint(){

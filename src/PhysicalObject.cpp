@@ -20,6 +20,7 @@ PhysicalObject::PhysicalObject(Sprite * s)
 PhysicalObject::~PhysicalObject()
 {
 	delete m_sprite;
+	PhysicalObject::m_world->DestroyBody(getBody());
 }
 
 b2Body * PhysicalObject::getBody()

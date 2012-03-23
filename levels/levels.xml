@@ -47,6 +47,7 @@
 				<option hours="12" minutes="00" leaving="0" entering="10"/>
 			</station>
 			<block type="TUNNEL" size="200">
+				<obstacle type="bonus" nom="etoile" posX="220" posY="300" />
 			</block>
 			<block type="GROUND" size="1024">
 				<obstacle type="animal" nom="vache" posX="1610" posY="300" />

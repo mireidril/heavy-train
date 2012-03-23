@@ -19,6 +19,8 @@ class Bonus : public PhysicalObject
 		BonusType getType();
 		//Return m_used
 		bool isUsed();
+		void build(b2World * world);
+
 	private :
 		int m_posX;
 		int m_posY;
