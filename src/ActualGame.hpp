@@ -121,5 +121,7 @@ class ActualGame
 
 		//True si le joueur se trouve en condition de game over
 		bool m_gameOver;
+
+		bool m_gameWon;
 };
 #endif

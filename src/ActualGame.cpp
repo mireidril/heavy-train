@@ -20,6 +20,7 @@ ActualGame::ActualGame(unsigned int level, unsigned int island)
 , m_satisfactionScore(0)
 , m_starDustScore(0)
 , m_obstacleScore(0)
+, m_gameWon(false)
 {
 	std::cout << "Actual Game" << std::endl;
 	b2Vec2 gravity(0.0f, -10.0f);
@@ -123,7 +124,7 @@ void ActualGame::run(GameEngine * gameEngine, SDL_Surface * screen, int w, int h
 	//std::cout<<"FPS : "<<fps<<std::endl;
 
 	//Actualise la simulation
-	if(!m_gameOver)
+	if(!m_gameOver && !m_gameWon)
 	{
 		runSimulation();
 	
@@ -134,22 +135,22 @@ void ActualGame::run(GameEngine * gameEngine, SDL_Surface * screen, int w, int h
 		m_actualLevel->render(screen, w, h, this, m_world);
 		drawInterface(screen, w, h);
 		m_train->drawSprite(screen, w, h);
+		m_actualLevel->drawTunnels(screen, w, h, this, m_world);
 
-
-		fooDrawInstance->SetFlags( b2Draw::e_shapeBit );
+		//fooDrawInstance->SetFlags( b2Draw::e_shapeBit );
 		//Affichage des formes physiques pour Debug
-		m_world->DrawDebugData();
+		//m_world->DrawDebugData();
 
 		checkVictoryConditions();
-		if(m_train->checkiIfTrainIsReturned())
-		{
-			m_gameOver = true;
-		}
 	}
-	else
+	else if(m_gameOver)
 	{
 		gameEngine->changeScreen(GAME, GAMEOVER, -1, -1);
-		//gameEngine->changeScreen(GAME, ENDGAME, m_actualLevel->getLevelNum(), m_actualLevel->getIslandNum()); //pour les tests
+		//gameEngine->changeScreen(GAME, ENDGAME, m_actualLevel->getLevelNum(), m_actualLevel->getIslandNum()); //pour des tests plus rapides
+	}
+	else if(m_gameWon)
+	{
+		gameEngine->changeScreen(GAME, ENDGAME, m_actualLevel->getLevelNum(), m_actualLevel->getIslandNum());
 	}
 }
 
@@ -431,6 +432,20 @@ void ActualGame::checkVictoryConditions()
 	{
 		m_gameOver = true;
 	}
+
+	//Si un wagon est coincé sous le sol : TODO
+
+	//Condition de victoire
+	if(m_actualBlock == m_actualLevel->getNbBlocks() - 1 && m_train->getNbPassengers() == 0)
+	{
+		m_gameWon = true;
+	}
+
+	if(m_train->checkiIfTrainIsReturned())
+	{
+		m_gameOver = true;
+	}
+
 }
 
 void ActualGame::checkKeyboardEvent(GameEngine* g, const SDL_KeyboardEvent *event)

@@ -362,7 +362,20 @@ void Level::drawBlocks(SDL_Surface * screen, int w, int h, ActualGame * game, b2
 {
 	for (unsigned int i=0; i<m_blocks.size(); i++) 
 	{
-		m_blocks.at(i)->draw (screen, w, h, game, world);
+		if(m_blocks.at(i)->getType() != TUNNEL)
+			m_blocks.at(i)->draw (screen, w, h, game, world);
+	}
+}
+
+/*
+ * Level dessine tous les blocs du vector
+ */
+void Level::drawTunnels(SDL_Surface * screen, int w, int h, ActualGame * game, b2World * world)
+{
+	for (unsigned int i=0; i<m_blocks.size(); i++) 
+	{
+		if(m_blocks.at(i)->getType() == TUNNEL)
+			m_blocks.at(i)->draw (screen, w, h, game, world);
 	}
 }
 
