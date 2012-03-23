@@ -13,6 +13,12 @@
 
 #define INFINITE 999999.0
 
+enum _entityCategory {
+    TRAIN =				0x0001,
+    PASSENGER =		    0x0002,
+    OBSTACLE_SENSOR =	0x0004,
+};
+
 class PhysicalObject
 {
 	public :

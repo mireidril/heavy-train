@@ -326,14 +326,16 @@ void ActualGame::trainAtStation()
 		updateTotalScore();
 
 		m_train->takeOffPassengers(station);
+<<<<<<< .mine
+		updateSatisfactionScore();
+		updateTotalScore();
+=======
+>>>>>>> .r183
 
 		//Les passagers montent
 		m_train->takeInPassengers(station);
-
 		
 	}
-	
-	std::cout<<"Number of passangers : "<<m_train->getNbPassengers()<<std::endl;
 }
 
 void ActualGame::trainLeavingStation()
@@ -535,6 +537,18 @@ void ActualGame::updateSatisfactionScore()
 	}else
 	{
 		m_satisfactionScore -= m_stopStationPoint;
+	}
+	*/
+	/*//check la mauvaise conduite en fonction de mshaken
+	if(m_shaken > ____)
+	{
+		m_satisfactionScore +=( m_drivePoint*15);
+	}else if(m_shaken > ____  && m_skahen < ___)
+	{
+		m_satisfactionScore +=( m_drivePoint*10);
+	}else if(m_shaken > 0  && m_skahen < ___)
+	{
+		m_satisfactionScore +=( m_drivePoint*5);
 	}
 	*/
 	//satisfaction en fonction du nombre de passager arrivé a destination

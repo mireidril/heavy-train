@@ -173,12 +173,22 @@ void Wagon::build(b2World * world, double x, float high)
 		fixtureRoof.density = 0.1f;
 		fixtureRoof.filter.groupIndex = -1; // So it doesn't collide with passengers
 		//*/
-	
-		m_physicalObjects[0]->getBody()->CreateFixture(&frameBot, 3.0f);
-		m_physicalObjects[0]->getBody()->CreateFixture(&frameLeft, 0.1f);
-		m_physicalObjects[0]->getBody()->CreateFixture(&frameRight, 0.1f);
+		fixtureRoof.filter.categoryBits = _entityCategory::TRAIN;
 		m_physicalObjects[0]->getBody()->CreateFixture(&fixtureRoof);
-		//m_physicalObjects[0]->getBody()->CreateFixture(&chassisToit, 1.0f);
+
+		b2FixtureDef fixtureDef;
+		fixtureDef.filter.categoryBits = _entityCategory::TRAIN;
+		fixtureDef.density = 3.0f;
+		fixtureDef.shape = &frameBot;
+		m_physicalObjects[0]->getBody()->CreateFixture(&fixtureDef);
+
+		fixtureDef.shape = &frameLeft;
+		fixtureDef.density = 0.1f;
+		m_physicalObjects[0]->getBody()->CreateFixture(&fixtureDef);
+
+		fixtureDef.shape = &frameRight;
+		fixtureDef.density = 0.1f;
+		m_physicalObjects[0]->getBody()->CreateFixture(&fixtureDef);
 	}
 	b2CircleShape circle;
 	circle.m_radius = 0.5f;
@@ -311,8 +321,13 @@ void Wagon::takeOffPassenger(int n, Station * station)
 				PhysicalObject::m_world->DestroyJoint((*it)->getJoint());
 				(*it)->setJoint(NULL);
 			}
-			m_passengersCount --;
 			(*it)->switchStatic();
+			m_passengersCount --;
+			n --;
+			std::cout<<"m_passengersCount : "<<m_passengersCount<<"   n="<<n<<std::endl;
+			if( n == 0 )
+				break;
+			
 		}
 	}
 	
