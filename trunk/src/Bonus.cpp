@@ -59,8 +59,8 @@ void Bonus::build(b2World * world)
 	b2FixtureDef fixtureDef;
 	fixtureDef.shape = &bodyShape;
 	fixtureDef.isSensor = true;
-	fixtureDef.filter.categoryBits = _entityCategory::OBSTACLE_SENSOR;
-	fixtureDef.filter.maskBits = _entityCategory::TRAIN; // Collision qu'avec le train
+	fixtureDef.filter.categoryBits = OBSTACLE_SENSOR;
+	fixtureDef.filter.maskBits = TRAIN; // Collision qu'avec le train
 	m_body = world->CreateBody(&bd);
 	m_body->CreateFixture(&fixtureDef);
 	m_body->SetGravityScale(0); // Il vole !

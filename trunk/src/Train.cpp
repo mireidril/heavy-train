@@ -433,6 +433,9 @@ void Train::takeOffPassengers(Station *station)
 				// On choisit un nombre au hasard de passagers à ejecter
 				nbPassengersToTakeOff = rand() % (n+1);
 			}
+			if( nbPassengersToTakeOff == 0 )
+				continue;
+			std::cout<<"nbPassengersToTakeOff : "<<nbPassengersToTakeOff<<" nPassengers:"<<m_wagons[i]->getNbPassengerWagon()<<std::endl;
 
 			if( nbPassengersToTakeOff > m_wagons[i]->getNbPassengerWagon())
 				nbPassengersToTakeOff == m_wagons[i]->getNbPassengerWagon();
@@ -440,13 +443,13 @@ void Train::takeOffPassengers(Station *station)
 			m_wagons[i]->takeOffPassenger(nbPassengersToTakeOff, station);
 			n-= nbPassengersToTakeOff;
 		}
+		std::cout<<"n : "<<n<<std::endl;
 	}
 }
 
 void Train::takeInPassengers(Station *station)
 {
 	int nbEnteringPassengers = station->getNbEnteringPassengers();
-
 	if( nbEnteringPassengers == 0 )
 		return;
 	std::list<Passenger*>::iterator it;
