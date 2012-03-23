@@ -33,25 +33,25 @@ void Time::getTime(int & hours, int & min, int & sec){
 }
 
 //Run clockwise the Time if m_started = true
-void Time::updateTime(Time &time){
-	if(m_started == true){
+void Time::updateTime(){
+	if(m_started == true){ 
 		//convert time in seconds
-		unsigned int timeInSeconds = time.m_seconds + time.m_minutes*60 + time.m_hours*3600 ;
+		/*unsigned int timeInSeconds = this->m_seconds + this->m_minutes*60 + this->m_hours*3600 ;
 		for (unsigned int i = 0 ; i<timeInSeconds ; i++){
 			std::cout<<i/3600<<":"<<(i/60)%60<<":"<<i%60<<std::endl;	 
 			clock_t end;
 			end = clock () + 1 * CLOCKS_PER_SEC ;
 			while (clock() < end) {}
-		}
+		}*/
 	}
 }
 
 
 //Run counter-clockwise the Time if m_started = true
-void Time::updateTimeCounter(Time &time){
+void Time::updateTimeCounter(){
 	if(m_started == true){	
 	//convert time in seconds
-	unsigned int timeInSeconds = time.m_seconds + time.m_minutes*60 + time.m_hours*3600 ;
+	unsigned int timeInSeconds = this->m_seconds + this->m_minutes*60 + this->m_hours*3600 ;
 		for (unsigned int i = timeInSeconds ; i>0; i--){
 			std::cout<<i/3600<<":"<<(i/60)%60<<":"<<i%60<<std::endl;	 
 			clock_t end;
@@ -146,6 +146,18 @@ int Time::getMinutes(){
 
 int Time::getSeconds(){
 	return m_seconds;
+}
+
+void Time::setHours(int hours){
+	m_hours = hours;
+}
+
+void Time::setMinutes(int minutes){
+	m_minutes = minutes;
+}
+
+void Time::setSeconds(int seconds){
+	m_seconds = seconds;
 }
 
 

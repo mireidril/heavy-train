@@ -3,6 +3,7 @@
 
 #include "Train.hpp"
 #include "Level.hpp"
+#include "Time.hpp"
 
 #ifdef _WIN32
 #include "Box2D/Box2D.h"

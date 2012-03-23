@@ -27,9 +27,9 @@ class Time
 		//Get the values of the Time
 		void getTime(int & hours, int & min, int & sec);
 		//Run clockwise the Time if m_started = true
-		void updateTime(Time &time);
+		void updateTime();
 		//Run counter-clockwise the Time if m_started = true
-		void updateTimeCounter(Time &time);
+		void updateTimeCounter();
 		//Operators
 		Time& operator+=(const Time& time);
 		Time& operator-=(const Time& time);
@@ -43,6 +43,10 @@ class Time
 		int getHours();
 		int getMinutes();
 		int getSeconds();
+		
+		void setHours(int hours);
+		void setMinutes(int minutes);
+		void setSeconds(int seconds);
 		
 	private :
 		//Hours
