@@ -12,8 +12,8 @@ Bonus::Bonus(BonusType type, int posX, int posY)
 	//Sprite
 	switch(type){
 		case STAR_DUST:
-			sizeX = 200; sizeY = 400;
-			m_sprite = new Sprite("../img/bonus/anneau.png",  posX-75, posY,  sizeX, sizeY);
+			sizeX = 250; sizeY = 120;
+			m_sprite = new Sprite("../img/bonus/star_dust.png",  posX-75, posY,  sizeX, sizeY);
 			break;
 		case ACCELERATOR:
 			sizeX = 200; sizeY = 400;
@@ -56,7 +56,12 @@ void Bonus::build(b2World * world)
 	vertices[3].Set(-miWidth, miHeight);
 	bodyShape.Set(vertices, 4);
 
+	b2FixtureDef fixtureDef;
+	fixtureDef.shape = &bodyShape;
+	fixtureDef.isSensor = true;
+	fixtureDef.filter.categoryBits = _entityCategory::OBSTACLE_SENSOR;
+	fixtureDef.filter.maskBits = _entityCategory::TRAIN; // Collision qu'avec le train
 	m_body = world->CreateBody(&bd);
-	m_body->CreateFixture(&bodyShape, 0.1f);
+	m_body->CreateFixture(&fixtureDef);
 	m_body->SetGravityScale(0); // Il vole !
 }
