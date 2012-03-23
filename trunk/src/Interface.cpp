@@ -18,6 +18,7 @@ Interface::Interface(GameScreen type)
 , m_previousScreen(type)
 , m_nameRegistered (false)
 , m_leaderboardUpdated(false)
+, m_levelUnlockedSaved(false)
 {
 	m_font =  TTF_OpenFont("../fonts/GretoonHighlight.ttf", 36);
 	m_littleFont =  TTF_OpenFont("../fonts/GretoonHighlight.ttf", 30);
@@ -253,19 +254,16 @@ void Interface::loadXML(int level, int island)
 		}*/
 	
 		//Récupère uniquement le nombre de niveaux débloqués
-		if(level <= 0 && island <= 0)
+		if(xmlScores)
 		{
-			if(xmlScores)
-			{
-				m_nbAvailableLevels = atoi(xmlScores->Attribute("nbLevel") );
-				m_nbAvailableIslands = atoi(xmlScores->Attribute("nbIsland") );
-			}
-			else
-			{
-				std::cerr<< "Problemes a la recuperation du nb d'iles et de niveaux debloques" <<std::endl;
-				m_nbAvailableLevels = 1;
-				m_nbAvailableIslands = 1;
-			}
+			m_nbAvailableLevels = atoi(xmlScores->Attribute("nbLevel") );
+			m_nbAvailableIslands = atoi(xmlScores->Attribute("nbIsland") );
+		}
+		else
+		{
+			std::cerr<< "Problemes a la recuperation du nb d'iles et de niveaux debloques" <<std::endl;
+			m_nbAvailableLevels = 1;
+			m_nbAvailableIslands = 1;
 		}
 	
 		//Récupère tous les scores : UTILISE APRES L'ECRAN TITLE
@@ -517,7 +515,7 @@ void Interface::update(GameEngine * gameEngine)
 		m_clic = -1;
 	}
 
-	//Autres actions
+	//Enregistrement du score du joueur
 	if(m_type == ENDGAME && m_nameRegistered && !m_leaderboardUpdated)
 	{
 		std::multimap< int, std::string >::iterator id = getScoreIdMinTotalScore();
@@ -525,7 +523,34 @@ void Interface::update(GameEngine * gameEngine)
 		l->m_scores.insert(id, make_pair(m_allScores.at("Total points : "), m_name.str()) );
 		l->m_scores.erase(id);
 		m_leaderboardUpdated = true;
+
+		saveLeaderboard();
 	}
+
+	if(m_type == ENDGAME && !m_levelUnlockedSaved)
+	{
+		if(m_leaderboards[m_actualLeaderboard]->island + 1 > m_nbAvailableIslands)
+		{
+			saveLevelsUnlocked();
+		}
+		m_levelUnlockedSaved = true;
+	}
+}
+
+void Interface::saveLeaderboard()
+{
+	//Ouvre le XML save.xml
+	//Cherche si le leaderboard pour l'ile "m_leaderboards[m_actualLeaderboard]->island" et le niveau "m_leaderboards[m_actualLeaderboard]->level" existe déjà
+		//si c'est le cas on la remplace
+		//sinon on ajoute une nouvelle balise <leaderboard> avec les score dedans
+}
+
+void Interface::saveLevelsUnlocked()
+{
+	//Ouvre le XML save.xml
+	//Remplace les attributs de la balise score par 
+	 // nbIsland = m_leaderboards[m_actualLeaderboard]->island + 1
+	 // nbLevel = m_leaderboards[m_actualLeaderboard]->level
 }
 
 /*

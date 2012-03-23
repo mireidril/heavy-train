@@ -88,10 +88,14 @@ class Interface
 
 		void setPreviousScreen(GameScreen s) {m_previousScreen = s;};
 		void setNameRegistered(bool b) {m_nameRegistered = b;};
+		void setlevelUnlockedSaved(bool b) {m_levelUnlockedSaved = b;};
 
 		void setActualGameForScores(ActualGame * ag);
+
 		int getScoreMin();
 		std::multimap< int, std::string >::iterator getScoreIdMinTotalScore();
+		void saveLeaderboard();
+		void saveLevelsUnlocked();
 	
 	private :
 		//const unsigned int						m_nbLevelByIsland;
@@ -121,6 +125,7 @@ class Interface
 		std::stringstream						m_name;
 		bool									m_nameRegistered;
 		bool									m_leaderboardUpdated;
+		bool									m_levelUnlockedSaved;
 		std::map<std::string, int>				m_allScores;
 		//Ecran précédent, parfois nécéssaire
 		GameScreen								m_previousScreen;

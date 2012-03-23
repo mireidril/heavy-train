@@ -285,7 +285,8 @@ void ActualGame::updateActualBlock()
 		if( !m_train->getIsAtStation() && actualBlock->getType() == STATION && !m_train->getBody(0)->IsAwake() )
 		{
 			trainAtStation();
-		}else if( m_train->getIsAtStation() &&  m_train->getBody(0)->IsAwake() )
+		}
+		else if( m_train->getIsAtStation() &&  m_train->getBody(0)->IsAwake() )
 		{
 			trainLeavingStation();
 		}
@@ -436,7 +437,7 @@ void ActualGame::checkVictoryConditions()
 	//Si un wagon est coincé sous le sol : TODO
 
 	//Condition de victoire
-	if(m_actualBlock == m_actualLevel->getNbBlocks() - 1 && m_train->getNbPassengers() == 0)
+	if(m_actualBlock == (m_actualLevel->getNbBlocks() - 1) && m_train->getNbPassengers() == 0)
 	{
 		m_gameWon = true;
 	}

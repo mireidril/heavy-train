@@ -71,7 +71,7 @@ void Level::scrollLevel(const int & x)
  */
 void Level::loadAndBuild()
 {
-	TiXmlDocument doc("../levels/levelstestcloclo.xml");
+	TiXmlDocument doc("../levels/levels.xml");
 	int sizeX, posY = 0,speed = -1;
 	std::string path;
 	Block * vBlock;

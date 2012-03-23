@@ -294,6 +294,10 @@ void Wagon::takeOffPassenger(int n, Station * station)
 	std::list<Passenger*>::iterator it;
 	for ( it = m_passengers.begin(); it != m_passengers.end(); ++it)
 	{
+		//Attention, j'ai rajouté ça parce que y'avait une erreur de seg quand le train avait des passagers à vider
+		if(m_passengersCount == 0)
+			return;
+
 		station->m_passengers.push_back(*it);
 
 		PhysicalObject::m_world->DestroyJoint((*it)->getJoint());
@@ -301,7 +305,8 @@ void Wagon::takeOffPassenger(int n, Station * station)
 		m_passengersCount --;
 		(*it)->switchStatic();
 	}
-	m_passengers.erase(m_passengers.begin(), it);
+	if(it !=  m_passengers.end())
+		m_passengers.erase(m_passengers.begin(), it);
 }
 
 int Wagon::getNbPassengerWagon()
