@@ -326,12 +326,8 @@ void ActualGame::trainAtStation()
 		updateTotalScore();
 
 		m_train->takeOffPassengers(station);
-<<<<<<< .mine
 		updateSatisfactionScore();
 		updateTotalScore();
-=======
->>>>>>> .r183
-
 		//Les passagers montent
 		m_train->takeInPassengers(station);
 		
