@@ -346,7 +346,10 @@ void Train::keyboard(GameEngine* g, const SDL_KeyboardEvent *event)
 		break;
 
 		case SDLK_RIGHT:
-			m_speed = -20;
+			if( m_usingTimeAccelerator > 0 )
+				m_speed = -300;
+			else
+				m_speed = -20;
 			m_spring1->SetMotorSpeed(m_speed);
 			m_spring2->SetMotorSpeed(m_speed);
 			m_wagons[0]->setMotorSpeed(m_speed);
@@ -518,4 +521,18 @@ Sprite::convertPixelsToMeters(&x, NULL, WINDOWS_W, WINDOWS_H);
 	*/
 	
 
+}
+
+
+void Train::setUsingTimeAccelerator(int i)
+{
+	m_usingTimeAccelerator = i;
+}
+
+void Train::decreaseTimeAccelerator()
+{
+	if( m_usingTimeAccelerator > 0 ){
+		--m_usingTimeAccelerator;
+		std::cout<<"timeAccelerator !"<<std::endl;
+	}
 }

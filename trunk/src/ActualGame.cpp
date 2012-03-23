@@ -160,6 +160,7 @@ void ActualGame::run(GameEngine * gameEngine, SDL_Surface * screen, int w, int h
 		m_train->drawSprite(screen, w, h);
 		m_actualLevel->drawTunnels(screen, w, h, this, m_world);
 
+		m_train->decreaseTimeAccelerator();
 		//fooDrawInstance->SetFlags( b2Draw::e_shapeBit );
 		//Affichage des formes physiques pour Debug
 		m_world->DrawDebugData();
@@ -604,6 +605,7 @@ void ActualGame::bonusEffect(Bonus * bonus)
 			break;
 		case ACCELERATOR :
 			std::cout<<"Accelerator !"<<std::endl;
+			m_train->setUsingTimeAccelerator(20);
 			break;
 		}
 
