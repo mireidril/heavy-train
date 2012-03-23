@@ -265,7 +265,7 @@ void GameEngine::changeScreen(const GameScreen & previousScreen, const GameScree
 			Mix_VolumeMusic(MIX_MAX_VOLUME/2);
 			Mix_Volume(0, MIX_MAX_VOLUME);
 			m_musique = Mix_LoadMUS("../musics/rednex.ogg");
-			Mix_PlayMusic(m_musique, -1);
+			//Mix_PlayMusic(m_musique, -1);
 
 		}
 		/*else if(screen == GAME && previousScreen == GAMEOVER)

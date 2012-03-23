@@ -37,15 +37,26 @@ void Bonus::build(b2World * world)
 	bd.type = b2_dynamicBody;
 	bd.position.Set(m_posX, m_posY);//position initiale du bonus
 	b2PolygonShape bodyShape;
-	float height = 0.5f;
-	float width = 0.5f;
+	float miWidth, miHeight;
+	switch(m_type){
+	case STAR_DUST:
+		miWidth = .5f;
+		miHeight = .5f;
+		break;
+	case ACCELERATOR:
+		miWidth = .5f;
+		miHeight = 2.5f;
+		break;
+	}
+	
 	b2Vec2 vertices[4];
-	vertices[0].Set(-height, -width);
-	vertices[1].Set(height, -width);
-	vertices[2].Set(height, width);
-	vertices[3].Set(-height, width);
+	vertices[0].Set(-miWidth, -miHeight);
+	vertices[1].Set(miWidth, -miHeight);
+	vertices[2].Set(miWidth, miHeight);
+	vertices[3].Set(-miWidth, miHeight);
 	bodyShape.Set(vertices, 4);
 
 	m_body = world->CreateBody(&bd);
 	m_body->CreateFixture(&bodyShape, 0.1f);
+	m_body->SetGravityScale(0); // Il vole !
 }

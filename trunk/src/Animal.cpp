@@ -9,6 +9,7 @@ Animal::Animal(const char * type, int x, int y)
 	m_type = type;
 	m_die = false;
 	m_tchou = false;
+	m_hasEscape = false;
 
 	//sprite animal
 	int sizeX, sizeY;
@@ -108,6 +109,7 @@ void Animal::draw(SDL_Surface * screen, const int & width, const int & height){
 		}
 		else {
 			m_tchou = false;
+			m_hasEscape = true;
 		}		
 	}
 	else if ( abs(x - m_posX) > 0.1 ){
@@ -120,7 +122,7 @@ void Animal::draw(SDL_Surface * screen, const int & width, const int & height){
 			die();
 		}			
 	}
-	else {
+	else if(! m_hasEscape) {
 		m_sprite->convertMetersToPixels(&x, &y,  width,  height);
 		m_sprite->setPositionY( y-60);
 		m_sprite->setAngle (angle);
@@ -131,6 +133,8 @@ void Animal::draw(SDL_Surface * screen, const int & width, const int & height){
 
 void Animal::die(){
 	m_die = true;
+	//Destruction du body
+	m_body->SetActive(false);
 }
 
 
@@ -142,7 +146,8 @@ void Animal::keyboard( const SDL_KeyboardEvent *event)
 	switch ( (event->keysym).sym)
 	{
 	case SDLK_SPACE:
-		m_tchou = true;		
+		m_tchou = true;
+		m_body->SetActive(false);
 		break;
 	default:
 		break;
